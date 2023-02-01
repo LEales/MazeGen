@@ -24,6 +24,12 @@ public class Menu extends Pane {
     private AudioPlayer audioPlayer;
     private RightPanel panel;
 
+
+
+    private Image testImage;
+    private Image testImageRezise;
+
+
     /**
      * Konstruktor som tar emot mainProgram, audioPlayer och panel
      * Kör sedan metoder för att länka Image-objekten med png-filer
@@ -51,6 +57,8 @@ public class Menu extends Pane {
         randomizeResize = new Image("file:files/texts/Randomize.png", 255, 33, false, false);
         help = new Image("file:files/texts/Help.png", 250, 30, false, false);
         helpResize = new Image("file:files/texts/Help.png", 255, 33, false, false);
+        testImage = new Image("file:files/texts/download.png", 250, 30, false, false);
+        testImageRezise = new Image("file:files/texts/download.png", 255, 33, false, false);
     }
 
     /**
@@ -138,7 +146,46 @@ public class Menu extends Pane {
             audioPlayer.playButtonSound();
         });
 
-        this.getChildren().addAll(campaignView,randomizeView,helpView,mazegenView);
+        ImageView testView = new ImageView(testImage);
+        testView.setStyle("fx-background-color: transparent;");
+        testView.setTranslateX(275);
+        testView.setTranslateY(347);
+        testView.toFront();
+        testView.setOnMouseEntered(e -> {
+            testView.setImage(testImageRezise);
+            testView.setTranslateX(273);
+            testView.setTranslateY(347);
+        });
+        testView.setOnMouseExited(e -> {testView.setImage(testImage);
+            testView.setTranslateX(275);
+            testView.setTranslateY(350);
+        });
+        testView.setOnMouseClicked(e -> {
+            mainProgram.showHighScoreList();
+            audioPlayer.playButtonSound();
+        });
+
+        ImageView victoryView = new ImageView(testImage);
+        victoryView.setStyle("fx-background-color: transparent;");
+        victoryView.setTranslateX(275);
+        victoryView.setTranslateY(397);
+        victoryView.toFront();
+        victoryView.setOnMouseEntered(e -> {
+            victoryView.setImage(testImageRezise);
+            victoryView.setTranslateX(273);
+            victoryView.setTranslateY(397);
+        });
+        victoryView.setOnMouseExited(e -> {victoryView.setImage(testImage);
+            victoryView.setTranslateX(275);
+            victoryView.setTranslateY(400);
+        });
+        victoryView.setOnMouseClicked(e -> {
+            mainProgram.showVcitoryScene();
+            audioPlayer.playButtonSound();
+        });
+
+
+        this.getChildren().addAll(campaignView,randomizeView,helpView,mazegenView,testView,victoryView);
     }
 
 }

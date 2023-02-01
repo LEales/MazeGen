@@ -20,7 +20,7 @@ public class GameOverScreen extends Pane {
      * @param mainProgram
      */
     public GameOverScreen(MainProgram mainProgram) {
-        setOnMouseClicked(e -> mainProgram.changeToMenu());
+        setOnMouseClicked(e -> mainProgram.showHighScoreList());
         setupImages();
         gameOverAnimation();
     }
@@ -43,6 +43,5 @@ public class GameOverScreen extends Pane {
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.play();
-
     }
 }

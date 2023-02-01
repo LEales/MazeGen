@@ -19,6 +19,7 @@ import view.GameOverScreen;
 import view.Randomize.MapTemplate;
 import model.MazeGeneration.MazeGenerator;
 import view.Menu.*;
+import view.VictoryScreen;
 import view.WorldIntroAnimation;
 
 
@@ -39,9 +40,13 @@ public class MainProgram extends Application {
     private Scene introScene;
     private Scene helpScene;
     private Scene chooseDimensionScene;
+    private Scene highscoreScene;
+    private Scene victoryScene;
     private Intro intro;
     private Menu menu;
     private Help help;
+    private highscoreList highscoreList;
+    private VictoryScreen victoryScreen;
     private ChooseDimension chooseDimension;
     private Scene randomScene;
     private Scene campaignScene;
@@ -75,9 +80,15 @@ public class MainProgram extends Application {
         menu = new Menu(this, audioPlayer, rightPanel);
         intro = new Intro(this, audioPlayer);
         help = new Help(this, audioPlayer);
+        highscoreList = new highscoreList(this, audioPlayer);
+        victoryScreen =new VictoryScreen(this, audioPlayer);
+
         chooseDimension = new ChooseDimension(this, audioPlayer);
         introScene = new Scene(intro, 800, 600);
         helpScene = new Scene(help, 800, 600);
+        highscoreScene = new Scene(highscoreList,800,600);
+        victoryScene = new Scene(victoryScreen,800,600);
+
         chooseDimensionScene = new Scene(chooseDimension, 800, 600);
 
         mainPaneRandomMaze = new BorderPane();
@@ -139,6 +150,7 @@ public class MainProgram extends Application {
      */
     public void changeToCampaign() throws FileNotFoundException {
 
+
         world1Template = new World1Template(world1Maps.getLevel11(), 1, 3, this, rightPanel, 0, audioPlayer, 25);
 
         mainPaneCampaign.setCenter(world1Template);
@@ -146,6 +158,7 @@ public class MainProgram extends Application {
         introAnimation = new WorldIntroAnimation("1");
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
+
     }
 
     /**
@@ -411,5 +424,12 @@ public class MainProgram extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void showHighScoreList() {
+        mainWindow.setScene(highscoreScene);
+    }
+    public void showVcitoryScene() {
+        mainWindow.setScene(victoryScene);
     }
 }
