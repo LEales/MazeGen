@@ -20,7 +20,7 @@ public class GameOverScreen extends Pane {
      * @param mainProgram
      */
     public GameOverScreen(MainProgram mainProgram) {
-        setOnMouseClicked(e -> mainProgram.showHighScoreList());
+        setOnMouseClicked(e -> mainProgram.showVcitoryScene());
         setupImages();
         gameOverAnimation();
     }

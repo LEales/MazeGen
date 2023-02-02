@@ -449,7 +449,7 @@ public class World1Template extends GridPane {
         rightPanel.pauseClock();
         gameStarted = true;
         time.setGameOver(true);
-        rightPanel.setGameOver(true);
+        mainProgram.setTotalTime(rightPanel.setGameOver(true));
         time = null;
         rightPanel.removePickaxe();
 

@@ -9,6 +9,7 @@ public class TotalTime extends Thread{
     private boolean gameOver;
     private int seconds;
     private int minutes;
+    private int hour;
 
     /**
      *
@@ -32,17 +33,25 @@ public class TotalTime extends Thread{
                     minutes++;
                     seconds = 0;
                 }
+                if (minutes==60){
+                    hour++;
+                    minutes=0;
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        System.out.println("Total tid: " + minutes + ":" + seconds);
+        System.out.printf("Total tid: %d:%d:%d",hour,minutes,seconds);
     }
 
     /**
      * @param gameOver Setter för villkoret
      */
-    public void setGameOver(boolean gameOver) {
+    public int[] setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
+        System.out.printf("Total tid: %d:%d:%d",hour,minutes,seconds);
+        System.out.println();
+        int[] arr = {hour,minutes,seconds};
+        return arr;
     }
 }

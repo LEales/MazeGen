@@ -45,7 +45,7 @@ public class MainProgram extends Application {
     private Intro intro;
     private Menu menu;
     private Help help;
-    private highscoreList highscoreList;
+    private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
     private ChooseDimension chooseDimension;
     private Scene randomScene;
@@ -80,7 +80,7 @@ public class MainProgram extends Application {
         menu = new Menu(this, audioPlayer, rightPanel);
         intro = new Intro(this, audioPlayer);
         help = new Help(this, audioPlayer);
-        highscoreList = new highscoreList(this, audioPlayer);
+        highscoreList = new HighscoreList(this, audioPlayer);
         victoryScreen =new VictoryScreen(this, audioPlayer);
 
         chooseDimension = new ChooseDimension(this, audioPlayer);
@@ -431,5 +431,13 @@ public class MainProgram extends Application {
     }
     public void showVcitoryScene() {
         mainWindow.setScene(victoryScene);
+    }
+
+    public void setTotalTime(int[] totalTime) {
+        victoryScreen.setTime(totalTime);
+    }
+
+    public void addToScoreList(String text, int[] totalTime) {
+        highscoreList.controlList(text,totalTime);
     }
 }

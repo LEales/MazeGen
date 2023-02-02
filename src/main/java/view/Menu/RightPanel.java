@@ -296,11 +296,11 @@ public class RightPanel extends GridPane {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
+                System.out.println(setGameOver(true));
+                //mainProgram.setTotalTime(totTime.setGameOver(true));
                 mainProgram.gameOver();
                 audioPlayer.playGameOverSound();
                 audioPlayer.stopMusic();
-                totTime.setGameOver(true);
                 removePickaxe();
             }
         });
@@ -324,8 +324,8 @@ public class RightPanel extends GridPane {
      * Setter för Tråden att veta när det blir GameOver
      * @param b
      */
-    public void setGameOver(boolean b) {
-        totTime.setGameOver(b);
+    public int[] setGameOver(boolean b) {
+        return totTime.setGameOver(b);
     }
     /**
      * Setter för att kontrollera om tiden har startat

@@ -57,8 +57,8 @@ public class Menu extends Pane {
         randomizeResize = new Image("file:files/texts/Randomize.png", 255, 33, false, false);
         help = new Image("file:files/texts/Help.png", 250, 30, false, false);
         helpResize = new Image("file:files/texts/Help.png", 255, 33, false, false);
-        testImage = new Image("file:files/texts/download.png", 250, 30, false, false);
-        testImageRezise = new Image("file:files/texts/download.png", 255, 33, false, false);
+        testImage = new Image("file:files/texts/Highscore.png", 250, 30, false, false);
+        testImageRezise = new Image("file:files/texts/Highscore.png", 255, 33, false, false);
     }
 
     /**

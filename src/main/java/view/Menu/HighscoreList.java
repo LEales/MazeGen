@@ -9,11 +9,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import view.AudioPlayer;
 
-public class highscoreList extends VBox{
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+public class HighscoreList extends VBox{
     private MainProgram mainProgram;
     private AudioPlayer audioPlayer;
 
-    public highscoreList(MainProgram mainProgram, AudioPlayer audioPlayer) {
+    public HighscoreList(MainProgram mainProgram, AudioPlayer audioPlayer) {
+        this.setOnMouseClicked(e->mainProgram.changeToMenu());
         this.audioPlayer = audioPlayer;
         this.mainProgram = mainProgram;
         this.setBackground(new Background(setBackground()));
@@ -21,8 +27,19 @@ public class highscoreList extends VBox{
     }
     public int setupHighscoreList (){
         //TODO fixa så att den läser in från .dat filen
+        String obj = "files/ScoreList.dat";
+        PlayerScore scoreList;
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(obj)));
+            scoreList = (PlayerScore)ois.readObject();
+            System.out.println(scoreList.getPlayer());
+            ois.close();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         for (int i = 0; i < 10; i++) {
-            Label label = createLabels("eeeeeeee");
+            Label label = createLabels(scoreList.getPlayer());
             this.getChildren().add(i,label );
         }
         return this.getChildren().size();
@@ -39,5 +56,8 @@ public class highscoreList extends VBox{
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         return menuBackground;
+    }
+
+    public void controlList(String text, int[] totalTime) {
     }
 }
