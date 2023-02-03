@@ -427,6 +427,7 @@ public class MainProgram extends Application {
     }
 
     public void showHighScoreList() {
+        highscoreList.setupHighscoreList();
         mainWindow.setScene(highscoreScene);
     }
     public void showVcitoryScene() {

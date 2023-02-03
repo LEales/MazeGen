@@ -47,4 +47,8 @@ public class PlayerScore implements Serializable {
     public int setSeconds(int seconds) {
         return this.seconds = seconds;
     }
+
+    public int getTotalTimeInSeconds(){
+        return this.seconds + (this.minutes*60)+ (this.hours*60*60);
+    }
 }

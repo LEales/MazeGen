@@ -2,6 +2,7 @@ package view;
 
 import control.MainProgram;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -49,23 +50,37 @@ public class VictoryScreen extends Pane {
         //TODO skapa dat fill och kontrollera den
         //System.out.println("Hour :"+totalTime[2]);
         String obj = "files/ScoreList.dat";
+        PlayerScore playerScore = new PlayerScore(textArea.getText(),totalTime[0],totalTime[1],totalTime[2]);
         try {
-            if (scoreListCounter!=1){
+            if (scoreListCounter==0){
                 ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(obj)));
-                PlayerScore playerScore = new PlayerScore(textArea.getText(),totalTime[0],totalTime[1],totalTime[2]);
                 oos.writeObject(playerScore);
                 oos.flush();
                 oos.close();
                 scoreListCounter++;
             }else {
-                ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(obj)));
-                PlayerScore scoreList;
-                scoreList = (PlayerScore)ois.readObject();
-                System.out.println(scoreList.getPlayer());
-
-                ois.close();
+                PlayerScore[] scoreList = new PlayerScore[10];
+                PlayerScore player;
+                try{
+                    ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(obj)));
+                    int counter = 0;
+                    while((player = (PlayerScore)ois.readObject())!=null){
+                        scoreList[counter] = player;
+                        counter++;
+                    }
+                    for (int i = 0; i < 10; i++) {
+                        if (scoreList[i]!=null) {
+                            System.out.println(scoreList[i].getPlayer());
+                        }
+                    }
+                    ois.close();
+                }catch (Exception e ){
+                    System.out.println("end of file");
+                }
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         mainProgram.addToScoreList(textArea.getText(),totalTime);
