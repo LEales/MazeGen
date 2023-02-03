@@ -275,8 +275,13 @@ public class RightPanel extends GridPane {
      * Startar en tråd som räknar den totala tiden
      */
     public void startTotalTimer(){
-        if (!timerIsStartedOnce)
-        totTime.start();
+        if (!timerIsStartedOnce) {
+            totTime.start();
+        }
+        else {
+            totTime = new TotalTime(false);
+            totTime.start();
+        }
     }
     /**
      * Startar en task för Game Over

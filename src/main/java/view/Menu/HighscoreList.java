@@ -25,16 +25,12 @@ public class HighscoreList extends VBox{
         this.setBackground(new Background(setBackground()));
     }
     public int setupHighscoreList (){
-        //TODO fixa så att den läser in från .dat filen
-        for (int i = 0; i < this.getChildren().size(); i++) {
-            this.getChildren().remove(i);
-        }
         System.out.println("listans barn "+this.getChildren().size());
-        String obj = "files/ScoreList.dat";
+        String file = "files/ScoreList.dat";
         PlayerScore[] scoreList = new PlayerScore[10];
         PlayerScore player;
         try{
-            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(obj)));
+            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
             int counter = 0;
             while((player = (PlayerScore)ois.readObject())!=null){
                 scoreList[counter] = player;
@@ -42,9 +38,8 @@ public class HighscoreList extends VBox{
             }
             ois.close();
         }catch (Exception e ){
-            System.out.println("end of file");
+            //System.out.println("end of file");
         }
-
         for (int i = 0; i < 10; i++) {
             if (scoreList[i]!=null) {
                 Label label = createLabels(scoreList[i].getPlayer());
@@ -70,20 +65,4 @@ public class HighscoreList extends VBox{
     public void controlList(String text, int[] totalTime) {
     }
 
-
-    /*for (int i = 0; i < scoreList.length; i++) {
-                        if (playerScore.getTotalTimeInSeconds() < scoreList[i].getTotalTimeInSeconds()){
-                            indexToChangePLayer =i;
-                        }
-                    }
-                    for (int i = scoreList.length-2; i >= indexToChangePLayer ; i--) {
-                        if (i == indexToChangePLayer){
-                            scoreList[i]=playerScore;
-                        }else {
-                            scoreList[i]=scoreList[i-1];
-                        }
-                    }
-                    for (int i = 0; i < scoreList.length; i++) {
-                        System.out.println(scoreList[i].getPlayer()+ "TIME : "+ scoreList[i].getTotalTimeInSeconds());
-                    }*/
 }

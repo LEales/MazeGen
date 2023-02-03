@@ -7,9 +7,9 @@ package model;
 public class TotalTime extends Thread{
 
     private boolean gameOver;
-    private int seconds;
-    private int minutes;
-    private int hour;
+    private int seconds = 0;
+    private int minutes = 0;
+    private int hour = 0;
 
     /**
      *
@@ -19,12 +19,12 @@ public class TotalTime extends Thread{
         this.gameOver = gameOver;
     }
 
+
     /**
      * Tråden sover i 1000 millisekunder
      * Inkrementerar int variabeln med 1
      */
     public void run(){
-
         while(!gameOver){
             try {
                 Thread.sleep(1000);
@@ -41,7 +41,6 @@ public class TotalTime extends Thread{
                 e.printStackTrace();
             }
         }
-        System.out.printf("Total tid: %d:%d:%d",hour,minutes,seconds);
     }
 
     /**
@@ -49,8 +48,6 @@ public class TotalTime extends Thread{
      */
     public int[] setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
-        System.out.printf("Total tid: %d:%d:%d",hour,minutes,seconds);
-        System.out.println();
         int[] arr = {hour,minutes,seconds};
         return arr;
     }

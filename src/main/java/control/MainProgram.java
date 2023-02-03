@@ -441,4 +441,10 @@ public class MainProgram extends Application {
     public void addToScoreList(String text, int[] totalTime) {
         highscoreList.controlList(text,totalTime);
     }
+
+    public void deleteScorelist() {
+        for (int i = 0; i < highscoreList.getChildren().size(); i++) {
+            highscoreList.getChildren().remove(i);
+        }
+    }
 }

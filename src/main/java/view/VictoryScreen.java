@@ -16,6 +16,7 @@ public class VictoryScreen extends Pane {
     private TextArea textArea;
     private int[] totalTime;
     private int scoreListCounter;
+    private int counter;
     public VictoryScreen(MainProgram mainProgram, AudioPlayer audioPlayer) {
         this.audioPlayer = audioPlayer;
         this.mainProgram = mainProgram;
@@ -41,6 +42,7 @@ public class VictoryScreen extends Pane {
         button.setMaxWidth(50);
         button.setTranslateY(350);
         button.setTranslateX(200);
+
         button.setOnMouseClicked(e-> addToScoreList());
 
         this.getChildren().addAll(textArea,button);
@@ -49,39 +51,73 @@ public class VictoryScreen extends Pane {
     private void addToScoreList() {
         //TODO skapa dat fill och kontrollera den
         //System.out.println("Hour :"+totalTime[2]);
+        mainProgram.deleteScorelist();
         String obj = "files/ScoreList.dat";
         PlayerScore playerScore = new PlayerScore(textArea.getText(),totalTime[0],totalTime[1],totalTime[2]);
-        try {
-            if (scoreListCounter==0){
+        PlayerScore[] scoreList = new PlayerScore[10];
+        PlayerScore player;
+        int counter = 0;
+        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(obj)))){
+            while((player = (PlayerScore)ois.readObject())!=null){
+                scoreList[counter] = player;
+                counter++;
+            }
+        }catch (Exception e ){
+            System.out.println("end of file");
+        }
+        if (scoreListCounter<=10){
+            try {// TODO LÄSS FÖRST IN dat filen sedan lägg till i arrayen sedan skriv över den gamla filen
                 ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(obj)));
-                oos.writeObject(playerScore);
+                System.out.println(counter);
+                scoreList[counter] = playerScore;
+                for (PlayerScore current : scoreList) {
+                    oos.writeObject(current);
+                }
                 oos.flush();
                 oos.close();
                 scoreListCounter++;
-            }else {
-                PlayerScore[] scoreList = new PlayerScore[10];
-                PlayerScore player;
-                try{
-                    ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(obj)));
-                    int counter = 0;
-                    while((player = (PlayerScore)ois.readObject())!=null){
-                        scoreList[counter] = player;
-                        counter++;
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }else {
+            int indexToChangePLayer =11;
+
+            for (int i = 0; i < scoreList.length ; i++) {
+                if (scoreList[i]!=null) {
+                    if (playerScore.getTotalTimeInSeconds() < scoreList[i].getTotalTimeInSeconds()){
+                        indexToChangePLayer =i;
                     }
-                    for (int i = 0; i < 10; i++) {
-                        if (scoreList[i]!=null) {
-                            System.out.println(scoreList[i].getPlayer());
-                        }
-                    }
-                    ois.close();
-                }catch (Exception e ){
-                    System.out.println("end of file");
                 }
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            if (indexToChangePLayer<=10) {
+                for (int i = scoreList.length - 1; i >= indexToChangePLayer; i--) {
+                    if (scoreList[i] != null) {
+                        if (i == indexToChangePLayer) {
+                            scoreList[i] = playerScore;
+                        } else {
+                            scoreList[i] = scoreList[i - 1];
+                        }
+                    }
+                }
+            }
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(obj)));
+                for (int i = 0; i < scoreList.length; i++) {
+                    if (scoreList[i]!=null){
+                        oos.writeObject(scoreList[i]);
+                    }
+                }
+                oos.flush();
+                oos.close();
+                scoreListCounter++;
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         mainProgram.addToScoreList(textArea.getText(),totalTime);
         mainProgram.changeToMenu();
