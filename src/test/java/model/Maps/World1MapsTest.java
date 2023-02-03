@@ -102,5 +102,5 @@ class World1MapsTest {
         }
         assertFalse(equal);
     }
-    
+
 }
