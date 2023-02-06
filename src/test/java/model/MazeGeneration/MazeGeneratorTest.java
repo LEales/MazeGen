@@ -14,46 +14,70 @@ class MazeGeneratorTest {
     HashMap<Node, ArrayList<Node>> G = new HashMap<>();
 
     @Test
-    void mPain() {
+    void checkStartAndGoalPain() {
         for (int i = 0; i < 1000; i++) {
             MazeGenerator mg = new MazeGenerator(28, true);
             int[][] maze = mg.getMaze();
             Node start = start(maze);
+            if (start.equals(new Node(-1,-1))) {
+                fail("No start Node");
+            }
             Node end = end(maze);
+            if (end.equals(new Node(-1, -1))) {
+                fail("No end Node");
+            }
             buildGraph(maze);
             assertTrue(dfs(start, end));
         }
     }
     @Test
-    void m18x18() {
+    void checkStartAndGoal18x18() {
         for (int i = 0; i < 1000; i++) {
             MazeGenerator mg = new MazeGenerator(18, true);
             int[][] maze = mg.getMaze();
             Node start = start(maze);
+            if (start.equals(new Node(-1,-1))) {
+                fail("No start Node");
+            }
             Node end = end(maze);
+            if (end.equals(new Node(-1, -1))) {
+                fail("No end Node");
+            }
             buildGraph(maze);
             assertTrue(dfs(start, end));
         }
     }
     @Test
-    void m14x14() {
+    void checkStartAndGoal14x14() {
         for (int i = 0; i < 1000; i++) {
             MazeGenerator mg = new MazeGenerator(14, true);
             int[][] maze = mg.getMaze();
             Node start = start(maze);
+            if (start.equals(new Node(-1,-1))) {
+                fail("No start Node");
+            }
             Node end = end(maze);
+            if (end.equals(new Node(-1, -1))) {
+                fail("No end Node");
+            }
             buildGraph(maze);
             assertTrue(dfs(start, end));
         }
     }
 
     @Test
-    void m10x10() {
+    void checkStartAndGoal10x10() {
         for (int i = 0; i < 1000; i++) {
             MazeGenerator mg = new MazeGenerator(10, true);
             int[][] maze = mg.getMaze();
             Node start = start(maze);
+            if (start.equals(new Node(-1,-1))) {
+                fail("No start Node");
+            }
             Node end = end(maze);
+            if (end.equals(new Node(-1, -1))) {
+                fail("No end Node");
+            }
             buildGraph(maze);
             assertTrue(dfs(start, end));
         }
