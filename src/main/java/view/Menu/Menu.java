@@ -23,9 +23,6 @@ public class Menu extends Pane {
     private Image mazegen;
     private AudioPlayer audioPlayer;
     private RightPanel panel;
-
-
-
     private Image testImage;
     private Image testImageRezise;
 
@@ -41,9 +38,10 @@ public class Menu extends Pane {
         this.mainProgram = mainProgram;
         this.audioPlayer = audioPlayer;
         this.panel = panel;
+        this.setBackground(new Background(setBackground()));
         setBackground();
         setupImages();
-        addButtons();
+        this.getChildren().addAll(getCampaignView(),getRandomizeView(),getHelpView(),getMazegenView(),getTestView(),getVictoryView());
     }
 
     /**
@@ -64,22 +62,20 @@ public class Menu extends Pane {
     /**
      * Metod som sätter bakgrundsbilden
      */
-    public void setBackground(){
+    public BackgroundImage setBackground(){
         BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-        this.setBackground(new Background(menuBackground));
+        return menuBackground;
     }
 
-    /**
-     * Metod som lägger till klickbara ImageViews i scenen
-     * Imageviews förstoras när man hovrar och byter scen när man klickar på dem
-     */
-    public void addButtons(){
+    public ImageView getMazegenView() {
         ImageView mazegenView = new ImageView(mazegen);
         mazegenView.setStyle("fx-background-color: transparent;");
+        return mazegenView;
+    }
 
-
+    public ImageView getCampaignView() {
         ImageView campaignView = new ImageView(campaign);
         campaignView.setStyle("fx-background-color: transparent;");
         campaignView.setTranslateX(275);
@@ -105,7 +101,10 @@ public class Menu extends Pane {
                 fileNotFoundException.printStackTrace();
             }
         });
+        return campaignView;
+    }
 
+    public ImageView getRandomizeView() {
         ImageView randomizeView = new ImageView(randomize);
         randomizeView.setStyle("fx-background-color: transparent;");
         randomizeView.setTranslateX(275);
@@ -125,7 +124,10 @@ public class Menu extends Pane {
             mainProgram.chooseDimension();
             audioPlayer.playButtonSound();
         });
+        return randomizeView;
+    }
 
+    public ImageView getHelpView() {
         ImageView helpView = new ImageView(help);
         helpView.setStyle("fx-background-color: transparent;");
         helpView.setTranslateX(275);
@@ -145,7 +147,10 @@ public class Menu extends Pane {
             mainProgram.changeToHelp();
             audioPlayer.playButtonSound();
         });
+        return helpView;
+    }
 
+    public ImageView getTestView() {
         ImageView testView = new ImageView(testImage);
         testView.setStyle("fx-background-color: transparent;");
         testView.setTranslateX(275);
@@ -164,7 +169,10 @@ public class Menu extends Pane {
             mainProgram.showHighScoreList();
             audioPlayer.playButtonSound();
         });
+        return testView;
+    }
 
+    public ImageView getVictoryView() {
         ImageView victoryView = new ImageView(testImage);
         victoryView.setStyle("fx-background-color: transparent;");
         victoryView.setTranslateX(275);
@@ -183,9 +191,6 @@ public class Menu extends Pane {
             mainProgram.showVcitoryScene();
             audioPlayer.playButtonSound();
         });
-
-
-        this.getChildren().addAll(campaignView,randomizeView,helpView,mazegenView,testView,victoryView);
+        return victoryView;
     }
-
 }
