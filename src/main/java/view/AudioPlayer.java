@@ -12,61 +12,34 @@ import java.io.File;
 
 public class AudioPlayer {
 
-    private File diamondSound;
-    private Media diamondMedia;
     private MediaPlayer diamondPlayer;
 
-    private File deathSound;
-    private Media deathMedia;
     private MediaPlayer deathPlayer;
 
-
-    private File startSound;
-    private Media startMedia;
     private MediaPlayer startPlayer;
 
-    private File goalSound;
-    private Media goalMedia;
     private MediaPlayer goalPlayer;
 
-    private File heartSound;
-    private Media heartMedia;
     private MediaPlayer heartPlayer;
 
-    private File breakableWallSound;
-    private Media breakableWallMedia;
     private MediaPlayer breakableWallPlayer;
 
     private File currentSong;
     private Media currentMedia;
     private MediaPlayer currentSongPlayer;
 
-    private File pickAxeSound;
-    private Media pickAxeMedia;
     private MediaPlayer pickAxeMediaPlayer;
 
-    private File gameOverSound;
-    private Media gameOverMedia;
     private MediaPlayer gameOverMediaPlayer;
 
-    private File buttonClickSound;
-    private Media buttonClickMedia;
     private MediaPlayer buttonClickedMediaPlayer;
 
-    private File introSound;
-    private Media introMedia;
     private MediaPlayer introMediaPlayer;
 
-    private File worldIntroSound;
-    private Media worldIntroMedia;
     private MediaPlayer worldIntroMediaPlayer;
 
-    private File timeLeftSound;
-    private Media timeLeftMedia;
     private MediaPlayer timeLeftMediaPlayer;
 
-    private File mobSound;
-    private Media mobSoundMedia;
     private MediaPlayer mobSoundMediaPlayer;
 
     /**
@@ -81,60 +54,60 @@ public class AudioPlayer {
      */
     public void setupAudioFiles() {
 
-        diamondSound = new File("files/sounds/Diamond1.mp3");
-        diamondMedia = new Media(diamondSound.toURI().toString());
+        File diamondSound = new File("files/sounds/Diamond1.mp3");
+        Media diamondMedia = new Media(diamondSound.toURI().toString());
         diamondPlayer = new MediaPlayer(diamondMedia);
 
-        deathSound = new File("files/sounds/MazegenDeath.mp3");
-        deathMedia = new Media(deathSound.toURI().toString());
+        File deathSound = new File("files/sounds/MazegenDeath.mp3");
+        Media deathMedia = new Media(deathSound.toURI().toString());
         deathPlayer = new MediaPlayer(deathMedia);
 
-        startSound = new File("files/sounds/MazegenStart.mp3");
-        startMedia = new Media(startSound.toURI().toString());
+        File startSound = new File("files/sounds/MazegenStart.mp3");
+        Media startMedia = new Media(startSound.toURI().toString());
         startPlayer = new MediaPlayer(startMedia);
 
-        goalSound = new File("files/sounds/MazegenGoal.mp3");
-        goalMedia = new Media(goalSound.toURI().toString());
+        File goalSound = new File("files/sounds/MazegenGoal.mp3");
+        Media goalMedia = new Media(goalSound.toURI().toString());
         goalPlayer = new MediaPlayer(goalMedia);
 
-        heartSound = new File("files/sounds/Heart.mp3");
-        heartMedia = new Media(heartSound.toURI().toString());
+        File heartSound = new File("files/sounds/Heart.mp3");
+        Media heartMedia = new Media(heartSound.toURI().toString());
         heartPlayer = new MediaPlayer(heartMedia);
 
-        breakableWallSound = new File("files/sounds/AxeUsed.mp3");
-        breakableWallMedia = new Media(breakableWallSound.toURI().toString());
+        File breakableWallSound = new File("files/sounds/AxeUsed.mp3");
+        Media breakableWallMedia = new Media(breakableWallSound.toURI().toString());
         breakableWallPlayer = new MediaPlayer(breakableWallMedia);
 
-        pickAxeSound = new File("files/sounds/pickaxe.mp3");
-        pickAxeMedia = new Media(pickAxeSound.toURI().toString());
+        File pickAxeSound = new File("files/sounds/pickaxe.mp3");
+        Media pickAxeMedia = new Media(pickAxeSound.toURI().toString());
         pickAxeMediaPlayer = new MediaPlayer(pickAxeMedia);
 
-        gameOverSound = new File("files/sounds/gameover.mp3");
-        gameOverMedia = new Media(gameOverSound.toURI().toString());
+        File gameOverSound = new File("files/sounds/gameover.mp3");
+        Media gameOverMedia = new Media(gameOverSound.toURI().toString());
         gameOverMediaPlayer = new MediaPlayer(gameOverMedia);
 
-        buttonClickSound = new File("files/sounds/menubuttons.mp3");
-        buttonClickMedia = new Media(buttonClickSound.toURI().toString());
+        File buttonClickSound = new File("files/sounds/menubuttons.mp3");
+        Media buttonClickMedia = new Media(buttonClickSound.toURI().toString());
         buttonClickedMediaPlayer = new MediaPlayer(buttonClickMedia);
 
-        introSound = new File("files/sounds/introsound.mp3");
-        introMedia = new Media(introSound.toURI().toString());
+        File introSound = new File("files/sounds/introsound.mp3");
+        Media introMedia = new Media(introSound.toURI().toString());
         introMediaPlayer = new MediaPlayer(introMedia);
 
-        worldIntroSound = new File("files/sounds/nextworld.mp3");
-        worldIntroMedia = new Media(worldIntroSound.toURI().toString());
+        File worldIntroSound = new File("files/sounds/nextworld.mp3");
+        Media worldIntroMedia = new Media(worldIntroSound.toURI().toString());
         worldIntroMediaPlayer = new MediaPlayer(worldIntroMedia);
 
         currentSong = new File("files/music/forest.mp3");
         currentMedia = new Media(currentSong.toURI().toString());
         currentSongPlayer = new MediaPlayer(currentMedia);
 
-        timeLeftSound = new File("files/sounds/timeLeft.mp3");
-        timeLeftMedia = new Media(timeLeftSound.toURI().toString());
+        File timeLeftSound = new File("files/sounds/timeLeft.mp3");
+        Media timeLeftMedia = new Media(timeLeftSound.toURI().toString());
         timeLeftMediaPlayer = new MediaPlayer(timeLeftMedia);
 
-        mobSound = new File("files/sounds/mobsound.mp3");
-        mobSoundMedia = new Media(mobSound.toURI().toString());
+        File mobSound = new File("files/sounds/mobsound.mp3");
+        Media mobSoundMedia = new Media(mobSound.toURI().toString());
         mobSoundMediaPlayer = new MediaPlayer(mobSoundMedia);
 
     }
@@ -143,78 +116,99 @@ public class AudioPlayer {
      * Spelar musik baserad på given input.
      * @param songToPlay Låten som ska spelas.
      */
-    public void playLevelMusic(String songToPlay) {
+    public File playLevelMusic(String songToPlay) {
 
-        String songName = songToPlay;
+        switch (songToPlay) {
+            case "forest" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+            case "lava" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+            case "heaven" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+            case "egypt" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+        }
 
-        if (songName.equals("forest")) {
-            currentSong = new File("files/music/" + songName + ".mp3");
-        }
-        else if (songName.equals("lava")) {
-            currentSong = new File("files/music/" + songName + ".mp3");
-        }
-        else if (songName.equals("heaven")) {
-            currentSong = new File("files/music/" + songName + ".mp3");
-        }
-        else if (songName.equals("egypt")) {
-            currentSong = new File("files/music/" + songName + ".mp3");
-        }
         currentMedia = new Media(currentSong.toURI().toString());
         currentSongPlayer = new MediaPlayer(currentMedia);
-        currentSongPlayer.setOnEndOfMedia(new Runnable() {
-            public void run() {
-                currentSongPlayer.seek(Duration.ZERO);
-            }
-        });
+        currentSongPlayer.setOnEndOfMedia(() -> currentSongPlayer.seek(Duration.ZERO));
         currentSongPlayer.play();
+
+        return currentSong;
     }
 
     /**
      * Spelar ett ljud när spelaren plockar upp en collectible.
      */
-    public void playCollectibleSound() {
-        diamondPlayer.play();
-        diamondPlayer.seek(Duration.ZERO);
+    public boolean playCollectibleSound() {
+        try {
+            diamondPlayer.play();
+            diamondPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Spelar ett ljud när spelaren dör.
      */
-    public void playDeathSound() {
-        deathPlayer.play();
-        deathPlayer.seek(Duration.ZERO);
+    public boolean playDeathSound() {
+        try {
+            deathPlayer.play();
+            deathPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Spelar ett ljud när spelrundan startas.
      */
-    public void playStartSound() {
-        startPlayer.play();
-        startPlayer.seek(Duration.ZERO);
+    public boolean playStartSound() {
+        try {
+            startPlayer.play();
+            startPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Spelar ett ljud när spelaren går i mål.
      */
-    public void playGoalSound() {
-        goalPlayer.play();
-        goalPlayer.seek(Duration.ZERO);
+    public boolean playGoalSound() {
+        try {
+            goalPlayer.play();
+            goalPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Spelar ett ljud när spelaren plockar upp ett liv.
      */
-    public void playHeartSound() {
-        heartPlayer.play();
-        heartPlayer.seek(Duration.ZERO);
+    public boolean playHeartSound() {
+        try {
+            heartPlayer.play();
+            heartPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Spelar ett ljud när spelaren förstör en vägg.
      */
-    public void playBreakableWallSound() {
-        breakableWallPlayer.play();
-        breakableWallPlayer.seek(Duration.ZERO);
+    public boolean playBreakableWallSound() {
+        try {
+            breakableWallPlayer.play();
+            breakableWallPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
