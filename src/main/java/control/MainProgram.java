@@ -158,7 +158,11 @@ public class MainProgram extends Application {
         introAnimation = new WorldIntroAnimation("1");
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
-
+        try {
+            nextWorld6Level(5, 10);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

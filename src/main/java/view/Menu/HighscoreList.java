@@ -3,6 +3,7 @@ package view.Menu;
 import control.MainProgram;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -19,16 +20,33 @@ public class HighscoreList extends VBox{
     private AudioPlayer audioPlayer;
     private Label[] labelArr = new Label[10];
 
+    private Image image;
+    private ImageView imageView = new ImageView(image);
+
     public HighscoreList(MainProgram mainProgram, AudioPlayer audioPlayer) {
         this.setOnMouseClicked(e->backToMenu());
         this.audioPlayer = audioPlayer;
         this.mainProgram = mainProgram;
         this.setBackground(new Background(setBackground()));
+        this.getChildren().add(sutupImage());
+    }
+
+    private ImageView sutupImage() {
+       image = new Image("file:files/texts/Highscore.png", 255, 33, false, false);
+       return imageView = new ImageView(image);
     }
 
     private void backToMenu() {
-        this.getChildren().clear();
+        cleaChildren(true);
         mainProgram.changeToMenu();
+    }
+
+    private boolean cleaChildren(boolean b) {
+        if (b){
+            this.getChildren().clear();
+            return true;
+        }
+        return false;
     }
 
     public int setupHighscoreList (){
@@ -52,14 +70,18 @@ public class HighscoreList extends VBox{
             if (scoreList[i]!=null) {
                 Label label = createLabels((i+1)+": "+scoreList[i].getPlayer()+ " PLAYERS TIME: "+ scoreList[i].getTotalTimeInSeconds());
                 this.getChildren().add(i, label);
+            }else {
+                Label label = createLabels((i+1)+": TO BE DECIDED");
+                this.getChildren().add(i, label);
             }
         }
         return this.getChildren().size();
     }
     public Label createLabels(String player){
         Label label2 = new Label(player);
-        label2.setTranslateX(350);
-        label2.setTextFill(Color.color(1,1,1));
+        label2.setTranslateX(300);
+        label2.setTranslateY(180);
+        label2.setTextFill(Color.color(1,.4,1));
         label2.setFont(Font.font("verdana", null, FontPosture.REGULAR,20));
         return label2;
     }
