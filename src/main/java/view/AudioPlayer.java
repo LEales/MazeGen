@@ -214,24 +214,34 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när spelaren plockar upp en yxa.
      */
-    public void playPickAxeSound() {
-        pickAxeMediaPlayer.play();
-        pickAxeMediaPlayer.seek(Duration.ZERO);
+    public boolean playPickAxeSound() {
+        try {
+            pickAxeMediaPlayer.play();
+            pickAxeMediaPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Spelar ett ljud när det blir gameOver.
      */
-    public void playGameOverSound() {
-        gameOverMediaPlayer.play();
-        gameOverMediaPlayer.seek(Duration.ZERO);
+    public boolean playGameOverSound() {
+        try {
+            gameOverMediaPlayer.play();
+            gameOverMediaPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * En metod som mutear alla speleffekters ljud.
      * @param mute True om ljudet ska vara avstängt och false om ljudet ska vara på.
      */
-    public void muteSound(boolean mute) {
+    public boolean muteSound(boolean mute) {
         breakableWallPlayer.setMute(mute);
         deathPlayer.setMute(mute);
         heartPlayer.setMute(mute);
@@ -240,69 +250,106 @@ public class AudioPlayer {
         diamondPlayer.setMute(mute);
         worldIntroMediaPlayer.setMute(mute);
         timeLeftMediaPlayer.setMute(mute);
+
+        return breakableWallPlayer.isMute() &&
+                deathPlayer.isMute() &&
+                heartPlayer.isMute() &&
+                startPlayer.isMute() &&
+                goalPlayer.isMute() &&
+                diamondPlayer.isMute() &&
+                worldIntroMediaPlayer.isMute() &&
+                timeLeftMediaPlayer.isMute();
     }
 
     /**
      * Spelar ett ljud när spelet startas.
      */
-    public void playIntroMusic() {
-        introMediaPlayer.play();
-        introMediaPlayer.seek(Duration.ZERO);
+    public boolean playIntroMusic() {
+        try {
+            introMediaPlayer.play();
+            introMediaPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Stänger av all musik.
      */
-    public void stopMusic() {
+    public boolean stopMusic() {
         currentSongPlayer.stop();
         introMediaPlayer.stop();
+        return currentSongPlayer.getStatus().equals(MediaPlayer.Status.STOPPED) && introMediaPlayer.getStatus().equals(MediaPlayer.Status.STOPPED);
     }
 
     /**
      * Spelar ett ljud vid alla knapptryck i menyerna.
      */
-    public void playButtonSound() {
-        buttonClickedMediaPlayer.play();
-        buttonClickedMediaPlayer.seek(Duration.ZERO);
+    public boolean playButtonSound() {
+        try {
+            buttonClickedMediaPlayer.play();
+            buttonClickedMediaPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Spelar ett ljud vid varje ny värld.
      */
-    public void playWorldIntroSound() {
-        worldIntroMediaPlayer.play();
-        worldIntroMediaPlayer.seek(Duration.ZERO);
+    public boolean playWorldIntroSound() {
+        try {
+            worldIntroMediaPlayer.play();
+            worldIntroMediaPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Spelar ett ljud när det endast är fem sekunder kvar på timern.
      */
-    public void playTimeLeftSound() {
-        timeLeftMediaPlayer.play();
-        timeLeftMediaPlayer.seek(Duration.ZERO);
+    public boolean playTimeLeftSound() {
+        try {
+            timeLeftMediaPlayer.play();
+            timeLeftMediaPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Spelar ett ljud när spelaren kolliderar med en fiende.
      */
-    public void playMobSound(){
-        mobSoundMediaPlayer.play();
-        mobSoundMediaPlayer.seek(Duration.ZERO);
+    public boolean playMobSound(){
+        try {
+            mobSoundMediaPlayer.play();
+            mobSoundMediaPlayer.seek(Duration.ZERO);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * En metod som mutear all musik .
      * @param mute True om ljudet ska vara avstängt och false om ljudet ska vara på.
      */
-    public void muteMusic(boolean mute){
+    public boolean muteMusic(boolean mute){
         currentSongPlayer.setMute(mute);
+        return currentSongPlayer.isMute();
     }
 
     /**
      * Stänger av timerns ljud.
      */
 
-    public void stopClockSound() {
+    public boolean stopClockSound() {
         timeLeftMediaPlayer.stop();
+        return timeLeftMediaPlayer.getStatus().equals(MediaPlayer.Status.STOPPED);
     }
 }
