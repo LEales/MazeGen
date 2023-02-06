@@ -8,13 +8,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import java.io.File;
+
 /**
  * @author André Eklund
  */
 public class WorldIntroAnimation extends Pane {
-
-    private String currentWorld;
-    private Image worldIntro;
 
     /**
      * Default konstruktor
@@ -27,29 +26,31 @@ public class WorldIntroAnimation extends Pane {
      * @param world tas emot och currentWorld sätts
      */
     public WorldIntroAnimation(String world) {
-        this.currentWorld = world;
-        setupImages();
-        introAnimation();
+        introAnimation( setupImages(world));
     }
 
     /**
      * Metod som länkar worldIntro-objektet till en png-fil för currentWorld.
      */
-    public void setupImages() {
-        worldIntro = new Image("file:files/worlds/World" + currentWorld + ".png", 600, 600, false, false);
+    public Image setupImages(String world) {
+        return new Image("file:files/worlds/World" + world + ".png", 600, 600, false, false);
     }
 
     /**
      * En fade transition för animation av bilden
      */
-    public void introAnimation() {
-        ImageView introView = new ImageView(worldIntro);
-        introView.setStyle("fx-background-color: transparent;");
-        FadeTransition ft = new FadeTransition(Duration.millis(4000), introView);
-        getChildren().add(introView);
-        ft.setFromValue(1);
-        ft.setToValue(0);
-        ft.play();
-
+    public boolean introAnimation(Image image) {
+        try {
+            ImageView introView = new ImageView(image);
+            introView.setStyle("fx-background-color: transparent;");
+            FadeTransition ft = new FadeTransition(Duration.millis(4000), introView);
+            getChildren().add(introView);
+            ft.setFromValue(1);
+            ft.setToValue(0);
+            ft.play();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

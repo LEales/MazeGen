@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AudioPlayerTest {
 
     @BeforeAll
-    static void initJXRuntime() {
+    static void initJFXRuntime() {
         Platform.startup(()-> {});
     }
 

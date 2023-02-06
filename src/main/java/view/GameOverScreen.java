@@ -12,8 +12,6 @@ import javafx.util.Duration;
  */
 public class GameOverScreen extends Pane {
 
-    private Image gameOver;
-
     /**
      * Konstruktor som tar emot mainProgram
      * Kör sedan metoder för bild och animation
@@ -21,22 +19,14 @@ public class GameOverScreen extends Pane {
      */
     public GameOverScreen(MainProgram mainProgram) {
         setOnMouseClicked(e -> mainProgram.showHighScoreList());
-        setupImages();
         gameOverAnimation();
-    }
-
-    /**
-     * Länkar gameOver-objektet till Gameover.png
-     */
-    public void setupImages() {
-        gameOver = new Image("file:files/texts/Gameover.png", 600, 600, false, false);
     }
 
     /**
      * Animation för gameOver-bilden
      */
     public void gameOverAnimation() {
-        ImageView introView = new ImageView(gameOver);
+        ImageView introView = new ImageView(new Image("file:files/texts/Gameover.png", 600, 600, false, false));
         introView.setStyle("fx-background-color: transparent;");
         FadeTransition ft = new FadeTransition(Duration.millis(4000), introView);
         getChildren().add(introView);

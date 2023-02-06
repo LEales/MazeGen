@@ -61,6 +61,8 @@ public class MainProgram extends Application {
     private GameOverScreen gameOverScreen;
     private Image cursorImage;
 
+    public static MainProgram mainProgram;
+
     /**
      * En metod som startar programmet.
      * Metoden instanierar även de olika komponenterna.
@@ -70,7 +72,7 @@ public class MainProgram extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        System.out.println("here");
         audioPlayer = new AudioPlayer();
         audioPlayer.playIntroMusic();
 
@@ -171,8 +173,9 @@ public class MainProgram extends Application {
     /**
      * Byter scen till hjälpfönstret.
      */
-    public void changeToHelp() {
+    public boolean changeToHelp() {
         mainWindow.setScene(helpScene);
+        return true;
     }
 
     /**
@@ -426,10 +429,19 @@ public class MainProgram extends Application {
         launch(args);
     }
 
+    public synchronized static MainProgram getMainProgram() {
+        return mainProgram;
+    }
+
     public void showHighScoreList() {
         mainWindow.setScene(highscoreScene);
     }
     public void showVcitoryScene() {
         mainWindow.setScene(victoryScene);
+    }
+
+    @Override
+    public void init() throws Exception {
+        mainProgram = this;
     }
 }
