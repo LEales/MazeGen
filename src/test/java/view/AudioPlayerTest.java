@@ -62,5 +62,120 @@ class AudioPlayerTest {
         assertNull(ap.playLevelMusic("#€%%%)((@£$∞"));
     }
 
+    @Test
+    void playCollectibleSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playCollectibleSound());
+    }
+
+    @Test
+    void playDeathSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playDeathSound());
+    }
+
+    @Test
+    void playStartSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playStartSound());
+    }
+
+    @Test
+    void playGoalSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playGoalSound());
+    }
+
+    @Test
+    void playHeartSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playHeartSound());
+    }
+
+    @Test
+    void playBreakableWallSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playBreakableWallSound());
+    }
+
+    @Test
+    void playPickaxeSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playPickAxeSound());
+    }
+
+    @Test
+    void playGameOverSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playGameOverSound());
+    }
+
+    @Test
+    void playIntroMusic() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playIntroMusic());
+    }
+
+    @Test
+    void stopMusic() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.stopMusic());
+    }
+
+    @Test
+    void playButtonSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playButtonSound());
+    }
+
+    @Test
+    void playWorldIntroSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playWorldIntroSound());
+    }
+
+    @Test
+    void playTimeLeftSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playTimeLeftSound());
+    }
+
+    @Test
+    void playMobSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.playMobSound());
+    }
+
+    @Test
+    void muteMusic() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.muteMusic(true));
+    }
+
+    @Test
+    void unmuteMusic() {
+        AudioPlayer ap = new AudioPlayer();
+        assertFalse(ap.muteMusic(false));
+    }
+
+    @Test
+    void muteSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.muteSound(true));
+    }
+
+    @Test
+    void unmuteSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertFalse(ap.muteSound(false));
+    }
+
+    @Test
+    void stopClockSound() {
+        AudioPlayer ap = new AudioPlayer();
+        assertTrue(ap.stopClockSound());
+    }
+
+
 
 }
