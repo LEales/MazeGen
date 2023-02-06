@@ -48,7 +48,6 @@ public class TotalTime extends Thread{
      */
     public int[] setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
-        int[] arr = {hour,minutes,seconds};
-        return arr;
+        return new int[]{hour,minutes,seconds};
     }
 }

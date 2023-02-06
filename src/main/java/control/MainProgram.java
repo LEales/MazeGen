@@ -430,7 +430,7 @@ public class MainProgram extends Application {
         highscoreList.setupHighscoreList();
         mainWindow.setScene(highscoreScene);
     }
-    public void showVcitoryScene() {
+    public void showVictoryScene() {
         mainWindow.setScene(victoryScene);
     }
 

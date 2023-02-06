@@ -23,8 +23,8 @@ public class Menu extends Pane {
     private Image mazegen;
     private AudioPlayer audioPlayer;
     private RightPanel panel;
-    private Image testImage;
-    private Image testImageRezise;
+    private Image highscoreImage;
+    private Image highscoreImageRezise;
 
 
     /**
@@ -39,9 +39,8 @@ public class Menu extends Pane {
         this.audioPlayer = audioPlayer;
         this.panel = panel;
         this.setBackground(new Background(setBackground()));
-        setBackground();
         setupImages();
-        this.getChildren().addAll(getCampaignView(),getRandomizeView(),getHelpView(),getMazegenView(),getTestView(),getVictoryView());
+        this.getChildren().addAll(getCampaignView(),getRandomizeView(),getHelpView(),getMazegenView(),getTestView());
     }
 
     /**
@@ -55,18 +54,17 @@ public class Menu extends Pane {
         randomizeResize = new Image("file:files/texts/Randomize.png", 255, 33, false, false);
         help = new Image("file:files/texts/Help.png", 250, 30, false, false);
         helpResize = new Image("file:files/texts/Help.png", 255, 33, false, false);
-        testImage = new Image("file:files/texts/Highscore.png", 250, 30, false, false);
-        testImageRezise = new Image("file:files/texts/Highscore.png", 255, 33, false, false);
+        highscoreImage = new Image("file:files/texts/Highscore.png", 250, 30, false, false);
+        highscoreImageRezise = new Image("file:files/texts/Highscore.png", 255, 33, false, false);
     }
 
     /**
      * Metod som sätter bakgrundsbilden
      */
     public BackgroundImage setBackground(){
-        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
+        return new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-        return menuBackground;
     }
 
     public ImageView getMazegenView() {
@@ -151,17 +149,17 @@ public class Menu extends Pane {
     }
 
     public ImageView getTestView() {
-        ImageView testView = new ImageView(testImage);
+        ImageView testView = new ImageView(highscoreImage);
         testView.setStyle("fx-background-color: transparent;");
         testView.setTranslateX(275);
         testView.setTranslateY(347);
         testView.toFront();
         testView.setOnMouseEntered(e -> {
-            testView.setImage(testImageRezise);
+            testView.setImage(highscoreImageRezise);
             testView.setTranslateX(273);
             testView.setTranslateY(347);
         });
-        testView.setOnMouseExited(e -> {testView.setImage(testImage);
+        testView.setOnMouseExited(e -> {testView.setImage(highscoreImage);
             testView.setTranslateX(275);
             testView.setTranslateY(350);
         });
@@ -170,27 +168,5 @@ public class Menu extends Pane {
             audioPlayer.playButtonSound();
         });
         return testView;
-    }
-
-    public ImageView getVictoryView() {
-        ImageView victoryView = new ImageView(testImage);
-        victoryView.setStyle("fx-background-color: transparent;");
-        victoryView.setTranslateX(275);
-        victoryView.setTranslateY(397);
-        victoryView.toFront();
-        victoryView.setOnMouseEntered(e -> {
-            victoryView.setImage(testImageRezise);
-            victoryView.setTranslateX(273);
-            victoryView.setTranslateY(397);
-        });
-        victoryView.setOnMouseExited(e -> {victoryView.setImage(testImage);
-            victoryView.setTranslateX(275);
-            victoryView.setTranslateY(400);
-        });
-        victoryView.setOnMouseClicked(e -> {
-            mainProgram.showVcitoryScene();
-            audioPlayer.playButtonSound();
-        });
-        return victoryView;
     }
 }

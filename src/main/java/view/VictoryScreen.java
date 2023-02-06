@@ -16,41 +16,39 @@ public class VictoryScreen extends Pane {
     private TextArea textArea;
     private int[] totalTime;
     private int scoreListCounter;
-    private int counter;
+
     public VictoryScreen(MainProgram mainProgram, AudioPlayer audioPlayer) {
         this.audioPlayer = audioPlayer;
         this.mainProgram = mainProgram;
         this.setBackground(new Background(setBackground()));
-        setupScreen();
+        this.getChildren().addAll(setupTextArea(),setupSendButton());
     }
     public BackgroundImage setBackground(){
-        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
+        return new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-        return menuBackground;
     }
 
-    private void setupScreen() {
+    private TextArea setupTextArea() {
         textArea = new TextArea();
         textArea.setMaxHeight(50);
         textArea.setMaxWidth(450);
         textArea.setTranslateY(300);
         textArea.setTranslateX(200);
+        return textArea;
+    }
 
+    private Button setupSendButton() {
         Button button = new Button("Send");
         button.setMaxHeight(25);
         button.setMaxWidth(50);
         button.setTranslateY(350);
         button.setTranslateX(200);
-
         button.setOnMouseClicked(e-> addToScoreList());
-
-        this.getChildren().addAll(textArea,button);
+        return button;
     }
 
     private void addToScoreList() {
-        //TODO skapa dat fill och kontrollera den
-        //System.out.println("Hour :"+totalTime[2]);
         String obj = "files/ScoreList.dat";
         PlayerScore playerScore = new PlayerScore(textArea.getText(),totalTime[0],totalTime[1],totalTime[2]);
         PlayerScore[] scoreList = new PlayerScore[10];
@@ -62,12 +60,11 @@ public class VictoryScreen extends Pane {
                 counter++;
             }
         }catch (Exception e ){
-            System.out.println("end of file");
+            e.printStackTrace();
         }
         if (scoreListCounter<10){
-            try {// TODO LÄSS FÖRST IN dat filen sedan lägg till i arrayen sedan skriv över den gamla filen
+            try {
                 ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(obj)));
-
 
                 scoreList[counter] = playerScore;
                 for (int i = 0; i < scoreList.length; i++) {
@@ -82,7 +79,6 @@ public class VictoryScreen extends Pane {
                     }
                 }
 
-
                 for (PlayerScore current : scoreList) {
                     if (current!=null) {
                         oos.writeObject(current);
@@ -92,13 +88,11 @@ public class VictoryScreen extends Pane {
                 oos.flush();
                 oos.close();
                 scoreListCounter++;
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-        }else {
+        } else {
             int indexToChangePLayer =11;
 
             for (int i = 0; i < scoreList.length ; i++) {
@@ -108,6 +102,7 @@ public class VictoryScreen extends Pane {
                     }
                 }
             }
+
             if (indexToChangePLayer<=10) {
                 for (int i = scoreList.length - 1; i >= indexToChangePLayer; i--) {
                     if (scoreList[i] != null) {
@@ -119,18 +114,17 @@ public class VictoryScreen extends Pane {
                     }
                 }
             }
+
             try {
                 ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(obj)));
-                for (int i = 0; i < scoreList.length; i++) {
-                    if (scoreList[i]!=null){
-                        oos.writeObject(scoreList[i]);
+                for (PlayerScore score : scoreList) {
+                    if (score != null) {
+                        oos.writeObject(score);
                     }
                 }
                 oos.flush();
                 oos.close();
                 scoreListCounter++;
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
