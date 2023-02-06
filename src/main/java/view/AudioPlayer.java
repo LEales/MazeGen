@@ -280,7 +280,7 @@ public class AudioPlayer {
     public boolean stopMusic() {
         currentSongPlayer.stop();
         introMediaPlayer.stop();
-        return currentSongPlayer.getStatus().equals(MediaPlayer.Status.STOPPED) && introMediaPlayer.getStatus().equals(MediaPlayer.Status.STOPPED);
+        return currentSongPlayer.currentCountProperty().intValue() == 0 && introMediaPlayer.currentCountProperty().intValue() == 0;
     }
 
     /**
@@ -350,6 +350,6 @@ public class AudioPlayer {
 
     public boolean stopClockSound() {
         timeLeftMediaPlayer.stop();
-        return timeLeftMediaPlayer.getStatus().equals(MediaPlayer.Status.STOPPED);
+        return timeLeftMediaPlayer.currentCountProperty().intValue() == 0;
     }
 }
