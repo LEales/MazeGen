@@ -51,7 +51,6 @@ public class VictoryScreen extends Pane {
     private void addToScoreList() {
         //TODO skapa dat fill och kontrollera den
         //System.out.println("Hour :"+totalTime[2]);
-        mainProgram.deleteScorelist();
         String obj = "files/ScoreList.dat";
         PlayerScore playerScore = new PlayerScore(textArea.getText(),totalTime[0],totalTime[1],totalTime[2]);
         PlayerScore[] scoreList = new PlayerScore[10];
@@ -65,14 +64,31 @@ public class VictoryScreen extends Pane {
         }catch (Exception e ){
             System.out.println("end of file");
         }
-        if (scoreListCounter<=10){
+        if (scoreListCounter<10){
             try {// TODO LÄSS FÖRST IN dat filen sedan lägg till i arrayen sedan skriv över den gamla filen
                 ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(obj)));
-                System.out.println(counter);
+
+
                 scoreList[counter] = playerScore;
-                for (PlayerScore current : scoreList) {
-                    oos.writeObject(current);
+                for (int i = 0; i < scoreList.length; i++) {
+                    for (int j = i+1; j < scoreList.length; j++) {
+                        if (scoreList[i]!=null && scoreList[j]!=null) {
+                            if (scoreList[i].getTotalTimeInSeconds() > scoreList[j].getTotalTimeInSeconds()) {
+                                PlayerScore temp = scoreList[i];
+                                scoreList[i] = scoreList[j];
+                                scoreList[j] = temp;
+                            }
+                        }
+                    }
                 }
+
+
+                for (PlayerScore current : scoreList) {
+                    if (current!=null) {
+                        oos.writeObject(current);
+                    }
+                }
+
                 oos.flush();
                 oos.close();
                 scoreListCounter++;
@@ -120,11 +136,10 @@ public class VictoryScreen extends Pane {
             }
         }
         mainProgram.addToScoreList(textArea.getText(),totalTime);
-        mainProgram.changeToMenu();
+        mainProgram.showHighScoreList();
     }
 
     public int[] setTime(int[] time) {
-        System.out.println(time[0]);
         this.totalTime = new int[3];
         totalTime[0] = time[0];
         totalTime[1] = time[1];

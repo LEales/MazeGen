@@ -442,9 +442,5 @@ public class MainProgram extends Application {
         highscoreList.controlList(text,totalTime);
     }
 
-    public void deleteScorelist() {
-        for (int i = 0; i < highscoreList.getChildren().size(); i++) {
-            highscoreList.getChildren().remove(i);
-        }
-    }
+
 }

@@ -17,32 +17,40 @@ import java.io.ObjectInputStream;
 public class HighscoreList extends VBox{
     private MainProgram mainProgram;
     private AudioPlayer audioPlayer;
+    private Label[] labelArr = new Label[10];
 
     public HighscoreList(MainProgram mainProgram, AudioPlayer audioPlayer) {
-        this.setOnMouseClicked(e->mainProgram.changeToMenu());
+        this.setOnMouseClicked(e->backToMenu());
         this.audioPlayer = audioPlayer;
         this.mainProgram = mainProgram;
         this.setBackground(new Background(setBackground()));
     }
+
+    private void backToMenu() {
+        this.getChildren().clear();
+        mainProgram.changeToMenu();
+    }
+
     public int setupHighscoreList (){
-        System.out.println("listans barn "+this.getChildren().size());
         String file = "files/ScoreList.dat";
         PlayerScore[] scoreList = new PlayerScore[10];
         PlayerScore player;
+        int counter = 0;
         try{
             ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
-            int counter = 0;
             while((player = (PlayerScore)ois.readObject())!=null){
                 scoreList[counter] = player;
+                labelArr[counter]=new Label(player.getPlayer());
                 counter++;
             }
             ois.close();
         }catch (Exception e ){
             //System.out.println("end of file");
         }
+
         for (int i = 0; i < 10; i++) {
             if (scoreList[i]!=null) {
-                Label label = createLabels(scoreList[i].getPlayer());
+                Label label = createLabels((i+1)+": "+scoreList[i].getPlayer()+ " PLAYERS TIME: "+ scoreList[i].getTotalTimeInSeconds());
                 this.getChildren().add(i, label);
             }
         }
