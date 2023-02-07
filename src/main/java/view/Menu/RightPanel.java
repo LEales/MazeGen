@@ -17,7 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import model.TimeThread;
-import model.TotalTime;
 import view.AudioPlayer;
 
 import java.io.FileNotFoundException;
@@ -181,6 +180,10 @@ public class RightPanel extends GridPane {
         }
         musicView.setImage(musicImage);
         musicLabel.setGraphic(musicView);
+    }
+
+    public boolean getMusicOn(){
+        return musicOn;
     }
     /**
      * Sätter en ny bild beroende på om man plockar upp/tappar ett liv

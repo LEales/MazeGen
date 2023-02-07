@@ -481,4 +481,8 @@ public class MainProgram extends Application {
         }
         return false;
     }
+
+    public boolean getMusiIsOn() {
+        return rightPanel.getMusicOn();
+    }
 }

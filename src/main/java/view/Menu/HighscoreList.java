@@ -66,7 +66,7 @@ public class HighscoreList extends VBox{
             }
             ois.close();
         }catch (Exception e ){
-            //System.out.println("end of file");
+            System.out.println("end of file");
         }
 
         for (int i = 0; i < 10; i++) {
