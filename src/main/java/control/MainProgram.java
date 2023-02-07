@@ -481,4 +481,11 @@ public class MainProgram extends Application {
         }
         return false;
     }
+    public HighscoreList getHighscoreList() {
+        return highscoreList;
+    }
+    public VictoryScreen getVictoryScreen() {
+        return victoryScreen;
+    }
+
 }
