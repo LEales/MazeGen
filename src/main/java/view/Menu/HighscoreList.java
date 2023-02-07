@@ -28,12 +28,14 @@ public class HighscoreList extends VBox{
         this.audioPlayer = audioPlayer;
         this.mainProgram = mainProgram;
         this.setBackground(new Background(setBackground()));
-        this.getChildren().add(sutupImage());
     }
 
     private ImageView sutupImage() {
-       image = new Image("file:files/texts/Highscore.png", 255, 33, false, false);
-       return imageView = new ImageView(image);
+        image = new Image("file:files/texts/Highscore.png", 255, 33, false, false);
+        imageView = new ImageView(image);
+        imageView.setTranslateX(300);
+        imageView.setTranslateY(-200);
+        return imageView;
     }
 
     private void backToMenu() {
@@ -50,6 +52,7 @@ public class HighscoreList extends VBox{
     }
 
     public int setupHighscoreList (){
+        this.getChildren().add(sutupImage());
         String file = "files/ScoreList.dat";
         PlayerScore[] scoreList = new PlayerScore[10];
         PlayerScore player;
@@ -80,7 +83,7 @@ public class HighscoreList extends VBox{
     public Label createLabels(String player){
         Label label2 = new Label(player);
         label2.setTranslateX(300);
-        label2.setTranslateY(180);
+        label2.setTranslateY(165);
         label2.setTextFill(Color.color(1,.4,1));
         label2.setFont(Font.font("verdana", null, FontPosture.REGULAR,20));
         return label2;
