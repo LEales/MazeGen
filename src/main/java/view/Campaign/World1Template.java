@@ -59,7 +59,6 @@ public class World1Template extends GridPane {
     private RightPanel rightPanel;
     private AudioPlayer audioPlayer;
     private TimeThread time;
-    private TotalTime totTime;
 
     /**
      * Instansierar objekten.
@@ -94,8 +93,6 @@ public class World1Template extends GridPane {
         rightPanel.setSTARTTIME(seconds);
         rightPanel.resetTimerLabel();
 
-
-        totTime = new TotalTime(false);
         time = null;
 
     }
@@ -449,7 +446,7 @@ public class World1Template extends GridPane {
         rightPanel.pauseClock();
         gameStarted = true;
         time.setGameOver(true);
-        rightPanel.setGameOver(true);
+        //mainProgram.setTotalTime(rightPanel.setGameOver(true));
         time = null;
         rightPanel.removePickaxe();
 

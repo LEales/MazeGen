@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.Maps.*;
 
 import model.MazeGeneration.GenerateNextLevel;
+import model.TotalTime;
 import view.AudioPlayer;
 import view.Campaign.*;
 import view.GameOverScreen;
@@ -45,7 +46,7 @@ public class MainProgram extends Application {
     private Intro intro;
     private Menu menu;
     private Help help;
-    private highscoreList highscoreList;
+    private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
     private ChooseDimension chooseDimension;
     private Scene randomScene;
@@ -63,6 +64,9 @@ public class MainProgram extends Application {
 
     public static MainProgram mainProgram;
 
+    private TotalTime totTime;
+    private boolean totalTimeIsStarted;
+
     /**
      * En metod som startar programmet.
      * Metoden instanierar även de olika komponenterna.
@@ -72,7 +76,7 @@ public class MainProgram extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        System.out.println("here");
+
         audioPlayer = new AudioPlayer();
         audioPlayer.playIntroMusic();
 
@@ -82,7 +86,7 @@ public class MainProgram extends Application {
         menu = new Menu(this, audioPlayer, rightPanel);
         intro = new Intro(this, audioPlayer);
         help = new Help(this, audioPlayer);
-        highscoreList = new highscoreList(this, audioPlayer);
+        highscoreList = new HighscoreList(this, audioPlayer);
         victoryScreen =new VictoryScreen(this, audioPlayer);
 
         chooseDimension = new ChooseDimension(this, audioPlayer);
@@ -117,6 +121,9 @@ public class MainProgram extends Application {
 
         mainWindow.setScene(introScene);
         mainWindow.show();
+
+        totTime = new TotalTime(false);
+        totalTimeIsStarted = false;
 
         introScene.setCursor(new ImageCursor(cursorImage));
         menuScene.setCursor(new ImageCursor(cursorImage));
@@ -161,6 +168,7 @@ public class MainProgram extends Application {
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
 
+        startTotalTime(true);
     }
 
     /**
@@ -183,6 +191,7 @@ public class MainProgram extends Application {
      * Kör en enkel animation med texten "Game Over".
      */
     public void gameOver() {
+        totTime.setGameOver(true);
         gameOverScreen = new GameOverScreen(this);
         mainPaneCampaign.getChildren().add(gameOverScreen);
     }
@@ -418,6 +427,9 @@ public class MainProgram extends Application {
         else if (level == 5) {
             rightPanel.changeLevelCounter("65");
             mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel65(), 5, heartCrystals, this, rightPanel, 5, audioPlayer));
+        } else if (level == 6) {
+            victoryScreen.setTime(totTime.setGameOver(true));
+            showVictoryScene();
         }
     }
 
@@ -434,14 +446,38 @@ public class MainProgram extends Application {
     }
 
     public void showHighScoreList() {
+        highscoreList.setupHighscoreList();
         mainWindow.setScene(highscoreScene);
     }
-    public void showVcitoryScene() {
+    public void showVictoryScene() {
         mainWindow.setScene(victoryScene);
     }
 
     @Override
     public void init() throws Exception {
         mainProgram = this;
+    }
+
+    public void setTotalTime(int[] totalTime) {
+        victoryScreen.setTime(totalTime);
+    }
+
+    public void addToScoreList(String text, int[] totalTime) {
+        highscoreList.controlList(text,totalTime);
+    }
+
+
+    public boolean startTotalTime(boolean b) {
+        if (b){
+            if (!totalTimeIsStarted) {
+                totTime.start();
+                totalTimeIsStarted = true;
+            }
+            else {
+                totTime = new TotalTime(false);
+                totTime.start();
+            }
+        }
+        return false;
     }
 }

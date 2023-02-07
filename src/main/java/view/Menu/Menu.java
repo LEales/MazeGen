@@ -23,11 +23,8 @@ public class Menu extends Pane {
     private Image mazegen;
     private AudioPlayer audioPlayer;
     private RightPanel panel;
-
-
-
-    private Image testImage;
-    private Image testImageRezise;
+    private Image highscoreImage;
+    private Image highscoreImageRezise;
 
 
     /**
@@ -41,9 +38,9 @@ public class Menu extends Pane {
         this.mainProgram = mainProgram;
         this.audioPlayer = audioPlayer;
         this.panel = panel;
-        setBackground();
+        this.setBackground(new Background(setBackground()));
         setupImages();
-        addButtons();
+        this.getChildren().addAll(getCampaignView(),getRandomizeView(),getHelpView(),getMazegenView(),getTestView());
     }
 
     /**
@@ -57,29 +54,26 @@ public class Menu extends Pane {
         randomizeResize = new Image("file:files/texts/Randomize.png", 255, 33, false, false);
         help = new Image("file:files/texts/Help.png", 250, 30, false, false);
         helpResize = new Image("file:files/texts/Help.png", 255, 33, false, false);
-        testImage = new Image("file:files/texts/download.png", 250, 30, false, false);
-        testImageRezise = new Image("file:files/texts/download.png", 255, 33, false, false);
+        highscoreImage = new Image("file:files/texts/Highscore.png", 250, 30, false, false);
+        highscoreImageRezise = new Image("file:files/texts/Highscore.png", 255, 33, false, false);
     }
 
     /**
      * Metod som sätter bakgrundsbilden
      */
-    public void setBackground(){
-        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
+    public BackgroundImage setBackground(){
+        return new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-        this.setBackground(new Background(menuBackground));
     }
 
-    /**
-     * Metod som lägger till klickbara ImageViews i scenen
-     * Imageviews förstoras när man hovrar och byter scen när man klickar på dem
-     */
-    public void addButtons(){
+    public ImageView getMazegenView() {
         ImageView mazegenView = new ImageView(mazegen);
         mazegenView.setStyle("fx-background-color: transparent;");
+        return mazegenView;
+    }
 
-
+    public ImageView getCampaignView() {
         ImageView campaignView = new ImageView(campaign);
         campaignView.setStyle("fx-background-color: transparent;");
         campaignView.setTranslateX(275);
@@ -105,7 +99,10 @@ public class Menu extends Pane {
                 fileNotFoundException.printStackTrace();
             }
         });
+        return campaignView;
+    }
 
+    public ImageView getRandomizeView() {
         ImageView randomizeView = new ImageView(randomize);
         randomizeView.setStyle("fx-background-color: transparent;");
         randomizeView.setTranslateX(275);
@@ -125,7 +122,10 @@ public class Menu extends Pane {
             mainProgram.chooseDimension();
             audioPlayer.playButtonSound();
         });
+        return randomizeView;
+    }
 
+    public ImageView getHelpView() {
         ImageView helpView = new ImageView(help);
         helpView.setStyle("fx-background-color: transparent;");
         helpView.setTranslateX(275);
@@ -145,18 +145,21 @@ public class Menu extends Pane {
             mainProgram.changeToHelp();
             audioPlayer.playButtonSound();
         });
+        return helpView;
+    }
 
-        ImageView testView = new ImageView(testImage);
+    public ImageView getTestView() {
+        ImageView testView = new ImageView(highscoreImage);
         testView.setStyle("fx-background-color: transparent;");
         testView.setTranslateX(275);
         testView.setTranslateY(347);
         testView.toFront();
         testView.setOnMouseEntered(e -> {
-            testView.setImage(testImageRezise);
+            testView.setImage(highscoreImageRezise);
             testView.setTranslateX(273);
             testView.setTranslateY(347);
         });
-        testView.setOnMouseExited(e -> {testView.setImage(testImage);
+        testView.setOnMouseExited(e -> {testView.setImage(highscoreImage);
             testView.setTranslateX(275);
             testView.setTranslateY(350);
         });
@@ -164,28 +167,6 @@ public class Menu extends Pane {
             mainProgram.showHighScoreList();
             audioPlayer.playButtonSound();
         });
-
-        ImageView victoryView = new ImageView(testImage);
-        victoryView.setStyle("fx-background-color: transparent;");
-        victoryView.setTranslateX(275);
-        victoryView.setTranslateY(397);
-        victoryView.toFront();
-        victoryView.setOnMouseEntered(e -> {
-            victoryView.setImage(testImageRezise);
-            victoryView.setTranslateX(273);
-            victoryView.setTranslateY(397);
-        });
-        victoryView.setOnMouseExited(e -> {victoryView.setImage(testImage);
-            victoryView.setTranslateX(275);
-            victoryView.setTranslateY(400);
-        });
-        victoryView.setOnMouseClicked(e -> {
-            mainProgram.showVcitoryScene();
-            audioPlayer.playButtonSound();
-        });
-
-
-        this.getChildren().addAll(campaignView,randomizeView,helpView,mazegenView,testView,victoryView);
+        return testView;
     }
-
 }
