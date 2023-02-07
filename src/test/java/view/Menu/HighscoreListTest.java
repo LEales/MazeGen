@@ -36,4 +36,19 @@ class HighscoreListTest {
 
     }
 
+    @Test
+    void setupHighscore2() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        MainProgram mp = MainProgram.getMainProgram();
+
+
+        HighscoreList h = mp.getHighscoreList();
+        assertEquals(1, h.setupHighscoreList());
+
+    }
+
 }
