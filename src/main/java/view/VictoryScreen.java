@@ -60,7 +60,7 @@ public class VictoryScreen extends Pane {
                 counter++;
             }
         }catch (Exception e ){
-            e.printStackTrace();
+            System.out.println("end of file");
         }
         if (scoreListCounter<10){
             try {

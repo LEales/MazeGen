@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.Maps.*;
 
 import model.MazeGeneration.GenerateNextLevel;
+import model.TotalTime;
 import view.AudioPlayer;
 import view.Campaign.*;
 import view.GameOverScreen;
@@ -60,6 +61,9 @@ public class MainProgram extends Application {
     private AudioPlayer audioPlayer;
     private GameOverScreen gameOverScreen;
     private Image cursorImage;
+
+    private TotalTime totTime;
+    private boolean totalTimeIsStarted;
 
     /**
      * En metod som startar programmet.
@@ -116,6 +120,9 @@ public class MainProgram extends Application {
         mainWindow.setScene(introScene);
         mainWindow.show();
 
+        totTime = new TotalTime(false);
+        totalTimeIsStarted = false;
+
         introScene.setCursor(new ImageCursor(cursorImage));
         menuScene.setCursor(new ImageCursor(cursorImage));
         campaignScene.setCursor(new ImageCursor(cursorImage));
@@ -158,11 +165,8 @@ public class MainProgram extends Application {
         introAnimation = new WorldIntroAnimation("1");
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
-        try {
-            nextWorld6Level(5, 10);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
+        startTotalTime(true);
     }
 
     /**
@@ -184,6 +188,7 @@ public class MainProgram extends Application {
      * Kör en enkel animation med texten "Game Over".
      */
     public void gameOver() {
+        totTime.setGameOver(true);
         gameOverScreen = new GameOverScreen(this);
         mainPaneCampaign.getChildren().add(gameOverScreen);
     }
@@ -419,6 +424,9 @@ public class MainProgram extends Application {
         else if (level == 5) {
             rightPanel.changeLevelCounter("65");
             mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel65(), 5, heartCrystals, this, rightPanel, 5, audioPlayer));
+        } else if (level == 6) {
+            victoryScreen.setTime(totTime.setGameOver(true));
+            showVictoryScene();
         }
     }
 
@@ -447,4 +455,17 @@ public class MainProgram extends Application {
     }
 
 
+    public boolean startTotalTime(boolean b) {
+        if (b){
+            if (!totalTimeIsStarted) {
+                totTime.start();
+                totalTimeIsStarted = true;
+            }
+            else {
+                totTime = new TotalTime(false);
+                totTime.start();
+            }
+        }
+        return false;
+    }
 }

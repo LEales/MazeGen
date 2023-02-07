@@ -37,6 +37,7 @@ public class TotalTime extends Thread{
                     hour++;
                     minutes=0;
                 }
+                System.out.println(seconds);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

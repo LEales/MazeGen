@@ -72,7 +72,7 @@ public class RightPanel extends GridPane {
 
     private AudioPlayer audioPlayer;
     private TimeThread time;
-    private TotalTime totTime;
+
 
     /**
      * Instansierar objekten och lägger till bilder och labels på scenen
@@ -148,8 +148,6 @@ public class RightPanel extends GridPane {
 
         menuView.setOnMouseClicked(e -> MainMenuClicked(e));
         add(menuView,0,0);
-
-        totTime = new TotalTime(false);
 
     }
     /**
@@ -275,13 +273,13 @@ public class RightPanel extends GridPane {
      * Startar en tråd som räknar den totala tiden
      */
     public void startTotalTimer(){
-        if (!timerIsStartedOnce) {
+        /*if (!timerIsStartedOnce) {
             totTime.start();
         }
         else {
             totTime = new TotalTime(false);
             totTime.start();
-        }
+        }*/
     }
     /**
      * Startar en task för Game Over
@@ -301,7 +299,7 @@ public class RightPanel extends GridPane {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                System.out.println(setGameOver(true));
+
                 //mainProgram.setTotalTime(totTime.setGameOver(true));
                 mainProgram.gameOver();
                 audioPlayer.playGameOverSound();
@@ -329,8 +327,8 @@ public class RightPanel extends GridPane {
      * Setter för Tråden att veta när det blir GameOver
      * @param b
      */
-    public int[] setGameOver(boolean b) {
-        return totTime.setGameOver(b);
+    public void setGameOver(boolean b) {
+        //return totTime.setGameOver(b);
     }
     /**
      * Setter för att kontrollera om tiden har startat
