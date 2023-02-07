@@ -429,6 +429,7 @@ public class MainProgram extends Application {
             mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel65(), 5, heartCrystals, this, rightPanel, 5, audioPlayer));
         } else if (level == 6) {
             victoryScreen.setTime(totTime.setGameOver(true));
+            audioPlayer.stopMusic();
             showVictoryScene();
         }
     }
