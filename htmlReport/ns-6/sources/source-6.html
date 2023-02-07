@@ -1,0 +1,692 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > World6Template</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">view.Campaign</a>
+</div>
+
+<h1>Coverage Summary for Class: World6Template (view.Campaign)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">World6Template</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/25)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/421)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package view.Campaign;
+&nbsp;
+&nbsp;import control.MainProgram;
+&nbsp;import javafx.animation.Animation;
+&nbsp;import javafx.animation.PathTransition;
+&nbsp;import javafx.scene.image.Image;
+&nbsp;import javafx.scene.image.ImageView;
+&nbsp;import javafx.scene.shape.Rectangle;
+&nbsp;import javafx.scene.shape.Circle;
+&nbsp;import javafx.util.Duration;
+&nbsp;import view.AudioPlayer;
+&nbsp;import view.Menu.RightPanel;
+&nbsp;
+&nbsp;import javax.lang.model.element.AnnotationMirror;
+&nbsp;import java.io.FileNotFoundException;
+&nbsp;
+&nbsp;/**
+&nbsp; * @author Filip Örnling
+&nbsp; */
+&nbsp;
+&nbsp;public class World6Template extends World1Template {
+&nbsp;
+&nbsp;
+&nbsp;    private Image ghost;
+&nbsp;
+&nbsp;    private int squareSize;
+&nbsp;    private PathTransition animation;
+&nbsp;    private PathTransition animation2;
+&nbsp;    private PathTransition animation3;
+&nbsp;    private PathTransition animation4;
+&nbsp;    private PathTransition animation5;
+&nbsp;    private PathTransition animation6;
+&nbsp;    private PathTransition animation7;
+&nbsp;    private PathTransition animation8;
+&nbsp;    private PathTransition animation9;
+&nbsp;    private PathTransition animation10;
+&nbsp;    private int currentLevel;
+&nbsp;    private Rectangle rectangle;
+&nbsp;    private ImageView ghost4V;
+&nbsp;    private ImageView ghost3V;
+&nbsp;    private ImageView ghost1V;
+&nbsp;    private ImageView ghost2V;
+&nbsp;    private ImageView ghost5V;
+&nbsp;    private ImageView ghost6V;
+&nbsp;    private ImageView ghost7V;
+&nbsp;    private ImageView ghost8V;
+&nbsp;    private ImageView ghost9V;
+&nbsp;    private ImageView ghost10V;
+&nbsp;
+&nbsp;
+&nbsp;    public World6Template(int[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int worldImage, AudioPlayer audioPlayer) throws FileNotFoundException {
+<b class="nc">&nbsp;        super(level, currentLevel, heartCrystals, mainProgram, rightPanel, worldImage, audioPlayer, 99);</b>
+<b class="nc">&nbsp;        squareSize = 600/(level.length+2);</b>
+<b class="nc">&nbsp;        this.currentLevel = currentLevel;</b>
+<b class="nc">&nbsp;        rightPanel.changeHeartCounter(String.valueOf(heartCrystals));</b>
+<b class="nc">&nbsp;        rightPanel.resetTimerLabel();</b>
+<b class="nc">&nbsp;        initialize();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Metoden initialize instansierar olika antal ImageView objekt beroende på vilken bana som spelas
+&nbsp;     * Metoden initialize instansierar även olika antal rectanglar i olika former beroende på bana
+&nbsp;     * Metoden kopplar sedan samman ImageView objekt och rectanglar för att skapa animationer
+&nbsp;     * Animationerna kan gå i olika hastigheter
+&nbsp;     */
+&nbsp;
+&nbsp;
+&nbsp;    public void initialize() {
+&nbsp;
+<b class="nc">&nbsp;        ghost = new Image(&quot;file:files/space_mob3.png&quot;, squareSize, squareSize, false, false);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (currentLevel==2){</b>
+&nbsp;
+<b class="nc">&nbsp;            ImageView ghost4V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost3V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost1V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost2V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost5V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost5V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost4V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost3V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost2V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost1V.setImage(ghost);</b>
+<b class="nc">&nbsp;            add(ghost5V,16,4);</b>
+<b class="nc">&nbsp;            add(ghost3V,9,4);</b>
+<b class="nc">&nbsp;            add(ghost1V,5,10);</b>
+<b class="nc">&nbsp;            add(ghost2V,4,5);</b>
+<b class="nc">&nbsp;            add(ghost4V,10,13);</b>
+<b class="nc">&nbsp;            Rectangle rectangle = new Rectangle(120,93);</b>
+<b class="nc">&nbsp;            rectangle.setY(72);</b>
+<b class="nc">&nbsp;            rectangle.setX(-45);</b>
+&nbsp;
+<b class="nc">&nbsp;            Rectangle rectangle2 = new Rectangle(120,93);</b>
+<b class="nc">&nbsp;            rectangle2.setY(72);</b>
+<b class="nc">&nbsp;            rectangle2.setX(-45);</b>
+&nbsp;
+<b class="nc">&nbsp;            animation = new PathTransition();</b>
+<b class="nc">&nbsp;            animation.setNode(ghost3V);</b>
+<b class="nc">&nbsp;            animation.setDuration(Duration.seconds(4));</b>
+<b class="nc">&nbsp;            animation.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation2 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation2.setNode(ghost1V);</b>
+<b class="nc">&nbsp;            animation2.setDuration(Duration.seconds(4));</b>
+<b class="nc">&nbsp;            animation2.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation2.setPath(rectangle2);</b>
+<b class="nc">&nbsp;            animation2.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation3 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation3.setNode(ghost2V);</b>
+<b class="nc">&nbsp;            animation3.setDuration(Duration.seconds(4));</b>
+<b class="nc">&nbsp;            animation3.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation3.setPath(rectangle2);</b>
+<b class="nc">&nbsp;            animation3.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation4 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation4.setNode(ghost4V);</b>
+<b class="nc">&nbsp;            animation4.setDuration(Duration.seconds(4));</b>
+<b class="nc">&nbsp;            animation4.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation4.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation4.play();</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            animation5 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation5.setNode(ghost5V);</b>
+<b class="nc">&nbsp;            animation5.setDuration(Duration.seconds(4));</b>
+<b class="nc">&nbsp;            animation5.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation5.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation5.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            ghost5V.setOnMouseEntered(event -&gt; enteredGhost(event));</b>
+<b class="nc">&nbsp;            ghost4V.setOnMouseEntered(event -&gt; enteredGhost(event));</b>
+<b class="nc">&nbsp;            ghost2V.setOnMouseEntered(event -&gt; enteredGhost(event));</b>
+<b class="nc">&nbsp;            ghost1V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
+<b class="nc">&nbsp;            ghost3V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        else if (currentLevel == 3){</b>
+<b class="nc">&nbsp;             ghost4V = new ImageView();</b>
+<b class="nc">&nbsp;             ghost3V = new ImageView();</b>
+<b class="nc">&nbsp;             ghost1V = new ImageView();</b>
+<b class="nc">&nbsp;             ghost2V = new ImageView();</b>
+<b class="nc">&nbsp;             ghost5V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost5V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost4V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost3V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost2V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost1V.setImage(ghost);</b>
+<b class="nc">&nbsp;            add(ghost5V,16,4);</b>
+<b class="nc">&nbsp;            add(ghost3V,9,4);</b>
+<b class="nc">&nbsp;            add(ghost1V,5,10);</b>
+<b class="nc">&nbsp;            add(ghost2V,4,5);</b>
+<b class="nc">&nbsp;            add(ghost4V,10,13);</b>
+<b class="nc">&nbsp;            rectangle = new Rectangle(120,93);</b>
+<b class="nc">&nbsp;            rectangle.setY(72);</b>
+<b class="nc">&nbsp;            rectangle.setX(-45);</b>
+&nbsp;
+<b class="nc">&nbsp;            Rectangle rectangle2 = new Rectangle(120,93);</b>
+<b class="nc">&nbsp;            rectangle2.setY(72);</b>
+<b class="nc">&nbsp;            rectangle2.setX(-45);</b>
+&nbsp;
+<b class="nc">&nbsp;            animation = new PathTransition();</b>
+<b class="nc">&nbsp;            animation.setNode(ghost3V);</b>
+<b class="nc">&nbsp;            animation.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation.setCycleCount(1);</b>
+<b class="nc">&nbsp;            animation.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation.setOnFinished(actionEvent -&gt; {</b>
+&nbsp;
+<b class="nc">&nbsp;                animation.setDuration(Duration.seconds(2));</b>
+<b class="nc">&nbsp;                animation.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                animation.setAutoReverse(true);</b>
+&nbsp;
+<b class="nc">&nbsp;                animation.play();</b>
+&nbsp;            });
+&nbsp;
+<b class="nc">&nbsp;            animation2 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation2.setNode(ghost1V);</b>
+<b class="nc">&nbsp;            animation2.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation2.setCycleCount(1);</b>
+<b class="nc">&nbsp;            animation2.setPath(rectangle2);</b>
+<b class="nc">&nbsp;            animation2.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation2.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation2.setDuration(Duration.seconds(2));</b>
+<b class="nc">&nbsp;                animation2.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                animation2.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation2.play();</b>
+&nbsp;            });
+&nbsp;
+<b class="nc">&nbsp;            animation3 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation3.setNode(ghost2V);</b>
+<b class="nc">&nbsp;            animation3.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation3.setCycleCount(1);</b>
+<b class="nc">&nbsp;            animation3.setPath(rectangle2);</b>
+<b class="nc">&nbsp;            animation3.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation3.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation3.setDuration(Duration.seconds(2));</b>
+<b class="nc">&nbsp;                animation3.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                animation3.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation3.play();</b>
+&nbsp;            });
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            animation4 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation4.setNode(ghost4V);</b>
+<b class="nc">&nbsp;            animation4.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation4.setCycleCount(1);</b>
+<b class="nc">&nbsp;            animation4.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation4.play();</b>
+&nbsp;
+<b class="nc">&nbsp;                    animation4.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                        animation4.setDuration(Duration.seconds(2));</b>
+<b class="nc">&nbsp;                        animation4.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                        animation4.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                        animation4.play();</b>
+&nbsp;                    });
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            animation5 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation5.setNode(ghost5V);</b>
+<b class="nc">&nbsp;            animation5.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation5.setCycleCount(1);</b>
+<b class="nc">&nbsp;            animation5.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation5.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation5.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation5.setDuration(Duration.seconds(2));</b>
+<b class="nc">&nbsp;                animation5.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                animation5.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation5.play();</b>
+&nbsp;            });
+&nbsp;
+<b class="nc">&nbsp;            ghost5V.setOnMouseEntered(event -&gt; enteredGhost(event));</b>
+<b class="nc">&nbsp;            ghost4V.setOnMouseEntered(event -&gt; enteredGhost(event));</b>
+<b class="nc">&nbsp;            ghost2V.setOnMouseEntered(event -&gt; enteredGhost(event));</b>
+<b class="nc">&nbsp;            ghost1V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
+<b class="nc">&nbsp;            ghost3V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        else if (currentLevel == 4 ){</b>
+<b class="nc">&nbsp;            ghost4V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost3V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost1V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost2V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost5V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost6V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost7V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost8V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost9V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost10V = new ImageView();</b>
+<b class="nc">&nbsp;            ghost10V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost9V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost8V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost7V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost6V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost5V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost4V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost3V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost2V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost1V.setImage(ghost);</b>
+<b class="nc">&nbsp;            add(ghost5V,3,1);</b>
+<b class="nc">&nbsp;            add(ghost3V,3,3);</b>
+<b class="nc">&nbsp;            add(ghost1V,3,5);</b>
+<b class="nc">&nbsp;            add(ghost2V,3,7);</b>
+<b class="nc">&nbsp;            add(ghost4V,3,9);</b>
+<b class="nc">&nbsp;            add(ghost6V,3,11);</b>
+<b class="nc">&nbsp;            add(ghost7V,3,13);</b>
+<b class="nc">&nbsp;            add(ghost8V,3,15);</b>
+<b class="nc">&nbsp;            add(ghost9V,3,17);</b>
+<b class="nc">&nbsp;            rectangle = new Rectangle(525,0);</b>
+<b class="nc">&nbsp;            rectangle.setY(72);</b>
+<b class="nc">&nbsp;            rectangle.setX(-45);</b>
+&nbsp;
+<b class="nc">&nbsp;            Rectangle rectangle2 = new Rectangle(525,0);</b>
+<b class="nc">&nbsp;            rectangle2.setY(105);</b>
+<b class="nc">&nbsp;            rectangle2.setX(-45);</b>
+&nbsp;
+<b class="nc">&nbsp;            animation = new PathTransition();</b>
+<b class="nc">&nbsp;            animation.setNode(ghost3V);</b>
+<b class="nc">&nbsp;            animation.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation.setCycleCount(3);</b>
+<b class="nc">&nbsp;            animation.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation.setCycleCount(1);</b>
+<b class="nc">&nbsp;                animation.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation.setPath(rectangle2);</b>
+<b class="nc">&nbsp;                animation.play();</b>
+<b class="nc">&nbsp;                animation.setOnFinished(actionEvent1 -&gt; {</b>
+<b class="nc">&nbsp;                    animation.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                    animation.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                    animation.setPath(rectangle);</b>
+<b class="nc">&nbsp;                    animation.play();</b>
+&nbsp;                });
+&nbsp;            });
+&nbsp;
+<b class="nc">&nbsp;            animation2 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation2.setNode(ghost1V);</b>
+<b class="nc">&nbsp;            animation2.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation2.setCycleCount(3);</b>
+<b class="nc">&nbsp;            animation2.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation2.play();</b>
+<b class="nc">&nbsp;            animation2.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation2.setCycleCount(1);</b>
+<b class="nc">&nbsp;                animation2.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation2.setPath(rectangle2);</b>
+<b class="nc">&nbsp;                animation2.play();</b>
+<b class="nc">&nbsp;                animation2.setOnFinished(actionEvent1 -&gt; {</b>
+<b class="nc">&nbsp;                    animation2.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                    animation2.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                    animation2.setPath(rectangle);</b>
+<b class="nc">&nbsp;                    animation2.play();</b>
+&nbsp;                });
+&nbsp;            });
+&nbsp;
+<b class="nc">&nbsp;            animation3 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation3.setNode(ghost2V);</b>
+<b class="nc">&nbsp;            animation3.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation3.setCycleCount(3);</b>
+<b class="nc">&nbsp;            animation3.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation3.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation3.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation3.setPath(rectangle2);</b>
+<b class="nc">&nbsp;                animation3.setCycleCount(1);</b>
+<b class="nc">&nbsp;                animation3.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation3.play();</b>
+<b class="nc">&nbsp;                animation3.setOnFinished(actionEvent1 -&gt; {</b>
+<b class="nc">&nbsp;                    animation3.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                    animation3.setPath(rectangle);</b>
+<b class="nc">&nbsp;                    animation3.play();</b>
+&nbsp;                });
+&nbsp;            });
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            animation4 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation4.setNode(ghost4V);</b>
+<b class="nc">&nbsp;            animation4.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation4.setCycleCount(3);</b>
+<b class="nc">&nbsp;            animation4.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation4.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation4.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation4.setPath(rectangle2);</b>
+<b class="nc">&nbsp;                animation4.setCycleCount(1);</b>
+<b class="nc">&nbsp;                animation4.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation4.play();</b>
+<b class="nc">&nbsp;                animation4.setOnFinished(actionEvent1 -&gt; {</b>
+<b class="nc">&nbsp;                    animation4.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                    animation4.setPath(rectangle);</b>
+<b class="nc">&nbsp;                    animation4.play();</b>
+&nbsp;                });
+&nbsp;            });
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            animation5 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation5.setNode(ghost5V);</b>
+<b class="nc">&nbsp;            animation5.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation5.setCycleCount(3);</b>
+<b class="nc">&nbsp;            animation5.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation5.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation5.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation5.setPath(rectangle2);</b>
+<b class="nc">&nbsp;                animation5.setCycleCount(1);</b>
+<b class="nc">&nbsp;                animation5.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation5.play();</b>
+<b class="nc">&nbsp;                animation5.setOnFinished(actionEvent1 -&gt; {</b>
+<b class="nc">&nbsp;                    animation5.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                    animation5.setPath(rectangle);</b>
+<b class="nc">&nbsp;                    animation5.play();</b>
+&nbsp;                });
+&nbsp;            });
+<b class="nc">&nbsp;            animation6 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation6.setNode(ghost6V);</b>
+<b class="nc">&nbsp;            animation6.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation6.setCycleCount(3);</b>
+<b class="nc">&nbsp;            animation6.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation6.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation6.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation6.setPath(rectangle2);</b>
+<b class="nc">&nbsp;                animation6.setCycleCount(1);</b>
+<b class="nc">&nbsp;                animation6.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation6.play();</b>
+<b class="nc">&nbsp;                animation6.setOnFinished(actionEvent1 -&gt; {</b>
+<b class="nc">&nbsp;                    animation6.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                    animation6.setPath(rectangle);</b>
+<b class="nc">&nbsp;                    animation6.play();</b>
+&nbsp;                });
+&nbsp;            });
+&nbsp;
+<b class="nc">&nbsp;            animation7 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation7.setNode(ghost7V);</b>
+<b class="nc">&nbsp;            animation7.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation7.setCycleCount(3);</b>
+<b class="nc">&nbsp;            animation7.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation7.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation7.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation7.setPath(rectangle2);</b>
+<b class="nc">&nbsp;                animation7.setCycleCount(1);</b>
+<b class="nc">&nbsp;                animation7.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation7.play();</b>
+<b class="nc">&nbsp;                animation7.setOnFinished(actionEvent1 -&gt; {</b>
+<b class="nc">&nbsp;                    animation7.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                    animation7.setPath(rectangle);</b>
+<b class="nc">&nbsp;                    animation7.play();</b>
+&nbsp;                });
+&nbsp;            });
+&nbsp;
+<b class="nc">&nbsp;            animation8 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation8.setNode(ghost8V);</b>
+<b class="nc">&nbsp;            animation8.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation8.setCycleCount(3);</b>
+<b class="nc">&nbsp;            animation8.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation8.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation8.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation8.setPath(rectangle2);</b>
+<b class="nc">&nbsp;                animation8.setCycleCount(1);</b>
+<b class="nc">&nbsp;                animation8.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation8.play();</b>
+<b class="nc">&nbsp;                animation8.setOnFinished(actionEvent1 -&gt; {</b>
+<b class="nc">&nbsp;                    animation8.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                    animation8.setPath(rectangle);</b>
+<b class="nc">&nbsp;                    animation8.play();</b>
+&nbsp;                });
+&nbsp;            });
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            animation9 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation9.setNode(ghost9V);</b>
+<b class="nc">&nbsp;            animation9.setDuration(Duration.seconds(5));</b>
+<b class="nc">&nbsp;            animation9.setCycleCount(3);</b>
+<b class="nc">&nbsp;            animation9.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation9.play();</b>
+<b class="nc">&nbsp;            animation9.setOnFinished(actionEvent -&gt; {</b>
+<b class="nc">&nbsp;                animation9.setPath(rectangle2);</b>
+<b class="nc">&nbsp;                animation9.setCycleCount(1);</b>
+<b class="nc">&nbsp;                animation9.setAutoReverse(true);</b>
+<b class="nc">&nbsp;                animation9.play();</b>
+<b class="nc">&nbsp;                animation9.setOnFinished(actionEvent1 -&gt; {</b>
+<b class="nc">&nbsp;                    animation9.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;                    animation9.setPath(rectangle);</b>
+<b class="nc">&nbsp;                    animation9.play();</b>
+&nbsp;                });
+&nbsp;            });
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            ghost9V.setOnMouseEntered(event -&gt; enteredGhost(event));</b>
+<b class="nc">&nbsp;            ghost8V.setOnMouseEntered(event -&gt; enteredGhost(event));</b>
+<b class="nc">&nbsp;            ghost7V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
+<b class="nc">&nbsp;            ghost6V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
+<b class="nc">&nbsp;            ghost5V.setOnMouseEntered(event -&gt; enteredGhost(event));</b>
+<b class="nc">&nbsp;            ghost4V.setOnMouseEntered(event -&gt; enteredGhost(event));</b>
+<b class="nc">&nbsp;            ghost2V.setOnMouseEntered(event -&gt; enteredGhost(event));</b>
+<b class="nc">&nbsp;            ghost1V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
+<b class="nc">&nbsp;            ghost3V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        else if(currentLevel==5) {</b>
+<b class="nc">&nbsp;            ImageView ghost1V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost2V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost3V = new ImageView();</b>
+&nbsp;
+<b class="nc">&nbsp;            ghost3V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost2V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost1V.setImage(ghost);</b>
+&nbsp;
+<b class="nc">&nbsp;            add(ghost1V, 12, 8);</b>
+<b class="nc">&nbsp;            add(ghost2V, 14, 0);</b>
+&nbsp;            //add(ghost3V, 8, 12);
+&nbsp;
+<b class="nc">&nbsp;            Rectangle rectangle = new Rectangle(132, 200);</b>
+<b class="nc">&nbsp;            rectangle.setY(80);</b>
+<b class="nc">&nbsp;            rectangle.setX(-150);</b>
+&nbsp;
+<b class="nc">&nbsp;            Rectangle rectangle1 = new Rectangle(0, 135);</b>
+<b class="nc">&nbsp;            rectangle1.setY(80);</b>
+<b class="nc">&nbsp;            rectangle1.setX(-150);</b>
+&nbsp;
+<b class="nc">&nbsp;            Rectangle rectangle2 = new Rectangle(400, 0);</b>
+<b class="nc">&nbsp;            rectangle2.setY(20);</b>
+<b class="nc">&nbsp;            rectangle2.setX(-150);</b>
+&nbsp;
+<b class="nc">&nbsp;            animation = new PathTransition();</b>
+<b class="nc">&nbsp;            animation.setNode(ghost1V);</b>
+<b class="nc">&nbsp;            animation.setDuration(Duration.seconds(2));</b>
+<b class="nc">&nbsp;            animation.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation2 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation2.setNode(ghost2V);</b>
+<b class="nc">&nbsp;            animation2.setDuration(Duration.seconds(3));</b>
+<b class="nc">&nbsp;            animation2.setAutoReverse(true);</b>
+<b class="nc">&nbsp;            animation2.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation2.setPath(rectangle1);</b>
+<b class="nc">&nbsp;            animation2.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation3 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation3.setNode(ghost3V);</b>
+<b class="nc">&nbsp;            animation3.setDuration(Duration.seconds(2.5));</b>
+<b class="nc">&nbsp;            animation3.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation3.setPath(rectangle2);</b>
+<b class="nc">&nbsp;            animation3.play();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        else if (currentLevel==6){</b>
+<b class="nc">&nbsp;            ImageView ghost1V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost2V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost3V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost4V = new ImageView();</b>
+&nbsp;
+<b class="nc">&nbsp;            ghost4V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost3V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost2V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost1V.setImage(ghost);</b>
+&nbsp;
+<b class="nc">&nbsp;            add(ghost1V, 7, 6);</b>
+<b class="nc">&nbsp;            add(ghost2V, 6, 3);</b>
+<b class="nc">&nbsp;            add(ghost3V, 16, 0);</b>
+<b class="nc">&nbsp;            add(ghost4V, 17, 10);</b>
+&nbsp;
+<b class="nc">&nbsp;            Rectangle rectangle = new Rectangle(100, 100);</b>
+<b class="nc">&nbsp;            rectangle.setY(80);</b>
+<b class="nc">&nbsp;            rectangle.setX(-150);</b>
+&nbsp;
+<b class="nc">&nbsp;            Rectangle rectangle1 = new Rectangle(100, 0);</b>
+<b class="nc">&nbsp;            rectangle1.setY(80);</b>
+<b class="nc">&nbsp;            rectangle1.setX(-150);</b>
+&nbsp;
+<b class="nc">&nbsp;            Rectangle rectangle2 = new Rectangle(0, 450);</b>
+<b class="nc">&nbsp;            rectangle2.setY(80);</b>
+<b class="nc">&nbsp;            rectangle2.setX(17);</b>
+&nbsp;
+<b class="nc">&nbsp;            Rectangle rectangle3 = new Rectangle(70, 130);</b>
+<b class="nc">&nbsp;            rectangle3.setY(80);</b>
+<b class="nc">&nbsp;            rectangle3.setX(-150);</b>
+&nbsp;
+<b class="nc">&nbsp;            animation = new PathTransition();</b>
+<b class="nc">&nbsp;            animation.setNode(ghost1V);</b>
+<b class="nc">&nbsp;            animation.setDuration(Duration.seconds(2));</b>
+<b class="nc">&nbsp;            animation.setAutoReverse(false);</b>
+<b class="nc">&nbsp;            animation.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation.setPath(rectangle);</b>
+<b class="nc">&nbsp;            animation.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation2 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation2.setNode(ghost2V);</b>
+<b class="nc">&nbsp;            animation2.setDuration(Duration.seconds(2.5));</b>
+<b class="nc">&nbsp;            animation2.setAutoReverse(true);</b>
+<b class="nc">&nbsp;            animation2.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation2.setPath(rectangle1);</b>
+<b class="nc">&nbsp;            animation2.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation3 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation3.setNode(ghost3V);</b>
+<b class="nc">&nbsp;            animation3.setDuration(Duration.seconds(2));</b>
+<b class="nc">&nbsp;            animation3.setAutoReverse(true);</b>
+<b class="nc">&nbsp;            animation3.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation3.setPath(rectangle2);</b>
+<b class="nc">&nbsp;            animation3.play();</b>
+&nbsp;
+<b class="nc">&nbsp;            animation4 = new PathTransition();</b>
+<b class="nc">&nbsp;            animation4.setNode(ghost4V);</b>
+<b class="nc">&nbsp;            animation4.setDuration(Duration.seconds(3));</b>
+<b class="nc">&nbsp;            animation4.setCycleCount(Animation.INDEFINITE);</b>
+<b class="nc">&nbsp;            animation4.setPath(rectangle3);</b>
+<b class="nc">&nbsp;            animation4.play();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}//Class
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-07 09:19</div>
+</div>
+</body>
+</html>

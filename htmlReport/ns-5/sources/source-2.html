@@ -1,0 +1,140 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > GameOverScreen</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">view</a>
+</div>
+
+<h1>Coverage Summary for Class: GameOverScreen (view)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GameOverScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package view;
+&nbsp;
+&nbsp;import control.MainProgram;
+&nbsp;import javafx.animation.FadeTransition;
+&nbsp;import javafx.scene.image.Image;
+&nbsp;import javafx.scene.image.ImageView;
+&nbsp;import javafx.scene.layout.Pane;
+&nbsp;import javafx.util.Duration;
+&nbsp;
+&nbsp;/**
+&nbsp; * @author André Eklund
+&nbsp; */
+&nbsp;public class GameOverScreen extends Pane {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Konstruktor som tar emot mainProgram
+&nbsp;     * Kör sedan metoder för bild och animation
+&nbsp;     * @param mainProgram
+&nbsp;     */
+<b class="nc">&nbsp;    public GameOverScreen(MainProgram mainProgram) {</b>
+<b class="nc">&nbsp;        setOnMouseClicked(e -&gt; mainProgram.showHighScoreList());</b>
+<b class="nc">&nbsp;        gameOverAnimation();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Animation för gameOver-bilden
+&nbsp;     */
+&nbsp;    public void gameOverAnimation() {
+<b class="nc">&nbsp;        ImageView introView = new ImageView(new Image(&quot;file:files/texts/Gameover.png&quot;, 600, 600, false, false));</b>
+<b class="nc">&nbsp;        introView.setStyle(&quot;fx-background-color: transparent;&quot;);</b>
+<b class="nc">&nbsp;        FadeTransition ft = new FadeTransition(Duration.millis(4000), introView);</b>
+<b class="nc">&nbsp;        getChildren().add(introView);</b>
+<b class="nc">&nbsp;        ft.setFromValue(0);</b>
+<b class="nc">&nbsp;        ft.setToValue(1);</b>
+<b class="nc">&nbsp;        ft.play();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-07 09:19</div>
+</div>
+</body>
+</html>

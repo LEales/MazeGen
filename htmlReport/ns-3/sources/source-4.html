@@ -1,0 +1,209 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > World4Maps</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">model.Maps</a>
+</div>
+
+<h1>Coverage Summary for Class: World4Maps (model.Maps)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">World4Maps</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package model.Maps;
+&nbsp;
+&nbsp;/**
+&nbsp; * @author André Eklund, Sebastian Helin, Viktor Näslund, Filip Örnling
+&nbsp; */
+<b class="fc">&nbsp;public class World4Maps {</b>
+&nbsp;
+<b class="fc">&nbsp;    private int[][] level41 = new int[][]{{7, 0, 0, 1, 1, 1, 1, 4, 1, 1, 1, 0, 0, 2},</b>
+&nbsp;                                          {1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
+&nbsp;                                          {4, 0, 1, 0, 0, 4, 0, 1, 0, 1, 1, 1, 0, 1},
+&nbsp;                                          {1, 0, 1, 1, 1, 1, 0, 4, 0, 4, 0, 1, 1, 1},
+&nbsp;                                          {4, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+&nbsp;                                          {1, 1, 1, 0, 1, 1, 1, 4, 0, 1, 1, 1, 1, 1},
+&nbsp;                                          {0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 4, 0},
+&nbsp;                                          {1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1},
+&nbsp;                                          {4, 0, 0, 0, 4, 1, 1, 1, 0, 0, 0, 0, 0, 1},
+&nbsp;                                          {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+&nbsp;                                          {0, 0, 1, 0, 1, 1, 1, 4, 1, 1, 1, 4, 0, 1},
+&nbsp;                                          {0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+&nbsp;                                          {4, 1, 0, 0, 0, 0, 0, 1, 1, 4, 1, 0, 0, 1},
+&nbsp;                                          {0, 0, 4, 1, 4, 1, 4, 1, 0, 0, 1, 1, 1, 3}};
+&nbsp;
+<b class="fc">&nbsp;    private int[][] level42 = new int[][]{{4, 1, 0, 0, 7, 0, 4, 0, 0, 0, 1, 1, 1, 1},</b>
+&nbsp;                                          {0, 4, 1, 1, 4, 0, 1, 4, 1, 4, 1, 0, 0, 1},
+&nbsp;                                          {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 4},
+&nbsp;                                          {1, 1, 1, 1, 1, 1, 0, 4, 0, 4, 1, 1, 1, 0},
+&nbsp;                                          {4, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 4},
+&nbsp;                                          {0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+&nbsp;                                          {4, 1, 1, 1, 1, 4, 0, 4, 1, 1, 0, 4, 1, 1},
+&nbsp;                                          {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+&nbsp;                                          {1, 1, 4, 0, 4, 0, 1, 1, 4, 1, 0, 0, 1, 1},
+&nbsp;                                          {0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 4},
+&nbsp;                                          {4, 1, 1, 0, 0, 1, 0, 4, 0, 0, 1, 0, 0, 1},
+&nbsp;                                          {1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 4, 0, 1},
+&nbsp;                                          {1, 1, 4, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 4},
+&nbsp;                                          {3, 0, 1, 1, 4, 1, 1, 4, 0, 1, 1, 1, 4, 2}};
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    private int[][] level43 = new int[][]   {{3, 1, 1, 4, 0, 6, 4, 1, 1, 0, 1, 0, 0, 4},</b>
+&nbsp;                                             {0, 0, 0, 1, 1, 4, 0, 0, 1, 4, 1, 0, 4, 1},
+&nbsp;                                             {0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0},
+&nbsp;                                             {0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0},
+&nbsp;                                             {0, 1, 1, 5, 0, 4, 0, 1, 0, 0, 1, 1, 1, 0},
+&nbsp;                                             {0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 4, 1},
+&nbsp;                                             {7, 1, 0, 0, 1, 4, 0, 4, 0, 0, 1, 0, 0, 1},
+&nbsp;                                             {1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 4},
+&nbsp;                                             {1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
+&nbsp;                                             {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 4},
+&nbsp;                                             {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 1},
+&nbsp;                                             {1, 0, 0, 0, 0, 0, 0, 4, 0, 1, 0, 0, 1, 4},
+&nbsp;                                             {1, 0, 0, 0, 4, 1, 1, 1, 0, 1, 0, 4, 1, 0},
+&nbsp;                                             {2, 1, 4, 1, 1, 0, 0, 1, 1, 4, 1, 1, 0, 0}};
+&nbsp;
+<b class="fc">&nbsp;    private int[][] level44 = new int[][]{{2, 1, 1, 4, 1, 1, 0, 1, 4, 1, 0, 4, 1, 1},</b>
+&nbsp;                                          {0, 0, 0, 0, 0, 1, 4, 1, 0, 1, 0, 1, 0, 1},
+&nbsp;                                          {4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 4},
+&nbsp;                                          {1, 1, 1, 1, 4, 1, 1, 7, 0, 0, 6, 0, 0, 1},
+&nbsp;                                          {1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1},
+&nbsp;                                          {5, 0, 4, 1, 1, 1, 4, 6, 4, 1, 0, 1, 1, 4},
+&nbsp;                                          {0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+&nbsp;                                          {1, 1, 0, 0, 4, 1, 4, 0, 1, 1, 0, 4, 1, 1},
+&nbsp;                                          {1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1},
+&nbsp;                                          {4, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 4},
+&nbsp;                                          {0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 4, 0, 0},
+&nbsp;                                          {4, 1, 0, 4, 0, 1, 1, 4, 0, 1, 4, 1, 1, 0},
+&nbsp;                                          {1, 0, 0, 1, 0, 1, 0, 0, 4, 1, 0, 0, 4, 1},
+&nbsp;                                          {1, 1, 1, 4, 0, 1, 4, 1, 1, 0, 0, 0, 0, 3}};
+&nbsp;
+<b class="fc">&nbsp;    private int[][] level45 = new int[][] {{3, 1, 0, 4, 1, 1, 4, 1, 1, 4, 0, 4, 1, 4},</b>
+&nbsp;                                           {0, 4, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1},
+&nbsp;                                           {0, 0, 4, 1, 0, 0, 1, 0, 0, 1, 4, 0, 0, 1},
+&nbsp;                                           {4, 1, 0, 4, 1, 0, 1, 0, 1, 4, 0, 1, 1, 4},
+&nbsp;                                           {0, 1, 0, 0, 4, 0, 4, 1, 4, 0, 0, 1, 0, 0},
+&nbsp;                                           {0, 1, 4, 6, 1, 4, 1, 0, 0, 0, 0, 1, 0, 4},
+&nbsp;                                           {1, 1, 0, 0, 0, 0, 0, 0, 4, 4, 0, 1, 4, 1},
+&nbsp;                                           {1, 0, 0, 7, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0},
+&nbsp;                                           {1, 4, 0, 0, 0, 0, 1, 0, 1, 1, 4, 0, 1, 0},
+&nbsp;                                           {0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0},
+&nbsp;                                           {0, 1, 0, 0, 0, 0, 4, 1, 1, 0, 1, 1, 0, 4},
+&nbsp;                                           {4, 1, 1, 1, 4, 0, 1, 0, 0, 0, 1, 0, 0, 1},
+&nbsp;                                           {1, 0, 0, 0, 1, 0, 1, 4, 0, 1, 1, 4, 1, 1},
+&nbsp;                                           {5, 1, 1, 1, 4, 0, 0, 1, 1, 4, 0, 0, 0, 2}};
+&nbsp;    /**
+&nbsp;     * Returnerar en array som representerar en nivå i spelet.
+&nbsp;     * @return returnerar en array av siffror.
+&nbsp;     */
+&nbsp;    public int[][] getLevel41(){
+<b class="fc">&nbsp;        return level41;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int[][] getLevel42(){
+<b class="fc">&nbsp;        return level42;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int[][] getLevel43(){
+<b class="fc">&nbsp;        return level43;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int[][] getLevel44(){
+<b class="fc">&nbsp;        return level44;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int[][] getLevel45() {
+<b class="fc">&nbsp;        return level45;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-07 09:19</div>
+</div>
+</body>
+</html>

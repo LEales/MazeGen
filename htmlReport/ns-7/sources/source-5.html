@@ -1,0 +1,499 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > RightPanel</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">view.Menu</a>
+</div>
+
+<h1>Coverage Summary for Class: RightPanel (view.Menu)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RightPanel</td>
+<td class="coverageStat">
+  <span class="percent">
+    9.1%
+  </span>
+  <span class="absValue">
+    (2/22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.6%
+  </span>
+  <span class="absValue">
+    (15/119)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RightPanel$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">RightPanel$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    7.7%
+  </span>
+  <span class="absValue">
+    (2/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    11.7%
+  </span>
+  <span class="absValue">
+    (15/128)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package view.Menu;
+&nbsp;
+&nbsp;import control.MainProgram;
+&nbsp;import javafx.animation.KeyFrame;
+&nbsp;import javafx.animation.KeyValue;
+&nbsp;import javafx.animation.Timeline;
+&nbsp;import javafx.application.Platform;
+&nbsp;import javafx.beans.property.IntegerProperty;
+&nbsp;import javafx.beans.property.SimpleIntegerProperty;
+&nbsp;import javafx.concurrent.Task;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.scene.image.Image;
+&nbsp;import javafx.scene.image.ImageView;
+&nbsp;import javafx.scene.input.MouseEvent;
+&nbsp;import javafx.scene.layout.*;
+&nbsp;import javafx.scene.paint.Color;
+&nbsp;import javafx.scene.text.Font;
+&nbsp;import javafx.util.Duration;
+&nbsp;import model.TimeThread;
+&nbsp;import model.TotalTime;
+&nbsp;import view.AudioPlayer;
+&nbsp;
+&nbsp;import java.io.FileNotFoundException;
+&nbsp;
+&nbsp;/**
+&nbsp; * @author Filip Örnling
+&nbsp; * @edit Viktor Näslund, Sebastian Helin
+&nbsp; */
+&nbsp;
+&nbsp;public class RightPanel extends GridPane {
+&nbsp;
+&nbsp;    private MainProgram mainProgram;
+&nbsp;    private String gameMode;
+&nbsp;    private int seconds;
+&nbsp;
+&nbsp;    private Image imageMenu;
+&nbsp;    private ImageView menuView;
+&nbsp;
+&nbsp;    private Image levelNumber;
+&nbsp;    private ImageView currentLevelView;
+&nbsp;    private Label levelLabel;
+&nbsp;    private Thread timer;
+&nbsp;
+&nbsp;    private Image heart;
+&nbsp;    private ImageView currentHeartView;
+&nbsp;    private Label heartLabel;
+&nbsp;
+&nbsp;    private Image pickaxe;
+&nbsp;    private ImageView pickaxeView;
+&nbsp;    private Label pickaxeLabel;
+&nbsp;
+&nbsp;    private Image soundImage;
+&nbsp;    private ImageView soundView;
+&nbsp;    private Label soundLabel;
+&nbsp;    private boolean soundOn;
+&nbsp;
+&nbsp;    private Image musicImage;
+&nbsp;    private ImageView musicView;
+&nbsp;    private Label musicLabel;
+&nbsp;    private boolean musicOn;
+<b class="fc">&nbsp;    private boolean timerIsStartedOnce = false;</b>
+&nbsp;
+&nbsp;    private Image emptySprite;
+&nbsp;    private ImageView emptyView;
+&nbsp;
+<b class="fc">&nbsp;    private static Integer STARTTIME = 15;</b>
+<b class="fc">&nbsp;    private Timeline timeline = new Timeline();</b>
+<b class="fc">&nbsp;    private Label timerLabel = new Label();</b>
+<b class="fc">&nbsp;    private IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);</b>
+<b class="fc">&nbsp;    private IntegerProperty stackedSeconds = new SimpleIntegerProperty();</b>
+<b class="fc">&nbsp;    private Font font = Font.loadFont(&quot;file:files/fonts/PressStart2P.ttf&quot;, 35);</b>
+&nbsp;
+&nbsp;    private AudioPlayer audioPlayer;
+&nbsp;    private TimeThread time;
+&nbsp;    private TotalTime totTime;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Instansierar objekten och lägger till bilder och labels på scenen
+&nbsp;     * @param mainProgram Huvudprogrammet
+&nbsp;     * @param gameMode Kollar ifall användaren valt randomized eller kampanjläge
+&nbsp;     * @param audioPlayer Klass som spelar upp ljud &amp; musik
+&nbsp;     * @param time En tråd som räknar hur många sekunder spelaren har på sig
+&nbsp;     * @throws FileNotFoundException
+&nbsp;     */
+<b class="fc">&nbsp;    public RightPanel(MainProgram mainProgram, String gameMode, AudioPlayer audioPlayer, TimeThread time) throws FileNotFoundException {</b>
+<b class="fc">&nbsp;        this.mainProgram = mainProgram;</b>
+<b class="fc">&nbsp;        this.gameMode = gameMode;</b>
+<b class="fc">&nbsp;        this.audioPlayer = audioPlayer;</b>
+<b class="fc">&nbsp;        this.time = time;</b>
+&nbsp;
+<b class="fc">&nbsp;        soundOn = true;</b>
+<b class="fc">&nbsp;        musicOn = true;</b>
+&nbsp;
+<b class="fc">&nbsp;        imageMenu = new Image(&quot;file:files/texts/Menu.png&quot;, 90, 30, false, false);</b>
+<b class="nc">&nbsp;        menuView = new ImageView(imageMenu);</b>
+&nbsp;
+<b class="nc">&nbsp;        emptySprite = new Image(&quot;file:files/emptySprite.png&quot;, 30, 30, false, false);</b>
+<b class="nc">&nbsp;        emptyView = new ImageView(emptySprite);</b>
+&nbsp;
+<b class="nc">&nbsp;        pickaxe = new Image(&quot;file:files/items/pickaxe.png&quot;, 30, 30, false, false);</b>
+<b class="nc">&nbsp;        pickaxeView = new ImageView(pickaxe);</b>
+<b class="nc">&nbsp;        pickaxeLabel = new Label();</b>
+<b class="nc">&nbsp;        pickaxeLabel.setGraphic(emptyView);</b>
+&nbsp;
+<b class="nc">&nbsp;        levelNumber = new Image(&quot;file:files/levelcounter/&quot;+ gameMode +&quot;.png&quot;, 90, 30, false, false);</b>
+<b class="nc">&nbsp;        currentLevelView = new ImageView(levelNumber);</b>
+<b class="nc">&nbsp;        levelLabel = new Label();</b>
+<b class="nc">&nbsp;        levelLabel.setGraphic(currentLevelView);</b>
+&nbsp;
+<b class="nc">&nbsp;        soundImage = new Image(&quot;file:files/soundbuttons/soundon.png&quot;, 30,30,false,false);</b>
+<b class="nc">&nbsp;        soundView = new ImageView(soundImage);</b>
+<b class="nc">&nbsp;        soundLabel = new Label();</b>
+<b class="nc">&nbsp;        soundLabel.setTranslateX(30);</b>
+<b class="nc">&nbsp;        soundLabel.setTranslateY(440);</b>
+<b class="nc">&nbsp;        soundLabel.setGraphic(soundView);</b>
+&nbsp;
+<b class="nc">&nbsp;        musicImage = new Image(&quot;file:files/soundbuttons/musicon.png&quot;, 30,30,false,false);</b>
+<b class="nc">&nbsp;        musicView = new ImageView(musicImage);</b>
+<b class="nc">&nbsp;        musicLabel = new Label();</b>
+<b class="nc">&nbsp;        musicLabel.setTranslateX(60);</b>
+<b class="nc">&nbsp;        musicLabel.setTranslateY(440);</b>
+<b class="nc">&nbsp;        musicLabel.setGraphic(musicView);</b>
+&nbsp;
+&nbsp;        //Hearts only in Campaign
+<b class="nc">&nbsp;        if(gameMode!=&quot;Random&quot;){</b>
+<b class="nc">&nbsp;            heart = new Image(&quot;file:files/hearts/3heart.png&quot;, 90, 30, false, false);</b>
+<b class="nc">&nbsp;            currentHeartView = new ImageView(heart);</b>
+<b class="nc">&nbsp;            heartLabel = new Label();</b>
+<b class="nc">&nbsp;            heartLabel.setGraphic(currentHeartView);</b>
+<b class="nc">&nbsp;            add(heartLabel,0,2);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        timerLabel.textProperty().bind(timeSeconds.asString());</b>
+<b class="nc">&nbsp;        timerLabel.setTextFill(Color.WHITE);</b>
+<b class="nc">&nbsp;        timerLabel.setFont(font);</b>
+<b class="nc">&nbsp;        timerLabel.setTranslateY(200);</b>
+<b class="nc">&nbsp;        timerLabel.setTranslateX(8);</b>
+&nbsp;
+<b class="nc">&nbsp;        add(timerLabel, 0, 4);</b>
+<b class="nc">&nbsp;        add(levelLabel,0,1);</b>
+<b class="nc">&nbsp;        add(pickaxeLabel, 0, 3);</b>
+&nbsp;
+<b class="nc">&nbsp;        soundLabel.setOnMouseClicked(e -&gt; soundLabelClicked());</b>
+<b class="nc">&nbsp;        musicLabel.setOnMouseClicked(e -&gt; musicLabelClicked());</b>
+&nbsp;
+<b class="nc">&nbsp;        add(soundLabel,0,4);</b>
+<b class="nc">&nbsp;        add(musicLabel,0,4);</b>
+&nbsp;
+<b class="nc">&nbsp;        menuView.setOnMouseClicked(e -&gt; MainMenuClicked(e));</b>
+<b class="nc">&nbsp;        add(menuView,0,0);</b>
+&nbsp;
+<b class="nc">&nbsp;        totTime = new TotalTime(false);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Slår på/av spelljud
+&nbsp;     */
+&nbsp;    public void soundLabelClicked(){
+<b class="nc">&nbsp;        if(soundOn){</b>
+<b class="nc">&nbsp;            soundImage = new Image(&quot;file:files/soundbuttons/soundoff.png&quot;, 30,30,false,false);</b>
+<b class="nc">&nbsp;            audioPlayer.muteSound(true);</b>
+<b class="nc">&nbsp;            soundOn = false;</b>
+&nbsp;        } else{
+<b class="nc">&nbsp;            soundImage = new Image(&quot;file:files/soundbuttons/soundon.png&quot;, 30,30,false,false);</b>
+<b class="nc">&nbsp;            audioPlayer.muteSound(false);</b>
+<b class="nc">&nbsp;            soundOn = true;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        soundView.setImage(soundImage);</b>
+<b class="nc">&nbsp;        soundLabel.setGraphic(soundView);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Slår på/av musik
+&nbsp;     */
+&nbsp;    public void musicLabelClicked(){
+<b class="nc">&nbsp;        if(musicOn){</b>
+<b class="nc">&nbsp;            musicImage = new Image(&quot;file:files/soundbuttons/musicoff.png&quot;,30,30,false,false);</b>
+<b class="nc">&nbsp;            audioPlayer.muteMusic(true);</b>
+<b class="nc">&nbsp;            musicOn = false;</b>
+&nbsp;        } else{
+<b class="nc">&nbsp;            musicImage = new Image(&quot;file:files/soundbuttons/musicon.png&quot;,30,30,false,false);</b>
+<b class="nc">&nbsp;            audioPlayer.muteMusic(false);</b>
+<b class="nc">&nbsp;            musicOn = true;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        musicView.setImage(musicImage);</b>
+<b class="nc">&nbsp;        musicLabel.setGraphic(musicView);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Sätter en ny bild beroende på om man plockar upp/tappar ett liv
+&nbsp;     * @param number
+&nbsp;     */
+&nbsp;    public void changeHeartCounter(String number){
+<b class="nc">&nbsp;        heart = new Image(&quot;file:files/hearts/&quot; + number + &quot;heart.png&quot;, 90, 30, false, false);</b>
+<b class="nc">&nbsp;        currentHeartView.setImage(heart);</b>
+<b class="nc">&nbsp;        heartLabel.setGraphic(currentHeartView);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Sätter bilden på yxan i en label
+&nbsp;     */
+&nbsp;    public void addPickaxe(){
+<b class="nc">&nbsp;        pickaxeLabel.setGraphic(pickaxeView);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Tar bort yxan när man plcokat upp den
+&nbsp;     */
+&nbsp;    public void removePickaxe(){
+<b class="nc">&nbsp;        pickaxeLabel.setGraphic(emptyView);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Byter bild beroende vilken nivå man befinner sig på
+&nbsp;     * @param number
+&nbsp;     */
+&nbsp;    public void changeLevelCounter(String number){
+<b class="nc">&nbsp;        levelNumber = new Image(&quot;file:files/levelcounter/&quot; + number + &quot;.png&quot;, 90, 30, false, false);</b>
+<b class="nc">&nbsp;        currentLevelView.setImage(levelNumber);</b>
+<b class="nc">&nbsp;        levelLabel.setGraphic(currentLevelView);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Byter scen till menyn
+&nbsp;     * @param e
+&nbsp;     */
+&nbsp;    private void MainMenuClicked(MouseEvent e){
+<b class="nc">&nbsp;        mainProgram.changeToMenu();</b>
+<b class="nc">&nbsp;        audioPlayer.playButtonSound();</b>
+<b class="nc">&nbsp;        audioPlayer.stopMusic();</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Startar den visuella klockan i GUIt
+&nbsp;     */
+&nbsp;    public void runClock() {
+<b class="nc">&nbsp;        timeSeconds.set(STARTTIME);</b>
+&nbsp;
+<b class="nc">&nbsp;        timeline.getKeyFrames().add(</b>
+<b class="nc">&nbsp;                new KeyFrame(Duration.seconds(STARTTIME),</b>
+<b class="nc">&nbsp;                        new KeyValue(timeSeconds, 0)));</b>
+<b class="nc">&nbsp;        timeline.playFromStart();</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Pausar klockan vid avancemang till ny nivå
+&nbsp;     */
+&nbsp;    public void pauseClock(){
+<b class="nc">&nbsp;        seconds = timeSeconds.getValue().intValue();</b>
+<b class="nc">&nbsp;        timeline.stop();</b>
+&nbsp;
+<b class="nc">&nbsp;        timeSeconds.set(seconds);</b>
+<b class="nc">&nbsp;        timeline = null;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Sätter tiden som visuella klockan ska visa
+&nbsp;     * @param timesec
+&nbsp;     */
+&nbsp;    public void setTheTime(int timesec){
+<b class="nc">&nbsp;        timeSeconds.set(timesec);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Kör igång klockan när spelaren trycker på startknappen
+&nbsp;     */
+&nbsp;    public void resumeClock(){
+<b class="nc">&nbsp;        timeSeconds.set(STARTTIME);</b>
+<b class="nc">&nbsp;        timeline = new Timeline();</b>
+<b class="nc">&nbsp;        timeline.getKeyFrames().add(</b>
+<b class="nc">&nbsp;                new KeyFrame(Duration.seconds(STARTTIME),</b>
+<b class="nc">&nbsp;                        new KeyValue(timeSeconds, 0)));</b>
+<b class="nc">&nbsp;        timeline.playFromStart();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * En setter som finns i varje maptemplate för att bestämma antal sekunder spelaren
+&nbsp;     * har på sig
+&nbsp;     * @param STARTTIME
+&nbsp;     */
+&nbsp;    public void setSTARTTIME(Integer STARTTIME) {
+<b class="nc">&nbsp;        RightPanel.STARTTIME = STARTTIME;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Startar en tråd som räknar den totala tiden
+&nbsp;     */
+&nbsp;    public void startTotalTimer(){
+<b class="nc">&nbsp;        if (!timerIsStartedOnce)</b>
+<b class="nc">&nbsp;        totTime.start();</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Startar en task för Game Over
+&nbsp;     */
+&nbsp;    public void startTask(){
+<b class="nc">&nbsp;        timer = null;</b>
+&nbsp;
+<b class="nc">&nbsp;        timer = new Thread(startNewTask());</b>
+<b class="nc">&nbsp;        timer.start();</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Tasks run-metod som sätter den totala tiden det tog att spela
+&nbsp;     * Pausar musik &amp; visar Game Over texten
+&nbsp;     */
+&nbsp;    public void gameIsOver(){
+&nbsp;
+<b class="nc">&nbsp;        Platform.runLater(new Runnable() {</b>
+&nbsp;            @Override
+&nbsp;            public void run() {
+&nbsp;
+<b class="nc">&nbsp;                mainProgram.gameOver();</b>
+<b class="nc">&nbsp;                audioPlayer.playGameOverSound();</b>
+<b class="nc">&nbsp;                audioPlayer.stopMusic();</b>
+<b class="nc">&nbsp;                totTime.setGameOver(true);</b>
+<b class="nc">&nbsp;                removePickaxe();</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Skapar en task vid gameOver
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public Task startNewTask() {
+<b class="nc">&nbsp;        Task&lt;Void&gt; task = new Task&lt;Void&gt;() {</b>
+&nbsp;            @Override
+&nbsp;            protected Void call() throws Exception {
+&nbsp;
+<b class="nc">&nbsp;                gameIsOver();</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+&nbsp;        };
+<b class="nc">&nbsp;        return task;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Setter för Tråden att veta när det blir GameOver
+&nbsp;     * @param b
+&nbsp;     */
+&nbsp;    public void setGameOver(boolean b) {
+<b class="nc">&nbsp;        totTime.setGameOver(b);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Setter för att kontrollera om tiden har startat
+&nbsp;     * @param timerIsStartedOnce
+&nbsp;     */
+&nbsp;    public void setTimerIsStarted(boolean timerIsStartedOnce) {
+<b class="nc">&nbsp;        this.timerIsStartedOnce = timerIsStartedOnce;</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Om spelaren har 5 sekunder kvar kallas denna metod från tråden
+&nbsp;     */
+&nbsp;    public void fiveSecLeft() {
+<b class="nc">&nbsp;        audioPlayer.playTimeLeftSound();</b>
+<b class="nc">&nbsp;        timerLabel.setStyle(&quot;-fx-text-fill: red;&quot;);</b>
+&nbsp;    }
+&nbsp;    /**
+&nbsp;     * Nollställer textens färg till vit och stoppar klockljudet
+&nbsp;     */
+&nbsp;    public void resetTimerLabel(){
+<b class="nc">&nbsp;        timerLabel.setStyle(&quot;-fx-text-fill: white;&quot;);</b>
+<b class="nc">&nbsp;        audioPlayer.stopClockSound();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-07 09:19</div>
+</div>
+</body>
+</html>

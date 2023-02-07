@@ -1,0 +1,731 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > World1Template</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">view.Campaign</a>
+</div>
+
+<h1>Coverage Summary for Class: World1Template (view.Campaign)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">World1Template</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/268)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">World1Template$MouseListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/17)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/285)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package view.Campaign;
+&nbsp;
+&nbsp;
+&nbsp;import control.MainProgram;
+&nbsp;import javafx.animation.FadeTransition;
+&nbsp;import javafx.scene.effect.Glow;
+&nbsp;import javafx.scene.image.Image;
+&nbsp;import javafx.scene.image.ImageView;
+&nbsp;import javafx.scene.input.MouseEvent;
+&nbsp;import javafx.scene.layout.*;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.event.EventHandler;
+&nbsp;import javafx.util.Duration;
+&nbsp;import model.TimeThread;
+&nbsp;import model.TotalTime;
+&nbsp;import view.AudioPlayer;
+&nbsp;import view.Menu.RightPanel;
+&nbsp;
+&nbsp;import java.io.FileNotFoundException;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;/**
+&nbsp; * @author André Eklund
+&nbsp; * @edit Filip Örnling, Sebastian Helin, Viktor Näslund
+&nbsp; */
+&nbsp;
+&nbsp;public class World1Template extends GridPane {
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    private MainProgram mainProgram;
+&nbsp;    private int[][] level;
+<b class="nc">&nbsp;    private ArrayList&lt;Label&gt; collectibles = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;    private ArrayList&lt;Label&gt; pickaxes = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;    private MouseListener mouseListener = new MouseListener();</b>
+&nbsp;    private Image wall;
+&nbsp;    private Image path;
+&nbsp;    private Image border;
+&nbsp;    private Image goal;
+&nbsp;    private Image diamond;
+&nbsp;    private Image start;
+&nbsp;    private Image heart;
+&nbsp;    private Image breakableWall;
+&nbsp;    private boolean startButtonPressed;
+&nbsp;    private boolean allCollectiblesObtained;
+&nbsp;    private boolean wallDestroyed;
+<b class="nc">&nbsp;    private int collectiblesObtained = 0;</b>
+&nbsp;    private int squareSize;
+&nbsp;    private int currentLevel;
+&nbsp;    private int heartCrystals;
+&nbsp;    private Image pickAxeImage;
+&nbsp;    private boolean pickaxeObtained;
+&nbsp;    private boolean gameStarted;
+<b class="nc">&nbsp;    private boolean startNotClickedOnce = true;</b>
+<b class="nc">&nbsp;    private boolean totalTimeStarted = false;</b>
+&nbsp;    private int world;
+<b class="nc">&nbsp;    private int seconds = 25;</b>
+&nbsp;
+&nbsp;    private RightPanel rightPanel;
+&nbsp;    private AudioPlayer audioPlayer;
+&nbsp;    private TimeThread time;
+&nbsp;    private TotalTime totTime;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Instansierar objekten.
+&nbsp;     * @param level Den array som sedan omvandlas till en nivå inuti spelet.
+&nbsp;     * @param currentLevel Den aktuella nivån
+&nbsp;     * @param heartCrystals Spelarens liv.
+&nbsp;     * @param mainProgram Huvudprogrammet.
+&nbsp;     * @param rightPanel Panelen som visar information så som liv, tid, nivå osv.
+&nbsp;     * @param world Används för att sätta rätt grafik på världen.
+&nbsp;     * @param audioPlayer Används för att spela upp ljud inne i spelet.
+&nbsp;     * @param seconds Tidsbegränsningen för varje bana.
+&nbsp;     * @throws FileNotFoundException
+&nbsp;     */
+&nbsp;
+&nbsp;    //Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
+<b class="nc">&nbsp;    public World1Template(int[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int world, AudioPlayer audioPlayer, int seconds) throws FileNotFoundException {</b>
+<b class="nc">&nbsp;        this.mainProgram = mainProgram;</b>
+<b class="nc">&nbsp;        this.currentLevel = currentLevel;</b>
+<b class="nc">&nbsp;        this.level = level;</b>
+<b class="nc">&nbsp;        this.heartCrystals = heartCrystals;</b>
+<b class="nc">&nbsp;        this.seconds = seconds;</b>
+&nbsp;
+<b class="nc">&nbsp;        rightPanel.changeHeartCounter(String.valueOf(heartCrystals));</b>
+<b class="nc">&nbsp;        this.rightPanel = rightPanel;</b>
+<b class="nc">&nbsp;        this.audioPlayer = audioPlayer;</b>
+<b class="nc">&nbsp;        this.world = world;</b>
+<b class="nc">&nbsp;        squareSize = 600/(level.length+2);</b>
+<b class="nc">&nbsp;        setBackground();</b>
+<b class="nc">&nbsp;        setupImages(world);</b>
+<b class="nc">&nbsp;        setupBorders();</b>
+<b class="nc">&nbsp;        setupLevel();</b>
+<b class="nc">&nbsp;        rightPanel.setSTARTTIME(seconds);</b>
+<b class="nc">&nbsp;        rightPanel.resetTimerLabel();</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        totTime = new TotalTime(false);</b>
+<b class="nc">&nbsp;        time = null;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sätter bakgrunden i fönstret.
+&nbsp;     */
+&nbsp;    public void setBackground(){
+<b class="nc">&nbsp;        BackgroundImage menuBackground = new BackgroundImage(new Image(&quot;file:files/MenuBackground.jpg&quot;,800,600,false,true),</b>
+&nbsp;                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+&nbsp;                BackgroundSize.DEFAULT);
+<b class="nc">&nbsp;        this.setBackground(new Background(menuBackground));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Skapar en ram runt spelplanen.
+&nbsp;     */
+&nbsp;    public void setupBorders() {
+<b class="nc">&nbsp;        for (int i = 0; i &lt; level.length + 1; i++) {</b>
+<b class="nc">&nbsp;            add(getBorders(), i, 0);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        for (int i = 0; i &lt; level.length + 1; i++) {</b>
+<b class="nc">&nbsp;            add(getBorders(), 0, i);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        for (int i = 0; i &lt; level.length + 2; i++) {</b>
+<b class="nc">&nbsp;            add(getBorders(), i, level.length + 1);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        for (int i = 0; i &lt; level.length + 2; i++) {</b>
+<b class="nc">&nbsp;            add(getBorders(), level.length + 1, i);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Omvandlar värdena i arrayen av siffror till olika grafiska komponenter baserat på vilken siffra en position har.
+&nbsp;     * Exempelvis så representerar 1:or väg, 0:or väggar, och 7:or hjärtan osv.
+&nbsp;     */
+&nbsp;    public void setupLevel() {
+<b class="nc">&nbsp;        for (int i = 0; i &lt; level.length; i++) {</b>
+<b class="nc">&nbsp;            for (int j = 0; j &lt; level.length; j++) {</b>
+&nbsp;
+<b class="nc">&nbsp;                if (level[i][j] == 1) {</b>
+<b class="nc">&nbsp;                    add(getPath(),j + 1,i + 1);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                else if (level[i][j] == 0){</b>
+<b class="nc">&nbsp;                    add(getWall(),j + 1,i + 1);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                else if (level[i][j] == 2){</b>
+<b class="nc">&nbsp;                    add(getStart(),j + 1,i + 1);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                else if (level[i][j] == 3){</b>
+<b class="nc">&nbsp;                    add(getGoal(),j + 1,i + 1);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                else if (level[i][j] == 4){</b>
+<b class="nc">&nbsp;                    add(getPath(),j + 1,i + 1);</b>
+<b class="nc">&nbsp;                    add(addCollectible(),j + 1,i + 1);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                else if (level[i][j] == 5){</b>
+<b class="nc">&nbsp;                    add(getPath(),j + 1,i + 1);</b>
+<b class="nc">&nbsp;                    add(addPickAxe(),j + 1,i + 1);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                else if (level[i][j] == 6){</b>
+<b class="nc">&nbsp;                    add(getBreakableWall(),j + 1,i + 1);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                else if (level[i][j] == 7){</b>
+<b class="nc">&nbsp;                    add(getPath(),j + 1,i + 1);</b>
+<b class="nc">&nbsp;                    add(addHeartCrystal(),j + 1,i + 1);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Instansierar de olika bilderna som används som grafik inuti spelet.
+&nbsp;     * Baserad på value så sätts bilderna till en specifik folder per värld.
+&nbsp;     * @param value Den aktuella världen.
+&nbsp;     */
+&nbsp;    public void setupImages(int value){
+&nbsp;
+<b class="nc">&nbsp;        String folder = &quot;&quot;;</b>
+&nbsp;
+<b class="nc">&nbsp;        if (value == 0) {</b>
+<b class="nc">&nbsp;            folder = &quot;forest&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (value == 1) {</b>
+<b class="nc">&nbsp;            folder = &quot;underground&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (value == 2) {</b>
+<b class="nc">&nbsp;            folder = &quot;lava&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if(value == 3) {</b>
+<b class="nc">&nbsp;            folder = &quot;cloud&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if(value == 4) {</b>
+<b class="nc">&nbsp;            folder = &quot;desert&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if(value == 5) {</b>
+<b class="nc">&nbsp;            folder = &quot;space&quot;;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        path = new Image(&quot;file:files/&quot; + folder + &quot;/path.png&quot;, squareSize, squareSize, false, false);</b>
+<b class="nc">&nbsp;        goal = new Image(&quot;file:files/&quot; + folder + &quot;/goal.png&quot;, squareSize, squareSize, false, false);</b>
+<b class="nc">&nbsp;        diamond = new Image(&quot;file:files/&quot; + folder + &quot;/collectible.png&quot;, squareSize, squareSize, false, false);</b>
+<b class="nc">&nbsp;        start = new Image(&quot;file:files/&quot; + folder + &quot;/start.png&quot;, squareSize, squareSize, false, false);</b>
+<b class="nc">&nbsp;        pickAxeImage = new Image(&quot;file:files/items/pickaxe.png&quot;, squareSize, squareSize, false, false);</b>
+<b class="nc">&nbsp;        heart = new Image(&quot;file:files/items/heart.png&quot;, squareSize, squareSize, false, false);</b>
+<b class="nc">&nbsp;        if (value == 3) {</b>
+<b class="nc">&nbsp;            breakableWall = new Image(&quot;file:files/cloud/breakablewall.png&quot;, squareSize, squareSize, false, false);</b>
+&nbsp;        }
+&nbsp;        else {
+<b class="nc">&nbsp;            breakableWall = new Image(&quot;file:files/breakablewall.png&quot;, squareSize, squareSize, false, false);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if(value!=5){</b>
+<b class="nc">&nbsp;            border = new Image(&quot;file:files/&quot; + folder + &quot;/border.png&quot;, squareSize, squareSize, false, false);</b>
+<b class="nc">&nbsp;            wall = new Image(&quot;file:files/&quot; + folder + &quot;/wall.png&quot;, squareSize, squareSize, false, false);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * En metod som skapar ett objekt av label som representerar en vägg.
+&nbsp;     * @return Returnerar en label.
+&nbsp;     */
+&nbsp;    public Label getWall() {
+<b class="nc">&nbsp;        Label label = new Label();</b>
+<b class="nc">&nbsp;        ImageView wallView = new ImageView(wall);</b>
+<b class="nc">&nbsp;        wallView.setFitHeight(squareSize);</b>
+<b class="nc">&nbsp;        wallView.setFitWidth(squareSize);</b>
+<b class="nc">&nbsp;        label.setGraphic(wallView);</b>
+<b class="nc">&nbsp;        label.setOnMouseEntered(e -&gt; enteredWall(e));</b>
+<b class="nc">&nbsp;        label.setOnMouseExited(e -&gt; exitedLabel(e));</b>
+<b class="nc">&nbsp;        return label;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * En metod som skapar ett objekt av label som representerar en väg.
+&nbsp;     * @return Returnerar en label.
+&nbsp;     */
+&nbsp;    private Label getPath() {
+<b class="nc">&nbsp;        Label label = new Label();</b>
+<b class="nc">&nbsp;        ImageView pathView = new ImageView(path);</b>
+<b class="nc">&nbsp;        pathView.setFitHeight(squareSize);</b>
+<b class="nc">&nbsp;        pathView.setFitWidth(squareSize);</b>
+<b class="nc">&nbsp;        label.setGraphic(pathView);</b>
+<b class="nc">&nbsp;        return label;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * En metod som skapar ett objekt av label som representerar en border.
+&nbsp;     * @return Returnerar en label.
+&nbsp;     */
+&nbsp;    private Label getBorders() {
+<b class="nc">&nbsp;        Label label = new Label();</b>
+<b class="nc">&nbsp;        ImageView borderView = new ImageView(border);</b>
+<b class="nc">&nbsp;        borderView.setFitHeight(squareSize);</b>
+<b class="nc">&nbsp;        borderView.setFitWidth(squareSize);</b>
+<b class="nc">&nbsp;        label.setGraphic(borderView);</b>
+<b class="nc">&nbsp;        label.setOnMouseEntered(e -&gt; enteredWall(e));</b>
+<b class="nc">&nbsp;        label.setOnMouseExited(e -&gt; exitedLabel(e));</b>
+<b class="nc">&nbsp;        return label;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * En metod som skapar ett objekt av label som representerar en förstörbar vägg.
+&nbsp;     * @return Returnerar en label.
+&nbsp;     */
+&nbsp;    private Label getBreakableWall() {
+<b class="nc">&nbsp;        Label label = new Label();</b>
+<b class="nc">&nbsp;        ImageView borderView = new ImageView(breakableWall);</b>
+<b class="nc">&nbsp;        borderView.setFitHeight(squareSize);</b>
+<b class="nc">&nbsp;        borderView.setFitWidth(squareSize);</b>
+<b class="nc">&nbsp;        label.setGraphic(borderView);</b>
+<b class="nc">&nbsp;        label.setOnMouseEntered(e -&gt; enteredBreakableWall(e));</b>
+<b class="nc">&nbsp;        return label;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * En metod som skapar ett objekt av label som representerar ett mål.
+&nbsp;     * @return Returnerar en label.
+&nbsp;     */
+&nbsp;    private Label getGoal() {
+<b class="nc">&nbsp;        Label label = new Label();</b>
+<b class="nc">&nbsp;        ImageView borderView = new ImageView(goal);</b>
+<b class="nc">&nbsp;        borderView.setFitHeight(squareSize);</b>
+<b class="nc">&nbsp;        borderView.setFitWidth(squareSize);</b>
+<b class="nc">&nbsp;        label.setGraphic(borderView);</b>
+<b class="nc">&nbsp;        label.setOnMouseEntered(e -&gt; {</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                enteredGoal();</b>
+<b class="nc">&nbsp;            } catch (FileNotFoundException | InterruptedException fileNotFoundException) {</b>
+<b class="nc">&nbsp;                fileNotFoundException.printStackTrace();</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        });
+<b class="nc">&nbsp;        return label;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * En metod som skapar ett objekt av label som representerar start.
+&nbsp;     * @return Returnerar en label.
+&nbsp;     */
+&nbsp;    private Label getStart() {
+<b class="nc">&nbsp;        Label label = new Label();</b>
+<b class="nc">&nbsp;        ImageView borderView = new ImageView(start);</b>
+<b class="nc">&nbsp;        borderView.setFitHeight(squareSize);</b>
+<b class="nc">&nbsp;        borderView.setFitWidth(squareSize);</b>
+<b class="nc">&nbsp;        label.setGraphic(borderView);</b>
+<b class="nc">&nbsp;        label.setOnMouseClicked(e -&gt; startLevel());</b>
+<b class="nc">&nbsp;        return label;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * En metod som skapar ett objekt av label som representerar en collectible.
+&nbsp;     * @return Returnerar en label.
+&nbsp;     */
+&nbsp;    public Label addCollectible() {
+<b class="nc">&nbsp;        Label collectible = new Label();</b>
+<b class="nc">&nbsp;        ImageView borderView = new ImageView(diamond);</b>
+<b class="nc">&nbsp;        borderView.setFitHeight(squareSize);</b>
+<b class="nc">&nbsp;        borderView.setFitWidth(squareSize);</b>
+<b class="nc">&nbsp;        Glow glow = new Glow();</b>
+<b class="nc">&nbsp;        glow.setLevel(0.7);</b>
+<b class="nc">&nbsp;        borderView.setEffect(glow);</b>
+<b class="nc">&nbsp;        collectible.setStyle(&quot;fx-background-color: transparent;&quot;);</b>
+<b class="nc">&nbsp;        collectible.setGraphic(borderView);</b>
+<b class="nc">&nbsp;        collectible.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseListener);</b>
+<b class="nc">&nbsp;        collectibles.add(collectible);</b>
+<b class="nc">&nbsp;        return collectible;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * En metod som skapar ett objekt av label som representerar ett spelarliv.
+&nbsp;     * @return Returnerar en label.
+&nbsp;     */
+&nbsp;    public Label addHeartCrystal() {
+<b class="nc">&nbsp;        Label heartCrystal = new Label();</b>
+<b class="nc">&nbsp;        ImageView borderView = new ImageView(heart);</b>
+<b class="nc">&nbsp;        borderView.setFitHeight(squareSize);</b>
+<b class="nc">&nbsp;        borderView.setFitWidth(squareSize);</b>
+<b class="nc">&nbsp;        Glow glow = new Glow();</b>
+<b class="nc">&nbsp;        glow.setLevel(0.8);</b>
+<b class="nc">&nbsp;        borderView.setEffect(glow);</b>
+<b class="nc">&nbsp;        heartCrystal.setStyle(&quot;fx-background-color: transparent;&quot;);</b>
+<b class="nc">&nbsp;        heartCrystal.setGraphic(borderView);</b>
+<b class="nc">&nbsp;        heartCrystal.setOpacity(0.8);</b>
+<b class="nc">&nbsp;        heartCrystal.setOnMouseEntered(e -&gt; heartCrystalObtained(e));</b>
+<b class="nc">&nbsp;        return heartCrystal;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * När en användare vidrör en label av typen heartCrystal körs denna metod.
+&nbsp;     * Om spelaren har mindre än tre återstående liv inkrementeras variabeln heartCrystals.
+&nbsp;     * @param e Används för att hitta rätt label.
+&nbsp;     */
+&nbsp;
+&nbsp;    private void heartCrystalObtained(MouseEvent e) {
+&nbsp;
+<b class="nc">&nbsp;        Label label = (Label)e.getSource();</b>
+&nbsp;
+<b class="nc">&nbsp;        if (startButtonPressed) {</b>
+<b class="nc">&nbsp;            audioPlayer.playHeartSound();</b>
+<b class="nc">&nbsp;            label.setVisible(false);</b>
+<b class="nc">&nbsp;            if(heartCrystals&lt;3){</b>
+<b class="nc">&nbsp;                heartCrystals++;</b>
+<b class="nc">&nbsp;                rightPanel.changeHeartCounter(String.valueOf(heartCrystals));</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * En metod som skapar ett objekt av label som representerar en yxa.
+&nbsp;     * @return Returnerar en label.
+&nbsp;     */
+&nbsp;    public Label addPickAxe() {
+<b class="nc">&nbsp;        Label pickAxe = new Label();</b>
+<b class="nc">&nbsp;        ImageView borderView = new ImageView(pickAxeImage);</b>
+<b class="nc">&nbsp;        borderView.setFitHeight(squareSize);</b>
+<b class="nc">&nbsp;        borderView.setFitWidth(squareSize);</b>
+<b class="nc">&nbsp;        Glow glow = new Glow();</b>
+<b class="nc">&nbsp;        glow.setLevel(0.7);</b>
+<b class="nc">&nbsp;        borderView.setEffect(glow);</b>
+<b class="nc">&nbsp;        pickAxe.setStyle(&quot;fx-background-color: transparent;&quot;);</b>
+<b class="nc">&nbsp;        pickAxe.setGraphic(borderView);</b>
+<b class="nc">&nbsp;        pickAxe.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseListener);</b>
+<b class="nc">&nbsp;        pickaxes.add(pickAxe);</b>
+<b class="nc">&nbsp;        return pickAxe;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Om en spelare vidrör en vägg med muspekaren körs denna metod.
+&nbsp;     * Om spelrundan är aktiverad förlorar spelaren ett liv.
+&nbsp;     * Om spelaren endast har ett återstående liv kvar vid kollisionen körs metoden gameOver.
+&nbsp;     * @param e Används för att hitta rätt label.
+&nbsp;     */
+&nbsp;    public void enteredWall(MouseEvent e) {
+<b class="nc">&nbsp;        Label label = (Label)e.getSource();</b>
+<b class="nc">&nbsp;        FadeTransition fade = new FadeTransition();</b>
+<b class="nc">&nbsp;        fade.setNode(label);</b>
+<b class="nc">&nbsp;        fade.setDuration(Duration.seconds(0.3));</b>
+<b class="nc">&nbsp;        fade.setFromValue(10);</b>
+<b class="nc">&nbsp;        fade.setToValue(0.6);</b>
+<b class="nc">&nbsp;        fade.play();</b>
+&nbsp;
+<b class="nc">&nbsp;        if (startButtonPressed) {</b>
+&nbsp;
+<b class="nc">&nbsp;            heartCrystals--;</b>
+<b class="nc">&nbsp;            rightPanel.changeHeartCounter(String.valueOf(heartCrystals));</b>
+&nbsp;
+<b class="nc">&nbsp;            if (heartCrystals == 0) {</b>
+<b class="nc">&nbsp;                gameOver();</b>
+&nbsp;            }
+<b class="nc">&nbsp;            audioPlayer.playDeathSound();</b>
+<b class="nc">&nbsp;            startButtonPressed = false;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Om en spelare vidrör ett spöke med muspekaren körs denna metod.
+&nbsp;     * Om spelrundan är aktiverad förlorar spelaren ett liv.
+&nbsp;     * Om spelaren endast har ett återstående liv kvar vid kollisionen körs metoden gameOver.
+&nbsp;     * @param e
+&nbsp;     */
+&nbsp;    public void enteredGhost(MouseEvent e){
+<b class="nc">&nbsp;        ImageView view = (ImageView) e.getSource();</b>
+<b class="nc">&nbsp;        FadeTransition fade = new FadeTransition();</b>
+<b class="nc">&nbsp;        fade.setNode(view);</b>
+<b class="nc">&nbsp;        fade.setDuration(Duration.seconds(1));</b>
+<b class="nc">&nbsp;        fade.setFromValue(10);</b>
+<b class="nc">&nbsp;        fade.setToValue(0.6);</b>
+<b class="nc">&nbsp;        fade.setToValue(10);</b>
+<b class="nc">&nbsp;        fade.play();</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        if (startButtonPressed) {</b>
+<b class="nc">&nbsp;            audioPlayer.playMobSound();</b>
+<b class="nc">&nbsp;            audioPlayer.playDeathSound();</b>
+<b class="nc">&nbsp;            heartCrystals--;</b>
+<b class="nc">&nbsp;            rightPanel.changeHeartCounter(String.valueOf(heartCrystals));</b>
+&nbsp;
+<b class="nc">&nbsp;            if (heartCrystals == 0) {</b>
+<b class="nc">&nbsp;                gameOver();</b>
+&nbsp;            }
+<b class="nc">&nbsp;            startButtonPressed = false;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Avslutar spelrundan och kör metoden gameOver i mainProgram.
+&nbsp;     */
+&nbsp;    private void gameOver() {
+<b class="nc">&nbsp;        audioPlayer.playGameOverSound();</b>
+<b class="nc">&nbsp;        audioPlayer.stopMusic();</b>
+<b class="nc">&nbsp;        mainProgram.gameOver();</b>
+<b class="nc">&nbsp;        rightPanel.pauseClock();</b>
+<b class="nc">&nbsp;        gameStarted = true;</b>
+<b class="nc">&nbsp;        time.setGameOver(true);</b>
+<b class="nc">&nbsp;        rightPanel.setGameOver(true);</b>
+<b class="nc">&nbsp;        time = null;</b>
+<b class="nc">&nbsp;        rightPanel.removePickaxe();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Om spelrundan är aktiverad och spelaren har plockat upp alla collectibles startas nästa nivå.
+&nbsp;     * @throws FileNotFoundException
+&nbsp;     * @throws InterruptedException
+&nbsp;     */
+&nbsp;    public void enteredGoal() throws FileNotFoundException, InterruptedException {
+<b class="nc">&nbsp;        if (startButtonPressed &amp;&amp; allCollectiblesObtained) {</b>
+<b class="nc">&nbsp;            audioPlayer.stopClockSound();</b>
+<b class="nc">&nbsp;            audioPlayer.playGoalSound();</b>
+<b class="nc">&nbsp;            nextLevel();</b>
+<b class="nc">&nbsp;            rightPanel.pauseClock();</b>
+<b class="nc">&nbsp;            rightPanel.setTheTime(seconds);</b>
+<b class="nc">&nbsp;            gameStarted = true;</b>
+<b class="nc">&nbsp;            time.setGameOver(true);</b>
+<b class="nc">&nbsp;            time = null;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Baserad på den aktuella världen väljer programmmet vilken nivå som ska spelas.
+&nbsp;     * @throws FileNotFoundException
+&nbsp;     * @throws InterruptedException
+&nbsp;     */
+&nbsp;    public void nextLevel() throws FileNotFoundException, InterruptedException {
+&nbsp;
+<b class="nc">&nbsp;        if (world == 0) {</b>
+<b class="nc">&nbsp;            mainProgram.nextWorld1Level(currentLevel, heartCrystals);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (world == 1) {</b>
+<b class="nc">&nbsp;            mainProgram.nextWorld2Level(currentLevel, heartCrystals);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (world == 2) {</b>
+<b class="nc">&nbsp;            mainProgram.nextWorld3Level(currentLevel, heartCrystals);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (world == 3) {</b>
+<b class="nc">&nbsp;            mainProgram.nextWorld4Level(currentLevel, heartCrystals);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (world == 4) {</b>
+<b class="nc">&nbsp;            mainProgram.nextWorld5Level(currentLevel, heartCrystals);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (world == 5) {</b>
+<b class="nc">&nbsp;            mainProgram.nextWorld6Level(currentLevel, heartCrystals);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Startar spelrundan och timern.
+&nbsp;     */
+&nbsp;    public void startLevel() {
+&nbsp;
+<b class="nc">&nbsp;        if (!totalTimeStarted){</b>
+<b class="nc">&nbsp;            rightPanel.startTotalTimer();</b>
+<b class="nc">&nbsp;            rightPanel.setTimerIsStarted(true);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (!gameStarted){</b>
+<b class="nc">&nbsp;            rightPanel.resumeClock();</b>
+<b class="nc">&nbsp;            gameStarted = true;</b>
+<b class="nc">&nbsp;            time = new TimeThread(seconds, rightPanel);</b>
+<b class="nc">&nbsp;            time.setGameOver(false);</b>
+<b class="nc">&nbsp;            time.start();</b>
+&nbsp;
+<b class="nc">&nbsp;        }else if (startNotClickedOnce){</b>
+<b class="nc">&nbsp;            rightPanel.runClock();</b>
+<b class="nc">&nbsp;            time = new TimeThread(seconds, rightPanel);</b>
+<b class="nc">&nbsp;            time.setGameOver(false);</b>
+<b class="nc">&nbsp;            time.start();</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        totalTimeStarted = true;</b>
+<b class="nc">&nbsp;        startNotClickedOnce = false;</b>
+<b class="nc">&nbsp;        audioPlayer.playStartSound();</b>
+<b class="nc">&nbsp;        startButtonPressed = true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * När muspekaren lämnar en label slutar den att highlightas.
+&nbsp;     * @param e Används för att hitta rätt label.
+&nbsp;     */
+&nbsp;    public void exitedLabel(MouseEvent e) {
+<b class="nc">&nbsp;        Label label = (Label)e.getSource();</b>
+<b class="nc">&nbsp;        FadeTransition fade = new FadeTransition();</b>
+<b class="nc">&nbsp;        fade.setNode(label);</b>
+<b class="nc">&nbsp;        fade.setDuration(Duration.seconds(0.3));</b>
+<b class="nc">&nbsp;        fade.setFromValue(0.6);</b>
+<b class="nc">&nbsp;        fade.setToValue(10);</b>
+<b class="nc">&nbsp;        fade.play();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Om spelrundan är startad och spelaren har plockat upp en yxa går det att förstöra väggen.
+&nbsp;     * Om spelrundan är startad och spelaren inte plockat upp en yxa förlorar hen ett liv vid kollision med väggen.
+&nbsp;     * @param e Används för att hitta rätt label.
+&nbsp;     */
+&nbsp;    public void enteredBreakableWall(MouseEvent e) {
+&nbsp;
+<b class="nc">&nbsp;        Label label = (Label)e.getSource();</b>
+<b class="nc">&nbsp;        ImageView pathView = new ImageView(path);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (startButtonPressed) {</b>
+<b class="nc">&nbsp;            if (pickaxeObtained) {</b>
+<b class="nc">&nbsp;                label.setGraphic(pathView);</b>
+<b class="nc">&nbsp;                pickaxeObtained = false;</b>
+<b class="nc">&nbsp;                rightPanel.removePickaxe();</b>
+<b class="nc">&nbsp;                wallDestroyed = true;</b>
+<b class="nc">&nbsp;                audioPlayer.playBreakableWallSound();</b>
+&nbsp;            }
+<b class="nc">&nbsp;            else if (!wallDestroyed) {</b>
+<b class="nc">&nbsp;                enteredWall(e);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * En listener som körs när spelaren plockar upp en collectible eller en yxa.
+&nbsp;     */
+<b class="nc">&nbsp;    private class MouseListener implements EventHandler&lt;MouseEvent&gt; {</b>
+&nbsp;
+&nbsp;        @Override
+&nbsp;        public void handle(MouseEvent e) {
+<b class="nc">&nbsp;            if (startButtonPressed) {</b>
+&nbsp;
+<b class="nc">&nbsp;                for (Label label : pickaxes){</b>
+<b class="nc">&nbsp;                    if (e.getSource()== label){</b>
+<b class="nc">&nbsp;                        audioPlayer.playPickAxeSound();</b>
+<b class="nc">&nbsp;                        label.setVisible(false);</b>
+<b class="nc">&nbsp;                        pickaxeObtained = true;</b>
+<b class="nc">&nbsp;                        rightPanel.addPickaxe();</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                }</b>
+&nbsp;
+<b class="nc">&nbsp;                for (Label label: collectibles) {</b>
+<b class="nc">&nbsp;                    if (e.getSource() == label) {</b>
+<b class="nc">&nbsp;                        audioPlayer.playCollectibleSound();</b>
+<b class="nc">&nbsp;                        label.setVisible(false);</b>
+<b class="nc">&nbsp;                        collectiblesObtained++;</b>
+<b class="nc">&nbsp;                        if (collectiblesObtained == collectibles.size()) {</b>
+<b class="nc">&nbsp;                            allCollectiblesObtained = true;</b>
+&nbsp;                        }
+&nbsp;                    }
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-07 09:19</div>
+</div>
+</body>
+</html>

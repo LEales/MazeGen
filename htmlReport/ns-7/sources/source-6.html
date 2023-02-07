@@ -1,0 +1,146 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > highscoreList</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">view.Menu</a>
+</div>
+
+<h1>Coverage Summary for Class: highscoreList (view.Menu)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">highscoreList</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package view.Menu;
+&nbsp;
+&nbsp;import control.MainProgram;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.scene.image.Image;
+&nbsp;import javafx.scene.layout.*;
+&nbsp;import javafx.scene.paint.Color;
+&nbsp;import javafx.scene.text.Font;
+&nbsp;import javafx.scene.text.FontPosture;
+&nbsp;import view.AudioPlayer;
+&nbsp;
+&nbsp;public class highscoreList extends VBox{
+&nbsp;    private MainProgram mainProgram;
+&nbsp;    private AudioPlayer audioPlayer;
+&nbsp;
+<b class="nc">&nbsp;    public highscoreList(MainProgram mainProgram, AudioPlayer audioPlayer) {</b>
+<b class="nc">&nbsp;        this.audioPlayer = audioPlayer;</b>
+<b class="nc">&nbsp;        this.mainProgram = mainProgram;</b>
+<b class="nc">&nbsp;        this.setBackground(new Background(setBackground()));</b>
+<b class="nc">&nbsp;        setupHighscoreList();</b>
+&nbsp;    }
+&nbsp;    public int setupHighscoreList (){
+&nbsp;        //TODO fixa så att den läser in från .dat filen
+<b class="nc">&nbsp;        for (int i = 0; i &lt; 10; i++) {</b>
+<b class="nc">&nbsp;            Label label = createLabels(&quot;eeeeeeee&quot;);</b>
+<b class="nc">&nbsp;            this.getChildren().add(i,label );</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return this.getChildren().size();</b>
+&nbsp;    }
+&nbsp;    public Label createLabels(String player){
+<b class="nc">&nbsp;        Label label2 = new Label(player);</b>
+<b class="nc">&nbsp;        label2.setTranslateX(350);</b>
+<b class="nc">&nbsp;        label2.setTextFill(Color.color(1,1,1));</b>
+<b class="nc">&nbsp;        label2.setFont(Font.font(&quot;verdana&quot;, null, FontPosture.REGULAR,20));</b>
+<b class="nc">&nbsp;        return label2;</b>
+&nbsp;    }
+&nbsp;    public BackgroundImage setBackground(){
+<b class="nc">&nbsp;        BackgroundImage menuBackground = new BackgroundImage(new Image(&quot;file:files/MenuBackground.jpg&quot;,800,600,false,true),</b>
+&nbsp;                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+&nbsp;                BackgroundSize.DEFAULT);
+<b class="nc">&nbsp;        return menuBackground;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-07 09:19</div>
+</div>
+</body>
+</html>
