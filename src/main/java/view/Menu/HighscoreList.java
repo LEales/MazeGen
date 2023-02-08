@@ -33,7 +33,7 @@ public class HighscoreList extends VBox{
     private ImageView sutupImage() {
         image = new Image("file:files/texts/Highscore.png", 255, 33, false, false);
         imageView = new ImageView(image);
-        imageView.setTranslateX(300);
+        imageView.setTranslateX(270);
         imageView.setTranslateY(-200);
         return imageView;
     }
@@ -71,10 +71,11 @@ public class HighscoreList extends VBox{
 
         for (int i = 0; i < 10; i++) {
             if (scoreList[i]!=null) {
+
                 Label label = createLabels((i+1)+": "+scoreList[i].getPlayer()+ " PLAYERS TIME: "+ scoreList[i].getTotalTimeInSeconds());
                 this.getChildren().add(i, label);
             }else {
-                Label label = createLabels((i+1)+": TO BE DECIDED");
+                Label label = createLabels((i+1)+": ");
                 this.getChildren().add(i, label);
             }
         }
@@ -82,9 +83,9 @@ public class HighscoreList extends VBox{
     }
     public Label createLabels(String player){
         Label label2 = new Label(player);
-        label2.setTranslateX(300);
+        label2.setTranslateX(280);
         label2.setTranslateY(165);
-        label2.setTextFill(Color.color(1,.4,1));
+        label2.setTextFill(Color.color(1,1,1));
         label2.setFont(Font.font("verdana", null, FontPosture.REGULAR,20));
         return label2;
     }

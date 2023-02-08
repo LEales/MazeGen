@@ -212,8 +212,11 @@ public class MainProgram extends Application {
 
         }
         else if (level == 2) {
-            rightPanel.changeLevelCounter("13");
-            mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel13(), 3, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
+            victoryScreen.setTime(totTime.setGameOver(true));
+            audioPlayer.stopMusic();
+            showVictoryScene();
+           // rightPanel.changeLevelCounter("13");
+           // mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel13(), 3, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
         }
         else if (level == 3) {
             rightPanel.changeLevelCounter("14");

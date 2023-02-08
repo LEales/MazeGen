@@ -2,8 +2,7 @@ package view;
 
 import control.MainProgram;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import view.Menu.PlayerScore;
@@ -13,7 +12,7 @@ import java.io.*;
 public class VictoryScreen extends Pane {
     private MainProgram mainProgram;
     private AudioPlayer audioPlayer;
-    private TextArea textArea;
+    private TextField textField;
     private int[] totalTime;
     private int scoreListCounter;
 
@@ -29,13 +28,13 @@ public class VictoryScreen extends Pane {
                 BackgroundSize.DEFAULT);
     }
 
-    private TextArea setupTextArea() {
-        textArea = new TextArea();
-        textArea.setMaxHeight(50);
-        textArea.setMaxWidth(450);
-        textArea.setTranslateY(300);
-        textArea.setTranslateX(200);
-        return textArea;
+    private TextField setupTextArea() {
+        textField = new TextField();
+        textField.setMaxHeight(50);
+        textField.setMaxWidth(450);
+        textField.setTranslateY(300);
+        textField.setTranslateX(200);
+        return textField;
     }
 
     private Button setupSendButton() {
@@ -50,7 +49,7 @@ public class VictoryScreen extends Pane {
 
     private void addToScoreList() {
         String obj = "files/ScoreList.dat";
-        PlayerScore playerScore = new PlayerScore(textArea.getText(),totalTime[0],totalTime[1],totalTime[2]);
+        PlayerScore playerScore = new PlayerScore(textField.getText(),totalTime[0],totalTime[1],totalTime[2]);
         PlayerScore[] scoreList = new PlayerScore[10];
         PlayerScore player;
         int counter = 0;
@@ -129,7 +128,7 @@ public class VictoryScreen extends Pane {
                 throw new RuntimeException(e);
             }
         }
-        mainProgram.addToScoreList(textArea.getText(),totalTime);
+        mainProgram.addToScoreList(textField.getText(),totalTime);
         mainProgram.showHighScoreList();
     }
 
