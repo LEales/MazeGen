@@ -67,20 +67,7 @@ public class VictoryScreen extends Pane {
             int indexToChangePLayer =11;
             indexToChangePLayer = findIndex(scoreList, indexToChangePLayer,playerToAdd);
             scoreList = checkIfToAddNewPlayer(indexToChangePLayer,scoreList,playerToAdd);
-
-            try {
-                ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-                for (PlayerScore score : scoreList) {
-                    if (score != null) {
-                        oos.writeObject(score);
-                    }
-                }
-                oos.flush();
-                oos.close();
-                scoreListCounter++;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            addScore(scoreList, file);
         }
         mainProgram.addToScoreList(textField.getText(),totalTime);
         mainProgram.showHighScoreList();
@@ -102,7 +89,6 @@ public class VictoryScreen extends Pane {
     }
 
     private int findIndex(PlayerScore[] scoreList, int indexToChangePLayer, PlayerScore playerToAdd) {
-
         for (int i = 0; i < scoreList.length ; i++) {
             if (scoreList[i]!=null) {
                 if (playerToAdd.getTotalTimeInSeconds() < scoreList[i].getTotalTimeInSeconds()){
@@ -114,7 +100,6 @@ public class VictoryScreen extends Pane {
     }
 
     private void addToScoreList(PlayerScore[] scoreList, int counter, PlayerScore playerToAdd, String file) {
-
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
 
@@ -132,7 +117,22 @@ public class VictoryScreen extends Pane {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    private void addScore(PlayerScore[] scoreList, String file) {
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+            for (PlayerScore score : scoreList) {
+                if (score != null) {
+                    oos.writeObject(score);
+                }
+            }
+            oos.flush();
+            oos.close();
+            scoreListCounter++;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void sortList(PlayerScore[] scoreList) {
