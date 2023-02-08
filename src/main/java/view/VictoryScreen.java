@@ -43,17 +43,17 @@ public class VictoryScreen extends Pane {
         button.setMaxWidth(50);
         button.setTranslateY(350);
         button.setTranslateX(200);
-        button.setOnMouseClicked(e-> addToScoreList());
+        button.setOnMouseClicked(e-> updateToScoreList());
         return button;
     }
 
-    private void addToScoreList() {
-        String obj = "files/ScoreList.dat";
-        PlayerScore playerScore = new PlayerScore(textField.getText(),totalTime[0],totalTime[1],totalTime[2]);
+    private void updateToScoreList() {
+        String file = "files/ScoreList.dat";
+        PlayerScore playerToAdd = new PlayerScore(textField.getText(),totalTime[0],totalTime[1],totalTime[2]);
         PlayerScore[] scoreList = new PlayerScore[10];
         PlayerScore player;
         int counter = 0;
-        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(obj)))){
+        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))){
             while((player = (PlayerScore)ois.readObject())!=null){
                 scoreList[counter] = player;
                 counter++;
@@ -62,60 +62,14 @@ public class VictoryScreen extends Pane {
             System.out.println("end of file");
         }
         if (scoreListCounter<10){
-            try {
-                ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(obj)));
-
-                scoreList[counter] = playerScore;
-                for (int i = 0; i < scoreList.length; i++) {
-                    for (int j = i+1; j < scoreList.length; j++) {
-                        if (scoreList[i]!=null && scoreList[j]!=null) {
-                            if (scoreList[i].getTotalTimeInSeconds() > scoreList[j].getTotalTimeInSeconds()) {
-                                PlayerScore temp = scoreList[i];
-                                scoreList[i] = scoreList[j];
-                                scoreList[j] = temp;
-                            }
-                        }
-                    }
-                }
-
-                for (PlayerScore current : scoreList) {
-                    if (current!=null) {
-                        oos.writeObject(current);
-                    }
-                }
-
-                oos.flush();
-                oos.close();
-                scoreListCounter++;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
+           addToScoreList(scoreList, counter,playerToAdd,file);
         } else {
             int indexToChangePLayer =11;
-
-            for (int i = 0; i < scoreList.length ; i++) {
-                if (scoreList[i]!=null) {
-                    if (playerScore.getTotalTimeInSeconds() < scoreList[i].getTotalTimeInSeconds()){
-                        indexToChangePLayer =i;
-                    }
-                }
-            }
-
-            if (indexToChangePLayer<=10) {
-                for (int i = scoreList.length - 1; i >= indexToChangePLayer; i--) {
-                    if (scoreList[i] != null) {
-                        if (i == indexToChangePLayer) {
-                            scoreList[i] = playerScore;
-                        } else {
-                            scoreList[i] = scoreList[i - 1];
-                        }
-                    }
-                }
-            }
+            indexToChangePLayer = findIndex(scoreList, indexToChangePLayer,playerToAdd);
+            scoreList = checkIfToAddNewPlayer(indexToChangePLayer,scoreList,playerToAdd);
 
             try {
-                ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(obj)));
+                ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
                 for (PlayerScore score : scoreList) {
                     if (score != null) {
                         oos.writeObject(score);
@@ -130,6 +84,69 @@ public class VictoryScreen extends Pane {
         }
         mainProgram.addToScoreList(textField.getText(),totalTime);
         mainProgram.showHighScoreList();
+    }
+
+    private PlayerScore[] checkIfToAddNewPlayer(int indexToChangePLayer, PlayerScore[] scoreList, PlayerScore playerToAdd) {
+        if (indexToChangePLayer<=10) {
+            for (int i = scoreList.length - 1; i >= indexToChangePLayer; i--) {
+                if (scoreList[i] != null) {
+                    if (i == indexToChangePLayer) {
+                        scoreList[i] = playerToAdd;
+                    } else {
+                        scoreList[i] = scoreList[i - 1];
+                    }
+                }
+            }
+        }
+        return scoreList;
+    }
+
+    private int findIndex(PlayerScore[] scoreList, int indexToChangePLayer, PlayerScore playerToAdd) {
+
+        for (int i = 0; i < scoreList.length ; i++) {
+            if (scoreList[i]!=null) {
+                if (playerToAdd.getTotalTimeInSeconds() < scoreList[i].getTotalTimeInSeconds()){
+                    indexToChangePLayer =i;
+                }
+            }
+        }
+        return indexToChangePLayer;
+    }
+
+    private void addToScoreList(PlayerScore[] scoreList, int counter, PlayerScore playerToAdd, String file) {
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+
+            scoreList[counter] = playerToAdd;
+            sortList(scoreList);
+
+            for (PlayerScore current : scoreList) {
+                if (current!=null) {
+                    oos.writeObject(current);
+                }
+            }
+            oos.flush();
+            oos.close();
+            scoreListCounter++;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private void sortList(PlayerScore[] scoreList) {
+        for (int i = 0; i < scoreList.length; i++) {
+            for (int j = i+1; j < scoreList.length; j++) {
+                if (scoreList[i]!=null && scoreList[j]!=null) {
+                    if (scoreList[i].getTotalTimeInSeconds() > scoreList[j].getTotalTimeInSeconds()) {
+                        PlayerScore temp = scoreList[i];
+                        scoreList[i] = scoreList[j];
+                        scoreList[j] = temp;
+                    }
+                }
+            }
+        }
     }
 
     public int[] setTime(int[] time) {
