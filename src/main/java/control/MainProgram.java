@@ -102,7 +102,9 @@ public class MainProgram extends Application {
         victoryScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                victoryScreen.setTextCurrent(event.getCode());
+                System.out.println(event.getCode());
+                String s = String.valueOf(event.getCode());
+                victoryScreen.setTextCurrent(s);
             }
         });
 

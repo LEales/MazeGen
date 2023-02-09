@@ -1,12 +1,12 @@
 package view;
 
 import control.MainProgram;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import model.PlayerScore;
 
@@ -22,8 +22,9 @@ public class VictoryScreen extends Pane {
     private Label first;
     private Label second;
     private Label third;
-
+    private int backspcaeCheck=0;
     private String current;
+    private String remover = "third";
 
 
     public VictoryScreen(MainProgram mainProgram, AudioPlayer audioPlayer) {
@@ -42,14 +43,13 @@ public class VictoryScreen extends Pane {
         this.getChildren().add(2,third);
         current = first.getId();
 
-        this.setOnMouseClicked(e->mainProgram.changeToMenu());
+        this.setOnMouseClicked(e->mainProgram.showHighScoreList());
         //this.getChildren().addAll(setupTextArea(),setupSendButton());
     }
     public BackgroundImage setBackground(){
         return new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-    }
+                BackgroundSize.DEFAULT);    }
 
     private Label setupTextArea(String text, int xValue, int yValue) {
         Font font = Font.loadFont("file:files/fonts/PressStart2P.ttf",50);
@@ -57,6 +57,7 @@ public class VictoryScreen extends Pane {
         label.setTranslateX(xValue);
         label.setTranslateY(yValue);
         label.setFont(font);
+        label.setTextFill(Color.web("#ffffff"));
         /*textField = new TextField();
         textField.setMaxHeight(50);
         textField.setMaxWidth(450);
@@ -65,20 +66,11 @@ public class VictoryScreen extends Pane {
         return label;
     }
 
-    private Button setupSendButton() {
-        Button button = new Button("Send");
-        button.setMaxHeight(25);
-        button.setMaxWidth(50);
-        button.setTranslateY(350);
-        button.setTranslateX(200);
-        button.setOnMouseClicked(e-> updateToScoreList());
-        return button;
-    }
-
     private void updateToScoreList() {
 
         String file = "files/ScoreList.dat";
-        PlayerScore playerToAdd = new PlayerScore(textField.getText(),totalTime[0],totalTime[1],totalTime[2], mainProgram.getLvlCleared());
+        System.out.println(buildName());
+        PlayerScore playerToAdd = new PlayerScore(buildName(),totalTime[0],totalTime[1],totalTime[2], mainProgram.getLvlCleared());
         PlayerScore[] scoreList = new PlayerScore[10];
         PlayerScore player;
         int counter = 0;
@@ -99,6 +91,18 @@ public class VictoryScreen extends Pane {
             addScore(scoreList, file);
         }
         mainProgram.showHighScoreList();
+    }
+
+    private String buildName() {
+
+        Label label;
+        label = (Label) this.getChildren().get(0);
+        String s =label.getText();
+        label = (Label) this.getChildren().get(1);
+        s +=label.getText();
+        label = (Label) this.getChildren().get(2);
+        s += label.getText();
+        return s;
     }
 
     private PlayerScore[] insertNewPlayerToScorelist(int indexToChangePLayer, PlayerScore[] scoreList, PlayerScore playerToAdd) {
@@ -196,32 +200,58 @@ public class VictoryScreen extends Pane {
         return totalTime;
     }
 
-    public void setTextCurrent(KeyCode code) {
-        System.out.println(this.getChildren().get(2));
-        Label label = (Label) this.getChildren().get(2);
-        System.out.println(label.getId());
+    public void setTextCurrent(String code) {
+
+        if (code.equals("BACK_SPACE")){
+            current="BACK_SPACE";
+        }else if (code.equals("ENTER")){
+            current = "ENTER";
+        }
         switch (current){
             case "first":
                 this.getChildren().remove(0);
-                this.getChildren().add(0,setupTextArea(code.getChar(),315,200));
-                current = second.getId();
+                this.getChildren().add(0,setupTextArea(code,315,200));
+                current = "second";
+                backspcaeCheck ++;
                 break;
             case "second":
                 this.getChildren().remove(1);
-                this.getChildren().add(1,setupTextArea(code.getChar(),375,200));
-                current = third.getId();
+                this.getChildren().add(1,setupTextArea(code,375,200));
+                current = "third";
+                backspcaeCheck ++;
                 break;
             case "third":
                 this.getChildren().remove(2);
-                this.getChildren().add(2,setupTextArea(code.getChar(),435,200));
-                break;
-            case "BACK_SPACE":
-                if (current.equals("third") ){
-                    this.getChildren().remove(2);
-                    this.getChildren().add(2,setupTextArea("_",435,200));
+                this.getChildren().add(2,setupTextArea(code,435,200));
+                if (backspcaeCheck<2){
+                    backspcaeCheck ++;
                 }
                 break;
-
+            case "BACK_SPACE":
+                if (backspcaeCheck==2){
+                    this.getChildren().remove(2);
+                    this.getChildren().add(2,setupTextArea("_",435,200));
+                    backspcaeCheck --;
+                    current = "third";
+                }else if (backspcaeCheck==1) {
+                    this.getChildren().remove(1);
+                    this.getChildren().add(1, setupTextArea("_", 375, 200));
+                    backspcaeCheck--;
+                    current = "second";
+                }
+                else if (backspcaeCheck==0){
+                    this.getChildren().remove(0);
+                    this.getChildren().add(0,setupTextArea("_",315,200));
+                    current ="first";
+                }
+                break;
+            case "ENTER":
+                updateToScoreList();
+                resetLabels(0, 315, 200);
+                resetLabels(1, 375, 200);
+                resetLabels(2,435,200);
+                current="first";
+                break;
         }
 
 
@@ -243,4 +273,12 @@ public class VictoryScreen extends Pane {
         this.getChildren().clear();
         this.getChildren().addAll(current, setupTextArea(second,375,200), setupTextArea(third,435,200));*/
     }
+
+    private Node resetLabels(int i, int xValue, int yValue) {
+        this.getChildren().remove(i);
+        this.getChildren().add(i,setupTextArea("_",xValue,yValue));
+        return this.getChildren().get(i);
+    }
+
+
 }
