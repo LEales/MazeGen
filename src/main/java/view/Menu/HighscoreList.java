@@ -26,7 +26,6 @@ public class HighscoreList extends HBox{
     private ImageView imageView = new ImageView(image);
 
     public HighscoreList(MainProgram mainProgram, AudioPlayer audioPlayer) {
-        setupVBoxes();
         this.setOnMouseClicked(e->backToMenu());
         this.audioPlayer = audioPlayer;
         this.mainProgram = mainProgram;
@@ -70,6 +69,7 @@ public class HighscoreList extends HBox{
     }
 
     public int setupHighscoreList (){
+        setupVBoxes();
         String file = "files/ScoreList.dat";
         PlayerScore[] scoreList = new PlayerScore[10];
         PlayerScore player;
@@ -104,11 +104,12 @@ public class HighscoreList extends HBox{
         return this.getChildren().size();
     }
     public Label createLabels(String text, int positionX, int positionY){
+        Font font = Font.loadFont("file:files/fonts/PressStart2P.ttf",15);
         Label label2 = new Label(text);
         label2.setTranslateX(positionX);
         label2.setTranslateY(positionY);
         label2.setTextFill(Color.color(1,1,1));
-        label2.setFont(Font.font("verdana", null, FontPosture.REGULAR,20));
+        label2.setFont(font);
         return label2;
     }
     public BackgroundImage setBackground(){
