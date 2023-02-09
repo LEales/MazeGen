@@ -7,7 +7,7 @@ import javafx.application.Platform;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import view.Menu.HighscoreList;
-import view.Menu.PlayerScore;
+import model.PlayerScore;
 
 import java.io.File;
 import java.io.FileInputStream;
