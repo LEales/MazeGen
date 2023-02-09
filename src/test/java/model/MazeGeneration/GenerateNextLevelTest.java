@@ -27,18 +27,22 @@ class GenerateNextLevelTest {
     void generateNewMaze10() {
         generateNewMaze(10);
     }
+
     @Test
     void generateNewMaze14() {
         generateNewMaze(14);
     }
+
     @Test
     void generateNewMaze18() {
         generateNewMaze(18);
     }
+
     @Test
     void generateNewMaze28() {
         generateNewMaze(28);
     }
+
     void generateNewMaze(int dim) {
         try {
             Thread.sleep(2000);
@@ -46,6 +50,7 @@ class GenerateNextLevelTest {
             throw new RuntimeException(e);
         }
         for (int i = 0; i < 100; i++) {
+            G.clear();
             Platform.runLater(() -> {
                 MainProgram mp = MainProgram.getMainProgram();
                 try {
@@ -63,20 +68,22 @@ class GenerateNextLevelTest {
             }
             int[][] maze = mg.getMaze();
             Node start = start(maze);
+            G.put(start, new ArrayList<>());
             if (start.equals(new Node(-1, -1))) {
                 fail("No start Node");
             }
             Node end = end(maze);
+            G.put(end, new ArrayList<>());
             if (end.equals(new Node(-1, -1))) {
                 fail("No end Node");
             }
             buildGraph(maze);
+            System.out.println(i);
             assertTrue(dfs(start, end));
         }
     }
 
     private boolean dfs(Node start, Node end) {
-        System.out.println("here");
         Stack<Node> stack = new Stack<>();
         HashSet<Node> visited = new HashSet<>();
         stack.push(start);
@@ -97,7 +104,6 @@ class GenerateNextLevelTest {
     }
 
     private void buildGraph(int[][] maze) {
-        G.clear();
         for (int j = 0; j < maze.length; j++) {
             for (int k = 0; k < maze[j].length; k++) {
                 if (road(j, k, maze)) {
@@ -130,8 +136,12 @@ class GenerateNextLevelTest {
     private void addEdge(Node a, Node b) {
         G.putIfAbsent(a, new ArrayList<>());
         G.putIfAbsent(b, new ArrayList<>());
-        G.get(a).add(b);
-        G.get(b).add(a);
+        if (!G.get(a).contains(b)) {
+            G.get(a).add(b);
+        }
+        if (!G.get(b).contains(a)) {
+            G.get(b).add(a);
+        }
     }
 
     private Node end(int[][] maze) {
