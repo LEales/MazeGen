@@ -1,7 +1,12 @@
 package model.MazeGeneration;
 
+import control.MainProgram;
+import javafx.application.Application;
+import javafx.application.Platform;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,69 +14,56 @@ import java.util.Stack;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MazeGeneratorTest {
-
+class GenerateNextLevelTest {
     HashMap<Node, ArrayList<Node>> G = new HashMap<>();
+    MazeGenerator mg;
 
-    @Test
-    void checkStartAndGoalPain() {
-        for (int i = 0; i < 1000; i++) {
-            MazeGenerator mg = new MazeGenerator(28, true);
-            int[][] maze = mg.getMaze();
-            Node start = start(maze);
-            if (start.equals(new Node(-1,-1))) {
-                fail("No start Node");
-            }
-            Node end = end(maze);
-            if (end.equals(new Node(-1, -1))) {
-                fail("No end Node");
-            }
-            buildGraph(maze);
-            assertTrue(dfs(start, end));
-        }
-    }
-    @Test
-    void checkStartAndGoal18x18() {
-        for (int i = 0; i < 1000; i++) {
-            MazeGenerator mg = new MazeGenerator(18, true);
-            int[][] maze = mg.getMaze();
-            Node start = start(maze);
-            if (start.equals(new Node(-1,-1))) {
-                fail("No start Node");
-            }
-            Node end = end(maze);
-            if (end.equals(new Node(-1, -1))) {
-                fail("No end Node");
-            }
-            buildGraph(maze);
-            assertTrue(dfs(start, end));
-        }
-    }
-    @Test
-    void checkStartAndGoal14x14() {
-        for (int i = 0; i < 1000; i++) {
-            MazeGenerator mg = new MazeGenerator(14, true);
-            int[][] maze = mg.getMaze();
-            Node start = start(maze);
-            if (start.equals(new Node(-1,-1))) {
-                fail("No start Node");
-            }
-            Node end = end(maze);
-            if (end.equals(new Node(-1, -1))) {
-                fail("No end Node");
-            }
-            buildGraph(maze);
-            assertTrue(dfs(start, end));
-        }
+    @BeforeAll
+    static void initJFXRuntime() {
+        new Thread(() -> Application.launch(MainProgram.class)).start();
     }
 
     @Test
-    void checkStartAndGoal10x10() {
-        for (int i = 0; i < 1000; i++) {
-            MazeGenerator mg = new MazeGenerator(10, true);
+    void generateNewMaze10() {
+        generateNewMaze(10);
+    }
+    @Test
+    void generateNewMaze14() {
+        generateNewMaze(14);
+    }
+    @Test
+    void generateNewMaze18() {
+        generateNewMaze(18);
+    }
+    @Test
+    void generateNewMaze28() {
+        generateNewMaze(28);
+    }
+    void generateNewMaze(int dim) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i = 0; i < 100; i++) {
+            Platform.runLater(() -> {
+                MainProgram mp = MainProgram.getMainProgram();
+                try {
+                    mp.changeToRandomize(dim);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                GenerateNextLevel gnl = mp.getGenerateNextLevel();
+                mg = gnl.getMazeGenerator();
+            });
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             int[][] maze = mg.getMaze();
             Node start = start(maze);
-            if (start.equals(new Node(-1,-1))) {
+            if (start.equals(new Node(-1, -1))) {
                 fail("No start Node");
             }
             Node end = end(maze);
@@ -84,6 +76,7 @@ class MazeGeneratorTest {
     }
 
     private boolean dfs(Node start, Node end) {
+        System.out.println("here");
         Stack<Node> stack = new Stack<>();
         HashSet<Node> visited = new HashSet<>();
         stack.push(start);

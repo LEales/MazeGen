@@ -501,4 +501,6 @@ public class MainProgram extends Application {
         return victoryScreen;
     }
 
+    public GenerateNextLevel getGenerateNextLevel() {return generateNextLevel;}
+
 }

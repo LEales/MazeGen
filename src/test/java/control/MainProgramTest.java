@@ -14,14 +14,7 @@ class MainProgramTest {
 
     @BeforeAll
     static void initJFXRuntime() {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Application.launch(MainProgram.class);
-            }
-        }).start();
-
+        new Thread(() -> Application.launch(MainProgram.class)).start();
     }
 
     @Test

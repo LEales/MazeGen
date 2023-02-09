@@ -142,4 +142,8 @@ public class GenerateNextLevel {
         }
         return maze;
     }
+
+    public MazeGenerator getMazeGenerator() {
+        return mazeGenerator;
+    }
 }
