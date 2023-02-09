@@ -63,7 +63,7 @@ public class MainProgram extends Application {
     private Image cursorImage;
 
     public static MainProgram mainProgram;
-
+    private int lvlCleared;
     private TotalTime totTime;
     private boolean totalTimeIsStarted;
 
@@ -158,8 +158,7 @@ public class MainProgram extends Application {
      * @throws FileNotFoundException
      */
     public void changeToCampaign() throws FileNotFoundException {
-
-
+        lvlCleared=0;
         world1Template = new World1Template(world1Maps.getLevel11(), 1, 3, this, rightPanel, 0, audioPlayer, 25);
 
         mainPaneCampaign.setCenter(world1Template);
@@ -191,7 +190,7 @@ public class MainProgram extends Application {
      * Kör en enkel animation med texten "Game Over".
      */
     public void gameOver() {
-        totTime.setGameOver(true);
+        victoryScreen.setTime(totTime.setGameOver(true));
         gameOverScreen = new GameOverScreen(this);
         mainPaneCampaign.getChildren().add(gameOverScreen);
     }
@@ -206,20 +205,27 @@ public class MainProgram extends Application {
     public void nextWorld1Level(int level, int heartCrystals) throws FileNotFoundException, InterruptedException {
 
         if (level == 1) {
+            lvlCleared=11;
             System.out.println("hello");
             rightPanel.changeLevelCounter("12");
             mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel12(), 2, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
 
         }
         else if (level == 2) {
+            lvlCleared = 12;
             rightPanel.changeLevelCounter("13");
             mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel13(), 3, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
         }
         else if (level == 3) {
-            rightPanel.changeLevelCounter("14");
-            mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel14(), 4, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
+            lvlCleared = 13;
+            victoryScreen.setTime(totTime.setGameOver(true));
+            audioPlayer.stopMusic();
+            showVictoryScene();
+            //rightPanel.changeLevelCounter("14");
+            //mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel14(), 4, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
         }
         else if (level == 4) {
+            lvlCleared = 14;
             rightPanel.changeLevelCounter("15");
             mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel15(), 5, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
         }
@@ -242,6 +248,7 @@ public class MainProgram extends Application {
         World2Maps world2Maps = new World2Maps();
 
         if (level == 1) {
+            lvlCleared = 14;
             rightPanel.changeLevelCounter("21");
             mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel21(), 2, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));
             introAnimation = new WorldIntroAnimation("2");
@@ -250,14 +257,17 @@ public class MainProgram extends Application {
             audioPlayer.playWorldIntroSound();
         }
         else if (level == 2) {
+            lvlCleared = 21;
             rightPanel.changeLevelCounter("22");
             mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel22(), 3, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));
         }
         else if (level == 3) {
+            lvlCleared = 22;
             rightPanel.changeLevelCounter("23");
             mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel23(), 4, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));
         }
         else if (level == 4) {
+            lvlCleared = 23;
             rightPanel.changeLevelCounter("24");
             mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel24(), 5, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));
         }
@@ -463,11 +473,6 @@ public class MainProgram extends Application {
         victoryScreen.setTime(totalTime);
     }
 
-    public void addToScoreList(String text, int[] totalTime) {
-        highscoreList.controlList(text,totalTime);
-    }
-
-
     public boolean startTotalTime(boolean b) {
         if (b){
             if (!totalTimeIsStarted) {
@@ -480,6 +485,14 @@ public class MainProgram extends Application {
             }
         }
         return false;
+    }
+
+    public int getLvlCleared() {
+        return lvlCleared;
+    }
+
+    public boolean getMusiIsOn() {
+        return rightPanel.getMusicOn();
     }
     public HighscoreList getHighscoreList() {
         return highscoreList;
