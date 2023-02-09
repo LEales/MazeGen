@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
+import model.PlayerScore;
 import view.AudioPlayer;
 
 import java.io.BufferedInputStream;

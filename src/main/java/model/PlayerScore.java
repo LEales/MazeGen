@@ -1,4 +1,4 @@
-package view.Menu;
+package model;
 
 import java.io.Serializable;
 

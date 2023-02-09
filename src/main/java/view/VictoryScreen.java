@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import view.Menu.PlayerScore;
+import model.PlayerScore;
 
 import java.io.*;
 
