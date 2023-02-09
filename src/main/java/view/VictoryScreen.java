@@ -67,13 +67,13 @@ public class VictoryScreen extends Pane {
         } else {
             int indexToChangePLayer =11;
             indexToChangePLayer = findIndex(scoreList, indexToChangePLayer,playerToAdd);
-            scoreList = checkIfToAddNewPlayer(indexToChangePLayer,scoreList,playerToAdd);
+            scoreList = insertNewPlayerToScorelist(indexToChangePLayer,scoreList,playerToAdd);
             addScore(scoreList, file);
         }
         mainProgram.showHighScoreList();
     }
 
-    private PlayerScore[] checkIfToAddNewPlayer(int indexToChangePLayer, PlayerScore[] scoreList, PlayerScore playerToAdd) {
+    private PlayerScore[] insertNewPlayerToScorelist(int indexToChangePLayer, PlayerScore[] scoreList, PlayerScore playerToAdd) {
         if (indexToChangePLayer<=10) {
             for (int i = scoreList.length - 1; i >= indexToChangePLayer; i--) {
                 if (scoreList[i] != null) {
@@ -89,10 +89,14 @@ public class VictoryScreen extends Pane {
     }
 
     private int findIndex(PlayerScore[] scoreList, int indexToChangePLayer, PlayerScore playerToAdd) {
-        for (int i = 0; i < scoreList.length ; i++) {
+        for (int i = scoreList.length-1; i >= 0 ; i--) {
             if (scoreList[i]!=null) {
-                if (playerToAdd.getTotalTimeInSeconds() < scoreList[i].getTotalTimeInSeconds()){
-                    indexToChangePLayer =i;
+                System.out.println(scoreList[i].getPlayer()+" ---TIME: "+scoreList[i].getTotalTimeInSeconds());
+                if ((scoreList[i].getLvl() <= playerToAdd.getLvl())){
+                    indexToChangePLayer = i;
+                    if (playerToAdd.getTotalTimeInSeconds() < scoreList[i].getTotalTimeInSeconds()){
+                        indexToChangePLayer = i;
+                    }
                 }
             }
         }
@@ -150,7 +154,6 @@ public class VictoryScreen extends Pane {
                             scoreList[j] = temp;
                         }
                     }
-
                 }
             }
         }
