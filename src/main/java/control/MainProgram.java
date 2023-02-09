@@ -1,11 +1,14 @@
 package control;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -92,8 +95,16 @@ public class MainProgram extends Application {
         chooseDimension = new ChooseDimension(this, audioPlayer);
         introScene = new Scene(intro, 800, 600);
         helpScene = new Scene(help, 800, 600);
+
         highscoreScene = new Scene(highscoreList,800,600);
         victoryScene = new Scene(victoryScreen,800,600);
+
+        victoryScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                victoryScreen.setTextCurrent(event.getCode());
+            }
+        });
 
         chooseDimensionScene = new Scene(chooseDimension, 800, 600);
 

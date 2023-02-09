@@ -2,9 +2,12 @@ package view;
 
 import control.MainProgram;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import model.PlayerScore;
 
 import java.io.*;
@@ -16,11 +19,31 @@ public class VictoryScreen extends Pane {
     private int[] totalTime;
     private int scoreListCounter;
 
+    private Label first;
+    private Label second;
+    private Label third;
+
+    private String current;
+
+
     public VictoryScreen(MainProgram mainProgram, AudioPlayer audioPlayer) {
         this.audioPlayer = audioPlayer;
         this.mainProgram = mainProgram;
         this.setBackground(new Background(setBackground()));
-        this.getChildren().addAll(setupTextArea(),setupSendButton());
+
+        first = setupTextArea("_",315,200);
+        second = setupTextArea("_",375,200);
+        third = setupTextArea("_",435,200);
+        first.setId("first");
+        second.setId("second");
+        third.setId("third");
+        this.getChildren().add(0,first);
+        this.getChildren().add(1,second);
+        this.getChildren().add(2,third);
+        current = first.getId();
+
+        this.setOnMouseClicked(e->mainProgram.changeToMenu());
+        //this.getChildren().addAll(setupTextArea(),setupSendButton());
     }
     public BackgroundImage setBackground(){
         return new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
@@ -28,13 +51,18 @@ public class VictoryScreen extends Pane {
                 BackgroundSize.DEFAULT);
     }
 
-    private TextField setupTextArea() {
-        textField = new TextField();
+    private Label setupTextArea(String text, int xValue, int yValue) {
+        Font font = Font.loadFont("file:files/fonts/PressStart2P.ttf",50);
+        Label label = new Label(text);
+        label.setTranslateX(xValue);
+        label.setTranslateY(yValue);
+        label.setFont(font);
+        /*textField = new TextField();
         textField.setMaxHeight(50);
         textField.setMaxWidth(450);
         textField.setTranslateY(300);
-        textField.setTranslateX(200);
-        return textField;
+        textField.setTranslateX(200);*/
+        return label;
     }
 
     private Button setupSendButton() {
@@ -166,5 +194,53 @@ public class VictoryScreen extends Pane {
         totalTime[1] = time[1];
         totalTime[2] = time[2];
         return totalTime;
+    }
+
+    public void setTextCurrent(KeyCode code) {
+        System.out.println(this.getChildren().get(2));
+        Label label = (Label) this.getChildren().get(2);
+        System.out.println(label.getId());
+        switch (current){
+            case "first":
+                this.getChildren().remove(0);
+                this.getChildren().add(0,setupTextArea(code.getChar(),315,200));
+                current = second.getId();
+                break;
+            case "second":
+                this.getChildren().remove(1);
+                this.getChildren().add(1,setupTextArea(code.getChar(),375,200));
+                current = third.getId();
+                break;
+            case "third":
+                this.getChildren().remove(2);
+                this.getChildren().add(2,setupTextArea(code.getChar(),435,200));
+                break;
+            case "BACK_SPACE":
+                if (current.equals("third") ){
+                    this.getChildren().remove(2);
+                    this.getChildren().add(2,setupTextArea("_",435,200));
+                }
+                break;
+
+        }
+
+
+       /* current = setupTextArea(first,315,200);
+        current.setId("first");
+        current.setText(code.getChar());
+        this.getChildren().clear();
+        this.getChildren().addAll(current, setupTextArea(second,375,200), setupTextArea(third,435,200));
+
+        current = setupTextArea(second,315,200);
+        current.setId("second");
+        current.setText(code.getChar());
+        this.getChildren().clear();
+        this.getChildren().addAll(current, setupTextArea(second,375,200), setupTextArea(third,435,200));
+
+        current = setupTextArea(second,315,200);
+        current.setId("second");
+        current.setText(code.getChar());
+        this.getChildren().clear();
+        this.getChildren().addAll(current, setupTextArea(second,375,200), setupTextArea(third,435,200));*/
     }
 }
