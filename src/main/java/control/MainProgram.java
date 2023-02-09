@@ -221,6 +221,8 @@ public class MainProgram extends Application {
             victoryScreen.setTime(totTime.setGameOver(true));
             audioPlayer.stopMusic();
             showVictoryScene();
+            //rightPanel.changeLevelCounter("14");
+            //mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel14(), 4, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
         }
         else if (level == 4) {
             lvlCleared = 14;
@@ -487,5 +489,9 @@ public class MainProgram extends Application {
 
     public int getLvlCleared() {
         return lvlCleared;
+    }
+
+    public boolean getMusiIsOn() {
+        return rightPanel.getMusicOn();
     }
 }

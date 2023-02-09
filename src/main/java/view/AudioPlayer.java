@@ -1,5 +1,6 @@
 package view;
 
+import control.MainProgram;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -117,19 +118,33 @@ public class AudioPlayer {
      * @param songToPlay Låten som ska spelas.
      */
     public File playLevelMusic(String songToPlay) {
+        MainProgram mainProgram = MainProgram.getMainProgram();
+        if (mainProgram.getMusiIsOn()) {
+            switch (songToPlay) {
+                case "forest" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+                case "lava" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+                case "heaven" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+                case "egypt" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+            }
 
-        switch (songToPlay) {
-            case "forest" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
-            case "lava" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
-            case "heaven" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
-            case "egypt" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+            currentMedia = new Media(currentSong.toURI().toString());
+            currentSongPlayer = new MediaPlayer(currentMedia);
+            currentSongPlayer.setOnEndOfMedia(() -> currentSongPlayer.seek(Duration.ZERO));
+            currentSongPlayer.play();
+        }else {
+            switch (songToPlay) {
+                case "forest" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+                case "lava" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+                case "heaven" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+                case "egypt" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
+            }
+
+            currentMedia = new Media(currentSong.toURI().toString());
+            currentSongPlayer = new MediaPlayer(currentMedia);
+            currentSongPlayer.setOnEndOfMedia(() -> currentSongPlayer.seek(Duration.ZERO));
+            currentSongPlayer.play();
+            currentSongPlayer.setMute(true);
         }
-
-        currentMedia = new Media(currentSong.toURI().toString());
-        currentSongPlayer = new MediaPlayer(currentMedia);
-        currentSongPlayer.setOnEndOfMedia(() -> currentSongPlayer.seek(Duration.ZERO));
-        currentSongPlayer.play();
-
         return currentSong;
     }
 
