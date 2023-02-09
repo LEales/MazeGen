@@ -1,5 +1,6 @@
 package view.Menu;
 
+import model.PlayerScore;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,19 +8,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerScoreTest {
     @Test
     void createValid() {
-        PlayerScore ps = new PlayerScore("Hello", 1, 2, 3);
+        PlayerScore ps = new PlayerScore("Hello", 1, 2, 3, 1);
         assertEquals(3723, ps.getTotalTimeInSeconds());
     }
 
     @Test
     void createInvalidNameNewline() {
         try {
-            new PlayerScore("\n", 0, 0, 0);
+            new PlayerScore("\n", 0, 0, 0, 1);
             fail("NewLine not allowed");
         } catch (IllegalArgumentException e) {
         }
         try {
-            new PlayerScore("\t", 0, 0, 0);
+            new PlayerScore("\t", 0, 0, 0, 1);
             fail("Tab not allowed");
         } catch (IllegalArgumentException e) {
 
@@ -29,7 +30,7 @@ class PlayerScoreTest {
     @Test
     void createInvalidNameTab() {
         try {
-            new PlayerScore("\t", 0, 0, 0);
+            new PlayerScore("\t", 0, 0, 0, 1);
             fail("Tab not allowed");
         } catch (IllegalArgumentException e) {
 
@@ -39,7 +40,7 @@ class PlayerScoreTest {
     @Test
     void createInvalidNameEmpty() {
         try {
-            new PlayerScore("", 0, 0, 0);
+            new PlayerScore("", 0, 0, 0, 1);
             fail("Empty string not allowed");
         } catch (IllegalArgumentException e) {
 
@@ -49,7 +50,7 @@ class PlayerScoreTest {
     @Test
     void createInvalidNameNull() {
         try {
-            new PlayerScore(null, 0, 0, 0);
+            new PlayerScore(null, 0, 0, 0, 1);
             fail("Null not allowed");
         } catch (IllegalArgumentException e) {
 
@@ -59,7 +60,7 @@ class PlayerScoreTest {
     @Test
     void invalidSeconds() {
         try {
-            new PlayerScore("a", 0, 0, -1);
+            new PlayerScore("a", 0, 0, -1, 1);
             fail("Negative seconds not allowed");
         } catch (IllegalArgumentException e) {
 
@@ -69,7 +70,7 @@ class PlayerScoreTest {
     @Test
     void invalidMinutes() {
         try {
-            new PlayerScore("a", 0, -1, 0);
+            new PlayerScore("a", 0, -1, 0, 1);
             fail("Negative minutes not allowed");
         } catch (IllegalArgumentException e) {
 
@@ -79,7 +80,7 @@ class PlayerScoreTest {
     @Test
     void invalidHours() {
         try {
-            new PlayerScore("a", -1, 0, 0);
+            new PlayerScore("a", -1, 0, 0, 1);
             fail("Negative hours not allowed");
         } catch (IllegalArgumentException e) {
 
