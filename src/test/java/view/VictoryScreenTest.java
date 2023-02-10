@@ -19,6 +19,8 @@ import java.lang.reflect.Method;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VictoryScreenTest {
+    VictoryScreen v;
+
     @BeforeAll
     static void initJFXRuntime() {
         new Thread(() -> Application.launch(MainProgram.class)).start();
@@ -26,7 +28,6 @@ class VictoryScreenTest {
 
     @Test
     void addScoresAndCheckOrder() {
-        fail("Test not working due to objectstreams");
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -34,13 +35,13 @@ class VictoryScreenTest {
         }
         Platform.runLater(() -> {
             MainProgram mp = MainProgram.getMainProgram();
-            VictoryScreen v = mp.getVictoryScreen();
+            v = mp.getVictoryScreen();
+
+
             File file = new File("files/ScoreList.dat");
             if (!file.delete()) {
                 fail("failed to delete file");
             }
-            file = null;
-
             addScores(new int[]{10, 20, 30}, v);
             addScores(new int[]{0, 20, 30}, v);
             addScores(new int[]{9, 20, 30}, v);
@@ -54,19 +55,24 @@ class VictoryScreenTest {
             addScores(new int[]{5, 20, 30}, v);
             addScores(new int[]{6, 20, 30}, v);
             addScores(new int[]{0, 0, 1}, v);
-
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("files/ScoreList.dat"))) {
-                Object o;
-                int[] expected = {1, 1230, 4830, 8430, 12030, 19230, 22830, 26430, 30030, 33630};
-                int i = 0;
-                while ((o = ois.readObject()) != null) {
-                    PlayerScore ps = (PlayerScore) o;
-                    assertEquals(expected[i++], ps.getTotalTimeInSeconds());
-                }
-            } catch (Exception e) {
-                fail("failed to read file");
-            }
         });
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("files/ScoreList.dat"))) {
+            Object o;
+            int[] expected = {1, 1230, 4830, 8430, 12030, 19230, 22830, 26430, 30030, 33630};
+            int i = 0;
+            while ((o = ois.readObject()) != null) {
+                PlayerScore ps = (PlayerScore) o;
+                assertEquals(expected[i++], ps.getTotalTimeInSeconds());
+            }
+        } catch (Exception e) {
+            fail("failed to read file");
+        }
     }
 
     void addScores(int[] time, VictoryScreen v) {
@@ -83,7 +89,7 @@ class VictoryScreenTest {
     Method getAddToScoreList() {
         Method method = null;
         try {
-            method = VictoryScreen.class.getDeclaredMethod("addToScoreList");
+            method = VictoryScreen.class.getDeclaredMethod("updateToScoreList");
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
