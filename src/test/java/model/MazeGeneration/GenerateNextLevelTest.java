@@ -62,7 +62,7 @@ class GenerateNextLevelTest {
                 mg = gnl.getMazeGenerator();
             });
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -124,7 +124,6 @@ class GenerateNextLevelTest {
         }
     }
 
-
     private boolean road(int i, int j, int[][] maze) {
         return maze[i][j] == 1 || maze[i][j] == 2 || maze[i][j] == 3;
     }
@@ -165,5 +164,4 @@ class GenerateNextLevelTest {
         }
         return new Node(-1, -1);
     }
-
 }

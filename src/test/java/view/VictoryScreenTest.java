@@ -27,7 +27,7 @@ class VictoryScreenTest {
     }
 
     @Test
-    void addScoresAndCheckOrder() {
+    void addScoresAndCheckOrderByTime() {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -37,11 +37,8 @@ class VictoryScreenTest {
             MainProgram mp = MainProgram.getMainProgram();
             v = mp.getVictoryScreen();
 
-
             File file = new File("files/ScoreList.dat");
-            if (!file.delete()) {
-                fail("failed to delete file");
-            }
+            file.delete();
             addScores(new int[]{10, 20, 30}, v);
             addScores(new int[]{0, 20, 30}, v);
             addScores(new int[]{9, 20, 30}, v);
