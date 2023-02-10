@@ -26,6 +26,65 @@ class VictoryScreenTest {
         new Thread(() -> Application.launch(MainProgram.class)).start();
     }
 
+
+    @Test
+    void addScoreMapOrder() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        Platform.runLater(() -> {
+            MainProgram mp = MainProgram.getMainProgram();
+            v = mp.getVictoryScreen();
+            File file = new File("files/ScoreList.dat");
+            file.delete();
+            try {
+                mp.nextWorld6Level(1, 3);
+                addScores(new int[]{0, 0, 0}, v);
+                mp.nextWorld6Level(2, 3);
+                addScores(new int[]{0, 0, 0}, v);
+                mp.nextWorld5Level(4, 3);
+                addScores(new int[]{0, 0, 0}, v);
+                mp.nextWorld5Level(1, 3);
+                addScores(new int[]{0, 0, 0}, v);
+                mp.nextWorld4Level(1, 3);
+                addScores(new int[]{0, 0, 0}, v);
+                mp.nextWorld4Level(1, 3);
+                addScores(new int[]{0, 0, 1}, v);
+                mp.nextWorld3Level(1, 3);
+                addScores(new int[]{0, 0, 0}, v);
+                mp.nextWorld2Level(1, 3);
+                addScores(new int[]{0, 0, 0}, v);
+                mp.nextWorld1Level(1, 3);
+                addScores(new int[]{0, 0, 0}, v);
+                mp.nextWorld6Level(6, 3);
+                addScores(new int[]{0, 0, 0}, v);
+            } catch (FileNotFoundException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("files/ScoreList.dat"))) {
+            Object o;
+            int[] expected = {66, 62, 61, 54, 51, 41, 41, 31, 21, 11};
+            int i = 0;
+            while ((o = ois.readObject()) != null) {
+                PlayerScore ps = (PlayerScore) o;
+                assertEquals(expected[i++], ps.getLvl());
+            }
+        } catch (Exception e) {
+            fail("failed to read file");
+        }
+
+
+    }
+
     @Test
     void addScoresAndCheckOrderByTime() {
         try {
