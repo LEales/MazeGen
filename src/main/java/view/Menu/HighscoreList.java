@@ -88,7 +88,6 @@ public class HighscoreList extends HBox{
 
         for (int i = 0; i < 10; i++) {
             if (scoreList[i]!=null) {
-
                 //Label label = createLabels((i+1)+": "+scoreList[i].getPlayer()+"    (LVL)   "+ scoreList[i].getLvl() +" // PLAYERS TIME: "+ scoreList[i].getTotalTimeInSeconds());
                 Label label = createLabels((i+1)+": "+scoreList[i].getPlayer(),0, 0);
                 Label label2 = createLabels(" LVL CLEARED: "+scoreList[i].getLvl(),0, 0);
@@ -101,10 +100,10 @@ public class HighscoreList extends HBox{
                 nameVbox.getChildren().add(label);
             }
         }
-        return this.getChildren().size();
+        return counter;
     }
     public Label createLabels(String text, int positionX, int positionY){
-        Font font = Font.loadFont("file:files/fonts/PressStart2P.ttf",15);
+        Font font = Font.loadFont("file:files/fonts/PressStart2P.ttf",18);
         Label label2 = new Label(text);
         label2.setTranslateX(positionX);
         label2.setTranslateY(positionY);

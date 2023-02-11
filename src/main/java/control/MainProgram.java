@@ -102,9 +102,27 @@ public class MainProgram extends Application {
         victoryScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println(event.getCode());
-                String s = String.valueOf(event.getCode());
-                victoryScreen.setTextCurrent(s);
+                String pattern = "[a-zA-Z0-9]";
+                String stringEvent;
+                switch (event.getCode()){
+                    case DIGIT0 -> stringEvent ="0";
+                    case DIGIT1 -> stringEvent ="1";
+                    case DIGIT2 -> stringEvent ="2";
+                    case DIGIT3 -> stringEvent ="3";
+                    case DIGIT4 -> stringEvent ="4";
+                    case DIGIT5 -> stringEvent ="5";
+                    case DIGIT6 -> stringEvent ="6";
+                    case DIGIT7 -> stringEvent ="7";
+                    case DIGIT8 -> stringEvent ="8";
+                    case DIGIT9 -> stringEvent ="9";
+                    default ->  stringEvent = String.valueOf(event.getCode());
+                }
+                if (stringEvent.matches(pattern) || stringEvent.equals("BACK_SPACE") || stringEvent.equals("ENTER")) {
+                    System.out.println(stringEvent);
+                    victoryScreen.setTextCurrent(stringEvent);
+                }else {
+                    victoryScreen.setTextCurrent("invalid");
+                }
             }
         });
 

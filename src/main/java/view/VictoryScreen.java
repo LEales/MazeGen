@@ -19,6 +19,8 @@ public class VictoryScreen extends Pane {
     private int[] totalTime;
     private int scoreListCounter;
 
+    private Label errorLabel;
+
     private Label first;
     private Label second;
     private Label third;
@@ -31,7 +33,24 @@ public class VictoryScreen extends Pane {
         this.audioPlayer = audioPlayer;
         this.mainProgram = mainProgram;
         this.setBackground(new Background(setBackground()));
+        setupTextLabels();
+        setupScene();
 
+        this.setOnMouseClicked(e->mainProgram.showHighScoreList());
+        //this.getChildren().addAll(setupTextArea(),setupSendButton());
+    }
+
+    private void setupScene() {
+        errorLabel = new Label("Not A Valid Input");
+        errorLabel. setTranslateY(100);
+        errorLabel.setTranslateX(240);
+        errorLabel.setFont(getFont(20));
+        errorLabel.setVisible(false);
+        errorLabel.setTextFill(Color.web("#FF0004"));
+        this.getChildren().add(errorLabel);
+    }
+
+    private void setupTextLabels() {
         first = setupTextArea("_",315,200);
         second = setupTextArea("_",375,200);
         third = setupTextArea("_",435,200);
@@ -42,28 +61,26 @@ public class VictoryScreen extends Pane {
         this.getChildren().add(1,second);
         this.getChildren().add(2,third);
         current = first.getId();
-
-        this.setOnMouseClicked(e->mainProgram.showHighScoreList());
-        //this.getChildren().addAll(setupTextArea(),setupSendButton());
     }
+
     public BackgroundImage setBackground(){
         return new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);    }
 
+
     private Label setupTextArea(String text, int xValue, int yValue) {
-        Font font = Font.loadFont("file:files/fonts/PressStart2P.ttf",50);
         Label label = new Label(text);
         label.setTranslateX(xValue);
         label.setTranslateY(yValue);
-        label.setFont(font);
+        label.setFont(getFont(50));
         label.setTextFill(Color.web("#ffffff"));
-        /*textField = new TextField();
-        textField.setMaxHeight(50);
-        textField.setMaxWidth(450);
-        textField.setTranslateY(300);
-        textField.setTranslateX(200);*/
         return label;
+    }
+
+    private Font getFont(int size) {
+        Font font;
+        return font = Font.loadFont("file:files/fonts/PressStart2P.ttf",size);
     }
 
     private void updateToScoreList() {
@@ -94,7 +111,6 @@ public class VictoryScreen extends Pane {
     }
 
     private String buildName() {
-
         Label label;
         label = (Label) this.getChildren().get(0);
         String s =label.getText();
@@ -201,13 +217,22 @@ public class VictoryScreen extends Pane {
     }
 
     public void setTextCurrent(String code) {
+        String temp="";
+        errorLabel.setVisible(false);
 
         if (code.equals("BACK_SPACE")){
             current="BACK_SPACE";
         }else if (code.equals("ENTER")){
             current = "ENTER";
+        }else if (code.equals("invalid")){
+            temp = current;
+            current = "invalid";
         }
         switch (current){
+            case "invalid":
+                current = temp;
+                errorLabel.setVisible(!errorLabel.isVisible());
+                break;
             case "first":
                 this.getChildren().remove(0);
                 this.getChildren().add(0,setupTextArea(code,315,200));
@@ -253,25 +278,6 @@ public class VictoryScreen extends Pane {
                 current="first";
                 break;
         }
-
-
-       /* current = setupTextArea(first,315,200);
-        current.setId("first");
-        current.setText(code.getChar());
-        this.getChildren().clear();
-        this.getChildren().addAll(current, setupTextArea(second,375,200), setupTextArea(third,435,200));
-
-        current = setupTextArea(second,315,200);
-        current.setId("second");
-        current.setText(code.getChar());
-        this.getChildren().clear();
-        this.getChildren().addAll(current, setupTextArea(second,375,200), setupTextArea(third,435,200));
-
-        current = setupTextArea(second,315,200);
-        current.setId("second");
-        current.setText(code.getChar());
-        this.getChildren().clear();
-        this.getChildren().addAll(current, setupTextArea(second,375,200), setupTextArea(third,435,200));*/
     }
 
     private Node resetLabels(int i, int xValue, int yValue) {
