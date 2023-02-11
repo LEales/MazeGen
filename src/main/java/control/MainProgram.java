@@ -1,11 +1,14 @@
 package control;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -92,8 +95,36 @@ public class MainProgram extends Application {
         chooseDimension = new ChooseDimension(this, audioPlayer);
         introScene = new Scene(intro, 800, 600);
         helpScene = new Scene(help, 800, 600);
+
         highscoreScene = new Scene(highscoreList,800,600);
         victoryScene = new Scene(victoryScreen,800,600);
+
+        victoryScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                String pattern = "[a-zA-Z0-9]";
+                String stringEvent;
+                switch (event.getCode()){
+                    case DIGIT0 -> stringEvent ="0";
+                    case DIGIT1 -> stringEvent ="1";
+                    case DIGIT2 -> stringEvent ="2";
+                    case DIGIT3 -> stringEvent ="3";
+                    case DIGIT4 -> stringEvent ="4";
+                    case DIGIT5 -> stringEvent ="5";
+                    case DIGIT6 -> stringEvent ="6";
+                    case DIGIT7 -> stringEvent ="7";
+                    case DIGIT8 -> stringEvent ="8";
+                    case DIGIT9 -> stringEvent ="9";
+                    default ->  stringEvent = String.valueOf(event.getCode());
+                }
+                if (stringEvent.matches(pattern) || stringEvent.equals("BACK_SPACE") || stringEvent.equals("ENTER")) {
+                    System.out.println(stringEvent);
+                    victoryScreen.setTextCurrent(stringEvent);
+                }else {
+                    victoryScreen.setTextCurrent("invalid");
+                }
+            }
+        });
 
         chooseDimensionScene = new Scene(chooseDimension, 800, 600);
 

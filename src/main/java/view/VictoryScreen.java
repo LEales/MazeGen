@@ -1,10 +1,13 @@
 package view;
 
 import control.MainProgram;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import model.PlayerScore;
 
 import java.io.*;
@@ -16,41 +19,75 @@ public class VictoryScreen extends Pane {
     private int[] totalTime;
     private int scoreListCounter;
 
+    private Label errorLabel;
+
+    private Label first;
+    private Label second;
+    private Label third;
+    private int backspcaeCheck=0;
+    private String current;
+    private String remover = "third";
+
+
     public VictoryScreen(MainProgram mainProgram, AudioPlayer audioPlayer) {
         this.audioPlayer = audioPlayer;
         this.mainProgram = mainProgram;
         this.setBackground(new Background(setBackground()));
-        this.getChildren().addAll(setupTextArea(),setupSendButton());
+        setupTextLabels();
+        setupScene();
+
+        this.setOnMouseClicked(e->mainProgram.showHighScoreList());
+        //this.getChildren().addAll(setupTextArea(),setupSendButton());
     }
+
+    private void setupScene() {
+        errorLabel = new Label("Not A Valid Input");
+        errorLabel. setTranslateY(100);
+        errorLabel.setTranslateX(240);
+        errorLabel.setFont(getFont(20));
+        errorLabel.setVisible(false);
+        errorLabel.setTextFill(Color.web("#FF0004"));
+        this.getChildren().add(errorLabel);
+    }
+
+    private void setupTextLabels() {
+        first = setupTextArea("_",315,200);
+        second = setupTextArea("_",375,200);
+        third = setupTextArea("_",435,200);
+        first.setId("first");
+        second.setId("second");
+        third.setId("third");
+        this.getChildren().add(0,first);
+        this.getChildren().add(1,second);
+        this.getChildren().add(2,third);
+        current = first.getId();
+    }
+
     public BackgroundImage setBackground(){
         return new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+                BackgroundSize.DEFAULT);    }
+
+
+    private Label setupTextArea(String text, int xValue, int yValue) {
+        Label label = new Label(text);
+        label.setTranslateX(xValue);
+        label.setTranslateY(yValue);
+        label.setFont(getFont(50));
+        label.setTextFill(Color.web("#ffffff"));
+        return label;
     }
 
-    private TextField setupTextArea() {
-        textField = new TextField();
-        textField.setMaxHeight(50);
-        textField.setMaxWidth(450);
-        textField.setTranslateY(300);
-        textField.setTranslateX(200);
-        return textField;
-    }
-
-    private Button setupSendButton() {
-        Button button = new Button("Send");
-        button.setMaxHeight(25);
-        button.setMaxWidth(50);
-        button.setTranslateY(350);
-        button.setTranslateX(200);
-        button.setOnMouseClicked(e-> updateToScoreList());
-        return button;
+    private Font getFont(int size) {
+        Font font;
+        return font = Font.loadFont("file:files/fonts/PressStart2P.ttf",size);
     }
 
     private void updateToScoreList() {
 
         String file = "files/ScoreList.dat";
-        PlayerScore playerToAdd = new PlayerScore(textField.getText(),totalTime[0],totalTime[1],totalTime[2], mainProgram.getLvlCleared());
+        System.out.println(buildName());
+        PlayerScore playerToAdd = new PlayerScore(buildName(),totalTime[0],totalTime[1],totalTime[2], mainProgram.getLvlCleared());
         PlayerScore[] scoreList = new PlayerScore[10];
         PlayerScore player;
         int counter = 0;
@@ -71,6 +108,17 @@ public class VictoryScreen extends Pane {
             addScore(scoreList, file);
         }
         mainProgram.showHighScoreList();
+    }
+
+    private String buildName() {
+        Label label;
+        label = (Label) this.getChildren().get(0);
+        String s =label.getText();
+        label = (Label) this.getChildren().get(1);
+        s +=label.getText();
+        label = (Label) this.getChildren().get(2);
+        s += label.getText();
+        return s;
     }
 
     private PlayerScore[] insertNewPlayerToScorelist(int indexToChangePLayer, PlayerScore[] scoreList, PlayerScore playerToAdd) {
@@ -167,4 +215,76 @@ public class VictoryScreen extends Pane {
         totalTime[2] = time[2];
         return totalTime;
     }
+
+    public void setTextCurrent(String code) {
+        String temp="";
+        errorLabel.setVisible(false);
+
+        if (code.equals("BACK_SPACE")){
+            current="BACK_SPACE";
+        }else if (code.equals("ENTER")){
+            current = "ENTER";
+        }else if (code.equals("invalid")){
+            temp = current;
+            current = "invalid";
+        }
+        switch (current){
+            case "invalid":
+                current = temp;
+                errorLabel.setVisible(!errorLabel.isVisible());
+                break;
+            case "first":
+                this.getChildren().remove(0);
+                this.getChildren().add(0,setupTextArea(code,315,200));
+                current = "second";
+                backspcaeCheck ++;
+                break;
+            case "second":
+                this.getChildren().remove(1);
+                this.getChildren().add(1,setupTextArea(code,375,200));
+                current = "third";
+                backspcaeCheck ++;
+                break;
+            case "third":
+                this.getChildren().remove(2);
+                this.getChildren().add(2,setupTextArea(code,435,200));
+                if (backspcaeCheck<2){
+                    backspcaeCheck ++;
+                }
+                break;
+            case "BACK_SPACE":
+                if (backspcaeCheck==2){
+                    this.getChildren().remove(2);
+                    this.getChildren().add(2,setupTextArea("_",435,200));
+                    backspcaeCheck --;
+                    current = "third";
+                }else if (backspcaeCheck==1) {
+                    this.getChildren().remove(1);
+                    this.getChildren().add(1, setupTextArea("_", 375, 200));
+                    backspcaeCheck--;
+                    current = "second";
+                }
+                else if (backspcaeCheck==0){
+                    this.getChildren().remove(0);
+                    this.getChildren().add(0,setupTextArea("_",315,200));
+                    current ="first";
+                }
+                break;
+            case "ENTER":
+                updateToScoreList();
+                resetLabels(0, 315, 200);
+                resetLabels(1, 375, 200);
+                resetLabels(2,435,200);
+                current="first";
+                break;
+        }
+    }
+
+    private Node resetLabels(int i, int xValue, int yValue) {
+        this.getChildren().remove(i);
+        this.getChildren().add(i,setupTextArea("_",xValue,yValue));
+        return this.getChildren().get(i);
+    }
+
+
 }
