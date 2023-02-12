@@ -25,13 +25,18 @@ public class GameOverScreen extends Pane {
     /**
      * Animation för gameOver-bilden
      */
-    public void gameOverAnimation() {
-        ImageView introView = new ImageView(new Image("file:files/texts/Gameover.png", 600, 600, false, false));
-        introView.setStyle("fx-background-color: transparent;");
-        FadeTransition ft = new FadeTransition(Duration.millis(4000), introView);
-        getChildren().add(introView);
-        ft.setFromValue(0);
-        ft.setToValue(1);
-        ft.play();
+    public boolean gameOverAnimation() {
+        try {
+            ImageView introView = new ImageView(new Image("file:files/texts/Gameover.png", 600, 600, false, false));
+            introView.setStyle("fx-background-color: transparent;");
+            FadeTransition ft = new FadeTransition(Duration.millis(4000), introView);
+            getChildren().add(introView);
+            ft.setFromValue(0);
+            ft.setToValue(1);
+            ft.play();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

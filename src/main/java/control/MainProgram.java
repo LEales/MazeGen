@@ -70,6 +70,7 @@ public class MainProgram extends Application {
     /**
      * En metod som startar programmet.
      * Metoden instanierar även de olika komponenterna.
+     *
      * @param primaryStage JavaFX top Container, huvudkomponenten till programmet.
      * @throws Exception
      */
@@ -87,13 +88,13 @@ public class MainProgram extends Application {
         intro = new Intro(this, audioPlayer);
         help = new Help(this, audioPlayer);
         highscoreList = new HighscoreList(this, audioPlayer);
-        victoryScreen =new VictoryScreen(this, audioPlayer);
+        victoryScreen = new VictoryScreen(this, audioPlayer);
 
         chooseDimension = new ChooseDimension(this, audioPlayer);
         introScene = new Scene(intro, 800, 600);
         helpScene = new Scene(help, 800, 600);
-        highscoreScene = new Scene(highscoreList,800,600);
-        victoryScene = new Scene(victoryScreen,800,600);
+        highscoreScene = new Scene(highscoreList, 800, 600);
+        victoryScene = new Scene(victoryScreen, 800, 600);
 
         chooseDimensionScene = new Scene(chooseDimension, 800, 600);
 
@@ -142,6 +143,7 @@ public class MainProgram extends Application {
 
     /**
      * Byter scen till Randomize.
+     *
      * @param dimension Storleken på labyrinten som ska genereras.
      * @throws FileNotFoundException
      */
@@ -155,10 +157,11 @@ public class MainProgram extends Application {
 
     /**
      * Byter scen till kampanjläget.
+     *
      * @throws FileNotFoundException
      */
     public void changeToCampaign() throws FileNotFoundException {
-        lvlCleared=0;
+        lvlCleared = 0;
         world1Template = new World1Template(world1Maps.getLevel11(), 1, 3, this, rightPanel, 0, audioPlayer, 25);
 
         mainPaneCampaign.setCenter(world1Template);
@@ -197,7 +200,8 @@ public class MainProgram extends Application {
 
     /**
      * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-     * @param level Den aktuella nivån.
+     *
+     * @param level         Den aktuella nivån.
      * @param heartCrystals Spelarens aktuella liv.
      * @throws FileNotFoundException
      * @throws InterruptedException
@@ -205,31 +209,26 @@ public class MainProgram extends Application {
     public void nextWorld1Level(int level, int heartCrystals) throws FileNotFoundException, InterruptedException {
 
         if (level == 1) {
-            lvlCleared=11;
-            System.out.println("hello");
+            lvlCleared = 11;
             rightPanel.changeLevelCounter("12");
             mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel12(), 2, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
 
-        }
-        else if (level == 2) {
+        } else if (level == 2) {
             lvlCleared = 12;
             rightPanel.changeLevelCounter("13");
             mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel13(), 3, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
-        }
-        else if (level == 3) {
+        } else if (level == 3) {
             lvlCleared = 13;
             victoryScreen.setTime(totTime.setGameOver(true));
             audioPlayer.stopMusic();
             showVictoryScene();
             //rightPanel.changeLevelCounter("14");
             //mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel14(), 4, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
-        }
-        else if (level == 4) {
+        } else if (level == 4) {
             lvlCleared = 14;
             rightPanel.changeLevelCounter("15");
             mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel15(), 5, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
-        }
-        else if (level == 5) {
+        } else if (level == 5) {
             nextWorld2Level(1, heartCrystals);
         }
 
@@ -237,7 +236,8 @@ public class MainProgram extends Application {
 
     /**
      * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-     * @param level Den aktuella nivån.
+     *
+     * @param level         Den aktuella nivån.
      * @param heartCrystals Spelarens aktuella liv.
      * @throws FileNotFoundException
      * @throws InterruptedException
@@ -255,34 +255,30 @@ public class MainProgram extends Application {
             mainPaneCampaign.getChildren().add(introAnimation);
             introAnimation.setDisable(true);
             audioPlayer.playWorldIntroSound();
-        }
-        else if (level == 2) {
+        } else if (level == 2) {
             lvlCleared = 21;
             rightPanel.changeLevelCounter("22");
             mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel22(), 3, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));
-        }
-        else if (level == 3) {
+        } else if (level == 3) {
             lvlCleared = 22;
             rightPanel.changeLevelCounter("23");
             mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel23(), 4, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));
-        }
-        else if (level == 4) {
+        } else if (level == 4) {
             lvlCleared = 23;
             rightPanel.changeLevelCounter("24");
             mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel24(), 5, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));
-        }
-        else if (level == 5) {
+        } else if (level == 5) {
             rightPanel.changeLevelCounter("25");
             mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel25(), 6, heartCrystals, this, rightPanel, 1, audioPlayer, true, rightPanel));
-        }
-        else if (level == 6) {
+        } else if (level == 6) {
             nextWorld3Level(1, heartCrystals);
         }
     }
 
     /**
      * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-     * @param level Den aktuella nivån.
+     *
+     * @param level         Den aktuella nivån.
      * @param heartCrystals Spelarens aktuella liv.
      * @throws FileNotFoundException
      * @throws InterruptedException
@@ -300,30 +296,27 @@ public class MainProgram extends Application {
             audioPlayer.playWorldIntroSound();
             audioPlayer.stopMusic();
             audioPlayer.playLevelMusic("lava");
-        }
-        else if (level == 2) {
+        } else if (level == 2) {
             rightPanel.changeLevelCounter("32");
             mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel32(), 3, heartCrystals, this, rightPanel, 2, audioPlayer));
-        }
-        else if (level == 3) {
+        } else if (level == 3) {
             rightPanel.changeLevelCounter("33");
             mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel33(), 4, heartCrystals, this, rightPanel, 2, audioPlayer));
-        }
-        else if (level == 4) {
+        } else if (level == 4) {
             rightPanel.changeLevelCounter("34");
             mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel34(), 5, heartCrystals, this, rightPanel, 2, audioPlayer));
-        }
-        else if (level == 5) {
+        } else if (level == 5) {
             rightPanel.changeLevelCounter("35");
             mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel35(), 6, heartCrystals, this, rightPanel, 2, audioPlayer));
-        }
-        else if (level == 6) {
+        } else if (level == 6) {
             nextWorld4Level(1, heartCrystals);
         }
     }
+
     /**
      * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-     * @param level Den aktuella nivån.
+     *
+     * @param level         Den aktuella nivån.
      * @param heartCrystals Spelarens aktuella liv.
      * @throws FileNotFoundException
      * @throws InterruptedException
@@ -341,30 +334,27 @@ public class MainProgram extends Application {
             audioPlayer.playWorldIntroSound();
             audioPlayer.stopMusic();
             audioPlayer.playLevelMusic("heaven");
-        }
-        else if (level == 2) {
+        } else if (level == 2) {
             rightPanel.changeLevelCounter("42");
             mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel42(), 3, heartCrystals, this, rightPanel, 3, audioPlayer));
-        }
-        else if (level == 3) {
+        } else if (level == 3) {
             rightPanel.changeLevelCounter("43");
             mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel43(), 4, heartCrystals, this, rightPanel, 3, audioPlayer));
-        }
-        else if (level == 4) {
+        } else if (level == 4) {
             rightPanel.changeLevelCounter("44");
             mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel44(), 5, heartCrystals, this, rightPanel, 3, audioPlayer));
-        }
-        else if (level == 5) {
+        } else if (level == 5) {
             rightPanel.changeLevelCounter("45");
             mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel45(), 6, heartCrystals, this, rightPanel, 3, audioPlayer));
-        }
-        else if (level == 6) {
+        } else if (level == 6) {
             nextWorld5Level(1, heartCrystals);
         }
     }
+
     /**
      * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-     * @param level Den aktuella nivån.
+     *
+     * @param level         Den aktuella nivån.
      * @param heartCrystals Spelarens aktuella liv.
      * @throws FileNotFoundException
      * @throws InterruptedException
@@ -382,30 +372,27 @@ public class MainProgram extends Application {
             audioPlayer.playWorldIntroSound();
             audioPlayer.stopMusic();
             audioPlayer.playLevelMusic("egypt");
-        }
-        else if (level == 2) {
+        } else if (level == 2) {
             rightPanel.changeLevelCounter("52");
             mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel52(), 3, heartCrystals, this, rightPanel, 4, audioPlayer));
-        }
-        else if (level == 3) {
+        } else if (level == 3) {
             rightPanel.changeLevelCounter("53");
             mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel53(), 4, heartCrystals, this, rightPanel, 4, audioPlayer));
-        }
-        else if (level == 4) {
+        } else if (level == 4) {
             rightPanel.changeLevelCounter("54");
             mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel54(), 5, heartCrystals, this, rightPanel, 4, audioPlayer));
-        }
-        else if (level == 5) {
+        } else if (level == 5) {
             rightPanel.changeLevelCounter("55");
             mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel55(), 6, heartCrystals, this, rightPanel, 4, audioPlayer));
-        }
-        else if (level == 6) {
+        } else if (level == 6) {
             nextWorld6Level(1, heartCrystals);
         }
     }
+
     /**
      * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-     * @param level Den aktuella nivån.
+     *
+     * @param level         Den aktuella nivån.
      * @param heartCrystals Spelarens aktuella liv.
      * @throws FileNotFoundException
      * @throws InterruptedException
@@ -421,20 +408,16 @@ public class MainProgram extends Application {
             mainPaneCampaign.getChildren().add(introAnimation);
             introAnimation.setDisable(true);
             audioPlayer.playWorldIntroSound();
-        }
-        else if (level == 2) {
+        } else if (level == 2) {
             rightPanel.changeLevelCounter("62");
             mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel62(), 3, heartCrystals, this, rightPanel, 5, audioPlayer));
-        }
-        else if (level == 3) {
+        } else if (level == 3) {
             rightPanel.changeLevelCounter("63");
             mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel63(), 4, heartCrystals, this, rightPanel, 5, audioPlayer));
-        }
-        else if (level == 4) {
+        } else if (level == 4) {
             rightPanel.changeLevelCounter("64");
             mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel64(), 5, heartCrystals, this, rightPanel, 5, audioPlayer));
-        }
-        else if (level == 5) {
+        } else if (level == 5) {
             rightPanel.changeLevelCounter("65");
             mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel65(), 5, heartCrystals, this, rightPanel, 5, audioPlayer));
         } else if (level == 6) {
@@ -446,6 +429,7 @@ public class MainProgram extends Application {
 
     /**
      * Main startar programmet.
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -460,6 +444,7 @@ public class MainProgram extends Application {
         highscoreList.setupHighscoreList();
         mainWindow.setScene(highscoreScene);
     }
+
     public void showVictoryScene() {
         mainWindow.setScene(victoryScene);
     }
@@ -474,12 +459,11 @@ public class MainProgram extends Application {
     }
 
     public boolean startTotalTime(boolean b) {
-        if (b){
+        if (b) {
             if (!totalTimeIsStarted) {
                 totTime.start();
                 totalTimeIsStarted = true;
-            }
-            else {
+            } else {
                 totTime = new TotalTime(false);
                 totTime.start();
             }
@@ -494,13 +478,17 @@ public class MainProgram extends Application {
     public boolean getMusiIsOn() {
         return rightPanel.getMusicOn();
     }
+
     public HighscoreList getHighscoreList() {
         return highscoreList;
     }
+
     public VictoryScreen getVictoryScreen() {
         return victoryScreen;
     }
 
-    public GenerateNextLevel getGenerateNextLevel() {return generateNextLevel;}
+    public GenerateNextLevel getGenerateNextLevel() {
+        return generateNextLevel;
+    }
 
 }

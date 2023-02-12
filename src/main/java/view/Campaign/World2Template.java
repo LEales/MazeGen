@@ -31,9 +31,9 @@ import java.util.ArrayList;
 
 
 public class World2Template extends World1Template {
-    
+
     private int squareSize;
-    private int duration=10;
+    private int duration = 10;
     private PathTransition animation;
     private PathTransition animation2;
     private PathTransition animation3;
@@ -49,7 +49,7 @@ public class World2Template extends World1Template {
 
     public World2Template(int[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int world, AudioPlayer audioPlayer, boolean bossMap, RightPanel panel) throws FileNotFoundException {
         super(level, currentLevel, heartCrystals, mainProgram, rightPanel, world, audioPlayer, 35);
-        squareSize = 600/(level.length+2);
+        squareSize = 600 / (level.length + 2);
         this.panel = panel;
         this.audioPlayer = audioPlayer;
         rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
@@ -61,6 +61,7 @@ public class World2Template extends World1Template {
         rightPanel.setSTARTTIME(35);
         rightPanel.resetTimerLabel();
     }
+
     public void setupGhost() {
         ghost = new Image("file:files/ghost.png", squareSize, squareSize, false, false);
     }
@@ -102,9 +103,9 @@ public class World2Template extends World1Template {
         ghost5V.setOnMouseEntered(e -> enteredGhost(e));
         ghost6V.setOnMouseEntered(e -> enteredGhost(e));
 
-        add(ghost1V,10,0);
-        add(ghost2V,9,0);
-        add(ghost3V,8,0);
+        add(ghost1V, 10, 0);
+        add(ghost2V, 9, 0);
+        add(ghost3V, 8, 0);
         add(ghost4V, 1, 0);
         add(ghost5V, 2, 0);
         add(ghost6V, 3, 0);
@@ -115,25 +116,25 @@ public class World2Template extends World1Template {
         Polyline line4 = new Polyline();
         Polyline line5 = new Polyline();
         Polyline line6 = new Polyline();
-        
+
         line1.getPoints().addAll(
                 16.0, -10.5,
                 10.5, 650.0);
         line2.getPoints().addAll(
-                15.0,-10.5,
-                10.5,650.0);
+                15.0, -10.5,
+                10.5, 650.0);
         line3.getPoints().addAll(
-                14.0,-10.5,
-                10.5,650.0);
+                14.0, -10.5,
+                10.5, 650.0);
         line4.getPoints().addAll(
                 16.0, -10.5,
                 10.5, 650.0);
         line5.getPoints().addAll(
-                15.0,-10.5,
-                10.5,650.0);
+                15.0, -10.5,
+                10.5, 650.0);
         line6.getPoints().addAll(
-                14.0,-10.5,
-                10.5,650.0);
+                14.0, -10.5,
+                10.5, 650.0);
 
 
         animation3 = new PathTransition();
