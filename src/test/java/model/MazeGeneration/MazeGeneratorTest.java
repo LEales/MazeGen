@@ -13,7 +13,6 @@ class MazeGeneratorTest {
 
     HashMap<Node, ArrayList<Node>> G = new HashMap<>();
 
-
     void checkStartAndGoal(int dim) {
         for (int i = 0; i < 1000; i++) {
             G.clear();
@@ -137,5 +136,4 @@ class MazeGeneratorTest {
         }
         return new Node(-1, -1);
     }
-
 }

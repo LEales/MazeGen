@@ -4,7 +4,7 @@ package model;
  * @author Sebastian Helin
  * Tråd som räknar den totala tiden det tog att spela
  */
-public class TotalTime extends Thread{
+public class TotalTime extends Thread {
 
     private boolean gameOver;
     private int seconds = 0;
@@ -12,10 +12,9 @@ public class TotalTime extends Thread{
     private int hour = 0;
 
     /**
-     *
      * @param gameOver Tar en boolen som används som villkor
      */
-    public TotalTime(boolean gameOver){
+    public TotalTime(boolean gameOver) {
         this.gameOver = gameOver;
     }
 
@@ -24,18 +23,18 @@ public class TotalTime extends Thread{
      * Tråden sover i 1000 millisekunder
      * Inkrementerar int variabeln med 1
      */
-    public void run(){
-        while(!gameOver){
+    public void run() {
+        while (!gameOver) {
             try {
                 Thread.sleep(1000);
                 seconds++;
-                if (seconds==60){
+                if (seconds == 60) {
                     minutes++;
                     seconds = 0;
                 }
-                if (minutes==60){
+                if (minutes == 60) {
                     hour++;
-                    minutes=0;
+                    minutes = 0;
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -48,6 +47,6 @@ public class TotalTime extends Thread{
      */
     public int[] setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
-        return new int[]{hour,minutes,seconds};
+        return new int[]{hour, minutes, seconds};
     }
 }

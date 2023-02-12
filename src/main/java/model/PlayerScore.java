@@ -10,7 +10,6 @@ public class PlayerScore implements Serializable {
     private int lvl;
 
 
-
     public PlayerScore(String player, int hours, int minutes, int seconds, int lvlCleared) {
         this.player = player;
         this.hours = hours;
@@ -27,10 +26,11 @@ public class PlayerScore implements Serializable {
         return seconds;
     }
 
-    public int getTotalTimeInSeconds(){
-        return this.seconds + (this.minutes*60)+ (this.hours*60*60);
+    public int getTotalTimeInSeconds() {
+        return this.seconds + (this.minutes * 60) + (this.hours * 60 * 60);
     }
-    public int getLvl(){
+
+    public int getLvl() {
         return lvl;
     }
 }

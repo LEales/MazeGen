@@ -1,10 +1,17 @@
 package model.Maps;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class World5MapsTest {
+    World5Maps w;
+
+    @BeforeEach
+    void init() {
+        w = new World5Maps();
+    }
 
     @Test
     void level51pos() {
@@ -24,8 +31,6 @@ class World5MapsTest {
                 {1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1},
                 {4, 0, 1, 1, 0, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                 {1, 4, 1, 0, 0, 0, 4, 1, 1, 4, 1, 1, 4, 1, 1, 4},};
-
-        World5Maps w = new World5Maps();
         int[][] level5Get = w.getLevel51();
         boolean equal = true;
         for (int i = 0; i < level51.length; i++) {
@@ -57,8 +62,6 @@ class World5MapsTest {
                 {1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1},
                 {4, 0, 1, 1, 0, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                 {1, 4, 1, 0, 0, 0, 4, 1, 1, 4, 1, 1, 4, 1, 0, 4},};
-
-        World5Maps w = new World5Maps();
         int[][] level5Get = w.getLevel51();
         boolean equal = true;
         for (int i = 0; i < level51.length; i++) {
@@ -90,7 +93,6 @@ class World5MapsTest {
                 {1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 4},
                 {1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0},
                 {3, 0, 0, 4, 1, 1, 1, 1, 4, 0, 1, 1, 1, 4, 1, 1}};
-        World5Maps w = new World5Maps();
         int[][] level5Get = w.getLevel52();
         boolean equal = true;
         for (int i = 0; i < level52.length; i++) {
@@ -122,7 +124,6 @@ class World5MapsTest {
                 {1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 4},
                 {1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0},
                 {3, 1, 0, 4, 1, 1, 1, 1, 4, 0, 1, 1, 1, 4, 1, 1}};
-        World5Maps w = new World5Maps();
         int[][] level5Get = w.getLevel52();
         boolean equal = true;
         for (int i = 0; i < level52.length; i++) {
@@ -154,7 +155,6 @@ class World5MapsTest {
                 {1, 0, 0, 1, 0, 0, 1, 1, 5, 0, 1, 0, 1, 0, 0, 4},
                 {1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 4, 4},
                 {2, 0, 0, 4, 6, 7, 0, 0, 1, 1, 4, 1, 0, 0, 4, 3}};
-        World5Maps w = new World5Maps();
         int[][] level5Get = w.getLevel53();
         boolean equal = true;
         for (int i = 0; i < level53.length; i++) {
@@ -186,7 +186,6 @@ class World5MapsTest {
                 {1, 0, 0, 1, 0, 0, 1, 1, 5, 0, 1, 0, 1, 0, 0, 4},
                 {1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 4, 4},
                 {2, 0, 0, 4, 6, 7, 0, 0, 1, 1, 0, 1, 0, 0, 4, 3}};
-        World5Maps w = new World5Maps();
         int[][] level5Get = w.getLevel53();
         boolean equal = true;
         for (int i = 0; i < level53.length; i++) {
@@ -218,7 +217,6 @@ class World5MapsTest {
                 {0, 1, 1, 6, 4, 1, 1, 0, 4, 0, 1, 0, 0, 1, 0, 1},
                 {1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 4, 0, 1, 1, 1},
                 {3, 0, 0, 0, 0, 0, 1, 1, 4, 1, 1, 0, 0, 1, 0, 2}};
-        World5Maps w = new World5Maps();
         int[][] level5Get = w.getLevel54();
         boolean equal = true;
         for (int i = 0; i < level54.length; i++) {
@@ -250,7 +248,6 @@ class World5MapsTest {
                 {0, 1, 1, 6, 4, 1, 1, 0, 4, 0, 1, 0, 0, 1, 0, 1},
                 {1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 4, 0, 1, 1, 1},
                 {3, 0, 0, 0, 0, 0, 1, 1, 4, 1, 1, 0, 1, 1, 0, 2}};
-        World5Maps w = new World5Maps();
         int[][] level5Get = w.getLevel54();
         boolean equal = true;
         for (int i = 0; i < level54.length; i++) {
@@ -263,6 +260,7 @@ class World5MapsTest {
         }
         assertFalse(equal);
     }
+
     @Test
     void level55pos() {
         int[][] level55 = {{0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0},
@@ -281,7 +279,6 @@ class World5MapsTest {
                 {0, 0, 4, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 7, 0, 1},
                 {1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 4},
                 {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 3}};
-        World5Maps w = new World5Maps();
         int[][] level5Get = w.getLevel55();
         boolean equal = true;
         for (int i = 0; i < level55.length; i++) {
@@ -313,7 +310,6 @@ class World5MapsTest {
                 {0, 0, 4, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 7, 0, 1},
                 {1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 4},
                 {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0}};
-        World5Maps w = new World5Maps();
         int[][] level5Get = w.getLevel55();
         boolean equal = true;
         for (int i = 0; i < level55.length; i++) {
@@ -326,6 +322,4 @@ class World5MapsTest {
         }
         assertFalse(equal);
     }
-
-
 }

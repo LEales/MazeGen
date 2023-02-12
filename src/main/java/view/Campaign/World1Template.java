@@ -27,7 +27,6 @@ import java.util.ArrayList;
 public class World1Template extends GridPane {
 
 
-
     private MainProgram mainProgram;
     private int[][] level;
     private ArrayList<Label> collectibles = new ArrayList<>();
@@ -62,14 +61,15 @@ public class World1Template extends GridPane {
 
     /**
      * Instansierar objekten.
-     * @param level Den array som sedan omvandlas till en nivå inuti spelet.
-     * @param currentLevel Den aktuella nivån
+     *
+     * @param level         Den array som sedan omvandlas till en nivå inuti spelet.
+     * @param currentLevel  Den aktuella nivån
      * @param heartCrystals Spelarens liv.
-     * @param mainProgram Huvudprogrammet.
-     * @param rightPanel Panelen som visar information så som liv, tid, nivå osv.
-     * @param world Används för att sätta rätt grafik på världen.
-     * @param audioPlayer Används för att spela upp ljud inne i spelet.
-     * @param seconds Tidsbegränsningen för varje bana.
+     * @param mainProgram   Huvudprogrammet.
+     * @param rightPanel    Panelen som visar information så som liv, tid, nivå osv.
+     * @param world         Används för att sätta rätt grafik på världen.
+     * @param audioPlayer   Används för att spela upp ljud inne i spelet.
+     * @param seconds       Tidsbegränsningen för varje bana.
      * @throws FileNotFoundException
      */
 
@@ -85,7 +85,7 @@ public class World1Template extends GridPane {
         this.rightPanel = rightPanel;
         this.audioPlayer = audioPlayer;
         this.world = world;
-        squareSize = 600/(level.length+2);
+        squareSize = 600 / (level.length + 2);
         setBackground();
         setupImages(world);
         setupBorders();
@@ -100,8 +100,8 @@ public class World1Template extends GridPane {
     /**
      * Sätter bakgrunden i fönstret.
      */
-    public void setBackground(){
-        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
+    public void setBackground() {
+        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg", 800, 600, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(menuBackground));
@@ -134,31 +134,24 @@ public class World1Template extends GridPane {
             for (int j = 0; j < level.length; j++) {
 
                 if (level[i][j] == 1) {
-                    add(getPath(),j + 1,i + 1);
-                }
-                else if (level[i][j] == 0){
-                    add(getWall(),j + 1,i + 1);
-                }
-                else if (level[i][j] == 2){
-                    add(getStart(),j + 1,i + 1);
-                }
-                else if (level[i][j] == 3){
-                    add(getGoal(),j + 1,i + 1);
-                }
-                else if (level[i][j] == 4){
-                    add(getPath(),j + 1,i + 1);
-                    add(addCollectible(),j + 1,i + 1);
-                }
-                else if (level[i][j] == 5){
-                    add(getPath(),j + 1,i + 1);
-                    add(addPickAxe(),j + 1,i + 1);
-                }
-                else if (level[i][j] == 6){
-                    add(getBreakableWall(),j + 1,i + 1);
-                }
-                else if (level[i][j] == 7){
-                    add(getPath(),j + 1,i + 1);
-                    add(addHeartCrystal(),j + 1,i + 1);
+                    add(getPath(), j + 1, i + 1);
+                } else if (level[i][j] == 0) {
+                    add(getWall(), j + 1, i + 1);
+                } else if (level[i][j] == 2) {
+                    add(getStart(), j + 1, i + 1);
+                } else if (level[i][j] == 3) {
+                    add(getGoal(), j + 1, i + 1);
+                } else if (level[i][j] == 4) {
+                    add(getPath(), j + 1, i + 1);
+                    add(addCollectible(), j + 1, i + 1);
+                } else if (level[i][j] == 5) {
+                    add(getPath(), j + 1, i + 1);
+                    add(addPickAxe(), j + 1, i + 1);
+                } else if (level[i][j] == 6) {
+                    add(getBreakableWall(), j + 1, i + 1);
+                } else if (level[i][j] == 7) {
+                    add(getPath(), j + 1, i + 1);
+                    add(addHeartCrystal(), j + 1, i + 1);
                 }
             }
         }
@@ -167,28 +160,24 @@ public class World1Template extends GridPane {
     /**
      * Instansierar de olika bilderna som används som grafik inuti spelet.
      * Baserad på value så sätts bilderna till en specifik folder per värld.
+     *
      * @param value Den aktuella världen.
      */
-    public void setupImages(int value){
+    public void setupImages(int value) {
 
         String folder = "";
 
         if (value == 0) {
             folder = "forest";
-        }
-        else if (value == 1) {
+        } else if (value == 1) {
             folder = "underground";
-        }
-        else if (value == 2) {
+        } else if (value == 2) {
             folder = "lava";
-        }
-        else if(value == 3) {
+        } else if (value == 3) {
             folder = "cloud";
-        }
-        else if(value == 4) {
+        } else if (value == 4) {
             folder = "desert";
-        }
-        else if(value == 5) {
+        } else if (value == 5) {
             folder = "space";
         }
 
@@ -200,11 +189,10 @@ public class World1Template extends GridPane {
         heart = new Image("file:files/items/heart.png", squareSize, squareSize, false, false);
         if (value == 3) {
             breakableWall = new Image("file:files/cloud/breakablewall.png", squareSize, squareSize, false, false);
-        }
-        else {
+        } else {
             breakableWall = new Image("file:files/breakablewall.png", squareSize, squareSize, false, false);
         }
-        if(value!=5){
+        if (value != 5) {
             border = new Image("file:files/" + folder + "/border.png", squareSize, squareSize, false, false);
             wall = new Image("file:files/" + folder + "/wall.png", squareSize, squareSize, false, false);
         }
@@ -212,6 +200,7 @@ public class World1Template extends GridPane {
 
     /**
      * En metod som skapar ett objekt av label som representerar en vägg.
+     *
      * @return Returnerar en label.
      */
     public Label getWall() {
@@ -227,6 +216,7 @@ public class World1Template extends GridPane {
 
     /**
      * En metod som skapar ett objekt av label som representerar en väg.
+     *
      * @return Returnerar en label.
      */
     private Label getPath() {
@@ -240,6 +230,7 @@ public class World1Template extends GridPane {
 
     /**
      * En metod som skapar ett objekt av label som representerar en border.
+     *
      * @return Returnerar en label.
      */
     private Label getBorders() {
@@ -255,6 +246,7 @@ public class World1Template extends GridPane {
 
     /**
      * En metod som skapar ett objekt av label som representerar en förstörbar vägg.
+     *
      * @return Returnerar en label.
      */
     private Label getBreakableWall() {
@@ -269,6 +261,7 @@ public class World1Template extends GridPane {
 
     /**
      * En metod som skapar ett objekt av label som representerar ett mål.
+     *
      * @return Returnerar en label.
      */
     private Label getGoal() {
@@ -289,6 +282,7 @@ public class World1Template extends GridPane {
 
     /**
      * En metod som skapar ett objekt av label som representerar start.
+     *
      * @return Returnerar en label.
      */
     private Label getStart() {
@@ -303,6 +297,7 @@ public class World1Template extends GridPane {
 
     /**
      * En metod som skapar ett objekt av label som representerar en collectible.
+     *
      * @return Returnerar en label.
      */
     public Label addCollectible() {
@@ -322,6 +317,7 @@ public class World1Template extends GridPane {
 
     /**
      * En metod som skapar ett objekt av label som representerar ett spelarliv.
+     *
      * @return Returnerar en label.
      */
     public Label addHeartCrystal() {
@@ -342,17 +338,18 @@ public class World1Template extends GridPane {
     /**
      * När en användare vidrör en label av typen heartCrystal körs denna metod.
      * Om spelaren har mindre än tre återstående liv inkrementeras variabeln heartCrystals.
+     *
      * @param e Används för att hitta rätt label.
      */
 
     private void heartCrystalObtained(MouseEvent e) {
 
-        Label label = (Label)e.getSource();
+        Label label = (Label) e.getSource();
 
         if (startButtonPressed) {
             audioPlayer.playHeartSound();
             label.setVisible(false);
-            if(heartCrystals<3){
+            if (heartCrystals < 3) {
                 heartCrystals++;
                 rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
             }
@@ -361,6 +358,7 @@ public class World1Template extends GridPane {
 
     /**
      * En metod som skapar ett objekt av label som representerar en yxa.
+     *
      * @return Returnerar en label.
      */
     public Label addPickAxe() {
@@ -382,10 +380,11 @@ public class World1Template extends GridPane {
      * Om en spelare vidrör en vägg med muspekaren körs denna metod.
      * Om spelrundan är aktiverad förlorar spelaren ett liv.
      * Om spelaren endast har ett återstående liv kvar vid kollisionen körs metoden gameOver.
+     *
      * @param e Används för att hitta rätt label.
      */
     public void enteredWall(MouseEvent e) {
-        Label label = (Label)e.getSource();
+        Label label = (Label) e.getSource();
         FadeTransition fade = new FadeTransition();
         fade.setNode(label);
         fade.setDuration(Duration.seconds(0.3));
@@ -410,9 +409,10 @@ public class World1Template extends GridPane {
      * Om en spelare vidrör ett spöke med muspekaren körs denna metod.
      * Om spelrundan är aktiverad förlorar spelaren ett liv.
      * Om spelaren endast har ett återstående liv kvar vid kollisionen körs metoden gameOver.
+     *
      * @param e
      */
-    public void enteredGhost(MouseEvent e){
+    public void enteredGhost(MouseEvent e) {
         ImageView view = (ImageView) e.getSource();
         FadeTransition fade = new FadeTransition();
         fade.setNode(view);
@@ -453,6 +453,7 @@ public class World1Template extends GridPane {
 
     /**
      * Om spelrundan är aktiverad och spelaren har plockat upp alla collectibles startas nästa nivå.
+     *
      * @throws FileNotFoundException
      * @throws InterruptedException
      */
@@ -471,6 +472,7 @@ public class World1Template extends GridPane {
 
     /**
      * Baserad på den aktuella världen väljer programmmet vilken nivå som ska spelas.
+     *
      * @throws FileNotFoundException
      * @throws InterruptedException
      */
@@ -478,20 +480,15 @@ public class World1Template extends GridPane {
 
         if (world == 0) {
             mainProgram.nextWorld1Level(currentLevel, heartCrystals);
-        }
-        else if (world == 1) {
+        } else if (world == 1) {
             mainProgram.nextWorld2Level(currentLevel, heartCrystals);
-        }
-        else if (world == 2) {
+        } else if (world == 2) {
             mainProgram.nextWorld3Level(currentLevel, heartCrystals);
-        }
-        else if (world == 3) {
+        } else if (world == 3) {
             mainProgram.nextWorld4Level(currentLevel, heartCrystals);
-        }
-        else if (world == 4) {
+        } else if (world == 4) {
             mainProgram.nextWorld5Level(currentLevel, heartCrystals);
-        }
-        else if (world == 5) {
+        } else if (world == 5) {
             mainProgram.nextWorld6Level(currentLevel, heartCrystals);
         }
     }
@@ -501,19 +498,19 @@ public class World1Template extends GridPane {
      */
     public void startLevel() {
 
-        if (!totalTimeStarted){
+        if (!totalTimeStarted) {
             rightPanel.startTotalTimer();
             rightPanel.setTimerIsStarted(true);
         }
 
-        if (!gameStarted){
+        if (!gameStarted) {
             rightPanel.resumeClock();
             gameStarted = true;
             time = new TimeThread(seconds, rightPanel);
             time.setGameOver(false);
             time.start();
 
-        }else if (startNotClickedOnce){
+        } else if (startNotClickedOnce) {
             rightPanel.runClock();
             time = new TimeThread(seconds, rightPanel);
             time.setGameOver(false);
@@ -528,10 +525,11 @@ public class World1Template extends GridPane {
 
     /**
      * När muspekaren lämnar en label slutar den att highlightas.
+     *
      * @param e Används för att hitta rätt label.
      */
     public void exitedLabel(MouseEvent e) {
-        Label label = (Label)e.getSource();
+        Label label = (Label) e.getSource();
         FadeTransition fade = new FadeTransition();
         fade.setNode(label);
         fade.setDuration(Duration.seconds(0.3));
@@ -543,11 +541,12 @@ public class World1Template extends GridPane {
     /**
      * Om spelrundan är startad och spelaren har plockat upp en yxa går det att förstöra väggen.
      * Om spelrundan är startad och spelaren inte plockat upp en yxa förlorar hen ett liv vid kollision med väggen.
+     *
      * @param e Används för att hitta rätt label.
      */
     public void enteredBreakableWall(MouseEvent e) {
 
-        Label label = (Label)e.getSource();
+        Label label = (Label) e.getSource();
         ImageView pathView = new ImageView(path);
 
         if (startButtonPressed) {
@@ -557,8 +556,7 @@ public class World1Template extends GridPane {
                 rightPanel.removePickaxe();
                 wallDestroyed = true;
                 audioPlayer.playBreakableWallSound();
-            }
-            else if (!wallDestroyed) {
+            } else if (!wallDestroyed) {
                 enteredWall(e);
             }
         }
@@ -573,8 +571,8 @@ public class World1Template extends GridPane {
         public void handle(MouseEvent e) {
             if (startButtonPressed) {
 
-                for (Label label : pickaxes){
-                    if (e.getSource()== label){
+                for (Label label : pickaxes) {
+                    if (e.getSource() == label) {
                         audioPlayer.playPickAxeSound();
                         label.setVisible(false);
                         pickaxeObtained = true;
@@ -582,7 +580,7 @@ public class World1Template extends GridPane {
                     }
                 }
 
-                for (Label label: collectibles) {
+                for (Label label : collectibles) {
                     if (e.getSource() == label) {
                         audioPlayer.playCollectibleSound();
                         label.setVisible(false);

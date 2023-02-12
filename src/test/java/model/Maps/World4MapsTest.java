@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class World4MapsTest {
+    World4Maps w;
 
     @Test
     void level41pos() {
@@ -22,7 +23,6 @@ class World4MapsTest {
                 {0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                 {4, 1, 0, 0, 0, 0, 0, 1, 1, 4, 1, 0, 0, 1},
                 {0, 0, 4, 1, 4, 1, 4, 1, 0, 0, 1, 1, 1, 3}};
-        World4Maps w = new World4Maps();
         int[][] level1Get = w.getLevel41();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -52,7 +52,6 @@ class World4MapsTest {
                 {0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                 {4, 1, 0, 0, 0, 0, 0, 1, 1, 4, 1, 0, 0, 1},
                 {0, 0, 4, 1, 4, 1, 4, 1, 0, 0, 1, 1, 1, 3}};
-        World4Maps w = new World4Maps();
         int[][] level1Get = w.getLevel41();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -82,7 +81,6 @@ class World4MapsTest {
                 {1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 4, 0, 1},
                 {1, 1, 4, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 4},
                 {3, 0, 1, 1, 4, 1, 1, 4, 0, 1, 1, 1, 4, 2}};
-        World4Maps w = new World4Maps();
         int[][] level1Get = w.getLevel42();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -112,7 +110,6 @@ class World4MapsTest {
                 {1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 4, 0, 1},
                 {1, 1, 4, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 4},
                 {3, 0, 1, 1, 4, 1, 1, 4, 0, 1, 1, 1, 4, 2}};
-        World4Maps w = new World4Maps();
         int[][] level1Get = w.getLevel42();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -142,7 +139,6 @@ class World4MapsTest {
                 {1, 0, 0, 0, 0, 0, 0, 4, 0, 1, 0, 0, 1, 4},
                 {1, 0, 0, 0, 4, 1, 1, 1, 0, 1, 0, 4, 1, 0},
                 {2, 1, 4, 1, 1, 0, 0, 1, 1, 4, 1, 1, 0, 0}};
-        World4Maps w = new World4Maps();
         int[][] level1Get = w.getLevel43();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -172,7 +168,6 @@ class World4MapsTest {
                 {1, 0, 0, 0, 0, 0, 0, 4, 0, 1, 0, 0, 1, 4},
                 {1, 0, 0, 0, 4, 1, 1, 1, 0, 1, 0, 4, 1, 0},
                 {2, 1, 4, 1, 1, 0, 0, 1, 1, 4, 1, 1, 0, 0}};
-        World4Maps w = new World4Maps();
         int[][] level1Get = w.getLevel43();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -202,7 +197,6 @@ class World4MapsTest {
                 {4, 1, 0, 4, 0, 1, 1, 4, 0, 1, 4, 1, 1, 0},
                 {1, 0, 0, 1, 0, 1, 0, 0, 4, 1, 0, 0, 4, 1},
                 {1, 1, 1, 4, 0, 1, 4, 1, 1, 0, 0, 0, 0, 3}};
-        World4Maps w = new World4Maps();
         int[][] level1Get = w.getLevel44();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -232,7 +226,6 @@ class World4MapsTest {
                 {4, 1, 0, 4, 0, 1, 1, 4, 0, 1, 4, 1, 1, 0},
                 {1, 0, 0, 1, 0, 1, 0, 0, 4, 1, 0, 0, 4, 1},
                 {1, 1, 1, 4, 0, 1, 4, 1, 1, 0, 0, 0, 0, 3}};
-        World4Maps w = new World4Maps();
         int[][] level1Get = w.getLevel44();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -262,7 +255,6 @@ class World4MapsTest {
                 {4, 1, 1, 1, 4, 0, 1, 0, 0, 0, 1, 0, 0, 1},
                 {1, 0, 0, 0, 1, 0, 1, 4, 0, 1, 1, 4, 1, 1},
                 {5, 1, 1, 1, 4, 0, 0, 1, 1, 4, 0, 0, 0, 2}};
-        World4Maps w = new World4Maps();
         int[][] level1Get = w.getLevel45();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -292,7 +284,6 @@ class World4MapsTest {
                 {4, 1, 1, 1, 4, 0, 1, 0, 0, 0, 1, 0, 99, 1},
                 {1, 0, 0, 0, 1, 0, 1, 4, 0, 1, 1, 4, 1, 1},
                 {5, 1, 1, 1, 4, 0, 0, 1, 1, 4, 0, 0, 0, 2}};
-        World4Maps w = new World4Maps();
         int[][] level1Get = w.getLevel45();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -305,5 +296,4 @@ class World4MapsTest {
         }
         assertFalse(equal);
     }
-
 }

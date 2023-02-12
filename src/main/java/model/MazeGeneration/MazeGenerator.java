@@ -11,7 +11,7 @@ public class MazeGenerator {
      * @Author https://github.com/oppenheimj/maze-generator/blob/master/MazeGenerator.java
      * Edit Sebastian Helin, André Eklund
      */
-    
+
     private Stack<Node> stack = new Stack<>();
     private Random rand = new Random();
     private int[][] maze;
@@ -19,7 +19,7 @@ public class MazeGenerator {
     private boolean generateGoalAndStart;
 
     /**
-     * @param dim Tar in en dimension för hur stor labyrinten ska vara
+     * @param dim             Tar in en dimension för hur stor labyrinten ska vara
      * @param setGoalAndStart Sätter start & mål
      */
     public MazeGenerator(int dim, boolean setGoalAndStart) {
@@ -32,7 +32,7 @@ public class MazeGenerator {
     }
 
     public void generateMaze() {
-        stack.push(new Node(0,0));
+        stack.push(new Node(0, 0));
         while (!stack.empty()) {
             Node next = stack.pop();
             if (validNextNode(next)) {
@@ -52,8 +52,8 @@ public class MazeGenerator {
     }
 
     /**
-     * @edit av Andre Eklund & Sebastian Helin
      * @return
+     * @edit av Andre Eklund & Sebastian Helin
      */
     public String getSymbolicMaze() {
         StringBuilder sb = new StringBuilder();
@@ -68,8 +68,8 @@ public class MazeGenerator {
 
     private boolean validNextNode(Node node) {
         int numNeighboringOnes = 0;
-        for (int y = node.y-1; y < node.y+2; y++) {
-            for (int x = node.x-1; x < node.x+2; x++) {
+        for (int y = node.y - 1; y < node.y + 2; y++) {
+            for (int x = node.x - 1; x < node.x + 2; x++) {
                 if (pointOnGrid(x, y) && pointNotNode(node, x, y) && maze[y][x] == 1) {
                     numNeighboringOnes++;
                 }
@@ -88,10 +88,10 @@ public class MazeGenerator {
 
     private ArrayList<Node> findNeighbors(Node node) {
         ArrayList<Node> neighbors = new ArrayList<>();
-        for (int y = node.y-1; y < node.y+2; y++) {
-            for (int x = node.x-1; x < node.x+2; x++) {
+        for (int y = node.y - 1; y < node.y + 2; y++) {
+            for (int x = node.x - 1; x < node.x + 2; x++) {
                 if (pointOnGrid(x, y) && pointNotCorner(node, x, y)
-                    && pointNotNode(node, x, y)) {
+                        && pointNotNode(node, x, y)) {
                     neighbors.add(new Node(x, y));
                 }
             }
@@ -124,7 +124,7 @@ public class MazeGenerator {
     private Boolean pointNotCorner(Node node, int x, int y) {
         return (x == node.x || y == node.y);
     }
-    
+
     private Boolean pointNotNode(Node node, int x, int y) {
         return !(x == node.x && y == node.y);
     }

@@ -1,11 +1,17 @@
 package model.Maps;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class World2MapsTest {
+    World2Maps w;
 
+    @BeforeEach
+    void init() {
+        w = new World2Maps();
+    }
     @Test
     void level21pos() {
         int[][] level = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -18,7 +24,6 @@ class World2MapsTest {
                 {1, 0, 0, 1, 1, 4, 0, 1, 1, 4},
                 {1, 0, 1, 1, 0, 1, 0, 0, 0, 1},
                 {7, 0, 2, 0, 0, 1, 1, 1, 1, 4}};
-        World2Maps w = new World2Maps();
         int[][] level1Get = w.getLevel21();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -44,7 +49,6 @@ class World2MapsTest {
                 {1, 0, 0, 1, 1, 4, 0, 1, 1, 4},
                 {1, 0, 1, 1, 0, 1, 4, 0, 0, 1},
                 {7, 0, 2, 0, 0, 1, 1, 1, 1, 4}};
-        World2Maps w = new World2Maps();
         int[][] level1Get = w.getLevel21();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -70,7 +74,6 @@ class World2MapsTest {
                 {0, 1, 1, 4, 0, 0, 1, 0, 1, 0},
                 {0, 0, 0, 1, 0, 1, 4, 0, 1, 0},
                 {1, 4, 1, 1, 0, 3, 0, 0, 1, 4}};
-        World2Maps w = new World2Maps();
         int[][] level1Get = w.getLevel22();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -96,7 +99,6 @@ class World2MapsTest {
                 {0, 1, 1, 4, 0, 0, 1, 0, 1, 0},
                 {0, 0, 0, 1, 0, 1, 4, 0, 1, 0},
                 {1, 4, 1, 1, 0, 3, 0, 0, 1, 4}};
-        World2Maps w = new World2Maps();
         int[][] level1Get = w.getLevel22();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -122,7 +124,6 @@ class World2MapsTest {
                 {1, 1, 0, 0, 0, 4, 1, 4, 0, 0},
                 {0, 1, 0, 0, 0, 1, 0, 1, 1, 1},
                 {5, 4, 1, 1, 1, 2, 0, 0, 0, 3}};
-        World2Maps w = new World2Maps();
         int[][] level1Get = w.getLevel23();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -148,7 +149,6 @@ class World2MapsTest {
                 {1, 1, 0, 0, 0, 4, 1, 4, 0, 0},
                 {0, 1, 0, 0, 0, 1, 0, 1, 1, 1},
                 {5, 4, 1, 1, 1, 2, 0, 0, 0, 3}};
-        World2Maps w = new World2Maps();
         int[][] level1Get = w.getLevel23();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -169,12 +169,11 @@ class World2MapsTest {
                 {0, 1, 1, 0, 1, 0, 1, 0, 0, 0},
                 {0, 0, 1, 0, 1, 4, 1, 1, 1, 4},
                 {5, 1, 1, 1, 1, 0, 0, 0, 0, 1},
-                {0, 0, 1, 0, 0, 0, 0, 0, 0 ,4},
-                {0, 1, 4, 0, 0, 4, 1, 4, 0 ,1},
-                {0, 4, 0, 0, 0, 1, 0, 1, 0 ,4},
-                {0, 1, 1, 4, 0, 1, 0, 1, 0 ,1},
-                {0, 0, 0, 1, 1, 1, 0, 1, 1 ,2}};
-        World2Maps w = new World2Maps();
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 4},
+                {0, 1, 4, 0, 0, 4, 1, 4, 0, 1},
+                {0, 4, 0, 0, 0, 1, 0, 1, 0, 4},
+                {0, 1, 1, 4, 0, 1, 0, 1, 0, 1},
+                {0, 0, 0, 1, 1, 1, 0, 1, 1, 2}};
         int[][] level1Get = w.getLevel24();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -195,12 +194,11 @@ class World2MapsTest {
                 {0, 1, 1, 0, 1, 0, 1, 0, 0, 0},
                 {0, 0, 1, 0, 1, 4, 1, 1, 1, 4},
                 {5, 1, 1, 1, 1, 0, 0, 0, 0, 1},
-                {0, 0, 1, 0, 0, 0, 0, 0, 0 ,4},
-                {0, 1, 4, 0, 0, 4, 1, 4, 0 ,1},
-                {0, 4, 0, 0, 4, 1, 0, 1, 0 ,4},
-                {0, 1, 1, 4, 0, 1, 0, 1, 0 ,1},
-                {0, 0, 0, 1, 1, 1, 0, 1, 1 ,2}};
-        World2Maps w = new World2Maps();
+                {0, 0, 1, 0, 0, 0, 0, 0, 0, 4},
+                {0, 1, 4, 0, 0, 4, 1, 4, 0, 1},
+                {0, 4, 0, 0, 4, 1, 0, 1, 0, 4},
+                {0, 1, 1, 4, 0, 1, 0, 1, 0, 1},
+                {0, 0, 0, 1, 1, 1, 0, 1, 1, 2}};
         int[][] level1Get = w.getLevel24();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -226,8 +224,7 @@ class World2MapsTest {
                 {1, 0, 0, 1, 1, 4, 0, 1, 0, 0, 0},
                 {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0},
                 {1, 0, 4, 1, 1, 0, 1, 0, 0, 1, 4},
-                {4, 1, 1 ,0 ,1 ,6 ,1 ,1 ,4 ,1 ,0}};
-        World2Maps w = new World2Maps();
+                {4, 1, 1, 0, 1, 6, 1, 1, 4, 1, 0}};
         int[][] level1Get = w.getLevel25();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -253,8 +250,7 @@ class World2MapsTest {
                 {1, 0, 0, 1, 1, 4, 0, 1, 0, 0, 0},
                 {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0},
                 {1, 0, 4, 1, 1, 0, 1, 0, 0, 1, 4},
-                {4, 1, 1 ,0 ,1 ,6 ,1 ,1 ,4 ,1 ,0}};
-        World2Maps w = new World2Maps();
+                {4, 1, 1, 0, 1, 6, 1, 1, 4, 1, 0}};
         int[][] level1Get = w.getLevel25();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
@@ -267,5 +263,4 @@ class World2MapsTest {
         }
         assertFalse(equal);
     }
-
 }

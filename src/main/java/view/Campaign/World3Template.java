@@ -50,7 +50,7 @@ public class World3Template extends World1Template {
 
     public World3Template(int[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int worldImage, AudioPlayer audioPlayer) throws FileNotFoundException {
         super(level, currentLevel, heartCrystals, mainProgram, rightPanel, worldImage, audioPlayer, 60);
-        squareSize = 600/(level.length+2);
+        squareSize = 600 / (level.length + 2);
         this.currentLevel = currentLevel;
         this.panel = rightPanel;
         this.audioPlayer = audioPlayer;
@@ -85,19 +85,19 @@ public class World3Template extends World1Template {
      */
 
     public void initialize() {
-        if (currentLevel==2){
+        if (currentLevel == 2) {
             ImageView ghost3V = new ImageView();
             ImageView ghost1V = new ImageView();
             ghost3V.setImage(ghost);
             ghost1V.setImage(ghost);
-            add(ghost3V,5,5);
-            add(ghost1V,14,5);
+            add(ghost3V, 5, 5);
+            add(ghost1V, 14, 5);
 
-            Rectangle rectangle = new Rectangle(125,251);
+            Rectangle rectangle = new Rectangle(125, 251);
             rectangle.setY(65);
             rectangle.setX(-147);
 
-            Rectangle rectangle2 = new Rectangle(84,123);
+            Rectangle rectangle2 = new Rectangle(84, 123);
             rectangle2.setY(65);
             rectangle2.setX(-147);
 
@@ -118,9 +118,7 @@ public class World3Template extends World1Template {
             ghost1V.setOnMouseEntered(e -> enteredGhost(e));
             ghost3V.setOnMouseEntered(e -> enteredGhost(e));
 
-        }
-
-        else if (currentLevel ==3){
+        } else if (currentLevel == 3) {
             ImageView ghost1V = new ImageView();
             ImageView ghost2V = new ImageView();
 
@@ -128,13 +126,13 @@ public class World3Template extends World1Template {
             ghost2V.setImage(ghost);
 
             //add(ghost1V,5,8);
-            add(ghost2V,9,3);
+            add(ghost2V, 9, 3);
 
-            Rectangle rectangle = new Rectangle(125,120);
+            Rectangle rectangle = new Rectangle(125, 120);
             rectangle.setY(65);
             rectangle.setX(-147);
 
-            Rectangle rectangle1 = new Rectangle(210,125);
+            Rectangle rectangle1 = new Rectangle(210, 125);
             rectangle1.setY(190);
             rectangle1.setX(-231);
 
@@ -155,43 +153,42 @@ public class World3Template extends World1Template {
             ghost1V.setOnMouseEntered(e -> enteredGhost(e));
             ghost2V.setOnMouseEntered(e -> enteredGhost(e));
 
-        }
-        else if (currentLevel ==4){
-          ImageView ghost4V = new ImageView();
-          ImageView ghost2V = new ImageView();
-          ImageView ghost1V = new ImageView();
-          ImageView ghost3V = new ImageView();
-          ImageView ghost5V = new ImageView();
+        } else if (currentLevel == 4) {
+            ImageView ghost4V = new ImageView();
+            ImageView ghost2V = new ImageView();
+            ImageView ghost1V = new ImageView();
+            ImageView ghost3V = new ImageView();
+            ImageView ghost5V = new ImageView();
 
-          ghost1V.setImage(ghost);
-          ghost2V.setImage(ghost);
-          ghost3V.setImage(ghost);
-          ghost4V.setImage(ghost);
-          ghost5V.setImage(ghost);
+            ghost1V.setImage(ghost);
+            ghost2V.setImage(ghost);
+            ghost3V.setImage(ghost);
+            ghost4V.setImage(ghost);
+            ghost5V.setImage(ghost);
 
-          add(ghost2V,15,4);
-          add(ghost4V,10,4);
-          add(ghost1V,10,1);
-          add(ghost3V,15,1);
-          add(ghost5V,12,1);
+            add(ghost2V, 15, 4);
+            add(ghost4V, 10, 4);
+            add(ghost1V, 10, 1);
+            add(ghost3V, 15, 1);
+            add(ghost5V, 12, 1);
 
-            Rectangle rectangle = new Rectangle(125,83);
+            Rectangle rectangle = new Rectangle(125, 83);
             rectangle.setY(190);
             rectangle.setX(-230);
 
-            Rectangle rectangle1 = new Rectangle(125,83);
+            Rectangle rectangle1 = new Rectangle(125, 83);
             rectangle1.setY(190);
             rectangle1.setX(-230);
 
-            Rectangle rectangle2 = new Rectangle(0,83);
+            Rectangle rectangle2 = new Rectangle(0, 83);
             rectangle2.setY(105);
             rectangle2.setX(-232);
 
-            Rectangle rectangle3 = new Rectangle(0,83);
+            Rectangle rectangle3 = new Rectangle(0, 83);
             rectangle3.setY(105);
             rectangle3.setX(-232);
 
-            Rectangle rectangle4 = new Rectangle(0,83);
+            Rectangle rectangle4 = new Rectangle(0, 83);
             rectangle4.setY(105);
             rectangle4.setX(-232);
 
@@ -245,8 +242,7 @@ public class World3Template extends World1Template {
             ghost4V.setOnMouseEntered(e -> enteredGhost(e));
             ghost5V.setOnMouseEntered(e -> enteredGhost(e));
 
-        }
-        else if(currentLevel==5) {
+        } else if (currentLevel == 5) {
             ImageView ghost1V = new ImageView();
             ImageView ghost2V = new ImageView();
             ImageView ghost3V = new ImageView();
@@ -315,9 +311,7 @@ public class World3Template extends World1Template {
             animation.setPath(rectangle);
             animation.play();
 
-        }
-
-            else if (currentLevel==6){
+        } else if (currentLevel == 6) {
             ImageView ghost1V = new ImageView();
             ImageView ghost2V = new ImageView();
             ImageView ghost3V = new ImageView();
@@ -387,10 +381,8 @@ public class World3Template extends World1Template {
             ghost3V.setOnMouseEntered(e -> enteredGhost(e));
             ghost4V.setOnMouseEntered(e -> enteredGhost(e));
 
-            }
         }
-
-
+    }
 
 
 }//Class
