@@ -17,6 +17,7 @@ class HighscoreListTest {
         new Thread(() -> Application.launch(MainProgram.class)).start();
     }
 
+    //Test that the right amount of Players are present in the highscore list.
     @Test
     void setupHighscore() {
         try {

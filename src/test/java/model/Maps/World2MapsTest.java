@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Gets all maps in the second level of the campaign and tests that the correct one is returned.
+
 class World2MapsTest {
     World2Maps w;
 

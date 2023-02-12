@@ -14,6 +14,8 @@ import java.util.Stack;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Tests if a randomized map that is generated after a previous one is completed is completable.
+
 class GenerateNextLevelTest {
     HashMap<Node, ArrayList<Node>> G = new HashMap<>();
     MazeGenerator mg;
@@ -83,6 +85,12 @@ class GenerateNextLevelTest {
         }
     }
 
+    /**
+     * A depth first search between two nodes.
+     * @param start start ladder/node to start searching from
+     * @param end goal ladder/node to search for a path to
+     * @return true if a path exists and false if one doesn't.
+     */
     private boolean dfs(Node start, Node end) {
         Stack<Node> stack = new Stack<>();
         HashSet<Node> visited = new HashSet<>();
@@ -103,6 +111,10 @@ class GenerateNextLevelTest {
         return false;
     }
 
+    /**
+     * Builds a graph structure out of a 2-D maze.
+     * @param maze the maze that is converted to a graph.
+     */
     private void buildGraph(int[][] maze) {
         for (int j = 0; j < maze.length; j++) {
             for (int k = 0; k < maze[j].length; k++) {
@@ -124,14 +136,32 @@ class GenerateNextLevelTest {
         }
     }
 
+    /**
+     * A help method for checking valid blocks in the maze.
+     * @param i The y coordinate to check
+     * @param j The x cooridnate to check
+     * @param maze The maze to check in
+     * @return True if the position is a valid connection between two nodes, otherwise false
+     */
     private boolean road(int i, int j, int[][] maze) {
         return maze[i][j] == 1 || maze[i][j] == 2 || maze[i][j] == 3;
     }
 
+    /**
+     *
+     * @param i Represents a x och y coordinate.
+     * @param dim The length/width of the maze
+     * @return tru if the index is within the maze, and false if it isn't.
+     */
     private boolean validate(int i, int dim) {
         return i >= 0 && i < dim;
     }
 
+    /**
+     * Adds Nodes to adj lists.
+      * @param a Node that has a connection to b.
+     * @param b Node that has connection to a.
+     */
     private void addEdge(Node a, Node b) {
         G.putIfAbsent(a, new ArrayList<>());
         G.putIfAbsent(b, new ArrayList<>());
@@ -143,6 +173,11 @@ class GenerateNextLevelTest {
         }
     }
 
+    /**
+     * Finds the finish node in the maze
+     * @param maze 2-D Maze to search in
+     * @return The end node if one exists otherwise a Node with -1,-1 as coordinates
+     */
     private Node end(int[][] maze) {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
@@ -154,6 +189,11 @@ class GenerateNextLevelTest {
         return new Node(-1, -1);
     }
 
+    /**
+     * Finds the start node in the maze
+     * @param maze 2-D Maze to search in
+     * @return The start node if one exists otherwise a Node with -1,-1 as coordinates
+     */
     private Node start(int[][] maze) {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {

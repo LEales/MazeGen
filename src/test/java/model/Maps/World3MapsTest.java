@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Gets all maps in the third level of the campaign and tests that the correct one is returned.
+
 class World3MapsTest {
     World3Maps w;
 

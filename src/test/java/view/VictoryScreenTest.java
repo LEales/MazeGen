@@ -24,7 +24,7 @@ class VictoryScreenTest {
         new Thread(() -> Application.launch(MainProgram.class)).start();
     }
 
-
+    //Tests that players appear in the correct order based on finished maps
     @Test
     void addScoreMapOrder() {
         try {
@@ -83,6 +83,7 @@ class VictoryScreenTest {
 
     }
 
+    //Tests that players appear in the correct order based on time.
     @Test
     void addScoresAndCheckOrderByTime() {
         try {
@@ -129,6 +130,7 @@ class VictoryScreenTest {
         }
     }
 
+    //help methods for access to private methods.
     void addScores(int[] time, VictoryScreen v) {
         v.setTime(time);
         try {
@@ -139,7 +141,7 @@ class VictoryScreenTest {
             throw new RuntimeException(e);
         }
     }
-
+    //help methods for access to private methods.
     Method getAddToScoreList() {
         Method method;
         try {
@@ -151,7 +153,7 @@ class VictoryScreenTest {
         return method;
     }
 
-
+    //tests the sorting algorithm based on levels completed.
     @Test
     void playerScoreSortLevel() {
         try {
@@ -191,7 +193,7 @@ class VictoryScreenTest {
         }
     }
 
-
+    //tests the sorting algorithm based on time.
     @Test
     void playerScoreSortSeconds() {
         try {

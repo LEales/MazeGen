@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Gets all maps in the fourth level of the campaign and tests that the correct one is returned.
+
 class World4MapsTest {
     World4Maps w;
 

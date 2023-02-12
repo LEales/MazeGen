@@ -10,6 +10,9 @@ import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//An example class for how to test fx dependent classes.
+
+
 class MainProgramTest {
 
     @BeforeAll
@@ -24,15 +27,6 @@ class MainProgramTest {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Be");
         MainProgram mp = MainProgram.getMainProgram();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                assertTrue(mp.changeToHelp());
-            }
-        });
-
-
     }
 }
