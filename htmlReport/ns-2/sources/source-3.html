@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > TimeThread</title>
+  <title>Coverage Report > TotalTime</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">model</a>
 </div>
 
-<h1>Coverage Summary for Class: TimeThread (model)</h1>
+<h1>Coverage Summary for Class: TotalTime (model)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -40,29 +40,29 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">TimeThread</td>
+  <td class="name">TotalTime</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/1)
+    (1/1)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    33.3%
   </span>
   <span class="absValue">
-    (0/3)
+    (1/3)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    26.3%
   </span>
   <span class="absValue">
-    (0/17)
+    (5/19)
   </span>
 </td>
 </tr>
@@ -76,48 +76,42 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package model;
 &nbsp;
-&nbsp;import view.Menu.RightPanel;
-&nbsp;
 &nbsp;/**
 &nbsp; * @author Sebastian Helin
-&nbsp; * En tråd som räknar ner den
-&nbsp; * totala tiden som skickas in från konstruktorn
+&nbsp; * Tråd som räknar den totala tiden det tog att spela
 &nbsp; */
+&nbsp;public class TotalTime extends Thread {
 &nbsp;
-&nbsp;public class TimeThread extends Thread {
-&nbsp;
-&nbsp;    private int seconds;
-&nbsp;    private RightPanel panel;
-<b class="nc">&nbsp;    private boolean gameOver = false;</b>
+&nbsp;    private boolean gameOver;
+<b class="fc">&nbsp;    private int seconds = 0;</b>
+<b class="fc">&nbsp;    private int minutes = 0;</b>
+<b class="fc">&nbsp;    private int hour = 0;</b>
 &nbsp;
 &nbsp;    /**
-&nbsp;     * @param seconds Varje nivå skickar in en seconds variabel till tråden
-&nbsp;     * @param panel
+&nbsp;     * @param gameOver Tar en boolen som används som villkor
 &nbsp;     */
-<b class="nc">&nbsp;    public TimeThread(int seconds, RightPanel panel) {</b>
-<b class="nc">&nbsp;        this.seconds = seconds;</b>
-<b class="nc">&nbsp;        this.panel = panel;</b>
+<b class="fc">&nbsp;    public TotalTime(boolean gameOver) {</b>
+<b class="fc">&nbsp;        this.gameOver = gameOver;</b>
 &nbsp;    }
 &nbsp;
+&nbsp;
 &nbsp;    /**
-&nbsp;     * Körs tills det blir GameOver eller en bana blir avklarad
-&nbsp;     * Instansieras om och körs igen för varje nivå
+&nbsp;     * Tråden sover i 1000 millisekunder
+&nbsp;     * Inkrementerar int variabeln med 1
 &nbsp;     */
 &nbsp;    public void run() {
 <b class="nc">&nbsp;        while (!gameOver) {</b>
 &nbsp;            try {
 <b class="nc">&nbsp;                Thread.sleep(1000);</b>
-<b class="nc">&nbsp;                if (seconds &gt; 0) {</b>
-<b class="nc">&nbsp;                    seconds--;</b>
+<b class="nc">&nbsp;                seconds++;</b>
+<b class="nc">&nbsp;                if (seconds == 60) {</b>
+<b class="nc">&nbsp;                    minutes++;</b>
+<b class="nc">&nbsp;                    seconds = 0;</b>
 &nbsp;                }
-<b class="nc">&nbsp;                if (seconds == 5) {</b>
-<b class="nc">&nbsp;                    panel.fiveSecLeft();</b>
+<b class="nc">&nbsp;                if (minutes == 60) {</b>
+<b class="nc">&nbsp;                    hour++;</b>
+<b class="nc">&nbsp;                    minutes = 0;</b>
 &nbsp;                }
-<b class="nc">&nbsp;                if (seconds == 0) {</b>
-<b class="nc">&nbsp;                    panel.startTask();</b>
-<b class="nc">&nbsp;                    gameOver = true;</b>
-&nbsp;                }
-&nbsp;
 <b class="nc">&nbsp;            } catch (InterruptedException e) {</b>
 <b class="nc">&nbsp;                e.printStackTrace();</b>
 <b class="nc">&nbsp;            }</b>
@@ -125,10 +119,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * @param gameOver setter för trådens villkor
+&nbsp;     * @param gameOver Setter för villkoret
 &nbsp;     */
-&nbsp;    public void setGameOver(boolean gameOver) {
+&nbsp;    public int[] setGameOver(boolean gameOver) {
 <b class="nc">&nbsp;        this.gameOver = gameOver;</b>
+<b class="nc">&nbsp;        return new int[]{hour, minutes, seconds};</b>
 &nbsp;    }
 &nbsp;}
 </code>

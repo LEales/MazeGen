@@ -40,18 +40,18 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name">Help</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/4)
+    (4/4)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/20)
+    (20/20)
   </span>
 </td>
 </tr>
@@ -59,18 +59,18 @@ Current scope:     <a href="../../index.html">all classes</a>
     <td class="name">Help$1</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    50%
   </span>
   <span class="absValue">
-    (0/2)
+    (1/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    33.3%
   </span>
   <span class="absValue">
-    (0/3)
+    (1/3)
   </span>
 </td>
   </tr>
@@ -78,18 +78,18 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name"><strong>Total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    83.3%
   </span>
   <span class="absValue">
-    (0/6)
+    (5/6)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    91.3%
   </span>
   <span class="absValue">
-    (0/23)
+    (21/23)
   </span>
 </td>
 </tr>
@@ -128,40 +128,40 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * @param mainProgram tas emot och instansvariabeln sätts
 &nbsp;     * @param audioPlayer tas emot och instansvariabeln sätts
 &nbsp;     */
-<b class="nc">&nbsp;    public Help(MainProgram mainProgram, AudioPlayer audioPlayer){</b>
-<b class="nc">&nbsp;        pressMouse = new Image(&quot;file:files/menuImages/helppicmouse.png&quot;);</b>
-<b class="nc">&nbsp;        this.mainProgram = mainProgram;</b>
-<b class="nc">&nbsp;        this.audioPlayer = audioPlayer;</b>
-<b class="nc">&nbsp;        setBackground();</b>
-<b class="nc">&nbsp;        pressMouseAnimation();</b>
-<b class="nc">&nbsp;        addListener();</b>
+<b class="fc">&nbsp;    public Help(MainProgram mainProgram, AudioPlayer audioPlayer){</b>
+<b class="fc">&nbsp;        pressMouse = new Image(&quot;file:files/menuImages/helppicmouse.png&quot;);</b>
+<b class="fc">&nbsp;        this.mainProgram = mainProgram;</b>
+<b class="fc">&nbsp;        this.audioPlayer = audioPlayer;</b>
+<b class="fc">&nbsp;        setBackground();</b>
+<b class="fc">&nbsp;        pressMouseAnimation();</b>
+<b class="fc">&nbsp;        addListener();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Metod som sätter bakgrundsbilden
 &nbsp;     */
 &nbsp;    public void setBackground(){
-<b class="nc">&nbsp;        BackgroundImage myBI= new BackgroundImage(new Image(&quot;file:files/menuImages/helppicnew.png&quot;,800,600,false,true),</b>
+<b class="fc">&nbsp;        BackgroundImage myBI= new BackgroundImage(new Image(&quot;file:files/menuImages/helppicnew.png&quot;,800,600,false,true),</b>
 &nbsp;                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
 &nbsp;                BackgroundSize.DEFAULT);
-<b class="nc">&nbsp;        this.setBackground(new Background(myBI));</b>
+<b class="fc">&nbsp;        this.setBackground(new Background(myBI));</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Metod som får pressMouseView-objektet att blinka genom en FadeTransition
 &nbsp;     */
 &nbsp;    public void pressMouseAnimation(){
-<b class="nc">&nbsp;        ImageView pressMouseView = new ImageView(pressMouse);</b>
-<b class="nc">&nbsp;        pressMouseView.setStyle(&quot;fx-background-color: transparent;&quot;);</b>
-<b class="nc">&nbsp;        pressMouseView.toFront();</b>
-<b class="nc">&nbsp;        FadeTransition fadeTransition = new FadeTransition(Duration.millis(1500), pressMouseView);</b>
-<b class="nc">&nbsp;        fadeTransition.setCycleCount(Transition.INDEFINITE);</b>
-<b class="nc">&nbsp;        pressMouseView.setOpacity(0);</b>
-<b class="nc">&nbsp;        getChildren().add(pressMouseView);</b>
+<b class="fc">&nbsp;        ImageView pressMouseView = new ImageView(pressMouse);</b>
+<b class="fc">&nbsp;        pressMouseView.setStyle(&quot;fx-background-color: transparent;&quot;);</b>
+<b class="fc">&nbsp;        pressMouseView.toFront();</b>
+<b class="fc">&nbsp;        FadeTransition fadeTransition = new FadeTransition(Duration.millis(1500), pressMouseView);</b>
+<b class="fc">&nbsp;        fadeTransition.setCycleCount(Transition.INDEFINITE);</b>
+<b class="fc">&nbsp;        pressMouseView.setOpacity(0);</b>
+<b class="fc">&nbsp;        getChildren().add(pressMouseView);</b>
 &nbsp;
-<b class="nc">&nbsp;        fadeTransition.setFromValue(0);</b>
-<b class="nc">&nbsp;        fadeTransition.setToValue(1);</b>
-<b class="nc">&nbsp;        fadeTransition.play();</b>
+<b class="fc">&nbsp;        fadeTransition.setFromValue(0);</b>
+<b class="fc">&nbsp;        fadeTransition.setToValue(1);</b>
+<b class="fc">&nbsp;        fadeTransition.play();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;
@@ -169,7 +169,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * Lägger till listener för knapptryck och skiftar scen till menyn
 &nbsp;     */
 &nbsp;    public void addListener(){
-<b class="nc">&nbsp;        this.setOnMouseClicked(new EventHandler&lt;MouseEvent&gt;() {</b>
+<b class="fc">&nbsp;        this.setOnMouseClicked(new EventHandler&lt;MouseEvent&gt;() {</b>
 &nbsp;            @Override
 &nbsp;            public void handle(MouseEvent mouseEvent) {
 <b class="nc">&nbsp;                mainProgram.changeToMenu();</b>
@@ -202,7 +202,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-02-07 09:19</div>
+    <div style="float:right;">generated on 2023-02-12 12:52</div>
 </div>
 </body>
 </html>

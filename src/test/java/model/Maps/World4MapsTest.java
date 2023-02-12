@@ -1,11 +1,17 @@
 package model.Maps;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class World4MapsTest {
     World4Maps w;
+
+    @BeforeEach
+    void init() {
+        w = new World4Maps();
+    }
 
     @Test
     void level41pos() {

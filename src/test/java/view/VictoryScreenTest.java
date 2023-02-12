@@ -1,12 +1,10 @@
 package view;
 
-import com.sun.javafx.scene.control.skin.Utils;
 import control.MainProgram;
 import javafx.application.Application;
 import javafx.application.Platform;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import view.Menu.HighscoreList;
 import model.PlayerScore;
 
 import java.io.File;
@@ -143,7 +141,7 @@ class VictoryScreenTest {
     }
 
     Method getAddToScoreList() {
-        Method method = null;
+        Method method;
         try {
             method = VictoryScreen.class.getDeclaredMethod("updateToScoreList");
         } catch (NoSuchMethodException e) {
@@ -153,4 +151,83 @@ class VictoryScreenTest {
         return method;
     }
 
+
+    @Test
+    void playerScoreSortLevel() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ignored) {
+        }
+        MainProgram mp = MainProgram.getMainProgram();
+        v = mp.getVictoryScreen();
+        PlayerScore[] ps = new PlayerScore[]{new PlayerScore("A", 0, 0, 0, 11),
+                new PlayerScore("B", 0, 0, 0, 21),
+                new PlayerScore("C", 0, 0, 0, 13),
+                new PlayerScore("C", 0, 0, 0, 12),
+                new PlayerScore("C", 0, 0, 0, 21),
+                new PlayerScore("C", 0, 0, 0, 41),
+                new PlayerScore("C", 0, 0, 0, 31),
+                new PlayerScore("C", 0, 0, 0, 0),
+        };
+        //int[] expected = new int[]{0, 11, 12, 13, 21, 21, 31, 41};
+        int[] expected = new int[]{41, 31, 21, 21, 13, 12, 11, 0};
+        Method sort;
+        try {
+            sort = VictoryScreen.class.getDeclaredMethod("sortList", PlayerScore[].class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        sort.setAccessible(true);
+        PlayerScore[] sorted;
+        try {
+            sorted = (PlayerScore[]) sort.invoke(v, (Object) ps);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (int i = 0; i < sorted.length; i++) {
+            System.out.println();
+            assertEquals(expected[i], sorted[i].getLvl());
+        }
+    }
+
+
+    @Test
+    void playerScoreSortSeconds() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ignored) {
+        }
+        MainProgram mp = MainProgram.getMainProgram();
+        v = mp.getVictoryScreen();
+        PlayerScore[] ps = new PlayerScore[]{new PlayerScore("A", 0, 0, 20, 0),
+                new PlayerScore("B", 0, 0, 20, 0),
+                new PlayerScore("C", 0, 0, 19, 0),
+                new PlayerScore("C", 0, 0, 17, 0),
+                new PlayerScore("C", 0, 0, 18, 0),
+                new PlayerScore("C", 0, 0, 17, 0),
+                new PlayerScore("C", 0, 0, 21, 0),
+                new PlayerScore("C", 0, 0, 15, 0),
+        };
+        //int[] expected = new int[]{0, 11, 12, 13, 21, 21, 31, 41};
+        int[] expected = new int[]{15, 17, 17, 18, 19, 20, 20, 21};
+        Method sort;
+        try {
+            sort = VictoryScreen.class.getDeclaredMethod("sortList", PlayerScore[].class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        sort.setAccessible(true);
+        PlayerScore[] sorted;
+        try {
+            sorted = (PlayerScore[]) sort.invoke(v, (Object) ps);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (int i = 0; i < sorted.length; i++) {
+            System.out.println();
+            assertEquals(expected[i], sorted[i].getTotalTimeInSeconds());
+        }
+    }
 }

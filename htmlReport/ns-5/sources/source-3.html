@@ -43,26 +43,26 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name">VictoryScreen</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/1)
+    (1/1)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    37.5%
   </span>
   <span class="absValue">
-    (0/4)
+    (6/16)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    20.7%
   </span>
   <span class="absValue">
-    (0/24)
+    (34/164)
   </span>
 </td>
 </tr>
@@ -77,55 +77,292 @@ Current scope:     <a href="../../index.html">all classes</a>
 <code class="sourceCode" id="sourceCode">&nbsp;package view;
 &nbsp;
 &nbsp;import control.MainProgram;
-&nbsp;import javafx.scene.control.Button;
-&nbsp;import javafx.scene.control.TextArea;
+&nbsp;import javafx.scene.Node;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.scene.control.TextField;
 &nbsp;import javafx.scene.image.Image;
 &nbsp;import javafx.scene.layout.*;
+&nbsp;import javafx.scene.paint.Color;
+&nbsp;import javafx.scene.text.Font;
+&nbsp;import model.PlayerScore;
 &nbsp;
 &nbsp;import java.io.*;
 &nbsp;
 &nbsp;public class VictoryScreen extends Pane {
 &nbsp;    private MainProgram mainProgram;
 &nbsp;    private AudioPlayer audioPlayer;
-&nbsp;    private TextArea textArea;
-<b class="nc">&nbsp;    public VictoryScreen(MainProgram mainProgram, AudioPlayer audioPlayer) {</b>
-<b class="nc">&nbsp;        this.audioPlayer = audioPlayer;</b>
-<b class="nc">&nbsp;        this.mainProgram = mainProgram;</b>
-<b class="nc">&nbsp;        this.setBackground(new Background(setBackground()));</b>
-<b class="nc">&nbsp;        setupScreen();</b>
+&nbsp;    private TextField textField;
+&nbsp;    private int[] totalTime;
+&nbsp;    private int scoreListCounter;
+&nbsp;
+&nbsp;    private Label errorLabel;
+&nbsp;
+&nbsp;    private Label first;
+&nbsp;    private Label second;
+&nbsp;    private Label third;
+<b class="fc">&nbsp;    private int backspcaeCheck=0;</b>
+&nbsp;    private String current;
+<b class="fc">&nbsp;    private String remover = &quot;third&quot;;</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public VictoryScreen(MainProgram mainProgram, AudioPlayer audioPlayer) {</b>
+<b class="fc">&nbsp;        this.audioPlayer = audioPlayer;</b>
+<b class="fc">&nbsp;        this.mainProgram = mainProgram;</b>
+<b class="fc">&nbsp;        this.setBackground(new Background(setBackground()));</b>
+<b class="fc">&nbsp;        setupTextLabels();</b>
+<b class="fc">&nbsp;        setupScene();</b>
+&nbsp;
+<b class="fc">&nbsp;        this.setOnMouseClicked(e-&gt;mainProgram.showHighScoreList());</b>
+&nbsp;        //this.getChildren().addAll(setupTextArea(),setupSendButton());
 &nbsp;    }
+&nbsp;
+&nbsp;    private void setupScene() {
+<b class="fc">&nbsp;        errorLabel = new Label(&quot;Not A Valid Input&quot;);</b>
+<b class="fc">&nbsp;        errorLabel. setTranslateY(100);</b>
+<b class="fc">&nbsp;        errorLabel.setTranslateX(240);</b>
+<b class="fc">&nbsp;        errorLabel.setFont(getFont(20));</b>
+<b class="fc">&nbsp;        errorLabel.setVisible(false);</b>
+<b class="fc">&nbsp;        errorLabel.setTextFill(Color.web(&quot;#FF0004&quot;));</b>
+<b class="fc">&nbsp;        this.getChildren().add(errorLabel);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void setupTextLabels() {
+<b class="fc">&nbsp;        first = setupTextArea(&quot;_&quot;,315,200);</b>
+<b class="fc">&nbsp;        second = setupTextArea(&quot;_&quot;,375,200);</b>
+<b class="fc">&nbsp;        third = setupTextArea(&quot;_&quot;,435,200);</b>
+<b class="fc">&nbsp;        first.setId(&quot;first&quot;);</b>
+<b class="fc">&nbsp;        second.setId(&quot;second&quot;);</b>
+<b class="fc">&nbsp;        third.setId(&quot;third&quot;);</b>
+<b class="fc">&nbsp;        this.getChildren().add(0,first);</b>
+<b class="fc">&nbsp;        this.getChildren().add(1,second);</b>
+<b class="fc">&nbsp;        this.getChildren().add(2,third);</b>
+<b class="fc">&nbsp;        current = first.getId();</b>
+&nbsp;    }
+&nbsp;
 &nbsp;    public BackgroundImage setBackground(){
-<b class="nc">&nbsp;        BackgroundImage menuBackground = new BackgroundImage(new Image(&quot;file:files/MenuBackground.jpg&quot;,800,600,false,true),</b>
+<b class="fc">&nbsp;        return new BackgroundImage(new Image(&quot;file:files/MenuBackground.jpg&quot;,800,600,false,true),</b>
 &nbsp;                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-&nbsp;                BackgroundSize.DEFAULT);
-<b class="nc">&nbsp;        return menuBackground;</b>
+&nbsp;                BackgroundSize.DEFAULT);    }
+&nbsp;
+&nbsp;
+&nbsp;    private Label setupTextArea(String text, int xValue, int yValue) {
+<b class="fc">&nbsp;        Label label = new Label(text);</b>
+<b class="fc">&nbsp;        label.setTranslateX(xValue);</b>
+<b class="fc">&nbsp;        label.setTranslateY(yValue);</b>
+<b class="fc">&nbsp;        label.setFont(getFont(50));</b>
+<b class="fc">&nbsp;        label.setTextFill(Color.web(&quot;#ffffff&quot;));</b>
+<b class="fc">&nbsp;        return label;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    private void setupScreen() {
-<b class="nc">&nbsp;        textArea = new TextArea();</b>
-<b class="nc">&nbsp;        textArea.setMaxHeight(50);</b>
-<b class="nc">&nbsp;        textArea.setMaxWidth(450);</b>
-<b class="nc">&nbsp;        textArea.setTranslateY(300);</b>
-<b class="nc">&nbsp;        textArea.setTranslateX(200);</b>
-&nbsp;
-<b class="nc">&nbsp;        Button button = new Button(&quot;Send&quot;);</b>
-<b class="nc">&nbsp;        button.setMaxHeight(25);</b>
-<b class="nc">&nbsp;        button.setMaxWidth(50);</b>
-<b class="nc">&nbsp;        button.setTranslateY(350);</b>
-<b class="nc">&nbsp;        button.setTranslateX(200);</b>
-<b class="nc">&nbsp;        button.setOnMouseClicked(e-&gt;CreateFile());</b>
-&nbsp;
-<b class="nc">&nbsp;        this.getChildren().addAll(textArea,button);</b>
+&nbsp;    private Font getFont(int size) {
+&nbsp;        Font font;
+<b class="fc">&nbsp;        return font = Font.loadFont(&quot;file:files/fonts/PressStart2P.ttf&quot;,size);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    private void CreateFile() {
+&nbsp;    private void updateToScoreList() {
+&nbsp;
+<b class="nc">&nbsp;        String file = &quot;files/ScoreList.dat&quot;;</b>
+<b class="nc">&nbsp;        System.out.println(buildName());</b>
+<b class="nc">&nbsp;        PlayerScore playerToAdd = new PlayerScore(buildName(),totalTime[0],totalTime[1],totalTime[2], mainProgram.getLvlCleared());</b>
+<b class="nc">&nbsp;        PlayerScore[] scoreList = new PlayerScore[10];</b>
+&nbsp;        PlayerScore player;
+<b class="nc">&nbsp;        int counter = 0;</b>
+<b class="nc">&nbsp;        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))){</b>
+<b class="nc">&nbsp;            while((player = (PlayerScore)ois.readObject())!=null){</b>
+<b class="nc">&nbsp;                scoreList[counter] = player;</b>
+<b class="nc">&nbsp;                counter++;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }catch (Exception e ){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;end of file&quot;);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        if (scoreListCounter&lt;10){</b>
+<b class="nc">&nbsp;           addToScoreList(scoreList, counter,playerToAdd,file);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            int indexToChangePLayer =11;</b>
+<b class="nc">&nbsp;            indexToChangePLayer = findIndex(scoreList, indexToChangePLayer,playerToAdd);</b>
+<b class="nc">&nbsp;            scoreList = insertNewPlayerToScorelist(indexToChangePLayer,scoreList,playerToAdd);</b>
+<b class="nc">&nbsp;            addScore(scoreList, file);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        mainProgram.showHighScoreList();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String buildName() {
+&nbsp;        Label label;
+<b class="nc">&nbsp;        label = (Label) this.getChildren().get(0);</b>
+<b class="nc">&nbsp;        String s =label.getText();</b>
+<b class="nc">&nbsp;        label = (Label) this.getChildren().get(1);</b>
+<b class="nc">&nbsp;        s +=label.getText();</b>
+<b class="nc">&nbsp;        label = (Label) this.getChildren().get(2);</b>
+<b class="nc">&nbsp;        s += label.getText();</b>
+<b class="nc">&nbsp;        return s;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private PlayerScore[] insertNewPlayerToScorelist(int indexToChangePLayer, PlayerScore[] scoreList, PlayerScore playerToAdd) {
+<b class="nc">&nbsp;        if (indexToChangePLayer&lt;=10) {</b>
+<b class="nc">&nbsp;            for (int i = scoreList.length - 1; i &gt;= indexToChangePLayer; i--) {</b>
+<b class="nc">&nbsp;                if (scoreList[i] != null) {</b>
+<b class="nc">&nbsp;                    if (i == indexToChangePLayer) {</b>
+<b class="nc">&nbsp;                        scoreList[i] = playerToAdd;</b>
+&nbsp;                    } else {
+<b class="nc">&nbsp;                        scoreList[i] = scoreList[i - 1];</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return scoreList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private int findIndex(PlayerScore[] scoreList, int indexToChangePLayer, PlayerScore playerToAdd) {
+<b class="nc">&nbsp;        for (int i = scoreList.length-1; i &gt;= 0 ; i--) {</b>
+<b class="nc">&nbsp;            if (scoreList[i]!=null) {</b>
+<b class="nc">&nbsp;                System.out.println(scoreList[i].getPlayer()+&quot; ---TIME: &quot;+scoreList[i].getTotalTimeInSeconds());</b>
+<b class="nc">&nbsp;                if ((scoreList[i].getLvl() &lt;= playerToAdd.getLvl())){</b>
+<b class="nc">&nbsp;                    indexToChangePLayer = i;</b>
+<b class="nc">&nbsp;                    if (playerToAdd.getTotalTimeInSeconds() &lt; scoreList[i].getTotalTimeInSeconds()){</b>
+<b class="nc">&nbsp;                        indexToChangePLayer = i;</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return indexToChangePLayer;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addToScoreList(PlayerScore[] scoreList, int counter, PlayerScore playerToAdd, String file) {
 &nbsp;        try {
-<b class="nc">&nbsp;            DataOutputStream dos = new DataOutputStream( new BufferedOutputStream(new FileOutputStream(&quot;files//Highscore&quot;)));</b>
-<b class="nc">&nbsp;            dos.writeBytes(textArea.getText());</b>
+<b class="nc">&nbsp;            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));</b>
+&nbsp;
+<b class="nc">&nbsp;            scoreList[counter] = playerToAdd;</b>
+<b class="nc">&nbsp;            scoreList = sortList(scoreList);</b>
+&nbsp;
+<b class="nc">&nbsp;            for (PlayerScore current : scoreList) {</b>
+<b class="nc">&nbsp;                if (current!=null) {</b>
+<b class="nc">&nbsp;                    oos.writeObject(current);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            oos.flush();</b>
+<b class="nc">&nbsp;            oos.close();</b>
+<b class="nc">&nbsp;            scoreListCounter++;</b>
 <b class="nc">&nbsp;        } catch (IOException e) {</b>
 <b class="nc">&nbsp;            throw new RuntimeException(e);</b>
 <b class="nc">&nbsp;        }</b>
 &nbsp;    }
+&nbsp;
+&nbsp;    private void addScore(PlayerScore[] scoreList, String file) {
+&nbsp;        try {
+<b class="nc">&nbsp;            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));</b>
+<b class="nc">&nbsp;            for (PlayerScore score : scoreList) {</b>
+<b class="nc">&nbsp;                if (score != null) {</b>
+<b class="nc">&nbsp;                    oos.writeObject(score);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            oos.flush();</b>
+<b class="nc">&nbsp;            oos.close();</b>
+<b class="nc">&nbsp;            scoreListCounter++;</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private PlayerScore[] sortList(PlayerScore[] scoreList) {
+<b class="nc">&nbsp;        for (int i = 0; i &lt; scoreList.length; i++) {</b>
+<b class="nc">&nbsp;            for (int j = i+1; j &lt; scoreList.length; j++) {</b>
+<b class="nc">&nbsp;                if (scoreList[i]!=null &amp;&amp; scoreList[j]!=null) {</b>
+<b class="nc">&nbsp;                    if ((scoreList[i].getLvl() &lt; scoreList[j].getLvl())){</b>
+<b class="nc">&nbsp;                        PlayerScore temp = scoreList[i];</b>
+<b class="nc">&nbsp;                        scoreList[i] = scoreList[j];</b>
+<b class="nc">&nbsp;                        scoreList[j] = temp;</b>
+<b class="nc">&nbsp;                    }else if (scoreList[i].getLvl() == scoreList[j].getLvl()){</b>
+<b class="nc">&nbsp;                        if (scoreList[i].getTotalTimeInSeconds() &gt; scoreList[j].getTotalTimeInSeconds()){</b>
+<b class="nc">&nbsp;                            PlayerScore temp = scoreList[i];</b>
+<b class="nc">&nbsp;                            scoreList[i] = scoreList[j];</b>
+<b class="nc">&nbsp;                            scoreList[j] = temp;</b>
+&nbsp;                        }
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return scoreList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int[] setTime(int[] time) {
+<b class="nc">&nbsp;        this.totalTime = new int[3];</b>
+<b class="nc">&nbsp;        totalTime[0] = time[0];</b>
+<b class="nc">&nbsp;        totalTime[1] = time[1];</b>
+<b class="nc">&nbsp;        totalTime[2] = time[2];</b>
+<b class="nc">&nbsp;        return totalTime;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setTextCurrent(String code) {
+<b class="nc">&nbsp;        String temp=&quot;&quot;;</b>
+<b class="nc">&nbsp;        errorLabel.setVisible(false);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (code.equals(&quot;BACK_SPACE&quot;)){</b>
+<b class="nc">&nbsp;            current=&quot;BACK_SPACE&quot;;</b>
+<b class="nc">&nbsp;        }else if (code.equals(&quot;ENTER&quot;)){</b>
+<b class="nc">&nbsp;            current = &quot;ENTER&quot;;</b>
+<b class="nc">&nbsp;        }else if (code.equals(&quot;invalid&quot;)){</b>
+<b class="nc">&nbsp;            temp = current;</b>
+<b class="nc">&nbsp;            current = &quot;invalid&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        switch (current){</b>
+&nbsp;            case &quot;invalid&quot;:
+<b class="nc">&nbsp;                current = temp;</b>
+<b class="nc">&nbsp;                errorLabel.setVisible(!errorLabel.isVisible());</b>
+<b class="nc">&nbsp;                break;</b>
+&nbsp;            case &quot;first&quot;:
+<b class="nc">&nbsp;                this.getChildren().remove(0);</b>
+<b class="nc">&nbsp;                this.getChildren().add(0,setupTextArea(code,315,200));</b>
+<b class="nc">&nbsp;                current = &quot;second&quot;;</b>
+<b class="nc">&nbsp;                backspcaeCheck ++;</b>
+<b class="nc">&nbsp;                break;</b>
+&nbsp;            case &quot;second&quot;:
+<b class="nc">&nbsp;                this.getChildren().remove(1);</b>
+<b class="nc">&nbsp;                this.getChildren().add(1,setupTextArea(code,375,200));</b>
+<b class="nc">&nbsp;                current = &quot;third&quot;;</b>
+<b class="nc">&nbsp;                backspcaeCheck ++;</b>
+<b class="nc">&nbsp;                break;</b>
+&nbsp;            case &quot;third&quot;:
+<b class="nc">&nbsp;                this.getChildren().remove(2);</b>
+<b class="nc">&nbsp;                this.getChildren().add(2,setupTextArea(code,435,200));</b>
+<b class="nc">&nbsp;                if (backspcaeCheck&lt;2){</b>
+<b class="nc">&nbsp;                    backspcaeCheck ++;</b>
+&nbsp;                }
+&nbsp;                break;
+&nbsp;            case &quot;BACK_SPACE&quot;:
+<b class="nc">&nbsp;                if (backspcaeCheck==2){</b>
+<b class="nc">&nbsp;                    this.getChildren().remove(2);</b>
+<b class="nc">&nbsp;                    this.getChildren().add(2,setupTextArea(&quot;_&quot;,435,200));</b>
+<b class="nc">&nbsp;                    backspcaeCheck --;</b>
+<b class="nc">&nbsp;                    current = &quot;third&quot;;</b>
+<b class="nc">&nbsp;                }else if (backspcaeCheck==1) {</b>
+<b class="nc">&nbsp;                    this.getChildren().remove(1);</b>
+<b class="nc">&nbsp;                    this.getChildren().add(1, setupTextArea(&quot;_&quot;, 375, 200));</b>
+<b class="nc">&nbsp;                    backspcaeCheck--;</b>
+<b class="nc">&nbsp;                    current = &quot;second&quot;;</b>
+&nbsp;                }
+<b class="nc">&nbsp;                else if (backspcaeCheck==0){</b>
+<b class="nc">&nbsp;                    this.getChildren().remove(0);</b>
+<b class="nc">&nbsp;                    this.getChildren().add(0,setupTextArea(&quot;_&quot;,315,200));</b>
+<b class="nc">&nbsp;                    current =&quot;first&quot;;</b>
+&nbsp;                }
+&nbsp;                break;
+&nbsp;            case &quot;ENTER&quot;:
+<b class="nc">&nbsp;                updateToScoreList();</b>
+<b class="nc">&nbsp;                resetLabels(0, 315, 200);</b>
+<b class="nc">&nbsp;                resetLabels(1, 375, 200);</b>
+<b class="nc">&nbsp;                resetLabels(2,435,200);</b>
+<b class="nc">&nbsp;                current=&quot;first&quot;;</b>
+&nbsp;                break;
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private Node resetLabels(int i, int xValue, int yValue) {
+<b class="nc">&nbsp;        this.getChildren().remove(i);</b>
+<b class="nc">&nbsp;        this.getChildren().add(i,setupTextArea(&quot;_&quot;,xValue,yValue));</b>
+<b class="nc">&nbsp;        return this.getChildren().get(i);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -150,7 +387,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-02-07 09:19</div>
+    <div style="float:right;">generated on 2023-02-12 12:52</div>
 </div>
 </body>
 </html>

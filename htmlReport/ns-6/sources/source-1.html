@@ -51,7 +51,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/268)
+    (0/266)
   </span>
 </td>
 </tr>
@@ -89,7 +89,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/285)
+    (0/283)
   </span>
 </td>
 </tr>
@@ -129,7 +129,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;public class World1Template extends GridPane {
 &nbsp;
 &nbsp;
-&nbsp;
 &nbsp;    private MainProgram mainProgram;
 &nbsp;    private int[][] level;
 <b class="nc">&nbsp;    private ArrayList&lt;Label&gt; collectibles = new ArrayList&lt;&gt;();</b>
@@ -161,18 +160,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private RightPanel rightPanel;
 &nbsp;    private AudioPlayer audioPlayer;
 &nbsp;    private TimeThread time;
-&nbsp;    private TotalTime totTime;
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Instansierar objekten.
-&nbsp;     * @param level Den array som sedan omvandlas till en nivå inuti spelet.
-&nbsp;     * @param currentLevel Den aktuella nivån
+&nbsp;     *
+&nbsp;     * @param level         Den array som sedan omvandlas till en nivå inuti spelet.
+&nbsp;     * @param currentLevel  Den aktuella nivån
 &nbsp;     * @param heartCrystals Spelarens liv.
-&nbsp;     * @param mainProgram Huvudprogrammet.
-&nbsp;     * @param rightPanel Panelen som visar information så som liv, tid, nivå osv.
-&nbsp;     * @param world Används för att sätta rätt grafik på världen.
-&nbsp;     * @param audioPlayer Används för att spela upp ljud inne i spelet.
-&nbsp;     * @param seconds Tidsbegränsningen för varje bana.
+&nbsp;     * @param mainProgram   Huvudprogrammet.
+&nbsp;     * @param rightPanel    Panelen som visar information så som liv, tid, nivå osv.
+&nbsp;     * @param world         Används för att sätta rätt grafik på världen.
+&nbsp;     * @param audioPlayer   Används för att spela upp ljud inne i spelet.
+&nbsp;     * @param seconds       Tidsbegränsningen för varje bana.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     */
 &nbsp;
@@ -188,7 +187,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        this.rightPanel = rightPanel;</b>
 <b class="nc">&nbsp;        this.audioPlayer = audioPlayer;</b>
 <b class="nc">&nbsp;        this.world = world;</b>
-<b class="nc">&nbsp;        squareSize = 600/(level.length+2);</b>
+<b class="nc">&nbsp;        squareSize = 600 / (level.length + 2);</b>
 <b class="nc">&nbsp;        setBackground();</b>
 <b class="nc">&nbsp;        setupImages(world);</b>
 <b class="nc">&nbsp;        setupBorders();</b>
@@ -196,8 +195,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        rightPanel.setSTARTTIME(seconds);</b>
 <b class="nc">&nbsp;        rightPanel.resetTimerLabel();</b>
 &nbsp;
-&nbsp;
-<b class="nc">&nbsp;        totTime = new TotalTime(false);</b>
 <b class="nc">&nbsp;        time = null;</b>
 &nbsp;
 &nbsp;    }
@@ -205,8 +202,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    /**
 &nbsp;     * Sätter bakgrunden i fönstret.
 &nbsp;     */
-&nbsp;    public void setBackground(){
-<b class="nc">&nbsp;        BackgroundImage menuBackground = new BackgroundImage(new Image(&quot;file:files/MenuBackground.jpg&quot;,800,600,false,true),</b>
+&nbsp;    public void setBackground() {
+<b class="nc">&nbsp;        BackgroundImage menuBackground = new BackgroundImage(new Image(&quot;file:files/MenuBackground.jpg&quot;, 800, 600, false, true),</b>
 &nbsp;                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
 &nbsp;                BackgroundSize.DEFAULT);
 <b class="nc">&nbsp;        this.setBackground(new Background(menuBackground));</b>
@@ -239,31 +236,24 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            for (int j = 0; j &lt; level.length; j++) {</b>
 &nbsp;
 <b class="nc">&nbsp;                if (level[i][j] == 1) {</b>
-<b class="nc">&nbsp;                    add(getPath(),j + 1,i + 1);</b>
-&nbsp;                }
-<b class="nc">&nbsp;                else if (level[i][j] == 0){</b>
-<b class="nc">&nbsp;                    add(getWall(),j + 1,i + 1);</b>
-&nbsp;                }
-<b class="nc">&nbsp;                else if (level[i][j] == 2){</b>
-<b class="nc">&nbsp;                    add(getStart(),j + 1,i + 1);</b>
-&nbsp;                }
-<b class="nc">&nbsp;                else if (level[i][j] == 3){</b>
-<b class="nc">&nbsp;                    add(getGoal(),j + 1,i + 1);</b>
-&nbsp;                }
-<b class="nc">&nbsp;                else if (level[i][j] == 4){</b>
-<b class="nc">&nbsp;                    add(getPath(),j + 1,i + 1);</b>
-<b class="nc">&nbsp;                    add(addCollectible(),j + 1,i + 1);</b>
-&nbsp;                }
-<b class="nc">&nbsp;                else if (level[i][j] == 5){</b>
-<b class="nc">&nbsp;                    add(getPath(),j + 1,i + 1);</b>
-<b class="nc">&nbsp;                    add(addPickAxe(),j + 1,i + 1);</b>
-&nbsp;                }
-<b class="nc">&nbsp;                else if (level[i][j] == 6){</b>
-<b class="nc">&nbsp;                    add(getBreakableWall(),j + 1,i + 1);</b>
-&nbsp;                }
-<b class="nc">&nbsp;                else if (level[i][j] == 7){</b>
-<b class="nc">&nbsp;                    add(getPath(),j + 1,i + 1);</b>
-<b class="nc">&nbsp;                    add(addHeartCrystal(),j + 1,i + 1);</b>
+<b class="nc">&nbsp;                    add(getPath(), j + 1, i + 1);</b>
+<b class="nc">&nbsp;                } else if (level[i][j] == 0) {</b>
+<b class="nc">&nbsp;                    add(getWall(), j + 1, i + 1);</b>
+<b class="nc">&nbsp;                } else if (level[i][j] == 2) {</b>
+<b class="nc">&nbsp;                    add(getStart(), j + 1, i + 1);</b>
+<b class="nc">&nbsp;                } else if (level[i][j] == 3) {</b>
+<b class="nc">&nbsp;                    add(getGoal(), j + 1, i + 1);</b>
+<b class="nc">&nbsp;                } else if (level[i][j] == 4) {</b>
+<b class="nc">&nbsp;                    add(getPath(), j + 1, i + 1);</b>
+<b class="nc">&nbsp;                    add(addCollectible(), j + 1, i + 1);</b>
+<b class="nc">&nbsp;                } else if (level[i][j] == 5) {</b>
+<b class="nc">&nbsp;                    add(getPath(), j + 1, i + 1);</b>
+<b class="nc">&nbsp;                    add(addPickAxe(), j + 1, i + 1);</b>
+<b class="nc">&nbsp;                } else if (level[i][j] == 6) {</b>
+<b class="nc">&nbsp;                    add(getBreakableWall(), j + 1, i + 1);</b>
+<b class="nc">&nbsp;                } else if (level[i][j] == 7) {</b>
+<b class="nc">&nbsp;                    add(getPath(), j + 1, i + 1);</b>
+<b class="nc">&nbsp;                    add(addHeartCrystal(), j + 1, i + 1);</b>
 &nbsp;                }
 &nbsp;            }
 &nbsp;        }
@@ -272,28 +262,24 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    /**
 &nbsp;     * Instansierar de olika bilderna som används som grafik inuti spelet.
 &nbsp;     * Baserad på value så sätts bilderna till en specifik folder per värld.
+&nbsp;     *
 &nbsp;     * @param value Den aktuella världen.
 &nbsp;     */
-&nbsp;    public void setupImages(int value){
+&nbsp;    public void setupImages(int value) {
 &nbsp;
 <b class="nc">&nbsp;        String folder = &quot;&quot;;</b>
 &nbsp;
 <b class="nc">&nbsp;        if (value == 0) {</b>
 <b class="nc">&nbsp;            folder = &quot;forest&quot;;</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (value == 1) {</b>
+<b class="nc">&nbsp;        } else if (value == 1) {</b>
 <b class="nc">&nbsp;            folder = &quot;underground&quot;;</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (value == 2) {</b>
+<b class="nc">&nbsp;        } else if (value == 2) {</b>
 <b class="nc">&nbsp;            folder = &quot;lava&quot;;</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if(value == 3) {</b>
+<b class="nc">&nbsp;        } else if (value == 3) {</b>
 <b class="nc">&nbsp;            folder = &quot;cloud&quot;;</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if(value == 4) {</b>
+<b class="nc">&nbsp;        } else if (value == 4) {</b>
 <b class="nc">&nbsp;            folder = &quot;desert&quot;;</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if(value == 5) {</b>
+<b class="nc">&nbsp;        } else if (value == 5) {</b>
 <b class="nc">&nbsp;            folder = &quot;space&quot;;</b>
 &nbsp;        }
 &nbsp;
@@ -305,11 +291,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        heart = new Image(&quot;file:files/items/heart.png&quot;, squareSize, squareSize, false, false);</b>
 <b class="nc">&nbsp;        if (value == 3) {</b>
 <b class="nc">&nbsp;            breakableWall = new Image(&quot;file:files/cloud/breakablewall.png&quot;, squareSize, squareSize, false, false);</b>
-&nbsp;        }
-&nbsp;        else {
+&nbsp;        } else {
 <b class="nc">&nbsp;            breakableWall = new Image(&quot;file:files/breakablewall.png&quot;, squareSize, squareSize, false, false);</b>
 &nbsp;        }
-<b class="nc">&nbsp;        if(value!=5){</b>
+<b class="nc">&nbsp;        if (value != 5) {</b>
 <b class="nc">&nbsp;            border = new Image(&quot;file:files/&quot; + folder + &quot;/border.png&quot;, squareSize, squareSize, false, false);</b>
 <b class="nc">&nbsp;            wall = new Image(&quot;file:files/&quot; + folder + &quot;/wall.png&quot;, squareSize, squareSize, false, false);</b>
 &nbsp;        }
@@ -317,6 +302,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * En metod som skapar ett objekt av label som representerar en vägg.
+&nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
 &nbsp;    public Label getWall() {
@@ -332,6 +318,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * En metod som skapar ett objekt av label som representerar en väg.
+&nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
 &nbsp;    private Label getPath() {
@@ -345,6 +332,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * En metod som skapar ett objekt av label som representerar en border.
+&nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
 &nbsp;    private Label getBorders() {
@@ -360,6 +348,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * En metod som skapar ett objekt av label som representerar en förstörbar vägg.
+&nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
 &nbsp;    private Label getBreakableWall() {
@@ -374,6 +363,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * En metod som skapar ett objekt av label som representerar ett mål.
+&nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
 &nbsp;    private Label getGoal() {
@@ -394,6 +384,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * En metod som skapar ett objekt av label som representerar start.
+&nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
 &nbsp;    private Label getStart() {
@@ -408,6 +399,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * En metod som skapar ett objekt av label som representerar en collectible.
+&nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
 &nbsp;    public Label addCollectible() {
@@ -427,6 +419,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * En metod som skapar ett objekt av label som representerar ett spelarliv.
+&nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
 &nbsp;    public Label addHeartCrystal() {
@@ -447,17 +440,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    /**
 &nbsp;     * När en användare vidrör en label av typen heartCrystal körs denna metod.
 &nbsp;     * Om spelaren har mindre än tre återstående liv inkrementeras variabeln heartCrystals.
+&nbsp;     *
 &nbsp;     * @param e Används för att hitta rätt label.
 &nbsp;     */
 &nbsp;
 &nbsp;    private void heartCrystalObtained(MouseEvent e) {
 &nbsp;
-<b class="nc">&nbsp;        Label label = (Label)e.getSource();</b>
+<b class="nc">&nbsp;        Label label = (Label) e.getSource();</b>
 &nbsp;
 <b class="nc">&nbsp;        if (startButtonPressed) {</b>
 <b class="nc">&nbsp;            audioPlayer.playHeartSound();</b>
 <b class="nc">&nbsp;            label.setVisible(false);</b>
-<b class="nc">&nbsp;            if(heartCrystals&lt;3){</b>
+<b class="nc">&nbsp;            if (heartCrystals &lt; 3) {</b>
 <b class="nc">&nbsp;                heartCrystals++;</b>
 <b class="nc">&nbsp;                rightPanel.changeHeartCounter(String.valueOf(heartCrystals));</b>
 &nbsp;            }
@@ -466,6 +460,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * En metod som skapar ett objekt av label som representerar en yxa.
+&nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
 &nbsp;    public Label addPickAxe() {
@@ -487,10 +482,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * Om en spelare vidrör en vägg med muspekaren körs denna metod.
 &nbsp;     * Om spelrundan är aktiverad förlorar spelaren ett liv.
 &nbsp;     * Om spelaren endast har ett återstående liv kvar vid kollisionen körs metoden gameOver.
+&nbsp;     *
 &nbsp;     * @param e Används för att hitta rätt label.
 &nbsp;     */
 &nbsp;    public void enteredWall(MouseEvent e) {
-<b class="nc">&nbsp;        Label label = (Label)e.getSource();</b>
+<b class="nc">&nbsp;        Label label = (Label) e.getSource();</b>
 <b class="nc">&nbsp;        FadeTransition fade = new FadeTransition();</b>
 <b class="nc">&nbsp;        fade.setNode(label);</b>
 <b class="nc">&nbsp;        fade.setDuration(Duration.seconds(0.3));</b>
@@ -515,9 +511,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * Om en spelare vidrör ett spöke med muspekaren körs denna metod.
 &nbsp;     * Om spelrundan är aktiverad förlorar spelaren ett liv.
 &nbsp;     * Om spelaren endast har ett återstående liv kvar vid kollisionen körs metoden gameOver.
+&nbsp;     *
 &nbsp;     * @param e
 &nbsp;     */
-&nbsp;    public void enteredGhost(MouseEvent e){
+&nbsp;    public void enteredGhost(MouseEvent e) {
 <b class="nc">&nbsp;        ImageView view = (ImageView) e.getSource();</b>
 <b class="nc">&nbsp;        FadeTransition fade = new FadeTransition();</b>
 <b class="nc">&nbsp;        fade.setNode(view);</b>
@@ -551,7 +548,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        rightPanel.pauseClock();</b>
 <b class="nc">&nbsp;        gameStarted = true;</b>
 <b class="nc">&nbsp;        time.setGameOver(true);</b>
-<b class="nc">&nbsp;        rightPanel.setGameOver(true);</b>
 <b class="nc">&nbsp;        time = null;</b>
 <b class="nc">&nbsp;        rightPanel.removePickaxe();</b>
 &nbsp;
@@ -559,6 +555,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Om spelrundan är aktiverad och spelaren har plockat upp alla collectibles startas nästa nivå.
+&nbsp;     *
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
 &nbsp;     */
@@ -577,6 +574,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Baserad på den aktuella världen väljer programmmet vilken nivå som ska spelas.
+&nbsp;     *
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
 &nbsp;     */
@@ -584,20 +582,15 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 <b class="nc">&nbsp;        if (world == 0) {</b>
 <b class="nc">&nbsp;            mainProgram.nextWorld1Level(currentLevel, heartCrystals);</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (world == 1) {</b>
+<b class="nc">&nbsp;        } else if (world == 1) {</b>
 <b class="nc">&nbsp;            mainProgram.nextWorld2Level(currentLevel, heartCrystals);</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (world == 2) {</b>
+<b class="nc">&nbsp;        } else if (world == 2) {</b>
 <b class="nc">&nbsp;            mainProgram.nextWorld3Level(currentLevel, heartCrystals);</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (world == 3) {</b>
+<b class="nc">&nbsp;        } else if (world == 3) {</b>
 <b class="nc">&nbsp;            mainProgram.nextWorld4Level(currentLevel, heartCrystals);</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (world == 4) {</b>
+<b class="nc">&nbsp;        } else if (world == 4) {</b>
 <b class="nc">&nbsp;            mainProgram.nextWorld5Level(currentLevel, heartCrystals);</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (world == 5) {</b>
+<b class="nc">&nbsp;        } else if (world == 5) {</b>
 <b class="nc">&nbsp;            mainProgram.nextWorld6Level(currentLevel, heartCrystals);</b>
 &nbsp;        }
 &nbsp;    }
@@ -607,19 +600,19 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     */
 &nbsp;    public void startLevel() {
 &nbsp;
-<b class="nc">&nbsp;        if (!totalTimeStarted){</b>
+<b class="nc">&nbsp;        if (!totalTimeStarted) {</b>
 <b class="nc">&nbsp;            rightPanel.startTotalTimer();</b>
 <b class="nc">&nbsp;            rightPanel.setTimerIsStarted(true);</b>
 &nbsp;        }
 &nbsp;
-<b class="nc">&nbsp;        if (!gameStarted){</b>
+<b class="nc">&nbsp;        if (!gameStarted) {</b>
 <b class="nc">&nbsp;            rightPanel.resumeClock();</b>
 <b class="nc">&nbsp;            gameStarted = true;</b>
 <b class="nc">&nbsp;            time = new TimeThread(seconds, rightPanel);</b>
 <b class="nc">&nbsp;            time.setGameOver(false);</b>
 <b class="nc">&nbsp;            time.start();</b>
 &nbsp;
-<b class="nc">&nbsp;        }else if (startNotClickedOnce){</b>
+<b class="nc">&nbsp;        } else if (startNotClickedOnce) {</b>
 <b class="nc">&nbsp;            rightPanel.runClock();</b>
 <b class="nc">&nbsp;            time = new TimeThread(seconds, rightPanel);</b>
 <b class="nc">&nbsp;            time.setGameOver(false);</b>
@@ -634,10 +627,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * När muspekaren lämnar en label slutar den att highlightas.
+&nbsp;     *
 &nbsp;     * @param e Används för att hitta rätt label.
 &nbsp;     */
 &nbsp;    public void exitedLabel(MouseEvent e) {
-<b class="nc">&nbsp;        Label label = (Label)e.getSource();</b>
+<b class="nc">&nbsp;        Label label = (Label) e.getSource();</b>
 <b class="nc">&nbsp;        FadeTransition fade = new FadeTransition();</b>
 <b class="nc">&nbsp;        fade.setNode(label);</b>
 <b class="nc">&nbsp;        fade.setDuration(Duration.seconds(0.3));</b>
@@ -649,11 +643,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    /**
 &nbsp;     * Om spelrundan är startad och spelaren har plockat upp en yxa går det att förstöra väggen.
 &nbsp;     * Om spelrundan är startad och spelaren inte plockat upp en yxa förlorar hen ett liv vid kollision med väggen.
+&nbsp;     *
 &nbsp;     * @param e Används för att hitta rätt label.
 &nbsp;     */
 &nbsp;    public void enteredBreakableWall(MouseEvent e) {
 &nbsp;
-<b class="nc">&nbsp;        Label label = (Label)e.getSource();</b>
+<b class="nc">&nbsp;        Label label = (Label) e.getSource();</b>
 <b class="nc">&nbsp;        ImageView pathView = new ImageView(path);</b>
 &nbsp;
 <b class="nc">&nbsp;        if (startButtonPressed) {</b>
@@ -663,8 +658,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;                rightPanel.removePickaxe();</b>
 <b class="nc">&nbsp;                wallDestroyed = true;</b>
 <b class="nc">&nbsp;                audioPlayer.playBreakableWallSound();</b>
-&nbsp;            }
-<b class="nc">&nbsp;            else if (!wallDestroyed) {</b>
+<b class="nc">&nbsp;            } else if (!wallDestroyed) {</b>
 <b class="nc">&nbsp;                enteredWall(e);</b>
 &nbsp;            }
 &nbsp;        }
@@ -679,8 +673,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        public void handle(MouseEvent e) {
 <b class="nc">&nbsp;            if (startButtonPressed) {</b>
 &nbsp;
-<b class="nc">&nbsp;                for (Label label : pickaxes){</b>
-<b class="nc">&nbsp;                    if (e.getSource()== label){</b>
+<b class="nc">&nbsp;                for (Label label : pickaxes) {</b>
+<b class="nc">&nbsp;                    if (e.getSource() == label) {</b>
 <b class="nc">&nbsp;                        audioPlayer.playPickAxeSound();</b>
 <b class="nc">&nbsp;                        label.setVisible(false);</b>
 <b class="nc">&nbsp;                        pickaxeObtained = true;</b>
@@ -688,7 +682,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;                    }
 <b class="nc">&nbsp;                }</b>
 &nbsp;
-<b class="nc">&nbsp;                for (Label label: collectibles) {</b>
+<b class="nc">&nbsp;                for (Label label : collectibles) {</b>
 <b class="nc">&nbsp;                    if (e.getSource() == label) {</b>
 <b class="nc">&nbsp;                        audioPlayer.playCollectibleSound();</b>
 <b class="nc">&nbsp;                        label.setVisible(false);</b>
@@ -725,7 +719,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-02-07 09:19</div>
+    <div style="float:right;">generated on 2023-02-12 12:52</div>
 </div>
 </body>
 </html>

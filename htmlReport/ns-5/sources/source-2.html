@@ -62,7 +62,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/10)
+    (0/14)
   </span>
 </td>
 </tr>
@@ -94,21 +94,26 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * @param mainProgram
 &nbsp;     */
 <b class="nc">&nbsp;    public GameOverScreen(MainProgram mainProgram) {</b>
-<b class="nc">&nbsp;        setOnMouseClicked(e -&gt; mainProgram.showHighScoreList());</b>
+<b class="nc">&nbsp;        setOnMouseClicked(e -&gt; mainProgram.showVictoryScene());</b>
 <b class="nc">&nbsp;        gameOverAnimation();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Animation för gameOver-bilden
 &nbsp;     */
-&nbsp;    public void gameOverAnimation() {
-<b class="nc">&nbsp;        ImageView introView = new ImageView(new Image(&quot;file:files/texts/Gameover.png&quot;, 600, 600, false, false));</b>
-<b class="nc">&nbsp;        introView.setStyle(&quot;fx-background-color: transparent;&quot;);</b>
-<b class="nc">&nbsp;        FadeTransition ft = new FadeTransition(Duration.millis(4000), introView);</b>
-<b class="nc">&nbsp;        getChildren().add(introView);</b>
-<b class="nc">&nbsp;        ft.setFromValue(0);</b>
-<b class="nc">&nbsp;        ft.setToValue(1);</b>
-<b class="nc">&nbsp;        ft.play();</b>
+&nbsp;    public boolean gameOverAnimation() {
+&nbsp;        try {
+<b class="nc">&nbsp;            ImageView introView = new ImageView(new Image(&quot;file:files/texts/Gameover.png&quot;, 600, 600, false, false));</b>
+<b class="nc">&nbsp;            introView.setStyle(&quot;fx-background-color: transparent;&quot;);</b>
+<b class="nc">&nbsp;            FadeTransition ft = new FadeTransition(Duration.millis(4000), introView);</b>
+<b class="nc">&nbsp;            getChildren().add(introView);</b>
+<b class="nc">&nbsp;            ft.setFromValue(0);</b>
+<b class="nc">&nbsp;            ft.setToValue(1);</b>
+<b class="nc">&nbsp;            ft.play();</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            return false;</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return true;</b>
 &nbsp;    }
 &nbsp;}
 </code>
@@ -134,7 +139,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-02-07 09:19</div>
+    <div style="float:right;">generated on 2023-02-12 12:52</div>
 </div>
 </body>
 </html>

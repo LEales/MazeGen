@@ -62,7 +62,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/260)
+    (0/256)
   </span>
 </td>
 </tr>
@@ -126,7 +126,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    public World3Template(int[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int worldImage, AudioPlayer audioPlayer) throws FileNotFoundException {
 <b class="nc">&nbsp;        super(level, currentLevel, heartCrystals, mainProgram, rightPanel, worldImage, audioPlayer, 60);</b>
-<b class="nc">&nbsp;        squareSize = 600/(level.length+2);</b>
+<b class="nc">&nbsp;        squareSize = 600 / (level.length + 2);</b>
 <b class="nc">&nbsp;        this.currentLevel = currentLevel;</b>
 <b class="nc">&nbsp;        this.panel = rightPanel;</b>
 <b class="nc">&nbsp;        this.audioPlayer = audioPlayer;</b>
@@ -161,19 +161,19 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     */
 &nbsp;
 &nbsp;    public void initialize() {
-<b class="nc">&nbsp;        if (currentLevel==2){</b>
+<b class="nc">&nbsp;        if (currentLevel == 2) {</b>
 <b class="nc">&nbsp;            ImageView ghost3V = new ImageView();</b>
 <b class="nc">&nbsp;            ImageView ghost1V = new ImageView();</b>
 <b class="nc">&nbsp;            ghost3V.setImage(ghost);</b>
 <b class="nc">&nbsp;            ghost1V.setImage(ghost);</b>
-<b class="nc">&nbsp;            add(ghost3V,5,5);</b>
-<b class="nc">&nbsp;            add(ghost1V,14,5);</b>
+<b class="nc">&nbsp;            add(ghost3V, 5, 5);</b>
+<b class="nc">&nbsp;            add(ghost1V, 14, 5);</b>
 &nbsp;
-<b class="nc">&nbsp;            Rectangle rectangle = new Rectangle(125,251);</b>
+<b class="nc">&nbsp;            Rectangle rectangle = new Rectangle(125, 251);</b>
 <b class="nc">&nbsp;            rectangle.setY(65);</b>
 <b class="nc">&nbsp;            rectangle.setX(-147);</b>
 &nbsp;
-<b class="nc">&nbsp;            Rectangle rectangle2 = new Rectangle(84,123);</b>
+<b class="nc">&nbsp;            Rectangle rectangle2 = new Rectangle(84, 123);</b>
 <b class="nc">&nbsp;            rectangle2.setY(65);</b>
 <b class="nc">&nbsp;            rectangle2.setX(-147);</b>
 &nbsp;
@@ -194,9 +194,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            ghost1V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
 <b class="nc">&nbsp;            ghost3V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
 &nbsp;
-<b class="nc">&nbsp;        }</b>
-&nbsp;
-<b class="nc">&nbsp;        else if (currentLevel ==3){</b>
+<b class="nc">&nbsp;        } else if (currentLevel == 3) {</b>
 <b class="nc">&nbsp;            ImageView ghost1V = new ImageView();</b>
 <b class="nc">&nbsp;            ImageView ghost2V = new ImageView();</b>
 &nbsp;
@@ -204,13 +202,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            ghost2V.setImage(ghost);</b>
 &nbsp;
 &nbsp;            //add(ghost1V,5,8);
-<b class="nc">&nbsp;            add(ghost2V,9,3);</b>
+<b class="nc">&nbsp;            add(ghost2V, 9, 3);</b>
 &nbsp;
-<b class="nc">&nbsp;            Rectangle rectangle = new Rectangle(125,120);</b>
+<b class="nc">&nbsp;            Rectangle rectangle = new Rectangle(125, 120);</b>
 <b class="nc">&nbsp;            rectangle.setY(65);</b>
 <b class="nc">&nbsp;            rectangle.setX(-147);</b>
 &nbsp;
-<b class="nc">&nbsp;            Rectangle rectangle1 = new Rectangle(210,125);</b>
+<b class="nc">&nbsp;            Rectangle rectangle1 = new Rectangle(210, 125);</b>
 <b class="nc">&nbsp;            rectangle1.setY(190);</b>
 <b class="nc">&nbsp;            rectangle1.setX(-231);</b>
 &nbsp;
@@ -231,43 +229,42 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            ghost1V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
 <b class="nc">&nbsp;            ghost2V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
 &nbsp;
-<b class="nc">&nbsp;        }</b>
-<b class="nc">&nbsp;        else if (currentLevel ==4){</b>
-<b class="nc">&nbsp;          ImageView ghost4V = new ImageView();</b>
-<b class="nc">&nbsp;          ImageView ghost2V = new ImageView();</b>
-<b class="nc">&nbsp;          ImageView ghost1V = new ImageView();</b>
-<b class="nc">&nbsp;          ImageView ghost3V = new ImageView();</b>
-<b class="nc">&nbsp;          ImageView ghost5V = new ImageView();</b>
+<b class="nc">&nbsp;        } else if (currentLevel == 4) {</b>
+<b class="nc">&nbsp;            ImageView ghost4V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost2V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost1V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost3V = new ImageView();</b>
+<b class="nc">&nbsp;            ImageView ghost5V = new ImageView();</b>
 &nbsp;
-<b class="nc">&nbsp;          ghost1V.setImage(ghost);</b>
-<b class="nc">&nbsp;          ghost2V.setImage(ghost);</b>
-<b class="nc">&nbsp;          ghost3V.setImage(ghost);</b>
-<b class="nc">&nbsp;          ghost4V.setImage(ghost);</b>
-<b class="nc">&nbsp;          ghost5V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost1V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost2V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost3V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost4V.setImage(ghost);</b>
+<b class="nc">&nbsp;            ghost5V.setImage(ghost);</b>
 &nbsp;
-<b class="nc">&nbsp;          add(ghost2V,15,4);</b>
-<b class="nc">&nbsp;          add(ghost4V,10,4);</b>
-<b class="nc">&nbsp;          add(ghost1V,10,1);</b>
-<b class="nc">&nbsp;          add(ghost3V,15,1);</b>
-<b class="nc">&nbsp;          add(ghost5V,12,1);</b>
+<b class="nc">&nbsp;            add(ghost2V, 15, 4);</b>
+<b class="nc">&nbsp;            add(ghost4V, 10, 4);</b>
+<b class="nc">&nbsp;            add(ghost1V, 10, 1);</b>
+<b class="nc">&nbsp;            add(ghost3V, 15, 1);</b>
+<b class="nc">&nbsp;            add(ghost5V, 12, 1);</b>
 &nbsp;
-<b class="nc">&nbsp;            Rectangle rectangle = new Rectangle(125,83);</b>
+<b class="nc">&nbsp;            Rectangle rectangle = new Rectangle(125, 83);</b>
 <b class="nc">&nbsp;            rectangle.setY(190);</b>
 <b class="nc">&nbsp;            rectangle.setX(-230);</b>
 &nbsp;
-<b class="nc">&nbsp;            Rectangle rectangle1 = new Rectangle(125,83);</b>
+<b class="nc">&nbsp;            Rectangle rectangle1 = new Rectangle(125, 83);</b>
 <b class="nc">&nbsp;            rectangle1.setY(190);</b>
 <b class="nc">&nbsp;            rectangle1.setX(-230);</b>
 &nbsp;
-<b class="nc">&nbsp;            Rectangle rectangle2 = new Rectangle(0,83);</b>
+<b class="nc">&nbsp;            Rectangle rectangle2 = new Rectangle(0, 83);</b>
 <b class="nc">&nbsp;            rectangle2.setY(105);</b>
 <b class="nc">&nbsp;            rectangle2.setX(-232);</b>
 &nbsp;
-<b class="nc">&nbsp;            Rectangle rectangle3 = new Rectangle(0,83);</b>
+<b class="nc">&nbsp;            Rectangle rectangle3 = new Rectangle(0, 83);</b>
 <b class="nc">&nbsp;            rectangle3.setY(105);</b>
 <b class="nc">&nbsp;            rectangle3.setX(-232);</b>
 &nbsp;
-<b class="nc">&nbsp;            Rectangle rectangle4 = new Rectangle(0,83);</b>
+<b class="nc">&nbsp;            Rectangle rectangle4 = new Rectangle(0, 83);</b>
 <b class="nc">&nbsp;            rectangle4.setY(105);</b>
 <b class="nc">&nbsp;            rectangle4.setX(-232);</b>
 &nbsp;
@@ -321,8 +318,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            ghost4V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
 <b class="nc">&nbsp;            ghost5V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
 &nbsp;
-<b class="nc">&nbsp;        }</b>
-<b class="nc">&nbsp;        else if(currentLevel==5) {</b>
+<b class="nc">&nbsp;        } else if (currentLevel == 5) {</b>
 <b class="nc">&nbsp;            ImageView ghost1V = new ImageView();</b>
 <b class="nc">&nbsp;            ImageView ghost2V = new ImageView();</b>
 <b class="nc">&nbsp;            ImageView ghost3V = new ImageView();</b>
@@ -391,9 +387,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            animation.setPath(rectangle);</b>
 <b class="nc">&nbsp;            animation.play();</b>
 &nbsp;
-<b class="nc">&nbsp;        }</b>
-&nbsp;
-<b class="nc">&nbsp;            else if (currentLevel==6){</b>
+<b class="nc">&nbsp;        } else if (currentLevel == 6) {</b>
 <b class="nc">&nbsp;            ImageView ghost1V = new ImageView();</b>
 <b class="nc">&nbsp;            ImageView ghost2V = new ImageView();</b>
 <b class="nc">&nbsp;            ImageView ghost3V = new ImageView();</b>
@@ -463,10 +457,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            ghost3V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
 <b class="nc">&nbsp;            ghost4V.setOnMouseEntered(e -&gt; enteredGhost(e));</b>
 &nbsp;
-&nbsp;            }
 &nbsp;        }
-&nbsp;
-&nbsp;
+&nbsp;    }
 &nbsp;
 &nbsp;
 &nbsp;}//Class
@@ -493,7 +485,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-02-07 09:19</div>
+    <div style="float:right;">generated on 2023-02-12 12:52</div>
 </div>
 </body>
 </html>

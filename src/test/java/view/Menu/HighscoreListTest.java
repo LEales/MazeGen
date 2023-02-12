@@ -2,7 +2,6 @@ package view.Menu;
 
 import control.MainProgram;
 import javafx.application.Application;
-import javafx.application.Platform;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +31,8 @@ class HighscoreListTest {
             while (ois.readObject() != null) {
                 count++;
             }
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
         assertEquals(count, h.setupHighscoreList());
     }
 }

@@ -59,10 +59,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    31%
+    28.7%
   </span>
   <span class="absValue">
-    (48/155)
+    (48/167)
   </span>
 </td>
 </tr>
@@ -76,6 +76,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package view;
 &nbsp;
+&nbsp;import control.MainProgram;
 &nbsp;import javafx.scene.media.Media;
 &nbsp;import javafx.scene.media.MediaPlayer;
 &nbsp;import javafx.util.Duration;
@@ -193,19 +194,33 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * @param songToPlay Låten som ska spelas.
 &nbsp;     */
 &nbsp;    public File playLevelMusic(String songToPlay) {
+<b class="nc">&nbsp;        MainProgram mainProgram = MainProgram.getMainProgram();</b>
+<b class="nc">&nbsp;        if (mainProgram.getMusiIsOn()) {</b>
+<b class="nc">&nbsp;            switch (songToPlay) {</b>
+<b class="nc">&nbsp;                case &quot;forest&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
+<b class="nc">&nbsp;                case &quot;lava&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
+<b class="nc">&nbsp;                case &quot;heaven&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
+<b class="nc">&nbsp;                case &quot;egypt&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
+&nbsp;            }
 &nbsp;
-<b class="nc">&nbsp;        switch (songToPlay) {</b>
-<b class="nc">&nbsp;            case &quot;forest&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
-<b class="nc">&nbsp;            case &quot;lava&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
-<b class="nc">&nbsp;            case &quot;heaven&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
-<b class="nc">&nbsp;            case &quot;egypt&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
+<b class="nc">&nbsp;            currentMedia = new Media(currentSong.toURI().toString());</b>
+<b class="nc">&nbsp;            currentSongPlayer = new MediaPlayer(currentMedia);</b>
+<b class="nc">&nbsp;            currentSongPlayer.setOnEndOfMedia(() -&gt; currentSongPlayer.seek(Duration.ZERO));</b>
+<b class="nc">&nbsp;            currentSongPlayer.play();</b>
+&nbsp;        }else {
+<b class="nc">&nbsp;            switch (songToPlay) {</b>
+<b class="nc">&nbsp;                case &quot;forest&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
+<b class="nc">&nbsp;                case &quot;lava&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
+<b class="nc">&nbsp;                case &quot;heaven&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
+<b class="nc">&nbsp;                case &quot;egypt&quot; -&gt; currentSong = new File(&quot;files/music/&quot; + songToPlay + &quot;.mp3&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            currentMedia = new Media(currentSong.toURI().toString());</b>
+<b class="nc">&nbsp;            currentSongPlayer = new MediaPlayer(currentMedia);</b>
+<b class="nc">&nbsp;            currentSongPlayer.setOnEndOfMedia(() -&gt; currentSongPlayer.seek(Duration.ZERO));</b>
+<b class="nc">&nbsp;            currentSongPlayer.play();</b>
+<b class="nc">&nbsp;            currentSongPlayer.setMute(true);</b>
 &nbsp;        }
-&nbsp;
-<b class="nc">&nbsp;        currentMedia = new Media(currentSong.toURI().toString());</b>
-<b class="nc">&nbsp;        currentSongPlayer = new MediaPlayer(currentMedia);</b>
-<b class="nc">&nbsp;        currentSongPlayer.setOnEndOfMedia(() -&gt; currentSongPlayer.seek(Duration.ZERO));</b>
-<b class="nc">&nbsp;        currentSongPlayer.play();</b>
-&nbsp;
 <b class="nc">&nbsp;        return currentSong;</b>
 &nbsp;    }
 &nbsp;
@@ -452,7 +467,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-02-07 09:19</div>
+    <div style="float:right;">generated on 2023-02-12 12:52</div>
 </div>
 </body>
 </html>

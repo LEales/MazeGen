@@ -87,7 +87,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * @Author https://github.com/oppenheimj/maze-generator/blob/master/MazeGenerator.java
 &nbsp;     * Edit Sebastian Helin, André Eklund
 &nbsp;     */
-&nbsp;    
+&nbsp;
 <b class="fc">&nbsp;    private Stack&lt;Node&gt; stack = new Stack&lt;&gt;();</b>
 <b class="fc">&nbsp;    private Random rand = new Random();</b>
 &nbsp;    private int[][] maze;
@@ -95,7 +95,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private boolean generateGoalAndStart;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * @param dim Tar in en dimension för hur stor labyrinten ska vara
+&nbsp;     * @param dim             Tar in en dimension för hur stor labyrinten ska vara
 &nbsp;     * @param setGoalAndStart Sätter start &amp; mål
 &nbsp;     */
 <b class="fc">&nbsp;    public MazeGenerator(int dim, boolean setGoalAndStart) {</b>
@@ -108,7 +108,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void generateMaze() {
-<b class="fc">&nbsp;        stack.push(new Node(0,0));</b>
+<b class="fc">&nbsp;        stack.push(new Node(0, 0));</b>
 <b class="fc">&nbsp;        while (!stack.empty()) {</b>
 <b class="fc">&nbsp;            Node next = stack.pop();</b>
 <b class="fc">&nbsp;            if (validNextNode(next)) {</b>
@@ -128,8 +128,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * @edit av Andre Eklund &amp; Sebastian Helin
 &nbsp;     * @return
+&nbsp;     * @edit av Andre Eklund &amp; Sebastian Helin
 &nbsp;     */
 &nbsp;    public String getSymbolicMaze() {
 <b class="nc">&nbsp;        StringBuilder sb = new StringBuilder();</b>
@@ -144,8 +144,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    private boolean validNextNode(Node node) {
 <b class="fc">&nbsp;        int numNeighboringOnes = 0;</b>
-<b class="fc">&nbsp;        for (int y = node.y-1; y &lt; node.y+2; y++) {</b>
-<b class="fc">&nbsp;            for (int x = node.x-1; x &lt; node.x+2; x++) {</b>
+<b class="fc">&nbsp;        for (int y = node.y - 1; y &lt; node.y + 2; y++) {</b>
+<b class="fc">&nbsp;            for (int x = node.x - 1; x &lt; node.x + 2; x++) {</b>
 <b class="fc">&nbsp;                if (pointOnGrid(x, y) &amp;&amp; pointNotNode(node, x, y) &amp;&amp; maze[y][x] == 1) {</b>
 <b class="fc">&nbsp;                    numNeighboringOnes++;</b>
 &nbsp;                }
@@ -164,10 +164,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    private ArrayList&lt;Node&gt; findNeighbors(Node node) {
 <b class="fc">&nbsp;        ArrayList&lt;Node&gt; neighbors = new ArrayList&lt;&gt;();</b>
-<b class="fc">&nbsp;        for (int y = node.y-1; y &lt; node.y+2; y++) {</b>
-<b class="fc">&nbsp;            for (int x = node.x-1; x &lt; node.x+2; x++) {</b>
+<b class="fc">&nbsp;        for (int y = node.y - 1; y &lt; node.y + 2; y++) {</b>
+<b class="fc">&nbsp;            for (int x = node.x - 1; x &lt; node.x + 2; x++) {</b>
 <b class="fc">&nbsp;                if (pointOnGrid(x, y) &amp;&amp; pointNotCorner(node, x, y)</b>
-<b class="fc">&nbsp;                    &amp;&amp; pointNotNode(node, x, y)) {</b>
+<b class="fc">&nbsp;                        &amp;&amp; pointNotNode(node, x, y)) {</b>
 <b class="fc">&nbsp;                    neighbors.add(new Node(x, y));</b>
 &nbsp;                }
 &nbsp;            }
@@ -200,7 +200,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private Boolean pointNotCorner(Node node, int x, int y) {
 <b class="fc">&nbsp;        return (x == node.x || y == node.y);</b>
 &nbsp;    }
-&nbsp;    
+&nbsp;
 &nbsp;    private Boolean pointNotNode(Node node, int x, int y) {
 <b class="fc">&nbsp;        return !(x == node.x &amp;&amp; y == node.y);</b>
 &nbsp;    }
@@ -228,7 +228,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-02-07 09:19</div>
+    <div style="float:right;">generated on 2023-02-12 12:52</div>
 </div>
 </body>
 </html>

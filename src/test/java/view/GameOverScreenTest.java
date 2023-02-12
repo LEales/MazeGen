@@ -1,6 +1,5 @@
 package view;
 
-import com.sun.tools.javac.Main;
 import control.MainProgram;
 import javafx.application.Application;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,7 +18,8 @@ class GameOverScreenTest {
     void gameOverAnimation() {
         try {
             Thread.sleep(2000);
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) {
+        }
         MainProgram mp = MainProgram.getMainProgram();
         GameOverScreen gms = new GameOverScreen(mp);
         assertTrue(gms.gameOverAnimation());

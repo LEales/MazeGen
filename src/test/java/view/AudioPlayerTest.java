@@ -1,6 +1,7 @@
 package view;
 
-import javafx.application.Platform;
+import control.MainProgram;
+import javafx.application.Application;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,7 @@ class AudioPlayerTest {
 
     @BeforeAll
     static void initJFXRuntime() {
-        Platform.startup(() -> {
-        });
+        new Thread(() -> Application.launch(MainProgram.class)).start();
     }
 
     @BeforeEach
@@ -138,7 +138,7 @@ class AudioPlayerTest {
     }
 
     @Test
-    void unmuteMusic() {
+    void unMuteMusic() {
         assertFalse(ap.muteMusic(false));
     }
 
@@ -148,7 +148,7 @@ class AudioPlayerTest {
     }
 
     @Test
-    void unmuteSound() {
+    void unMuteSound() {
         assertFalse(ap.muteSound(false));
     }
 

@@ -24,12 +24,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 <h1>Coverage Summary for Class: MainProgram (control)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
 <th class="coverageStat 
 ">
   Method, %
@@ -43,30 +40,78 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name">MainProgram</td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    19.2%
   </span>
   <span class="absValue">
-    (1/1)
+    (5/26)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    21.1%
+    20.6%
   </span>
   <span class="absValue">
-    (4/19)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    3.6%
-  </span>
-  <span class="absValue">
-    (7/192)
+    (46/223)
   </span>
 </td>
 </tr>
-
+  <tr>
+    <td class="name">MainProgram$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.6%
+  </span>
+  <span class="absValue">
+    (1/18)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainProgram$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    20.7%
+  </span>
+  <span class="absValue">
+    (6/29)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    19.4%
+  </span>
+  <span class="absValue">
+    (47/242)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
@@ -77,11 +122,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 <code class="sourceCode" id="sourceCode">&nbsp;package control;
 &nbsp;
 &nbsp;import javafx.application.Application;
+&nbsp;import javafx.event.EventHandler;
 &nbsp;import javafx.geometry.Insets;
 &nbsp;import javafx.scene.ImageCursor;
 &nbsp;import javafx.scene.Scene;
 &nbsp;
 &nbsp;import javafx.scene.image.Image;
+&nbsp;import javafx.scene.input.KeyCode;
+&nbsp;import javafx.scene.input.KeyEvent;
 &nbsp;import javafx.scene.layout.*;
 &nbsp;import javafx.scene.paint.Color;
 &nbsp;import javafx.stage.Stage;
@@ -89,6 +137,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import model.Maps.*;
 &nbsp;
 &nbsp;import model.MazeGeneration.GenerateNextLevel;
+&nbsp;import model.TotalTime;
 &nbsp;import view.AudioPlayer;
 &nbsp;import view.Campaign.*;
 &nbsp;import view.GameOverScreen;
@@ -121,7 +170,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private Intro intro;
 &nbsp;    private Menu menu;
 &nbsp;    private Help help;
-&nbsp;    private highscoreList highscoreList;
+&nbsp;    private HighscoreList highscoreList;
 &nbsp;    private VictoryScreen victoryScreen;
 &nbsp;    private ChooseDimension chooseDimension;
 &nbsp;    private Scene randomScene;
@@ -138,68 +187,104 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private Image cursorImage;
 &nbsp;
 &nbsp;    public static MainProgram mainProgram;
+&nbsp;    private int lvlCleared;
+&nbsp;    private TotalTime totTime;
+&nbsp;    private boolean totalTimeIsStarted;
 &nbsp;
 &nbsp;    /**
 &nbsp;     * En metod som startar programmet.
 &nbsp;     * Metoden instanierar även de olika komponenterna.
+&nbsp;     *
 &nbsp;     * @param primaryStage JavaFX top Container, huvudkomponenten till programmet.
 &nbsp;     * @throws Exception
 &nbsp;     */
 &nbsp;
 &nbsp;    @Override
 &nbsp;    public void start(Stage primaryStage) throws Exception {
-<b class="fc">&nbsp;        System.out.println(&quot;here&quot;);</b>
+&nbsp;
 <b class="fc">&nbsp;        audioPlayer = new AudioPlayer();</b>
 <b class="fc">&nbsp;        audioPlayer.playIntroMusic();</b>
 &nbsp;
 <b class="fc">&nbsp;        rightPanel = new RightPanel(this, &quot;11&quot;, audioPlayer, null);</b>
-<b class="nc">&nbsp;        rightPanel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));</b>
+<b class="fc">&nbsp;        rightPanel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));</b>
 &nbsp;
-<b class="nc">&nbsp;        menu = new Menu(this, audioPlayer, rightPanel);</b>
-<b class="nc">&nbsp;        intro = new Intro(this, audioPlayer);</b>
-<b class="nc">&nbsp;        help = new Help(this, audioPlayer);</b>
-<b class="nc">&nbsp;        highscoreList = new highscoreList(this, audioPlayer);</b>
-<b class="nc">&nbsp;        victoryScreen =new VictoryScreen(this, audioPlayer);</b>
+<b class="fc">&nbsp;        menu = new Menu(this, audioPlayer, rightPanel);</b>
+<b class="fc">&nbsp;        intro = new Intro(this, audioPlayer);</b>
+<b class="fc">&nbsp;        help = new Help(this, audioPlayer);</b>
+<b class="fc">&nbsp;        highscoreList = new HighscoreList(this, audioPlayer);</b>
+<b class="fc">&nbsp;        victoryScreen = new VictoryScreen(this, audioPlayer);</b>
 &nbsp;
-<b class="nc">&nbsp;        chooseDimension = new ChooseDimension(this, audioPlayer);</b>
-<b class="nc">&nbsp;        introScene = new Scene(intro, 800, 600);</b>
-<b class="nc">&nbsp;        helpScene = new Scene(help, 800, 600);</b>
-<b class="nc">&nbsp;        highscoreScene = new Scene(highscoreList,800,600);</b>
-<b class="nc">&nbsp;        victoryScene = new Scene(victoryScreen,800,600);</b>
+<b class="fc">&nbsp;        chooseDimension = new ChooseDimension(this, audioPlayer);</b>
+<b class="fc">&nbsp;        introScene = new Scene(intro, 800, 600);</b>
+<b class="fc">&nbsp;        helpScene = new Scene(help, 800, 600);</b>
 &nbsp;
-<b class="nc">&nbsp;        chooseDimensionScene = new Scene(chooseDimension, 800, 600);</b>
+<b class="fc">&nbsp;        highscoreScene = new Scene(highscoreList,800,600);</b>
+<b class="fc">&nbsp;        victoryScene = new Scene(victoryScreen,800,600);</b>
 &nbsp;
-<b class="nc">&nbsp;        mainPaneRandomMaze = new BorderPane();</b>
-<b class="nc">&nbsp;        mainPaneCampaign = new BorderPane();</b>
-<b class="nc">&nbsp;        introAnimation = new WorldIntroAnimation();</b>
 &nbsp;
-<b class="nc">&nbsp;        mainWindow = primaryStage;</b>
-<b class="nc">&nbsp;        cursorImage = new Image(&quot;file:files/imagecursor.png&quot;);</b>
+<b class="fc">&nbsp;        victoryScene.setOnKeyPressed(new EventHandler&lt;KeyEvent&gt;() {</b>
+&nbsp;            @Override
+&nbsp;            public void handle(KeyEvent event) {
+<b class="nc">&nbsp;                String pattern = &quot;[a-zA-Z0-9]&quot;;</b>
+&nbsp;                String stringEvent;
+<b class="nc">&nbsp;                switch (event.getCode()){</b>
+<b class="nc">&nbsp;                    case DIGIT0 -&gt; stringEvent =&quot;0&quot;;</b>
+<b class="nc">&nbsp;                    case DIGIT1 -&gt; stringEvent =&quot;1&quot;;</b>
+<b class="nc">&nbsp;                    case DIGIT2 -&gt; stringEvent =&quot;2&quot;;</b>
+<b class="nc">&nbsp;                    case DIGIT3 -&gt; stringEvent =&quot;3&quot;;</b>
+<b class="nc">&nbsp;                    case DIGIT4 -&gt; stringEvent =&quot;4&quot;;</b>
+<b class="nc">&nbsp;                    case DIGIT5 -&gt; stringEvent =&quot;5&quot;;</b>
+<b class="nc">&nbsp;                    case DIGIT6 -&gt; stringEvent =&quot;6&quot;;</b>
+<b class="nc">&nbsp;                    case DIGIT7 -&gt; stringEvent =&quot;7&quot;;</b>
+<b class="nc">&nbsp;                    case DIGIT8 -&gt; stringEvent =&quot;8&quot;;</b>
+<b class="nc">&nbsp;                    case DIGIT9 -&gt; stringEvent =&quot;9&quot;;</b>
+<b class="nc">&nbsp;                    default -&gt;  stringEvent = String.valueOf(event.getCode());</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (stringEvent.matches(pattern) || stringEvent.equals(&quot;BACK_SPACE&quot;) || stringEvent.equals(&quot;ENTER&quot;)) {</b>
+<b class="nc">&nbsp;                    System.out.println(stringEvent);</b>
+<b class="nc">&nbsp;                    victoryScreen.setTextCurrent(stringEvent);</b>
+&nbsp;                }else {
+<b class="nc">&nbsp;                    victoryScreen.setTextCurrent(&quot;invalid&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
 &nbsp;
-<b class="nc">&nbsp;        mainWindow.setTitle(&quot;Mazegen&quot;);</b>
-<b class="nc">&nbsp;        mainWindow.setResizable(false);</b>
-<b class="nc">&nbsp;        mainWindow.setOnCloseRequest(windowEvent -&gt; System.exit(0));</b>
-<b class="nc">&nbsp;        world1Maps = new World1Maps();</b>
-<b class="nc">&nbsp;        mainPaneCampaign.setRight(rightPanel);</b>
+<b class="fc">&nbsp;        chooseDimensionScene = new Scene(chooseDimension, 800, 600);</b>
 &nbsp;
-<b class="nc">&nbsp;        rightPnlRndm = new RightPanel(this, &quot;Random&quot;, audioPlayer, null);</b>
-<b class="nc">&nbsp;        rightPnlRndm.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));</b>
+<b class="fc">&nbsp;        mainPaneRandomMaze = new BorderPane();</b>
+<b class="fc">&nbsp;        mainPaneCampaign = new BorderPane();</b>
+<b class="fc">&nbsp;        introAnimation = new WorldIntroAnimation();</b>
 &nbsp;
-<b class="nc">&nbsp;        mainPaneRandomMaze.setRight(rightPnlRndm);</b>
+<b class="fc">&nbsp;        mainWindow = primaryStage;</b>
+<b class="fc">&nbsp;        cursorImage = new Image(&quot;file:files/imagecursor.png&quot;);</b>
 &nbsp;
-<b class="nc">&nbsp;        campaignScene = new Scene(mainPaneCampaign, 800, 600);</b>
-<b class="nc">&nbsp;        randomScene = new Scene(mainPaneRandomMaze, 800, 600);</b>
-<b class="nc">&nbsp;        menuScene = new Scene(menu, 800, 600);</b>
+<b class="fc">&nbsp;        mainWindow.setTitle(&quot;Mazegen&quot;);</b>
+<b class="fc">&nbsp;        mainWindow.setResizable(false);</b>
+<b class="fc">&nbsp;        mainWindow.setOnCloseRequest(windowEvent -&gt; System.exit(0));</b>
+<b class="fc">&nbsp;        world1Maps = new World1Maps();</b>
+<b class="fc">&nbsp;        mainPaneCampaign.setRight(rightPanel);</b>
 &nbsp;
-<b class="nc">&nbsp;        mainWindow.setScene(introScene);</b>
-<b class="nc">&nbsp;        mainWindow.show();</b>
+<b class="fc">&nbsp;        rightPnlRndm = new RightPanel(this, &quot;Random&quot;, audioPlayer, null);</b>
+<b class="fc">&nbsp;        rightPnlRndm.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));</b>
 &nbsp;
-<b class="nc">&nbsp;        introScene.setCursor(new ImageCursor(cursorImage));</b>
-<b class="nc">&nbsp;        menuScene.setCursor(new ImageCursor(cursorImage));</b>
-<b class="nc">&nbsp;        campaignScene.setCursor(new ImageCursor(cursorImage));</b>
-<b class="nc">&nbsp;        chooseDimensionScene.setCursor(new ImageCursor(cursorImage));</b>
-<b class="nc">&nbsp;        helpScene.setCursor(new ImageCursor(cursorImage));</b>
-<b class="nc">&nbsp;        randomScene.setCursor(new ImageCursor(cursorImage));</b>
+<b class="fc">&nbsp;        mainPaneRandomMaze.setRight(rightPnlRndm);</b>
+&nbsp;
+<b class="fc">&nbsp;        campaignScene = new Scene(mainPaneCampaign, 800, 600);</b>
+<b class="fc">&nbsp;        randomScene = new Scene(mainPaneRandomMaze, 800, 600);</b>
+<b class="fc">&nbsp;        menuScene = new Scene(menu, 800, 600);</b>
+&nbsp;
+<b class="fc">&nbsp;        mainWindow.setScene(introScene);</b>
+<b class="fc">&nbsp;        mainWindow.show();</b>
+&nbsp;
+<b class="fc">&nbsp;        totTime = new TotalTime(false);</b>
+<b class="fc">&nbsp;        totalTimeIsStarted = false;</b>
+&nbsp;
+<b class="fc">&nbsp;        introScene.setCursor(new ImageCursor(cursorImage));</b>
+<b class="fc">&nbsp;        menuScene.setCursor(new ImageCursor(cursorImage));</b>
+<b class="fc">&nbsp;        campaignScene.setCursor(new ImageCursor(cursorImage));</b>
+<b class="fc">&nbsp;        chooseDimensionScene.setCursor(new ImageCursor(cursorImage));</b>
+<b class="fc">&nbsp;        helpScene.setCursor(new ImageCursor(cursorImage));</b>
+<b class="fc">&nbsp;        randomScene.setCursor(new ImageCursor(cursorImage));</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
@@ -211,6 +296,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Byter scen till Randomize.
+&nbsp;     *
 &nbsp;     * @param dimension Storleken på labyrinten som ska genereras.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     */
@@ -224,11 +310,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Byter scen till kampanjläget.
+&nbsp;     *
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     */
 &nbsp;    public void changeToCampaign() throws FileNotFoundException {
-&nbsp;
-&nbsp;
+<b class="nc">&nbsp;        lvlCleared = 0;</b>
 <b class="nc">&nbsp;        world1Template = new World1Template(world1Maps.getLevel11(), 1, 3, this, rightPanel, 0, audioPlayer, 25);</b>
 &nbsp;
 <b class="nc">&nbsp;        mainPaneCampaign.setCenter(world1Template);</b>
@@ -237,6 +323,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        mainPaneCampaign.getChildren().add(introAnimation);</b>
 <b class="nc">&nbsp;        introAnimation.setDisable(true);</b>
 &nbsp;
+<b class="nc">&nbsp;        startTotalTime(true);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
@@ -259,13 +346,15 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * Kör en enkel animation med texten &quot;Game Over&quot;.
 &nbsp;     */
 &nbsp;    public void gameOver() {
+<b class="nc">&nbsp;        victoryScreen.setTime(totTime.setGameOver(true));</b>
 <b class="nc">&nbsp;        gameOverScreen = new GameOverScreen(this);</b>
 <b class="nc">&nbsp;        mainPaneCampaign.getChildren().add(gameOverScreen);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-&nbsp;     * @param level Den aktuella nivån.
+&nbsp;     *
+&nbsp;     * @param level         Den aktuella nivån.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -273,24 +362,26 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    public void nextWorld1Level(int level, int heartCrystals) throws FileNotFoundException, InterruptedException {
 &nbsp;
 <b class="nc">&nbsp;        if (level == 1) {</b>
-<b class="nc">&nbsp;            System.out.println(&quot;hello&quot;);</b>
+<b class="nc">&nbsp;            lvlCleared = 11;</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;12&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel12(), 2, heartCrystals, this, rightPanel, 0, audioPlayer, 25));</b>
 &nbsp;
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 2) {</b>
+<b class="nc">&nbsp;        } else if (level == 2) {</b>
+<b class="nc">&nbsp;            lvlCleared = 12;</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;13&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel13(), 3, heartCrystals, this, rightPanel, 0, audioPlayer, 25));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 3) {</b>
-<b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;14&quot;);</b>
-<b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel14(), 4, heartCrystals, this, rightPanel, 0, audioPlayer, 25));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 4) {</b>
+<b class="nc">&nbsp;        } else if (level == 3) {</b>
+<b class="nc">&nbsp;            lvlCleared = 13;</b>
+<b class="nc">&nbsp;            victoryScreen.setTime(totTime.setGameOver(true));</b>
+<b class="nc">&nbsp;            audioPlayer.stopMusic();</b>
+<b class="nc">&nbsp;            showVictoryScene();</b>
+&nbsp;            //rightPanel.changeLevelCounter(&quot;14&quot;);
+&nbsp;            //mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel14(), 4, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
+<b class="nc">&nbsp;        } else if (level == 4) {</b>
+<b class="nc">&nbsp;            lvlCleared = 14;</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;15&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel15(), 5, heartCrystals, this, rightPanel, 0, audioPlayer, 25));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 5) {</b>
+<b class="nc">&nbsp;        } else if (level == 5) {</b>
 <b class="nc">&nbsp;            nextWorld2Level(1, heartCrystals);</b>
 &nbsp;        }
 &nbsp;
@@ -298,7 +389,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-&nbsp;     * @param level Den aktuella nivån.
+&nbsp;     *
+&nbsp;     * @param level         Den aktuella nivån.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -309,37 +401,37 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        World2Maps world2Maps = new World2Maps();</b>
 &nbsp;
 <b class="nc">&nbsp;        if (level == 1) {</b>
+<b class="nc">&nbsp;            lvlCleared = 14;</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;21&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel21(), 2, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));</b>
 <b class="nc">&nbsp;            introAnimation = new WorldIntroAnimation(&quot;2&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.getChildren().add(introAnimation);</b>
 <b class="nc">&nbsp;            introAnimation.setDisable(true);</b>
 <b class="nc">&nbsp;            audioPlayer.playWorldIntroSound();</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 2) {</b>
+<b class="nc">&nbsp;        } else if (level == 2) {</b>
+<b class="nc">&nbsp;            lvlCleared = 21;</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;22&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel22(), 3, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 3) {</b>
+<b class="nc">&nbsp;        } else if (level == 3) {</b>
+<b class="nc">&nbsp;            lvlCleared = 22;</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;23&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel23(), 4, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 4) {</b>
+<b class="nc">&nbsp;        } else if (level == 4) {</b>
+<b class="nc">&nbsp;            lvlCleared = 23;</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;24&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel24(), 5, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 5) {</b>
+<b class="nc">&nbsp;        } else if (level == 5) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;25&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel25(), 6, heartCrystals, this, rightPanel, 1, audioPlayer, true, rightPanel));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 6) {</b>
+<b class="nc">&nbsp;        } else if (level == 6) {</b>
 <b class="nc">&nbsp;            nextWorld3Level(1, heartCrystals);</b>
 &nbsp;        }
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-&nbsp;     * @param level Den aktuella nivån.
+&nbsp;     *
+&nbsp;     * @param level         Den aktuella nivån.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -357,30 +449,27 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            audioPlayer.playWorldIntroSound();</b>
 <b class="nc">&nbsp;            audioPlayer.stopMusic();</b>
 <b class="nc">&nbsp;            audioPlayer.playLevelMusic(&quot;lava&quot;);</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 2) {</b>
+<b class="nc">&nbsp;        } else if (level == 2) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;32&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel32(), 3, heartCrystals, this, rightPanel, 2, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 3) {</b>
+<b class="nc">&nbsp;        } else if (level == 3) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;33&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel33(), 4, heartCrystals, this, rightPanel, 2, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 4) {</b>
+<b class="nc">&nbsp;        } else if (level == 4) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;34&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel34(), 5, heartCrystals, this, rightPanel, 2, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 5) {</b>
+<b class="nc">&nbsp;        } else if (level == 5) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;35&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel35(), 6, heartCrystals, this, rightPanel, 2, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 6) {</b>
+<b class="nc">&nbsp;        } else if (level == 6) {</b>
 <b class="nc">&nbsp;            nextWorld4Level(1, heartCrystals);</b>
 &nbsp;        }
 &nbsp;    }
+&nbsp;
 &nbsp;    /**
 &nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-&nbsp;     * @param level Den aktuella nivån.
+&nbsp;     *
+&nbsp;     * @param level         Den aktuella nivån.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -398,30 +487,27 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            audioPlayer.playWorldIntroSound();</b>
 <b class="nc">&nbsp;            audioPlayer.stopMusic();</b>
 <b class="nc">&nbsp;            audioPlayer.playLevelMusic(&quot;heaven&quot;);</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 2) {</b>
+<b class="nc">&nbsp;        } else if (level == 2) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;42&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel42(), 3, heartCrystals, this, rightPanel, 3, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 3) {</b>
+<b class="nc">&nbsp;        } else if (level == 3) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;43&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel43(), 4, heartCrystals, this, rightPanel, 3, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 4) {</b>
+<b class="nc">&nbsp;        } else if (level == 4) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;44&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel44(), 5, heartCrystals, this, rightPanel, 3, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 5) {</b>
+<b class="nc">&nbsp;        } else if (level == 5) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;45&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel45(), 6, heartCrystals, this, rightPanel, 3, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 6) {</b>
+<b class="nc">&nbsp;        } else if (level == 6) {</b>
 <b class="nc">&nbsp;            nextWorld5Level(1, heartCrystals);</b>
 &nbsp;        }
 &nbsp;    }
+&nbsp;
 &nbsp;    /**
 &nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-&nbsp;     * @param level Den aktuella nivån.
+&nbsp;     *
+&nbsp;     * @param level         Den aktuella nivån.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -439,30 +525,27 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            audioPlayer.playWorldIntroSound();</b>
 <b class="nc">&nbsp;            audioPlayer.stopMusic();</b>
 <b class="nc">&nbsp;            audioPlayer.playLevelMusic(&quot;egypt&quot;);</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 2) {</b>
+<b class="nc">&nbsp;        } else if (level == 2) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;52&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel52(), 3, heartCrystals, this, rightPanel, 4, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 3) {</b>
+<b class="nc">&nbsp;        } else if (level == 3) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;53&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel53(), 4, heartCrystals, this, rightPanel, 4, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 4) {</b>
+<b class="nc">&nbsp;        } else if (level == 4) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;54&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel54(), 5, heartCrystals, this, rightPanel, 4, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 5) {</b>
+<b class="nc">&nbsp;        } else if (level == 5) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;55&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel55(), 6, heartCrystals, this, rightPanel, 4, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 6) {</b>
+<b class="nc">&nbsp;        } else if (level == 6) {</b>
 <b class="nc">&nbsp;            nextWorld6Level(1, heartCrystals);</b>
 &nbsp;        }
 &nbsp;    }
+&nbsp;
 &nbsp;    /**
 &nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
-&nbsp;     * @param level Den aktuella nivån.
+&nbsp;     *
+&nbsp;     * @param level         Den aktuella nivån.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -478,27 +561,28 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            mainPaneCampaign.getChildren().add(introAnimation);</b>
 <b class="nc">&nbsp;            introAnimation.setDisable(true);</b>
 <b class="nc">&nbsp;            audioPlayer.playWorldIntroSound();</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 2) {</b>
+<b class="nc">&nbsp;        } else if (level == 2) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;62&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel62(), 3, heartCrystals, this, rightPanel, 5, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 3) {</b>
+<b class="nc">&nbsp;        } else if (level == 3) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;63&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel63(), 4, heartCrystals, this, rightPanel, 5, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 4) {</b>
+<b class="nc">&nbsp;        } else if (level == 4) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;64&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel64(), 5, heartCrystals, this, rightPanel, 5, audioPlayer));</b>
-&nbsp;        }
-<b class="nc">&nbsp;        else if (level == 5) {</b>
+<b class="nc">&nbsp;        } else if (level == 5) {</b>
 <b class="nc">&nbsp;            rightPanel.changeLevelCounter(&quot;65&quot;);</b>
 <b class="nc">&nbsp;            mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel65(), 5, heartCrystals, this, rightPanel, 5, audioPlayer));</b>
+<b class="nc">&nbsp;        } else if (level == 6) {</b>
+<b class="nc">&nbsp;            victoryScreen.setTime(totTime.setGameOver(true));</b>
+<b class="nc">&nbsp;            audioPlayer.stopMusic();</b>
+<b class="nc">&nbsp;            showVictoryScene();</b>
 &nbsp;        }
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Main startar programmet.
+&nbsp;     *
 &nbsp;     * @param args
 &nbsp;     */
 &nbsp;    public static void main(String[] args) {
@@ -510,9 +594,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void showHighScoreList() {
+<b class="nc">&nbsp;        highscoreList.setupHighscoreList();</b>
 <b class="nc">&nbsp;        mainWindow.setScene(highscoreScene);</b>
 &nbsp;    }
-&nbsp;    public void showVcitoryScene() {
+&nbsp;
+&nbsp;    public void showVictoryScene() {
 <b class="nc">&nbsp;        mainWindow.setScene(victoryScene);</b>
 &nbsp;    }
 &nbsp;
@@ -520,6 +606,44 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    public void init() throws Exception {
 <b class="fc">&nbsp;        mainProgram = this;</b>
 &nbsp;    }
+&nbsp;
+&nbsp;    public void setTotalTime(int[] totalTime) {
+<b class="nc">&nbsp;        victoryScreen.setTime(totalTime);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean startTotalTime(boolean b) {
+<b class="nc">&nbsp;        if (b) {</b>
+<b class="nc">&nbsp;            if (!totalTimeIsStarted) {</b>
+<b class="nc">&nbsp;                totTime.start();</b>
+<b class="nc">&nbsp;                totalTimeIsStarted = true;</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                totTime = new TotalTime(false);</b>
+<b class="nc">&nbsp;                totTime.start();</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getLvlCleared() {
+<b class="nc">&nbsp;        return lvlCleared;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean getMusiIsOn() {
+<b class="nc">&nbsp;        return rightPanel.getMusicOn();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public HighscoreList getHighscoreList() {
+<b class="fc">&nbsp;        return highscoreList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public VictoryScreen getVictoryScreen() {
+<b class="nc">&nbsp;        return victoryScreen;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public GenerateNextLevel getGenerateNextLevel() {
+<b class="nc">&nbsp;        return generateNextLevel;</b>
+&nbsp;    }
+&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -544,7 +668,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-02-07 09:19</div>
+    <div style="float:right;">generated on 2023-02-12 12:52</div>
 </div>
 </body>
 </html>
