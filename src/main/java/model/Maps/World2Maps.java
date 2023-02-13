@@ -6,62 +6,62 @@ package model.Maps;
 
 public class World2Maps {
 
-    private int[][] level21 = new int[][]{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {4, 0, 4, 1, 1, 0, 0, 0, 3, 0},
-            {1, 1, 1, 0, 1, 0, 0, 0, 4, 0},
-            {0, 0, 0, 1, 1, 1, 1, 1, 1, 0},
-            {1, 1, 1, 1, 0, 1, 0, 0, 0, 0},
-            {1, 0, 0, 0, 0, 4, 1, 1, 0, 0},
-            {1, 0, 4, 1, 0, 0, 0, 1, 0, 0},
-            {1, 0, 0, 1, 1, 4, 0, 1, 1, 4},
-            {1, 0, 1, 1, 0, 1, 0, 0, 0, 1},
-            {7, 0, 2, 0, 0, 1, 1, 1, 1, 4}};
+    private int[][] level21 = new int[][]{{Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+            {4, Sprite.Wall, 4, 1, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, 3, Sprite.Wall},
+            {1, 1, 1, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, 4, Sprite.Wall},
+            {Sprite.Wall, Sprite.Wall, Sprite.Wall, 1, 1, 1, 1, 1, 1, Sprite.Wall},
+            {1, 1, 1, 1, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+            {1, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, 4, 1, 1, Sprite.Wall, Sprite.Wall},
+            {1, Sprite.Wall, 4, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall},
+            {1, Sprite.Wall, Sprite.Wall, 1, 1, 4, Sprite.Wall, 1, 1, 4},
+            {1, Sprite.Wall, 1, 1, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, 1},
+            {7, Sprite.Wall, 2, Sprite.Wall, Sprite.Wall, 1, 1, 1, 1, 4}};
 
-    private int[][] level22 = new int[][]{{0, 5, 1, 4, 0, 0, 4, 1, 1, 0},
-            {1, 0, 0, 1, 1, 0, 1, 0, 2, 0},
-            {1, 4, 1, 0, 1, 1, 1, 0, 0, 0},
-            {1, 0, 1, 1, 1, 0, 1, 1, 0, 0},
-            {1, 0, 0, 1, 0, 0, 0, 1, 0, 0},
-            {4, 1, 0, 1, 1, 4, 0, 1, 4, 0},
-            {0, 1, 0, 6, 0, 1, 1, 0, 1, 0},
-            {0, 1, 1, 4, 0, 0, 1, 0, 1, 0},
-            {0, 0, 0, 1, 0, 1, 4, 0, 1, 0},
-            {1, 4, 1, 1, 0, 3, 0, 0, 1, 4}};
+    private int[][] level22 = new int[][]{{Sprite.Wall, 5, 1, 4, Sprite.Wall, Sprite.Wall, 4, 1, 1, Sprite.Wall},
+            {1, Sprite.Wall, Sprite.Wall, 1, 1, Sprite.Wall, 1, Sprite.Wall, 2, Sprite.Wall},
+            {1, 4, 1, Sprite.Wall, 1, 1, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+            {1, Sprite.Wall, 1, 1, 1, Sprite.Wall, 1, 1, Sprite.Wall, Sprite.Wall},
+            {1, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall},
+            {4, 1, Sprite.Wall, 1, 1, 4, Sprite.Wall, 1, 4, Sprite.Wall},
+            {Sprite.Wall, 1, Sprite.Wall, 6, Sprite.Wall, 1, 1, Sprite.Wall, 1, Sprite.Wall},
+            {Sprite.Wall, 1, 1, 4, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, 1, Sprite.Wall},
+            {Sprite.Wall, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, 1, 4, Sprite.Wall, 1, Sprite.Wall},
+            {1, 4, 1, 1, Sprite.Wall, 3, Sprite.Wall, Sprite.Wall, 1, 4}};
 
 
-    private int[][] level23 = new int[][]{{0, 1, 1, 4, 0, 0, 1, 0, 0, 0},
-            {1, 4, 0, 1, 0, 0, 1, 4, 6, 4},
-            {4, 0, 1, 1, 0, 1, 1, 0, 0, 1},
-            {1, 0, 4, 0, 0, 1, 0, 0, 0, 4},
-            {4, 0, 1, 0, 0, 4, 1, 1, 0, 1},
-            {1, 0, 4, 1, 0, 1, 0, 0, 0, 4},
-            {4, 0, 0, 1, 1, 1, 0, 1, 1, 1},
-            {1, 1, 0, 0, 0, 4, 1, 4, 0, 0},
-            {0, 1, 0, 0, 0, 1, 0, 1, 1, 1},
-            {5, 4, 1, 1, 1, 2, 0, 0, 0, 3}};
+    private int[][] level23 = new int[][]{{Sprite.Wall, 1, 1, 4, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+            {1, 4, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, 1, 4, 6, 4},
+            {4, Sprite.Wall, 1, 1, Sprite.Wall, 1, 1, Sprite.Wall, Sprite.Wall, 1},
+            {1, Sprite.Wall, 4, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, 4},
+            {4, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, 4, 1, 1, Sprite.Wall, 1},
+            {1, Sprite.Wall, 4, 1, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, 4},
+            {4, Sprite.Wall, Sprite.Wall, 1, 1, 1, Sprite.Wall, 1, 1, 1},
+            {1, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, 4, 1, 4, Sprite.Wall, Sprite.Wall},
+            {Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, 1, 1, 1},
+            {5, 4, 1, 1, 1, 2, Sprite.Wall, Sprite.Wall, Sprite.Wall, 3}};
 
-    private int[][] level24 = new int[][]{{0, 1, 4, 6, 1, 0, 0, 0, 1, 1},
-            {0, 1, 0, 0, 1, 0, 1, 1, 1, 3},
-            {0, 1, 1, 0, 1, 0, 1, 0, 0, 0},
-            {0, 0, 1, 0, 1, 4, 1, 1, 1, 4},
-            {5, 1, 1, 1, 1, 0, 0, 0, 0, 1},
-            {0, 0, 1, 0, 0, 0, 0, 0, 0, 4},
-            {0, 1, 4, 0, 0, 4, 1, 4, 0, 1},
-            {0, 4, 0, 0, 0, 1, 0, 1, 0, 4},
-            {0, 1, 1, 4, 0, 1, 0, 1, 0, 1},
-            {0, 0, 0, 1, 1, 1, 0, 1, 1, 2}};
+    private int[][] level24 = new int[][]{{Sprite.Wall, 1, 4, 6, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, 1, 1},
+            {Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, 1, 1, 1, 3},
+            {Sprite.Wall, 1, 1, Sprite.Wall, 1, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+            {Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, 1, 4, 1, 1, 1, 4},
+            {5, 1, 1, 1, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, 1},
+            {Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, 4},
+            {Sprite.Wall, 1, 4, Sprite.Wall, Sprite.Wall, 4, 1, 4, Sprite.Wall, 1},
+            {Sprite.Wall, 4, Sprite.Wall, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, 1, Sprite.Wall, 4},
+            {Sprite.Wall, 1, 1, 4, Sprite.Wall, 1, Sprite.Wall, 1, Sprite.Wall, 1},
+            {Sprite.Wall, Sprite.Wall, Sprite.Wall, 1, 1, 1, Sprite.Wall, 1, 1, 2}};
 
-    private int[][] level25 = new int[][]{{0, 0, 0, 0, 0, 3, 0, 0, 5, 0, 0},
-            {0, 5, 0, 0, 0, 7, 0, 0, 1, 0, 0},
-            {4, 1, 1, 0, 0, 1, 0, 0, 4, 1, 2},
-            {1, 0, 1, 4, 0, 6, 0, 0, 1, 0, 0},
-            {4, 1, 0, 1, 0, 1, 0, 0, 1, 4, 0},
-            {0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0},
-            {4, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0},
-            {1, 0, 0, 1, 1, 4, 0, 1, 0, 0, 0},
-            {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0},
-            {1, 0, 4, 1, 1, 0, 1, 0, 0, 1, 4},
-            {4, 1, 1, 0, 1, 6, 1, 1, 4, 1, 0}};
+    private int[][] level25 = new int[][]{{Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, 3, Sprite.Wall, Sprite.Wall, 5, Sprite.Wall, Sprite.Wall},
+            {Sprite.Wall, 5, Sprite.Wall, Sprite.Wall, Sprite.Wall, 7, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall},
+            {4, 1, 1, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, 4, 1, 2},
+            {1, Sprite.Wall, 1, 4, Sprite.Wall, 6, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall},
+            {4, 1, Sprite.Wall, 1, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, 1, 4, Sprite.Wall},
+            {Sprite.Wall, 1, Sprite.Wall, 1, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, 1, Sprite.Wall},
+            {4, 1, Sprite.Wall, 1, Sprite.Wall, 1, Sprite.Wall, 1, 1, 1, Sprite.Wall},
+            {1, Sprite.Wall, Sprite.Wall, 1, 1, 4, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+            {1, 1, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, 1, 1, 1, Sprite.Wall},
+            {1, Sprite.Wall, 4, 1, 1, Sprite.Wall, 1, Sprite.Wall, Sprite.Wall, 1, 4},
+            {4, 1, 1, Sprite.Wall, 1, 6, 1, 1, 4, 1, Sprite.Wall}};
 
     /**
      * Returnerar en array som representerar en nivå i spelet.
