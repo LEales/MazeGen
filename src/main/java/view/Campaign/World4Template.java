@@ -35,8 +35,8 @@ public class World4Template extends World1Template {
     private Thread platfrom;
     private int currentLevel;
 
-    public World4Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
-        super(level, currentLevel, heartCrystals, mainProgram, rightPanel, world, audioPlayer, 80);
+    public World4Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
+        super(level, currentLevel, heartCrystals, rightPanel, world, audioPlayer, 80);
         rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
         this.currentLevel = currentLevel;
         squareSize = 600/(level.length+2);

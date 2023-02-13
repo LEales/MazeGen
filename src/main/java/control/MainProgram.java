@@ -177,13 +177,17 @@ public class MainProgram extends Application {
      */
     public void changeToCampaign() throws FileNotFoundException {
         lvlCleared = 0;
-        World1Template world1Template = new World1Template(world1Maps.getLevel11(), 1, 3, this, rightPanel, World.FOREST, audioPlayer, 25);
+        World1Template world1Template = new World1Template(world1Maps.getLevel11(), 1, 3, rightPanel, World.FOREST, audioPlayer, 25);
 
         mainPaneCampaign.setCenter(world1Template);
         mainWindow.setScene(campaignScene);
         introAnimation = new WorldIntroAnimation("1");
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
+
+        try {
+            nextWorld2Level(5,3);
+        } catch (Exception e){}
 
         startTotalTime();
     }
@@ -227,22 +231,22 @@ public class MainProgram extends Application {
             case 1 -> {
                 lvlCleared = 11;
                 rightPanel.changeLevelCounter("12");
-                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel12(), 2, heartCrystals, this, rightPanel, World.FOREST, audioPlayer, 25));
+                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel12(), 2, heartCrystals, rightPanel, World.FOREST, audioPlayer, 25));
             }
             case 2 -> {
                 lvlCleared = 12;
                 rightPanel.changeLevelCounter("13");
-                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel13(), 3, heartCrystals, this, rightPanel, World.FOREST, audioPlayer, 25));
+                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel13(), 3, heartCrystals, rightPanel, World.FOREST, audioPlayer, 25));
             }
             case 3 -> {
                 lvlCleared = 13;
                 rightPanel.changeLevelCounter("14");
-                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel14(), 4, heartCrystals, this, rightPanel, World.FOREST, audioPlayer, 25));
+                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel14(), 4, heartCrystals, rightPanel, World.FOREST, audioPlayer, 25));
             }
             case 4 -> {
                 lvlCleared = 14;
                 rightPanel.changeLevelCounter("15");
-                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel15(), 5, heartCrystals, this, rightPanel, World.FOREST, audioPlayer, 25));
+                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel15(), 5, heartCrystals, rightPanel, World.FOREST, audioPlayer, 25));
             }
             case 5 -> {
                 lvlCleared = 15;
@@ -268,7 +272,7 @@ public class MainProgram extends Application {
         switch (level) {
             case 1 -> {
                 rightPanel.changeLevelCounter("21");
-                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel21(), 2, heartCrystals, this, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel21(), 2, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
                 introAnimation = new WorldIntroAnimation("2");
                 mainPaneCampaign.getChildren().add(introAnimation);
                 introAnimation.setDisable(true);
@@ -277,22 +281,22 @@ public class MainProgram extends Application {
             case 2 -> {
                 lvlCleared = 21;
                 rightPanel.changeLevelCounter("22");
-                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel22(), 3, heartCrystals, this, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel22(), 3, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
             }
             case 3 -> {
                 lvlCleared = 22;
                 rightPanel.changeLevelCounter("23");
-                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel23(), 4, heartCrystals, this, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel23(), 4, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
             }
             case 4 -> {
                 lvlCleared = 23;
                 rightPanel.changeLevelCounter("24");
-                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel24(), 5, heartCrystals, this, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel24(), 5, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
             }
             case 5 -> {
                 lvlCleared = 24;
                 rightPanel.changeLevelCounter("25");
-                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel25(), 6, heartCrystals, this, rightPanel, World.UNDERGROUND, audioPlayer, true, rightPanel));
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel25(), 6, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer, true, rightPanel));
             }
             case 6 -> {
                 lvlCleared = 25;
@@ -316,7 +320,7 @@ public class MainProgram extends Application {
         switch (level) {
             case 1 -> {
                 rightPanel.changeLevelCounter("31");
-                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel31(), 2, heartCrystals, this, rightPanel, World.LAVA, audioPlayer));
+                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel31(), 2, heartCrystals, rightPanel, World.LAVA, audioPlayer));
                 introAnimation = new WorldIntroAnimation("3");
                 mainPaneCampaign.getChildren().add(introAnimation);
                 introAnimation.setDisable(true);
@@ -327,22 +331,22 @@ public class MainProgram extends Application {
             case 2 -> {
                 lvlCleared = 31;
                 rightPanel.changeLevelCounter("32");
-                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel32(), 3, heartCrystals, this, rightPanel, World.LAVA, audioPlayer));
+                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel32(), 3, heartCrystals, rightPanel, World.LAVA, audioPlayer));
             }
             case 3 -> {
                 lvlCleared = 32;
                 rightPanel.changeLevelCounter("33");
-                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel33(), 4, heartCrystals, this, rightPanel, World.LAVA, audioPlayer));
+                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel33(), 4, heartCrystals, rightPanel, World.LAVA, audioPlayer));
             }
             case 4 -> {
                 lvlCleared = 33;
                 rightPanel.changeLevelCounter("34");
-                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel34(), 5, heartCrystals, this, rightPanel, World.LAVA, audioPlayer));
+                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel34(), 5, heartCrystals, rightPanel, World.LAVA, audioPlayer));
             }
             case 5 -> {
                 lvlCleared = 34;
                 rightPanel.changeLevelCounter("35");
-                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel35(), 6, heartCrystals, this, rightPanel, World.LAVA, audioPlayer));
+                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel35(), 6, heartCrystals, rightPanel, World.LAVA, audioPlayer));
             }
             case 6 -> {
                 lvlCleared = 35;
@@ -366,7 +370,7 @@ public class MainProgram extends Application {
         switch (level) {
             case 1 -> {
                 rightPanel.changeLevelCounter("41");
-                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel41(), 2, heartCrystals, this, rightPanel, World.CLOUD, audioPlayer));
+                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel41(), 2, heartCrystals, rightPanel, World.CLOUD, audioPlayer));
                 introAnimation = new WorldIntroAnimation("4");
                 mainPaneCampaign.getChildren().add(introAnimation);
                 introAnimation.setDisable(true);
@@ -377,22 +381,22 @@ public class MainProgram extends Application {
             case 2 -> {
                 lvlCleared = 41;
                 rightPanel.changeLevelCounter("42");
-                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel42(), 3, heartCrystals, this, rightPanel, World.CLOUD, audioPlayer));
+                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel42(), 3, heartCrystals, rightPanel, World.CLOUD, audioPlayer));
             }
             case 3 -> {
                 lvlCleared = 42;
                 rightPanel.changeLevelCounter("43");
-                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel43(), 4, heartCrystals, this, rightPanel, World.CLOUD, audioPlayer));
+                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel43(), 4, heartCrystals, rightPanel, World.CLOUD, audioPlayer));
             }
             case 4 -> {
                 lvlCleared = 43;
                 rightPanel.changeLevelCounter("44");
-                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel44(), 5, heartCrystals, this, rightPanel, World.CLOUD, audioPlayer));
+                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel44(), 5, heartCrystals, rightPanel, World.CLOUD, audioPlayer));
             }
             case 5 -> {
                 lvlCleared = 44;
                 rightPanel.changeLevelCounter("45");
-                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel45(), 6, heartCrystals, this, rightPanel, World.CLOUD, audioPlayer));
+                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel45(), 6, heartCrystals, rightPanel, World.CLOUD, audioPlayer));
             }
             case 6 -> {
                 lvlCleared = 45;
@@ -416,7 +420,7 @@ public class MainProgram extends Application {
         switch (level) {
             case 1 -> {
                 rightPanel.changeLevelCounter("51");
-                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel51(), 2, heartCrystals, this, rightPanel, World.DESERT, audioPlayer));
+                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel51(), 2, heartCrystals, rightPanel, World.DESERT, audioPlayer));
                 introAnimation = new WorldIntroAnimation("5");
                 mainPaneCampaign.getChildren().add(introAnimation);
                 introAnimation.setDisable(true);
@@ -427,22 +431,22 @@ public class MainProgram extends Application {
             case 2 -> {
                 lvlCleared = 51;
                 rightPanel.changeLevelCounter("52");
-                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel52(), 3, heartCrystals, this, rightPanel, World.DESERT, audioPlayer));
+                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel52(), 3, heartCrystals, rightPanel, World.DESERT, audioPlayer));
             }
             case 3 -> {
                 lvlCleared = 52;
                 rightPanel.changeLevelCounter("53");
-                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel53(), 4, heartCrystals, this, rightPanel, World.DESERT, audioPlayer));
+                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel53(), 4, heartCrystals, rightPanel, World.DESERT, audioPlayer));
             }
             case 4 -> {
                 lvlCleared = 53;
                 rightPanel.changeLevelCounter("54");
-                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel54(), 5, heartCrystals, this, rightPanel, World.DESERT, audioPlayer));
+                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel54(), 5, heartCrystals, rightPanel, World.DESERT, audioPlayer));
             }
             case 5 -> {
                 lvlCleared = 54;
                 rightPanel.changeLevelCounter("55");
-                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel55(), 6, heartCrystals, this, rightPanel, World.DESERT, audioPlayer));
+                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel55(), 6, heartCrystals, rightPanel, World.DESERT, audioPlayer));
             }
             case 6 -> {
                 lvlCleared = 55;
@@ -466,7 +470,7 @@ public class MainProgram extends Application {
         switch (level) {
             case 1 -> {
                 rightPanel.changeLevelCounter("61");
-                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel61(), 2, heartCrystals, this, rightPanel, World.SPACE, audioPlayer));
+                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel61(), 2, heartCrystals, rightPanel, World.SPACE, audioPlayer));
                 introAnimation = new WorldIntroAnimation("6");
                 mainPaneCampaign.getChildren().add(introAnimation);
                 introAnimation.setDisable(true);
@@ -475,22 +479,22 @@ public class MainProgram extends Application {
             case 2 -> {
                 lvlCleared = 61;
                 rightPanel.changeLevelCounter("62");
-                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel62(), 3, heartCrystals, this, rightPanel, World.SPACE, audioPlayer));
+                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel62(), 3, heartCrystals, rightPanel, World.SPACE, audioPlayer));
             }
             case 3 -> {
                 lvlCleared = 62;
                 rightPanel.changeLevelCounter("63");
-                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel63(), 4, heartCrystals, this, rightPanel, World.SPACE, audioPlayer));
+                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel63(), 4, heartCrystals, rightPanel, World.SPACE, audioPlayer));
             }
             case 4 -> {
                 lvlCleared = 63;
                 rightPanel.changeLevelCounter("64");
-                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel64(), 5, heartCrystals, this, rightPanel, World.SPACE, audioPlayer));
+                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel64(), 5, heartCrystals, rightPanel, World.SPACE, audioPlayer));
             }
             case 5 -> {
                 lvlCleared = 64;
                 rightPanel.changeLevelCounter("65");
-                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel65(), 6, heartCrystals, this, rightPanel, World.SPACE, audioPlayer));
+                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel65(), 6, heartCrystals, rightPanel, World.SPACE, audioPlayer));
             }
             case 6 -> {
                 lvlCleared = 65;

@@ -2,13 +2,13 @@ package view.Campaign;
 
 import control.MainProgram;
 import javafx.animation.FadeTransition;
+import javafx.scene.Node;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
-import javafx.event.EventHandler;
 import javafx.util.Duration;
 import model.Maps.Sprite;
 import model.World;
@@ -32,7 +32,6 @@ public class World1Template extends GridPane {
     private final Sprite[][] level;
     private final Collection<Label> collectibles = new ArrayList<>();
     private final Collection<Label> pickaxes = new ArrayList<>();
-    private final EventHandler<MouseEvent> mouseListener = new MouseListener();
     private Image wall;
     private Image path;
     private Image border;
@@ -66,7 +65,6 @@ public class World1Template extends GridPane {
      * @param level         Den array som sedan omvandlas till en nivå inuti spelet.
      * @param currentLevel  Den aktuella nivån
      * @param heartCrystals Spelarens liv.
-     * @param mainProgram   Huvudprogrammet.
      * @param rightPanel    Panelen som visar information så som liv, tid, nivå osv.
      * @param world         Används för att sätta rätt grafik på världen.
      * @param audioPlayer   Används för att spela upp ljud inne i spelet.
@@ -75,8 +73,8 @@ public class World1Template extends GridPane {
      */
 
     //Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
-    public World1Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, World world, AudioPlayer audioPlayer, int seconds) throws FileNotFoundException {
-        this.mainProgram = mainProgram;
+    public World1Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, AudioPlayer audioPlayer, int seconds) throws FileNotFoundException {
+        this.mainProgram = MainProgram.getMainProgram();
         this.currentLevel = currentLevel;
         this.level = level.clone();
         this.heartCrystals = heartCrystals;
@@ -292,9 +290,19 @@ public class World1Template extends GridPane {
         borderView.setEffect(glow);
         collectible.setStyle("fx-background-color: transparent;");
         collectible.setGraphic(borderView);
-        collectible.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseListener);
+        collectible.setOnMouseEntered(e -> collectibleObtained(e));
         collectibles.add(collectible);
         return collectible;
+    }
+
+    private void collectibleObtained(MouseEvent e) {
+        audioPlayer.playCollectibleSound();
+        Label label = (Label) e.getSource();
+        label.setVisible(false);
+        collectiblesObtained++;
+        if (collectiblesObtained == collectibles.size()) {
+            allCollectiblesObtained = true;
+        }
     }
 
     /**
@@ -352,9 +360,19 @@ public class World1Template extends GridPane {
         borderView.setEffect(glow);
         pickAxe.setStyle("fx-background-color: transparent;");
         pickAxe.setGraphic(borderView);
-        pickAxe.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseListener);
+        pickAxe.setOnMouseEntered(e -> pickAxeObtained(e));
         pickaxes.add(pickAxe);
         return pickAxe;
+    }
+
+    private void pickAxeObtained(MouseEvent e) {
+        if (startButtonPressed) {
+            audioPlayer.playPickAxeSound();
+            Label label = (Label) e.getSource();
+            label.setVisible(false);
+            pickaxeObtained = true;
+            rightPanel.addPickaxe();
+        }
     }
 
     /**
@@ -366,12 +384,7 @@ public class World1Template extends GridPane {
      */
     public void enteredWall(MouseEvent e) {
         Label label = (Label) e.getSource();
-        FadeTransition fade = new FadeTransition();
-        fade.setNode(label);
-        fade.setDuration(Duration.seconds(0.3));
-        fade.setFromValue(10.0);
-        fade.setToValue(0.6);
-        fade.play();
+        createFadeTransition(label, 0.3, 10.0, 0.6).play();
 
         if (startButtonPressed) {
             rightPanel.changeHeartCounter(String.valueOf(--heartCrystals));
@@ -391,17 +404,9 @@ public class World1Template extends GridPane {
      * @param e
      */
     public void enteredGhost(MouseEvent e) {
-        ImageView view = (ImageView) e.getSource();
-        FadeTransition fade = new FadeTransition();
-        fade.setNode(view);
-        fade.setDuration(Duration.seconds(1));
-        fade.setFromValue(10);
-        fade.setToValue(0.6);
-        fade.setToValue(10);
-        fade.play();
-
-
         if (startButtonPressed) {
+            ImageView view = (ImageView) e.getSource();
+            createFadeTransition(view, 0.2, 10, 0.6).play();
             audioPlayer.playMobSound();
             audioPlayer.playDeathSound();
             rightPanel.changeHeartCounter(String.valueOf(--heartCrystals));
@@ -409,6 +414,7 @@ public class World1Template extends GridPane {
                 gameOver();
             }
             startButtonPressed = false;
+            createFadeTransition(view, 1.5, 0.6, 10).play();
         }
     }
 
@@ -499,12 +505,17 @@ public class World1Template extends GridPane {
      */
     private void exitedLabel(MouseEvent e) {
         Label label = (Label) e.getSource();
+        createFadeTransition(label, 0.3, 0.6, 10).play();
+    }
+
+    private FadeTransition createFadeTransition(Node node, double duration, double from, double to) {
         FadeTransition fade = new FadeTransition();
-        fade.setNode(label);
-        fade.setDuration(Duration.seconds(0.3));
-        fade.setFromValue(0.6);
-        fade.setToValue(10);
-        fade.play();
+        fade.setNode(node);
+        fade.setDuration(Duration.seconds(duration));
+        fade.setFromValue(from);
+        fade.setToValue(to);
+
+        return fade;
     }
 
     /**
@@ -527,36 +538,6 @@ public class World1Template extends GridPane {
                 audioPlayer.playBreakableWallSound();
             } else if (!wallDestroyed) {
                 enteredWall(e);
-            }
-        }
-    }
-
-    /**
-     * En listener som körs när spelaren plockar upp en collectible eller en yxa.
-     */
-    private class MouseListener implements EventHandler<MouseEvent> {
-        @Override
-        public void handle(MouseEvent e) {
-            if (startButtonPressed) {
-                for (Label label : pickaxes) {
-                    if (e.getSource() == label) {
-                        audioPlayer.playPickAxeSound();
-                        label.setVisible(false);
-                        pickaxeObtained = true;
-                        rightPanel.addPickaxe();
-                    }
-                }
-
-                for (Label label : collectibles) {
-                    if (e.getSource() == label) {
-                        audioPlayer.playCollectibleSound();
-                        label.setVisible(false);
-                        collectiblesObtained++;
-                        if (collectiblesObtained == collectibles.size()) {
-                            allCollectiblesObtained = true;
-                        }
-                    }
-                }
             }
         }
     }

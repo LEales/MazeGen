@@ -38,8 +38,8 @@ public class World3Template extends World1Template {
     private TimeThread time;
     private AudioPlayer audioPlayer;
 
-    public World3Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
-        super(level, currentLevel, heartCrystals, mainProgram, rightPanel, world, audioPlayer, 60);
+    public World3Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
+        super(level, currentLevel, heartCrystals, rightPanel, world, audioPlayer, 60);
         squareSize = 600 / (level.length + 2);
         this.currentLevel = currentLevel;
         this.panel = rightPanel;

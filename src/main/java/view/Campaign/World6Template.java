@@ -23,9 +23,7 @@ import java.io.FileNotFoundException;
 public class World6Template extends World1Template {
 
 
-    private Image ghost;
-
-    private int squareSize;
+    private final int squareSize;
     private PathTransition animation;
     private PathTransition animation2;
     private PathTransition animation3;
@@ -35,24 +33,15 @@ public class World6Template extends World1Template {
     private PathTransition animation7;
     private PathTransition animation8;
     private PathTransition animation9;
-    private PathTransition animation10;
-    private int currentLevel;
+
+    private final int currentLevel;
+
     private Rectangle rectangle;
-    private ImageView ghost4V;
-    private ImageView ghost3V;
-    private ImageView ghost1V;
-    private ImageView ghost2V;
-    private ImageView ghost5V;
-    private ImageView ghost6V;
-    private ImageView ghost7V;
-    private ImageView ghost8V;
-    private ImageView ghost9V;
-    private ImageView ghost10V;
 
 
-    public World6Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
-        super(level, currentLevel, heartCrystals, mainProgram, rightPanel, world, audioPlayer, 99);
-        squareSize = 600/(level.length+2);
+    public World6Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
+        super(level, currentLevel, heartCrystals, rightPanel, world, audioPlayer, 99);
+        squareSize = (int) MainProgram.HEIGHT/(level.length+2);
         this.currentLevel = currentLevel;
         rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
         rightPanel.resetTimerLabel();
@@ -70,8 +59,13 @@ public class World6Template extends World1Template {
 
     public void initialize() {
 
-        ghost = new Image("file:files/space_mob3.png", squareSize, squareSize, false, false);
+        Image ghost = new Image("file:files/space_mob3.png", squareSize, squareSize, false, false);
 
+        ImageView ghost4V1;
+        ImageView ghost3V1;
+        ImageView ghost1V1;
+        ImageView ghost2V1;
+        ImageView ghost5V1;
         if (currentLevel==2){
 
             ImageView ghost4V = new ImageView();
@@ -142,21 +136,21 @@ public class World6Template extends World1Template {
         }
 
         else if (currentLevel == 3){
-             ghost4V = new ImageView();
-             ghost3V = new ImageView();
-             ghost1V = new ImageView();
-             ghost2V = new ImageView();
-             ghost5V = new ImageView();
-            ghost5V.setImage(ghost);
-            ghost4V.setImage(ghost);
-            ghost3V.setImage(ghost);
-            ghost2V.setImage(ghost);
-            ghost1V.setImage(ghost);
-            add(ghost5V,16,4);
-            add(ghost3V,9,4);
-            add(ghost1V,5,10);
-            add(ghost2V,4,5);
-            add(ghost4V,10,13);
+             ghost4V1 = new ImageView();
+             ghost3V1 = new ImageView();
+             ghost1V1 = new ImageView();
+             ghost2V1 = new ImageView();
+             ghost5V1 = new ImageView();
+            ghost5V1.setImage(ghost);
+            ghost4V1.setImage(ghost);
+            ghost3V1.setImage(ghost);
+            ghost2V1.setImage(ghost);
+            ghost1V1.setImage(ghost);
+            add(ghost5V1,16,4);
+            add(ghost3V1,9,4);
+            add(ghost1V1,5,10);
+            add(ghost2V1,4,5);
+            add(ghost4V1,10,13);
             rectangle = new Rectangle(120,93);
             rectangle.setY(72);
             rectangle.setX(-45);
@@ -166,7 +160,7 @@ public class World6Template extends World1Template {
             rectangle2.setX(-45);
 
             animation = new PathTransition();
-            animation.setNode(ghost3V);
+            animation.setNode(ghost3V1);
             animation.setDuration(Duration.seconds(5));
             animation.setCycleCount(1);
             animation.setPath(rectangle);
@@ -182,7 +176,7 @@ public class World6Template extends World1Template {
             });
 
             animation2 = new PathTransition();
-            animation2.setNode(ghost1V);
+            animation2.setNode(ghost1V1);
             animation2.setDuration(Duration.seconds(5));
             animation2.setCycleCount(1);
             animation2.setPath(rectangle2);
@@ -196,7 +190,7 @@ public class World6Template extends World1Template {
             });
 
             animation3 = new PathTransition();
-            animation3.setNode(ghost2V);
+            animation3.setNode(ghost2V1);
             animation3.setDuration(Duration.seconds(5));
             animation3.setCycleCount(1);
             animation3.setPath(rectangle2);
@@ -212,7 +206,7 @@ public class World6Template extends World1Template {
 
 
             animation4 = new PathTransition();
-            animation4.setNode(ghost4V);
+            animation4.setNode(ghost4V1);
             animation4.setDuration(Duration.seconds(5));
             animation4.setCycleCount(1);
             animation4.setPath(rectangle);
@@ -227,7 +221,7 @@ public class World6Template extends World1Template {
 
 
             animation5 = new PathTransition();
-            animation5.setNode(ghost5V);
+            animation5.setNode(ghost5V1);
             animation5.setDuration(Duration.seconds(5));
             animation5.setCycleCount(1);
             animation5.setPath(rectangle);
@@ -240,39 +234,39 @@ public class World6Template extends World1Template {
                 animation5.play();
             });
 
-            ghost5V.setOnMouseEntered(event -> enteredGhost(event));
-            ghost4V.setOnMouseEntered(event -> enteredGhost(event));
-            ghost2V.setOnMouseEntered(event -> enteredGhost(event));
-            ghost1V.setOnMouseEntered(e -> enteredGhost(e));
-            ghost3V.setOnMouseEntered(e -> enteredGhost(e));
+            ghost5V1.setOnMouseEntered(event -> enteredGhost(event));
+            ghost4V1.setOnMouseEntered(event -> enteredGhost(event));
+            ghost2V1.setOnMouseEntered(event -> enteredGhost(event));
+            ghost1V1.setOnMouseEntered(e -> enteredGhost(e));
+            ghost3V1.setOnMouseEntered(e -> enteredGhost(e));
 
         }
         else if (currentLevel == 4 ){
-            ghost4V = new ImageView();
-            ghost3V = new ImageView();
-            ghost1V = new ImageView();
-            ghost2V = new ImageView();
-            ghost5V = new ImageView();
-            ghost6V = new ImageView();
-            ghost7V = new ImageView();
-            ghost8V = new ImageView();
-            ghost9V = new ImageView();
-            ghost10V = new ImageView();
+            ghost4V1 = new ImageView();
+            ghost3V1 = new ImageView();
+            ghost1V1 = new ImageView();
+            ghost2V1 = new ImageView();
+            ghost5V1 = new ImageView();
+            ImageView ghost6V = new ImageView();
+            ImageView ghost7V = new ImageView();
+            ImageView ghost8V = new ImageView();
+            ImageView ghost9V = new ImageView();
+            ImageView ghost10V = new ImageView();
             ghost10V.setImage(ghost);
             ghost9V.setImage(ghost);
             ghost8V.setImage(ghost);
             ghost7V.setImage(ghost);
             ghost6V.setImage(ghost);
-            ghost5V.setImage(ghost);
-            ghost4V.setImage(ghost);
-            ghost3V.setImage(ghost);
-            ghost2V.setImage(ghost);
-            ghost1V.setImage(ghost);
-            add(ghost5V,3,1);
-            add(ghost3V,3,3);
-            add(ghost1V,3,5);
-            add(ghost2V,3,7);
-            add(ghost4V,3,9);
+            ghost5V1.setImage(ghost);
+            ghost4V1.setImage(ghost);
+            ghost3V1.setImage(ghost);
+            ghost2V1.setImage(ghost);
+            ghost1V1.setImage(ghost);
+            add(ghost5V1,3,1);
+            add(ghost3V1,3,3);
+            add(ghost1V1,3,5);
+            add(ghost2V1,3,7);
+            add(ghost4V1,3,9);
             add(ghost6V,3,11);
             add(ghost7V,3,13);
             add(ghost8V,3,15);
@@ -286,7 +280,7 @@ public class World6Template extends World1Template {
             rectangle2.setX(-45);
 
             animation = new PathTransition();
-            animation.setNode(ghost3V);
+            animation.setNode(ghost3V1);
             animation.setDuration(Duration.seconds(5));
             animation.setCycleCount(3);
             animation.setPath(rectangle);
@@ -306,7 +300,7 @@ public class World6Template extends World1Template {
             });
 
             animation2 = new PathTransition();
-            animation2.setNode(ghost1V);
+            animation2.setNode(ghost1V1);
             animation2.setDuration(Duration.seconds(5));
             animation2.setCycleCount(3);
             animation2.setPath(rectangle);
@@ -325,7 +319,7 @@ public class World6Template extends World1Template {
             });
 
             animation3 = new PathTransition();
-            animation3.setNode(ghost2V);
+            animation3.setNode(ghost2V1);
             animation3.setDuration(Duration.seconds(5));
             animation3.setCycleCount(3);
             animation3.setPath(rectangle);
@@ -346,7 +340,7 @@ public class World6Template extends World1Template {
 
 
             animation4 = new PathTransition();
-            animation4.setNode(ghost4V);
+            animation4.setNode(ghost4V1);
             animation4.setDuration(Duration.seconds(5));
             animation4.setCycleCount(3);
             animation4.setPath(rectangle);
@@ -366,7 +360,7 @@ public class World6Template extends World1Template {
 
 
             animation5 = new PathTransition();
-            animation5.setNode(ghost5V);
+            animation5.setNode(ghost5V1);
             animation5.setDuration(Duration.seconds(5));
             animation5.setCycleCount(3);
             animation5.setPath(rectangle);
@@ -465,11 +459,11 @@ public class World6Template extends World1Template {
             ghost8V.setOnMouseEntered(event -> enteredGhost(event));
             ghost7V.setOnMouseEntered(e -> enteredGhost(e));
             ghost6V.setOnMouseEntered(e -> enteredGhost(e));
-            ghost5V.setOnMouseEntered(event -> enteredGhost(event));
-            ghost4V.setOnMouseEntered(event -> enteredGhost(event));
-            ghost2V.setOnMouseEntered(event -> enteredGhost(event));
-            ghost1V.setOnMouseEntered(e -> enteredGhost(e));
-            ghost3V.setOnMouseEntered(e -> enteredGhost(e));
+            ghost5V1.setOnMouseEntered(event -> enteredGhost(event));
+            ghost4V1.setOnMouseEntered(event -> enteredGhost(event));
+            ghost2V1.setOnMouseEntered(event -> enteredGhost(event));
+            ghost1V1.setOnMouseEntered(e -> enteredGhost(e));
+            ghost3V1.setOnMouseEntered(e -> enteredGhost(e));
 
 
         }
