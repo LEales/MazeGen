@@ -27,10 +27,18 @@ public class MazeGenerator {
     public MazeGenerator(int dim, boolean setGoalAndStart) {
         this.generateGoalAndStart = setGoalAndStart;
         maze = new Sprite[dim][dim];
+        maze = fillArray(maze);
         dimension = dim;
         generateMaze();
         createStartAndGoal();
         System.out.println(getRawMaze());
+    }
+
+    private Sprite[][] fillArray(Sprite[][] maze) {
+        for (Sprite[] sprites : maze) {
+            Arrays.fill(sprites, Sprite.Wall);
+        }
+        return maze;
     }
 
     public void generateMaze() {
