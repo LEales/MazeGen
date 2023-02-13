@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import model.PlayerScore;
+import model.Player;
 
 import java.io.*;
 
@@ -87,12 +87,12 @@ public class VictoryScreen extends Pane {
 
         String file = "files/ScoreList.dat";
         System.out.println(buildName());
-        PlayerScore playerToAdd = new PlayerScore(buildName(),totalTime, mainProgram.getLvlCleared());
-        PlayerScore[] scoreList = new PlayerScore[10];
-        PlayerScore player;
+        Player playerToAdd = new Player(buildName(),totalTime, mainProgram.getLvlCleared());
+        Player[] scoreList = new Player[10];
+        Player player;
         int counter = 0;
         try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))){
-            while((player = (PlayerScore)ois.readObject())!=null){
+            while((player = (Player)ois.readObject())!=null){
                 scoreList[counter] = player;
                 counter++;
             }
@@ -121,7 +121,7 @@ public class VictoryScreen extends Pane {
         return s;
     }
 
-    private PlayerScore[] insertNewPlayerToScorelist(int indexToChangePLayer, PlayerScore[] scoreList, PlayerScore playerToAdd) {
+    private Player[] insertNewPlayerToScorelist(int indexToChangePLayer, Player[] scoreList, Player playerToAdd) {
         if (indexToChangePLayer<=10) {
             for (int i = scoreList.length - 1; i >= indexToChangePLayer; i--) {
                 if (scoreList[i] != null) {
@@ -136,7 +136,7 @@ public class VictoryScreen extends Pane {
         return scoreList;
     }
 
-    private int findIndex(PlayerScore[] scoreList, int indexToChangePLayer, PlayerScore playerToAdd) {
+    private int findIndex(Player[] scoreList, int indexToChangePLayer, Player playerToAdd) {
         for (int i = scoreList.length-1; i >= 0 ; i--) {
             if (scoreList[i]!=null) {
                 System.out.println(scoreList[i].getPlayer()+" ---TIME: "+scoreList[i].getSeconds());
@@ -151,14 +151,14 @@ public class VictoryScreen extends Pane {
         return indexToChangePLayer;
     }
 
-    private void addToScoreList(PlayerScore[] scoreList, int counter, PlayerScore playerToAdd, String file) {
+    private void addToScoreList(Player[] scoreList, int counter, Player playerToAdd, String file) {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
 
             scoreList[counter] = playerToAdd;
             scoreList = sortList(scoreList);
 
-            for (PlayerScore current : scoreList) {
+            for (Player current : scoreList) {
                 if (current!=null) {
                     oos.writeObject(current);
                 }
@@ -171,10 +171,10 @@ public class VictoryScreen extends Pane {
         }
     }
 
-    private void addScore(PlayerScore[] scoreList, String file) {
+    private void addScore(Player[] scoreList, String file) {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-            for (PlayerScore score : scoreList) {
+            for (Player score : scoreList) {
                 if (score != null) {
                     oos.writeObject(score);
                 }
@@ -187,17 +187,17 @@ public class VictoryScreen extends Pane {
         }
     }
 
-    private PlayerScore[] sortList(PlayerScore[] scoreList) {
+    private Player[] sortList(Player[] scoreList) {
         for (int i = 0; i < scoreList.length; i++) {
             for (int j = i+1; j < scoreList.length; j++) {
                 if (scoreList[i]!=null && scoreList[j]!=null) {
                     if ((scoreList[i].getLvl() < scoreList[j].getLvl())){
-                        PlayerScore temp = scoreList[i];
+                        Player temp = scoreList[i];
                         scoreList[i] = scoreList[j];
                         scoreList[j] = temp;
                     }else if (scoreList[i].getLvl() == scoreList[j].getLvl()){
                         if (scoreList[i].getSeconds() > scoreList[j].getSeconds()){
-                            PlayerScore temp = scoreList[i];
+                            Player temp = scoreList[i];
                             scoreList[i] = scoreList[j];
                             scoreList[j] = temp;
                         }

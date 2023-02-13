@@ -145,7 +145,7 @@ class GenerateNextLevelTest {
      * @return True if the position is a valid connection between two nodes, otherwise false
      */
     private boolean road(int i, int j, Sprite[][] maze) {
-        return maze[i][j] == Sprite.Path || maze[i][j] == Sprite.Start || maze[i][j] == Sprite.Goal;
+        return maze[i][j] == Sprite.PATH || maze[i][j] == Sprite.START || maze[i][j] == Sprite.GOAL;
     }
 
     /**
@@ -182,7 +182,7 @@ class GenerateNextLevelTest {
     private Node end(Sprite[][] maze) {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
-                if (maze[i][j] == Sprite.Goal) {
+                if (maze[i][j] == Sprite.GOAL) {
                     return new Node(i, j);
                 }
             }
@@ -198,7 +198,7 @@ class GenerateNextLevelTest {
     private Node start(Sprite[][] maze) {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
-                if (maze[i][j] == Sprite.Start) {
+                if (maze[i][j] == Sprite.START) {
                     return new Node(i, j);
                 }
             }

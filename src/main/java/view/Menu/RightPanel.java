@@ -16,7 +16,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import model.TimeThread;
+import model.time.TimeThread;
 import view.AudioPlayer;
 
 import java.io.FileNotFoundException;

@@ -1,10 +1,8 @@
 package model.MazeGeneration;
 
-import control.MainProgram;
 import javafx.scene.layout.BorderPane;
 import model.Maps.Sprite;
 import view.Randomize.MapTemplate;
-import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;
 import java.util.Random;
@@ -17,27 +15,21 @@ import java.util.Random;
 public class GenerateNextLevel {
 
     private MazeGenerator mazeGenerator;
-    private BorderPane mainPane;
-    private MainProgram mainProgram;
-    private RightPanel rightPanel;
-    private int dimension;
+    private final BorderPane mainPane;
+    private final int dimension;
 
     /**
      * Initializes the objects.
      *
-     * @param mainProgram   Huvudprogrammet.
      * @param mainPane      En BorderPane.
      * @param mazeGenerator Klassen som genererar labyrinter.
-     * @param rightPanel    Panelen som visar information så som liv, tid, nivå osv.
      * @param dimension     Storleken på labyrinten som ska genereras.
      */
 
-    public GenerateNextLevel(MainProgram mainProgram, BorderPane mainPane, MazeGenerator mazeGenerator, RightPanel rightPanel, int dimension) {
+    public GenerateNextLevel(BorderPane mainPane, MazeGenerator mazeGenerator, int dimension) {
         this.dimension = dimension;
         this.mazeGenerator = mazeGenerator;
-        this.mainProgram = mainProgram;
         this.mainPane = mainPane;
-        this.rightPanel = rightPanel;
     }
 
     /**
@@ -53,15 +45,15 @@ public class GenerateNextLevel {
 
         for (int i = 0; i < currentMaze.length; i++) {
             for (int j = 0; j < currentMaze[i].length; j++) {
-                if (currentMaze[i][j] == Sprite.Goal) {
-                    nextMaze[i][j] = Sprite.Start;
-                } else if (currentMaze[i][j] == Sprite.Start) {
+                if (currentMaze[i][j] == Sprite.GOAL) {
+                    nextMaze[i][j] = Sprite.START;
+                } else if (currentMaze[i][j] == Sprite.START) {
                     col = j;
                 }
             }
         }
-        nextMaze[new Random().nextBoolean() ? 0 : nextMaze.length - 1][col] = Sprite.Goal;
-        mainPane.setCenter(new MapTemplate(checkStartAndGoalNeighbors(nextMaze), mainProgram, this));
+        nextMaze[new Random().nextBoolean() ? 0 : nextMaze.length - 1][col] = Sprite.GOAL;
+        mainPane.setCenter(new MapTemplate(checkStartAndGoalNeighbors(nextMaze), this));
         this.mazeGenerator = newMazegenerator;
     }
 
@@ -72,7 +64,7 @@ public class GenerateNextLevel {
      * @param maze Arrayen som ska granskas.
      * @return returnerar den modifierade arrayen.
      */
-    public Sprite[][] checkStartAndGoalNeighbors(Sprite[][] maze) {
+    private Sprite[][] checkStartAndGoalNeighbors(Sprite[][] maze) {
 
         int wallCounterStart = 0;
         int wallCounterGoal = 0;
@@ -80,16 +72,16 @@ public class GenerateNextLevel {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
 
-                if (maze[i][j] == Sprite.Start) {
+                if (Sprite.START == maze[i][j]) {
                     for (int offsetRow = i - 1; offsetRow <= i + 1; offsetRow++) {
                         for (int offsetCol = j - 1; offsetCol <= j + 1; offsetCol++) {
 
                             if ((offsetRow >= 0) && (offsetRow < maze.length)) {
 
                                 if ((offsetCol >= 0) && (offsetCol < maze[0].length)) {
-                                    if (maze[offsetRow][offsetCol] == Sprite.Wall) {
+                                    if (Sprite.WALL == maze[offsetRow][offsetCol]) {
                                         if ((i == 0) && (j == 0)) {
-                                            if ((offsetRow != 1 && offsetCol != 1) || (offsetRow != 1 && offsetCol != maze.length - 1) || (offsetRow != maze.length - 1 && offsetCol != 1) || (offsetRow != maze.length - 1 && offsetCol != maze.length - 1)) {
+                                            if (validate(1, offsetRow, offsetRow, offsetCol, maze)) {
                                                 wallCounterStart++;
                                             }
                                         }
@@ -98,8 +90,8 @@ public class GenerateNextLevel {
                                             for (int offsetCol2 = offsetCol - 1; offsetCol2 <= offsetCol + 1; offsetCol2++) {
                                                 if ((offsetRow2 >= 0) && (offsetRow2 < maze.length)) {
                                                     if ((offsetCol2 >= 0) && (offsetCol2 < maze[0].length)) {
-                                                        if (maze[offsetRow2][offsetCol2] == Sprite.Wall) {
-                                                            maze[offsetRow2][offsetCol2] = Sprite.Path;
+                                                        if (Sprite.WALL == maze[offsetRow2][offsetCol2]) {
+                                                            maze[offsetRow2][offsetCol2] = Sprite.PATH;
                                                         }
                                                     }
                                                 }
@@ -110,14 +102,14 @@ public class GenerateNextLevel {
                             }
                         }
                     }
-                } else if (maze[i][j] == Sprite.Goal) {
+                } else if (maze[i][j] == Sprite.GOAL) {
                     for (int offsetRow = i - 1; offsetRow <= i + 1; offsetRow++) {
                         for (int offsetCol = j - 1; offsetCol <= j + 1; offsetCol++) {
 
                             if ((offsetRow >= 0) && (offsetRow < maze.length)) {
                                 if ((offsetCol >= 0) && (offsetCol < maze[0].length)) {
-                                    if (maze[offsetRow][offsetCol] == Sprite.Wall) {
-                                        if ((offsetRow != 1 && offsetCol != 1) || (offsetRow != 1 && offsetCol != maze.length - 1) || (offsetRow != maze.length - 1 && offsetCol != 1) || (offsetRow != maze.length - 1 && offsetCol != maze.length - 1)) {
+                                    if (maze[offsetRow][offsetCol] == Sprite.WALL) {
+                                        if (validate(offsetRow, 1, offsetRow, offsetCol, maze)) {
                                             wallCounterGoal++;
                                         }
                                     } else if (wallCounterGoal >= 2) {
@@ -125,8 +117,8 @@ public class GenerateNextLevel {
                                             for (int offsetCol2 = offsetCol - 1; offsetCol2 <= offsetCol + 1; offsetCol2++) {
                                                 if ((offsetRow2 >= 0) && (offsetRow2 < maze.length)) {
                                                     if ((offsetCol2 >= 0) && (offsetCol2 < maze[0].length)) {
-                                                        if (maze[offsetRow2][offsetCol2] == Sprite.Wall) {
-                                                            maze[offsetRow2][offsetCol2] = Sprite.Path;
+                                                        if (maze[offsetRow2][offsetCol2] == Sprite.WALL) {
+                                                            maze[offsetRow2][offsetCol2] = Sprite.PATH;
                                                         }
                                                     }
                                                 }
@@ -141,6 +133,12 @@ public class GenerateNextLevel {
             }
         }
         return maze;
+    }
+
+    private boolean validate(int x, int offsetRow, int offsetRow1, int offsetCol, Sprite[][] maze) {
+        return (x != offsetRow && 1 != offsetCol) || (1 != offsetRow1 && offsetCol != maze.length - 1) ||
+                (offsetRow1 != maze.length - 1 && 1 != offsetCol) || (offsetRow1 != maze.length - 1 &&
+                offsetCol != maze.length - 1);
     }
 
     public MazeGenerator getMazeGenerator() {

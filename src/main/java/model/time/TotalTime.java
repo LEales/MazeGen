@@ -1,4 +1,6 @@
-package model;
+package model.time;
+
+import model.time.Time;
 
 /**
  * @author Sebastian Helin

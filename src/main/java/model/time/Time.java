@@ -1,4 +1,4 @@
-package model;
+package model.time;
 
 import java.io.Serial;
 import java.io.Serializable;

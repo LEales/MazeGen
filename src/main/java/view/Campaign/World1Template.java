@@ -1,6 +1,5 @@
 package view.Campaign;
 
-
 import control.MainProgram;
 import javafx.animation.FadeTransition;
 import javafx.scene.effect.Glow;
@@ -12,13 +11,14 @@ import javafx.scene.control.Label;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
 import model.Maps.Sprite;
-import model.TimeThread;
-import model.TotalTime;
+import model.World;
+import model.time.TimeThread;
 import view.AudioPlayer;
 import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author André Eklund
@@ -28,11 +28,11 @@ import java.util.ArrayList;
 public class World1Template extends GridPane {
 
 
-    private MainProgram mainProgram;
-    private Sprite[][] level;
-    private ArrayList<Label> collectibles = new ArrayList<>();
-    private ArrayList<Label> pickaxes = new ArrayList<>();
-    private MouseListener mouseListener = new MouseListener();
+    private final MainProgram mainProgram;
+    private final Sprite[][] level;
+    private final Collection<Label> collectibles = new ArrayList<>();
+    private final Collection<Label> pickaxes = new ArrayList<>();
+    private final EventHandler<MouseEvent> mouseListener = new MouseListener();
     private Image wall;
     private Image path;
     private Image border;
@@ -45,19 +45,19 @@ public class World1Template extends GridPane {
     private boolean allCollectiblesObtained;
     private boolean wallDestroyed;
     private int collectiblesObtained = 0;
-    private int squareSize;
-    private int currentLevel;
+    private final int squareSize;
+    private final int currentLevel;
     private int heartCrystals;
     private Image pickAxeImage;
     private boolean pickaxeObtained;
     private boolean gameStarted;
     private boolean startNotClickedOnce = true;
-    private boolean totalTimeStarted = false;
-    private int world;
-    private int seconds = 25;
+    private boolean totalTimeStarted = true;
+    private final World world;
+    private int seconds;
 
-    private RightPanel rightPanel;
-    private AudioPlayer audioPlayer;
+    private final RightPanel rightPanel;
+    private final AudioPlayer audioPlayer;
     private TimeThread time;
 
     /**
@@ -75,10 +75,10 @@ public class World1Template extends GridPane {
      */
 
     //Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
-    public World1Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int world, AudioPlayer audioPlayer, int seconds) throws FileNotFoundException {
+    public World1Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, World world, AudioPlayer audioPlayer, int seconds) throws FileNotFoundException {
         this.mainProgram = mainProgram;
         this.currentLevel = currentLevel;
-        this.level = level;
+        this.level = level.clone();
         this.heartCrystals = heartCrystals;
         this.seconds = seconds;
 
@@ -86,23 +86,21 @@ public class World1Template extends GridPane {
         this.rightPanel = rightPanel;
         this.audioPlayer = audioPlayer;
         this.world = world;
-        squareSize = 600 / (level.length + 2);
+        squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
         setBackground();
         setupImages(world);
         setupBorders();
         setupLevel();
         rightPanel.setSTARTTIME(seconds);
         rightPanel.resetTimerLabel();
-
-        time = null;
-
     }
 
     /**
      * Sätter bakgrunden i fönstret.
      */
     public void setBackground() {
-        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg", 800, 600, false, true),
+        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg",
+                MainProgram.WIDTH, MainProgram.HEIGHT, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(menuBackground));
@@ -111,7 +109,7 @@ public class World1Template extends GridPane {
     /**
      * Skapar en ram runt spelplanen.
      */
-    public void setupBorders() {
+    private void setupBorders() {
         for (int i = 0; i < level.length + 1; i++) {
             add(getBorders(), i, 0);
         }
@@ -130,29 +128,28 @@ public class World1Template extends GridPane {
      * Omvandlar värdena i arrayen av siffror till olika grafiska komponenter baserat på vilken siffra en position har.
      * Exempelvis så representerar 1:or väg, 0:or väggar, och 7:or hjärtan osv.
      */
-    public void setupLevel() {
-        for (int i = 0; i < level.length; i++) {
-            for (int j = 0; j < level.length; j++) {
-
-                if (level[i][j] == Sprite.Path) {
-                    add(getPath(), j + 1, i + 1);
-                } else if (level[i][j] == Sprite.Wall) {
-                    add(getWall(), j + 1, i + 1);
-                } else if (level[i][j] == Sprite.Start) {
-                    add(getStart(), j + 1, i + 1);
-                } else if (level[i][j] == Sprite.Goal) {
-                    add(getGoal(), j + 1, i + 1);
-                } else if (level[i][j] == Sprite.Collectible) {
-                    add(getPath(), j + 1, i + 1);
-                    add(addCollectible(), j + 1, i + 1);
-                } else if (level[i][j] == Sprite.Axe) {
-                    add(getPath(), j + 1, i + 1);
-                    add(addPickAxe(), j + 1, i + 1);
-                } else if (level[i][j] == Sprite.BreakableWall) {
-                    add(getBreakableWall(), j + 1, i + 1);
-                } else if (level[i][j] == Sprite.Heart) {
-                    add(getPath(), j + 1, i + 1);
-                    add(addHeartCrystal(), j + 1, i + 1);
+    private void setupLevel() {
+        for (int i = 1; i < level.length+1; i++) {
+            for (int j = 1; j < level.length+1; j++) {
+                switch (level[i-1][j-1]) {
+                    case PATH -> add(getPath(), j, i);
+                    case WALL -> add(getWall(), j, i);
+                    case START -> add(getStart(), j, i);
+                    case GOAL -> add(getGoal(), j, i);
+                    case COLLECTIBLE -> {
+                        add(getPath(), j, i);
+                        add(addCollectible(), j, i);
+                    }
+                    case AXE -> {
+                        add(getPath(), j, i);
+                        add(addPickAxe(), j, i);
+                    }
+                    case BREAKABLE_WALL -> add(getBreakableWall(), j, i);
+                    case HEART -> {
+                        add(getPath(), j, i);
+                        add(addHeartCrystal(), j, i);
+                    }
+                    default -> throw new IllegalStateException("Unexpected value: " + level[i-1][j-1]);
                 }
             }
         }
@@ -162,40 +159,24 @@ public class World1Template extends GridPane {
      * Instansierar de olika bilderna som används som grafik inuti spelet.
      * Baserad på value så sätts bilderna till en specifik folder per värld.
      *
-     * @param value Den aktuella världen.
+     * @param world Den aktuella världen.
      */
-    public void setupImages(int value) {
+    public void setupImages(World world) {
 
-        String folder = "";
-
-        if (value == 0) {
-            folder = "forest";
-        } else if (value == 1) {
-            folder = "underground";
-        } else if (value == 2) {
-            folder = "lava";
-        } else if (value == 3) {
-            folder = "cloud";
-        } else if (value == 4) {
-            folder = "desert";
-        } else if (value == 5) {
-            folder = "space";
-        }
-
-        path = new Image("file:files/" + folder + "/path.png", squareSize, squareSize, false, false);
-        goal = new Image("file:files/" + folder + "/goal.png", squareSize, squareSize, false, false);
-        diamond = new Image("file:files/" + folder + "/collectible.png", squareSize, squareSize, false, false);
-        start = new Image("file:files/" + folder + "/start.png", squareSize, squareSize, false, false);
+        path = new Image("file:files/" + world + "/path.png", squareSize, squareSize, false, false);
+        goal = new Image("file:files/" + world + "/goal.png", squareSize, squareSize, false, false);
+        diamond = new Image("file:files/" + world + "/collectible.png", squareSize, squareSize, false, false);
+        start = new Image("file:files/" + world + "/start.png", squareSize, squareSize, false, false);
         pickAxeImage = new Image("file:files/items/pickaxe.png", squareSize, squareSize, false, false);
         heart = new Image("file:files/items/heart.png", squareSize, squareSize, false, false);
-        if (value == 3) {
+        if (World.CLOUD == world) {
             breakableWall = new Image("file:files/cloud/breakablewall.png", squareSize, squareSize, false, false);
         } else {
             breakableWall = new Image("file:files/breakablewall.png", squareSize, squareSize, false, false);
         }
-        if (value != 5) {
-            border = new Image("file:files/" + folder + "/border.png", squareSize, squareSize, false, false);
-            wall = new Image("file:files/" + folder + "/wall.png", squareSize, squareSize, false, false);
+        if (World.SPACE != world) {
+            border = new Image("file:files/" + world + "/border.png", squareSize, squareSize, false, false);
+            wall = new Image("file:files/" + world + "/wall.png", squareSize, squareSize, false, false);
         }
     }
 
@@ -301,7 +282,7 @@ public class World1Template extends GridPane {
      *
      * @return Returnerar en label.
      */
-    public Label addCollectible() {
+    private Label addCollectible() {
         Label collectible = new Label();
         ImageView borderView = new ImageView(diamond);
         borderView.setFitHeight(squareSize);
@@ -321,7 +302,7 @@ public class World1Template extends GridPane {
      *
      * @return Returnerar en label.
      */
-    public Label addHeartCrystal() {
+    private Label addHeartCrystal() {
         Label heartCrystal = new Label();
         ImageView borderView = new ImageView(heart);
         borderView.setFitHeight(squareSize);
@@ -350,9 +331,8 @@ public class World1Template extends GridPane {
         if (startButtonPressed) {
             audioPlayer.playHeartSound();
             label.setVisible(false);
-            if (heartCrystals < 3) {
-                heartCrystals++;
-                rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
+            if (3 > heartCrystals) {
+                rightPanel.changeHeartCounter(String.valueOf(++heartCrystals));
             }
         }
     }
@@ -362,7 +342,7 @@ public class World1Template extends GridPane {
      *
      * @return Returnerar en label.
      */
-    public Label addPickAxe() {
+    private Label addPickAxe() {
         Label pickAxe = new Label();
         ImageView borderView = new ImageView(pickAxeImage);
         borderView.setFitHeight(squareSize);
@@ -389,16 +369,13 @@ public class World1Template extends GridPane {
         FadeTransition fade = new FadeTransition();
         fade.setNode(label);
         fade.setDuration(Duration.seconds(0.3));
-        fade.setFromValue(10);
+        fade.setFromValue(10.0);
         fade.setToValue(0.6);
         fade.play();
 
         if (startButtonPressed) {
-
-            heartCrystals--;
-            rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
-
-            if (heartCrystals == 0) {
+            rightPanel.changeHeartCounter(String.valueOf(--heartCrystals));
+            if (0 == heartCrystals) {
                 gameOver();
             }
             audioPlayer.playDeathSound();
@@ -427,10 +404,8 @@ public class World1Template extends GridPane {
         if (startButtonPressed) {
             audioPlayer.playMobSound();
             audioPlayer.playDeathSound();
-            heartCrystals--;
-            rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
-
-            if (heartCrystals == 0) {
+            rightPanel.changeHeartCounter(String.valueOf(--heartCrystals));
+            if (0 == heartCrystals) {
                 gameOver();
             }
             startButtonPressed = false;
@@ -458,7 +433,7 @@ public class World1Template extends GridPane {
      * @throws FileNotFoundException
      * @throws InterruptedException
      */
-    public void enteredGoal() throws FileNotFoundException, InterruptedException {
+    private void enteredGoal() throws FileNotFoundException, InterruptedException {
         if (startButtonPressed && allCollectiblesObtained) {
             audioPlayer.stopClockSound();
             audioPlayer.playGoalSound();
@@ -477,29 +452,22 @@ public class World1Template extends GridPane {
      * @throws FileNotFoundException
      * @throws InterruptedException
      */
-    public void nextLevel() throws FileNotFoundException, InterruptedException {
-
-        if (world == 0) {
-            mainProgram.nextWorld1Level(currentLevel, heartCrystals);
-        } else if (world == 1) {
-            mainProgram.nextWorld2Level(currentLevel, heartCrystals);
-        } else if (world == 2) {
-            mainProgram.nextWorld3Level(currentLevel, heartCrystals);
-        } else if (world == 3) {
-            mainProgram.nextWorld4Level(currentLevel, heartCrystals);
-        } else if (world == 4) {
-            mainProgram.nextWorld5Level(currentLevel, heartCrystals);
-        } else if (world == 5) {
-            mainProgram.nextWorld6Level(currentLevel, heartCrystals);
+    private void nextLevel() throws FileNotFoundException, InterruptedException {
+        switch (world) {
+            case FOREST -> mainProgram.nextWorld1Level(currentLevel, heartCrystals);
+            case UNDERGROUND -> mainProgram.nextWorld2Level(currentLevel, heartCrystals);
+            case LAVA -> mainProgram.nextWorld3Level(currentLevel, heartCrystals);
+            case CLOUD -> mainProgram.nextWorld4Level(currentLevel, heartCrystals);
+            case DESERT -> mainProgram.nextWorld5Level(currentLevel, heartCrystals);
+            case SPACE -> mainProgram.nextWorld6Level(currentLevel, heartCrystals);
         }
     }
 
     /**
      * Startar spelrundan och timern.
      */
-    public void startLevel() {
-
-        if (!totalTimeStarted) {
+    private void startLevel() {
+        if (totalTimeStarted) {
             rightPanel.startTotalTimer();
             rightPanel.setTimerIsStarted(true);
         }
@@ -518,7 +486,7 @@ public class World1Template extends GridPane {
             time.start();
 
         }
-        totalTimeStarted = true;
+        totalTimeStarted = false;
         startNotClickedOnce = false;
         audioPlayer.playStartSound();
         startButtonPressed = true;
@@ -529,7 +497,7 @@ public class World1Template extends GridPane {
      *
      * @param e Används för att hitta rätt label.
      */
-    public void exitedLabel(MouseEvent e) {
+    private void exitedLabel(MouseEvent e) {
         Label label = (Label) e.getSource();
         FadeTransition fade = new FadeTransition();
         fade.setNode(label);
@@ -545,7 +513,7 @@ public class World1Template extends GridPane {
      *
      * @param e Används för att hitta rätt label.
      */
-    public void enteredBreakableWall(MouseEvent e) {
+    private void enteredBreakableWall(MouseEvent e) {
 
         Label label = (Label) e.getSource();
         ImageView pathView = new ImageView(path);
@@ -567,11 +535,9 @@ public class World1Template extends GridPane {
      * En listener som körs när spelaren plockar upp en collectible eller en yxa.
      */
     private class MouseListener implements EventHandler<MouseEvent> {
-
         @Override
         public void handle(MouseEvent e) {
             if (startButtonPressed) {
-
                 for (Label label : pickaxes) {
                     if (e.getSource() == label) {
                         audioPlayer.playPickAxeSound();

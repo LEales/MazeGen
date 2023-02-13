@@ -137,14 +137,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import javafx.scene.paint.Color;
 &nbsp;import javafx.scene.text.Font;
 &nbsp;import javafx.util.Duration;
-&nbsp;import model.TimeThread;
+&nbsp;import model.time.TimeThread;
 &nbsp;import view.AudioPlayer;
 &nbsp;
 &nbsp;import java.io.FileNotFoundException;
 &nbsp;
 &nbsp;/**
-&nbsp; * @author Filip Örnling
-&nbsp; * @edit Viktor Näslund, Sebastian Helin
+&nbsp; * @author Filip ï¿½rnling
+&nbsp; * @edit Viktor Nï¿½slund, Sebastian Helin
 &nbsp; */
 &nbsp;
 &nbsp;public class RightPanel extends GridPane {
@@ -195,11 +195,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Instansierar objekten och lägger till bilder och labels på scenen
+&nbsp;     * Instansierar objekten och lï¿½gger till bilder och labels pï¿½ scenen
 &nbsp;     * @param mainProgram Huvudprogrammet
-&nbsp;     * @param gameMode Kollar ifall användaren valt randomized eller kampanjläge
+&nbsp;     * @param gameMode Kollar ifall anvï¿½ndaren valt randomized eller kampanjlï¿½ge
 &nbsp;     * @param audioPlayer Klass som spelar upp ljud &amp; musik
-&nbsp;     * @param time En tråd som räknar hur många sekunder spelaren har på sig
+&nbsp;     * @param time En trï¿½d som rï¿½knar hur mï¿½nga sekunder spelaren har pï¿½ sig
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     */
 <b class="fc">&nbsp;    public RightPanel(MainProgram mainProgram, String gameMode, AudioPlayer audioPlayer, TimeThread time) throws FileNotFoundException {</b>
@@ -271,7 +271,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Slår på/av spelljud
+&nbsp;     * Slï¿½r pï¿½/av spelljud
 &nbsp;     */
 &nbsp;    public void soundLabelClicked(){
 <b class="nc">&nbsp;        if(soundOn){</b>
@@ -287,7 +287,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        soundLabel.setGraphic(soundView);</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Slår på/av musik
+&nbsp;     * Slï¿½r pï¿½/av musik
 &nbsp;     */
 &nbsp;    public void musicLabelClicked(){
 <b class="nc">&nbsp;        if(musicOn){</b>
@@ -307,7 +307,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        return musicOn;</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Sätter en ny bild beroende på om man plockar upp/tappar ett liv
+&nbsp;     * Sï¿½tter en ny bild beroende pï¿½ om man plockar upp/tappar ett liv
 &nbsp;     * @param number
 &nbsp;     */
 &nbsp;    public void changeHeartCounter(String number){
@@ -316,19 +316,19 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        heartLabel.setGraphic(currentHeartView);</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Sätter bilden på yxan i en label
+&nbsp;     * Sï¿½tter bilden pï¿½ yxan i en label
 &nbsp;     */
 &nbsp;    public void addPickaxe(){
 <b class="nc">&nbsp;        pickaxeLabel.setGraphic(pickaxeView);</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Tar bort yxan när man plcokat upp den
+&nbsp;     * Tar bort yxan nï¿½r man plcokat upp den
 &nbsp;     */
 &nbsp;    public void removePickaxe(){
 <b class="nc">&nbsp;        pickaxeLabel.setGraphic(emptyView);</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Byter bild beroende vilken nivå man befinner sig på
+&nbsp;     * Byter bild beroende vilken nivï¿½ man befinner sig pï¿½
 &nbsp;     * @param number
 &nbsp;     */
 &nbsp;    public void changeLevelCounter(String number){
@@ -357,7 +357,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        timeline.playFromStart();</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Pausar klockan vid avancemang till ny nivå
+&nbsp;     * Pausar klockan vid avancemang till ny nivï¿½
 &nbsp;     */
 &nbsp;    public void pauseClock(){
 <b class="nc">&nbsp;        seconds = timeSeconds.getValue().intValue();</b>
@@ -367,14 +367,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        timeline = null;</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Sätter tiden som visuella klockan ska visa
+&nbsp;     * Sï¿½tter tiden som visuella klockan ska visa
 &nbsp;     * @param timesec
 &nbsp;     */
 &nbsp;    public void setTheTime(int timesec){
 <b class="nc">&nbsp;        timeSeconds.set(timesec);</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Kör igång klockan när spelaren trycker på startknappen
+&nbsp;     * Kï¿½r igï¿½ng klockan nï¿½r spelaren trycker pï¿½ startknappen
 &nbsp;     */
 &nbsp;    public void resumeClock(){
 <b class="nc">&nbsp;        timeSeconds.set(STARTTIME);</b>
@@ -386,15 +386,15 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * En setter som finns i varje maptemplate för att bestämma antal sekunder spelaren
-&nbsp;     * har på sig
+&nbsp;     * En setter som finns i varje maptemplate fï¿½r att bestï¿½mma antal sekunder spelaren
+&nbsp;     * har pï¿½ sig
 &nbsp;     * @param STARTTIME
 &nbsp;     */
 &nbsp;    public void setSTARTTIME(Integer STARTTIME) {
 <b class="nc">&nbsp;        RightPanel.STARTTIME = STARTTIME;</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Startar en tråd som räknar den totala tiden
+&nbsp;     * Startar en trï¿½d som rï¿½knar den totala tiden
 &nbsp;     */
 &nbsp;    public void startTotalTimer(){
 &nbsp;        /*if (!timerIsStartedOnce) {
@@ -406,7 +406,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        }*/
 <b class="nc">&nbsp;    }</b>
 &nbsp;    /**
-&nbsp;     * Startar en task för Game Over
+&nbsp;     * Startar en task fï¿½r Game Over
 &nbsp;     */
 &nbsp;    public void startTask(){
 <b class="nc">&nbsp;        timer = null;</b>
@@ -415,7 +415,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        timer.start();</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Tasks run-metod som sätter den totala tiden det tog att spela
+&nbsp;     * Tasks run-metod som sï¿½tter den totala tiden det tog att spela
 &nbsp;     * Pausar musik &amp; visar Game Over texten
 &nbsp;     */
 &nbsp;    public void gameIsOver(){
@@ -447,28 +447,28 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        return task;</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Setter för Tråden att veta när det blir GameOver
+&nbsp;     * Setter fï¿½r Trï¿½den att veta nï¿½r det blir GameOver
 &nbsp;     * @param b
 &nbsp;     */
 &nbsp;    public void setGameOver(boolean b) {
 &nbsp;        //return totTime.setGameOver(b);
 <b class="nc">&nbsp;    }</b>
 &nbsp;    /**
-&nbsp;     * Setter för att kontrollera om tiden har startat
+&nbsp;     * Setter fï¿½r att kontrollera om tiden har startat
 &nbsp;     * @param timerIsStartedOnce
 &nbsp;     */
 &nbsp;    public void setTimerIsStarted(boolean timerIsStartedOnce) {
 <b class="nc">&nbsp;        this.timerIsStartedOnce = timerIsStartedOnce;</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Om spelaren har 5 sekunder kvar kallas denna metod från tråden
+&nbsp;     * Om spelaren har 5 sekunder kvar kallas denna metod frï¿½n trï¿½den
 &nbsp;     */
 &nbsp;    public void fiveSecLeft() {
 <b class="nc">&nbsp;        audioPlayer.playTimeLeftSound();</b>
 <b class="nc">&nbsp;        timerLabel.setStyle(&quot;-fx-text-fill: red;&quot;);</b>
 &nbsp;    }
 &nbsp;    /**
-&nbsp;     * Nollställer textens färg till vit och stoppar klockljudet
+&nbsp;     * Nollstï¿½ller textens fï¿½rg till vit och stoppar klockljudet
 &nbsp;     */
 &nbsp;    public void resetTimerLabel(){
 <b class="nc">&nbsp;        timerLabel.setStyle(&quot;-fx-text-fill: white;&quot;);</b>

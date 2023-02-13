@@ -113,8 +113,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import javafx.scene.control.Label;
 &nbsp;import javafx.event.EventHandler;
 &nbsp;import javafx.util.Duration;
-&nbsp;import model.TimeThread;
-&nbsp;import model.TotalTime;
+&nbsp;import model.time.TimeThread;
+&nbsp;import model.time.TotalTime;
 &nbsp;import view.AudioPlayer;
 &nbsp;import view.Menu.RightPanel;
 &nbsp;
@@ -122,8 +122,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import java.util.ArrayList;
 &nbsp;
 &nbsp;/**
-&nbsp; * @author André Eklund
-&nbsp; * @edit Filip Örnling, Sebastian Helin, Viktor Näslund
+&nbsp; * @author Andrï¿½ Eklund
+&nbsp; * @edit Filip ï¿½rnling, Sebastian Helin, Viktor Nï¿½slund
 &nbsp; */
 &nbsp;
 &nbsp;public class World1Template extends GridPane {
@@ -164,14 +164,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    /**
 &nbsp;     * Instansierar objekten.
 &nbsp;     *
-&nbsp;     * @param level         Den array som sedan omvandlas till en nivå inuti spelet.
-&nbsp;     * @param currentLevel  Den aktuella nivån
+&nbsp;     * @param level         Den array som sedan omvandlas till en nivï¿½ inuti spelet.
+&nbsp;     * @param currentLevel  Den aktuella nivï¿½n
 &nbsp;     * @param heartCrystals Spelarens liv.
 &nbsp;     * @param mainProgram   Huvudprogrammet.
-&nbsp;     * @param rightPanel    Panelen som visar information så som liv, tid, nivå osv.
-&nbsp;     * @param world         Används för att sätta rätt grafik på världen.
-&nbsp;     * @param audioPlayer   Används för att spela upp ljud inne i spelet.
-&nbsp;     * @param seconds       Tidsbegränsningen för varje bana.
+&nbsp;     * @param rightPanel    Panelen som visar information sï¿½ som liv, tid, nivï¿½ osv.
+&nbsp;     * @param world         Anvï¿½nds fï¿½r att sï¿½tta rï¿½tt grafik pï¿½ vï¿½rlden.
+&nbsp;     * @param audioPlayer   Anvï¿½nds fï¿½r att spela upp ljud inne i spelet.
+&nbsp;     * @param seconds       Tidsbegrï¿½nsningen fï¿½r varje bana.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     */
 &nbsp;
@@ -200,7 +200,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Sätter bakgrunden i fönstret.
+&nbsp;     * Sï¿½tter bakgrunden i fï¿½nstret.
 &nbsp;     */
 &nbsp;    public void setBackground() {
 <b class="nc">&nbsp;        BackgroundImage menuBackground = new BackgroundImage(new Image(&quot;file:files/MenuBackground.jpg&quot;, 800, 600, false, true),</b>
@@ -228,8 +228,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Omvandlar värdena i arrayen av siffror till olika grafiska komponenter baserat på vilken siffra en position har.
-&nbsp;     * Exempelvis så representerar 1:or väg, 0:or väggar, och 7:or hjärtan osv.
+&nbsp;     * Omvandlar vï¿½rdena i arrayen av siffror till olika grafiska komponenter baserat pï¿½ vilken siffra en position har.
+&nbsp;     * Exempelvis sï¿½ representerar 1:or vï¿½g, 0:or vï¿½ggar, och 7:or hjï¿½rtan osv.
 &nbsp;     */
 &nbsp;    public void setupLevel() {
 <b class="nc">&nbsp;        for (int i = 0; i &lt; level.length; i++) {</b>
@@ -260,10 +260,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Instansierar de olika bilderna som används som grafik inuti spelet.
-&nbsp;     * Baserad på value så sätts bilderna till en specifik folder per värld.
+&nbsp;     * Instansierar de olika bilderna som anvï¿½nds som grafik inuti spelet.
+&nbsp;     * Baserad pï¿½ value sï¿½ sï¿½tts bilderna till en specifik folder per vï¿½rld.
 &nbsp;     *
-&nbsp;     * @param value Den aktuella världen.
+&nbsp;     * @param value Den aktuella vï¿½rlden.
 &nbsp;     */
 &nbsp;    public void setupImages(int value) {
 &nbsp;
@@ -301,7 +301,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * En metod som skapar ett objekt av label som representerar en vägg.
+&nbsp;     * En metod som skapar ett objekt av label som representerar en vï¿½gg.
 &nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
@@ -317,7 +317,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * En metod som skapar ett objekt av label som representerar en väg.
+&nbsp;     * En metod som skapar ett objekt av label som representerar en vï¿½g.
 &nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
@@ -347,7 +347,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * En metod som skapar ett objekt av label som representerar en förstörbar vägg.
+&nbsp;     * En metod som skapar ett objekt av label som representerar en fï¿½rstï¿½rbar vï¿½gg.
 &nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
@@ -362,7 +362,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * En metod som skapar ett objekt av label som representerar ett mål.
+&nbsp;     * En metod som skapar ett objekt av label som representerar ett mï¿½l.
 &nbsp;     *
 &nbsp;     * @return Returnerar en label.
 &nbsp;     */
@@ -438,10 +438,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * När en användare vidrör en label av typen heartCrystal körs denna metod.
-&nbsp;     * Om spelaren har mindre än tre återstående liv inkrementeras variabeln heartCrystals.
+&nbsp;     * Nï¿½r en anvï¿½ndare vidrï¿½r en label av typen heartCrystal kï¿½rs denna metod.
+&nbsp;     * Om spelaren har mindre ï¿½n tre ï¿½terstï¿½ende liv inkrementeras variabeln heartCrystals.
 &nbsp;     *
-&nbsp;     * @param e Används för att hitta rätt label.
+&nbsp;     * @param e Anvï¿½nds fï¿½r att hitta rï¿½tt label.
 &nbsp;     */
 &nbsp;
 &nbsp;    private void heartCrystalObtained(MouseEvent e) {
@@ -479,11 +479,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Om en spelare vidrör en vägg med muspekaren körs denna metod.
-&nbsp;     * Om spelrundan är aktiverad förlorar spelaren ett liv.
-&nbsp;     * Om spelaren endast har ett återstående liv kvar vid kollisionen körs metoden gameOver.
+&nbsp;     * Om en spelare vidrï¿½r en vï¿½gg med muspekaren kï¿½rs denna metod.
+&nbsp;     * Om spelrundan ï¿½r aktiverad fï¿½rlorar spelaren ett liv.
+&nbsp;     * Om spelaren endast har ett ï¿½terstï¿½ende liv kvar vid kollisionen kï¿½rs metoden gameOver.
 &nbsp;     *
-&nbsp;     * @param e Används för att hitta rätt label.
+&nbsp;     * @param e Anvï¿½nds fï¿½r att hitta rï¿½tt label.
 &nbsp;     */
 &nbsp;    public void enteredWall(MouseEvent e) {
 <b class="nc">&nbsp;        Label label = (Label) e.getSource();</b>
@@ -508,9 +508,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Om en spelare vidrör ett spöke med muspekaren körs denna metod.
-&nbsp;     * Om spelrundan är aktiverad förlorar spelaren ett liv.
-&nbsp;     * Om spelaren endast har ett återstående liv kvar vid kollisionen körs metoden gameOver.
+&nbsp;     * Om en spelare vidrï¿½r ett spï¿½ke med muspekaren kï¿½rs denna metod.
+&nbsp;     * Om spelrundan ï¿½r aktiverad fï¿½rlorar spelaren ett liv.
+&nbsp;     * Om spelaren endast har ett ï¿½terstï¿½ende liv kvar vid kollisionen kï¿½rs metoden gameOver.
 &nbsp;     *
 &nbsp;     * @param e
 &nbsp;     */
@@ -539,7 +539,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Avslutar spelrundan och kör metoden gameOver i mainProgram.
+&nbsp;     * Avslutar spelrundan och kï¿½r metoden gameOver i mainProgram.
 &nbsp;     */
 &nbsp;    private void gameOver() {
 <b class="nc">&nbsp;        audioPlayer.playGameOverSound();</b>
@@ -554,7 +554,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Om spelrundan är aktiverad och spelaren har plockat upp alla collectibles startas nästa nivå.
+&nbsp;     * Om spelrundan ï¿½r aktiverad och spelaren har plockat upp alla collectibles startas nï¿½sta nivï¿½.
 &nbsp;     *
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -573,7 +573,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Baserad på den aktuella världen väljer programmmet vilken nivå som ska spelas.
+&nbsp;     * Baserad pï¿½ den aktuella vï¿½rlden vï¿½ljer programmmet vilken nivï¿½ som ska spelas.
 &nbsp;     *
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -626,9 +626,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * När muspekaren lämnar en label slutar den att highlightas.
+&nbsp;     * Nï¿½r muspekaren lï¿½mnar en label slutar den att highlightas.
 &nbsp;     *
-&nbsp;     * @param e Används för att hitta rätt label.
+&nbsp;     * @param e Anvï¿½nds fï¿½r att hitta rï¿½tt label.
 &nbsp;     */
 &nbsp;    public void exitedLabel(MouseEvent e) {
 <b class="nc">&nbsp;        Label label = (Label) e.getSource();</b>
@@ -641,10 +641,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Om spelrundan är startad och spelaren har plockat upp en yxa går det att förstöra väggen.
-&nbsp;     * Om spelrundan är startad och spelaren inte plockat upp en yxa förlorar hen ett liv vid kollision med väggen.
+&nbsp;     * Om spelrundan ï¿½r startad och spelaren har plockat upp en yxa gï¿½r det att fï¿½rstï¿½ra vï¿½ggen.
+&nbsp;     * Om spelrundan ï¿½r startad och spelaren inte plockat upp en yxa fï¿½rlorar hen ett liv vid kollision med vï¿½ggen.
 &nbsp;     *
-&nbsp;     * @param e Används för att hitta rätt label.
+&nbsp;     * @param e Anvï¿½nds fï¿½r att hitta rï¿½tt label.
 &nbsp;     */
 &nbsp;    public void enteredBreakableWall(MouseEvent e) {
 &nbsp;
@@ -665,7 +665,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * En listener som körs när spelaren plockar upp en collectible eller en yxa.
+&nbsp;     * En listener som kï¿½rs nï¿½r spelaren plockar upp en collectible eller en yxa.
 &nbsp;     */
 <b class="nc">&nbsp;    private class MouseListener implements EventHandler&lt;MouseEvent&gt; {</b>
 &nbsp;

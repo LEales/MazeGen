@@ -3,9 +3,9 @@ package view;
 import control.MainProgram;
 import javafx.application.Application;
 import javafx.application.Platform;
+import model.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import model.PlayerScore;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -70,10 +70,10 @@ class VictoryScreenTest {
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("files/ScoreList.dat"))) {
             Object o;
-            int[] expected = {66, 62, 61, 54, 51, 41, 41, 31, 21, 11};
+            int[] expected = {65, 62, 61, 54, 51, 41, 41, 31, 21, 11};
             int i = 0;
             while ((o = ois.readObject()) != null) {
-                PlayerScore ps = (PlayerScore) o;
+                Player ps = (Player) o;
                 assertEquals(expected[i++], ps.getLvl());
             }
         } catch (Exception e) {
@@ -122,7 +122,7 @@ class VictoryScreenTest {
             int[] expected = {1, 1230, 4830, 8430, 12030, 19230, 22830, 26430, 30030, 33630};
             int i = 0;
             while ((o = ois.readObject()) != null) {
-                PlayerScore ps = (PlayerScore) o;
+                Player ps = (Player) o;
                 assertEquals(expected[i++], ps.getSeconds());
             }
         } catch (Exception e) {
@@ -162,27 +162,27 @@ class VictoryScreenTest {
         }
         MainProgram mp = MainProgram.getMainProgram();
         v = mp.getVictoryScreen();
-        PlayerScore[] ps = new PlayerScore[]{new PlayerScore("A", 0, 11),
-                new PlayerScore("B", 0, 21),
-                new PlayerScore("C", 0, 13),
-                new PlayerScore("C", 0, 12),
-                new PlayerScore("C", 0, 21),
-                new PlayerScore("C", 0, 41),
-                new PlayerScore("C", 0, 31),
-                new PlayerScore("C", 0, 0),
+        Player[] ps = new Player[]{new Player("A", 0, 11),
+                new Player("B", 0, 21),
+                new Player("C", 0, 13),
+                new Player("C", 0, 12),
+                new Player("C", 0, 21),
+                new Player("C", 0, 41),
+                new Player("C", 0, 31),
+                new Player("C", 0, 0),
         };
         //int[] expected = new int[]{0, 11, 12, 13, 21, 21, 31, 41};
         int[] expected = new int[]{41, 31, 21, 21, 13, 12, 11, 0};
         Method sort;
         try {
-            sort = VictoryScreen.class.getDeclaredMethod("sortList", PlayerScore[].class);
+            sort = VictoryScreen.class.getDeclaredMethod("sortList", Player[].class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
         sort.setAccessible(true);
-        PlayerScore[] sorted;
+        Player[] sorted;
         try {
-            sorted = (PlayerScore[]) sort.invoke(v, (Object) ps);
+            sorted = (Player[]) sort.invoke(v, (Object) ps);
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
@@ -202,27 +202,27 @@ class VictoryScreenTest {
         }
         MainProgram mp = MainProgram.getMainProgram();
         v = mp.getVictoryScreen();
-        PlayerScore[] ps = new PlayerScore[]{new PlayerScore("A", 20, 0),
-                new PlayerScore("B", 20, 0),
-                new PlayerScore("C", 19, 0),
-                new PlayerScore("C", 17, 0),
-                new PlayerScore("C", 18, 0),
-                new PlayerScore("C", 17, 0),
-                new PlayerScore("C", 21, 0),
-                new PlayerScore("C", 15, 0),
+        Player[] ps = new Player[]{new Player("A", 20, 0),
+                new Player("B", 20, 0),
+                new Player("C", 19, 0),
+                new Player("C", 17, 0),
+                new Player("C", 18, 0),
+                new Player("C", 17, 0),
+                new Player("C", 21, 0),
+                new Player("C", 15, 0),
         };
         //int[] expected = new int[]{0, 11, 12, 13, 21, 21, 31, 41};
         int[] expected = new int[]{15, 17, 17, 18, 19, 20, 20, 21};
         Method sort;
         try {
-            sort = VictoryScreen.class.getDeclaredMethod("sortList", PlayerScore[].class);
+            sort = VictoryScreen.class.getDeclaredMethod("sortList", Player[].class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
         sort.setAccessible(true);
-        PlayerScore[] sorted;
+        Player[] sorted;
         try {
-            sorted = (PlayerScore[]) sort.invoke(v, (Object) ps);
+            sorted = (Player[]) sort.invoke(v, (Object) ps);
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }

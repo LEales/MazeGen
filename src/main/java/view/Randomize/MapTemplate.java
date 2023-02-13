@@ -67,8 +67,8 @@ public class MapTemplate extends GridPane {
     /**
      * Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
      */
-    public MapTemplate(Sprite[][] level, MainProgram mainProgram, GenerateNextLevel generateNextLevel) throws FileNotFoundException {
-        this.mainProgram = mainProgram;
+    public MapTemplate(Sprite[][] level, GenerateNextLevel generateNextLevel) throws FileNotFoundException {
+        this.mainProgram = MainProgram.getMainProgram();
         this.level = level;
         this.generateNextLevel = generateNextLevel;
 
@@ -112,19 +112,19 @@ public class MapTemplate extends GridPane {
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level.length; j++) {
 
-                if (level[i][j] == Sprite.Path) {
+                if (level[i][j] == Sprite.PATH) {
                     add(getPath(),j + 1,i + 1);
                     if (new Random().nextInt(5) == 4) {
                         add(addCollectible(),j + 1,i + 1);
                     }
                 }
-                else if (level[i][j] == Sprite.Wall){
+                else if (level[i][j] == Sprite.WALL){
                     add(getWall(),j + 1,i + 1);
                 }
-                else if (level[i][j] == Sprite.Start){
+                else if (level[i][j] == Sprite.START){
                     add(getStart(),j + 1,i + 1);
                 }
-                else if (level[i][j] == Sprite.Goal){
+                else if (level[i][j] == Sprite.GOAL){
                     add(getGoal(),j + 1,i + 1);
                 }
             }
@@ -289,6 +289,7 @@ public class MapTemplate extends GridPane {
             goalPlayer.play();
             goalPlayer.seek(Duration.ZERO);
             generateNextLevel.generateNewMaze();
+
         }
     }
     /**

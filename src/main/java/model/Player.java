@@ -1,26 +1,30 @@
 package model;
 
+import model.time.Time;
+
 import java.io.Serializable;
 
-public class PlayerScore implements Serializable {
+public class Player implements Serializable {
+
+    public static final long serialVersionUID = 3482904832L;
     private String player = "";
-    private Time time;
-    private int lvl;
+    private final Time time;
+    private final int lvl;
 
 
-    public PlayerScore(String player, Time time, int lvlCleared) {
+    public Player(String player, Time time, int lvl) {
         playerCheck(player);
         this.player = player;
         this.time = time;
-        this.lvl = lvlCleared;
+        this.lvl = lvl;
     }
 
-    public PlayerScore(String player, int seconds, int lvlCleared) {
+    public Player(String player, int seconds, int lvlCleared) {
         this(player, new Time(seconds), lvlCleared);
     }
 
     private void playerCheck(String name) {
-        if (name == null) {
+        if (null == name) {
             throw new IllegalArgumentException("Name not allowed to be null");
         } else if (name.contains("\n")) {
             throw new IllegalArgumentException("Name not allowed to contain new line");

@@ -1,14 +1,12 @@
 package control;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -16,7 +14,8 @@ import javafx.stage.Stage;
 import model.Maps.*;
 
 import model.MazeGeneration.GenerateNextLevel;
-import model.TotalTime;
+import model.World;
+import model.time.TotalTime;
 import view.AudioPlayer;
 import view.Campaign.*;
 import view.GameOverScreen;
@@ -31,7 +30,6 @@ import java.io.FileNotFoundException;
 
 /**
  * @author André Eklund
- * @edit Filip Örnling, Viktor Näslund, Sebastian Helin
  */
 
 public class MainProgram extends Application {
@@ -39,36 +37,27 @@ public class MainProgram extends Application {
     private Stage mainWindow;
     private BorderPane mainPaneRandomMaze;
     private BorderPane mainPaneCampaign;
-    private MapTemplate mapTemplate;
     private Scene menuScene;
-    private Scene introScene;
     private Scene helpScene;
     private Scene chooseDimensionScene;
     private Scene highscoreScene;
     private Scene victoryScene;
-    private Intro intro;
-    private Menu menu;
-    private Help help;
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
-    private ChooseDimension chooseDimension;
     private Scene randomScene;
     private Scene campaignScene;
     private RightPanel rightPanel;
-    private RightPanel rightPnlRndm;
-    private MazeGenerator mazeGenerator;
     private GenerateNextLevel generateNextLevel;
-    private World1Template world1Template;
     private World1Maps world1Maps;
     private WorldIntroAnimation introAnimation;
     private AudioPlayer audioPlayer;
-    private GameOverScreen gameOverScreen;
-    private Image cursorImage;
 
     public static MainProgram mainProgram;
     private int lvlCleared;
     private TotalTime totTime;
-    private boolean totalTimeIsStarted;
+
+    public static final double WIDTH = 800.0d;
+    public static final double HEIGHT = 600.0d;
 
     /**
      * En metod som startar programmet.
@@ -79,7 +68,7 @@ public class MainProgram extends Application {
      */
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws FileNotFoundException {
 
         audioPlayer = new AudioPlayer();
         audioPlayer.playIntroMusic();
@@ -87,55 +76,52 @@ public class MainProgram extends Application {
         rightPanel = new RightPanel(this, "11", audioPlayer, null);
         rightPanel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        menu = new Menu(this, audioPlayer, rightPanel);
-        intro = new Intro(this, audioPlayer);
-        help = new Help(this, audioPlayer);
+        Menu menu = new Menu(this, audioPlayer, rightPanel);
+        Intro intro = new Intro(this, audioPlayer);
+        Help help = new Help(this, audioPlayer);
         highscoreList = new HighscoreList(this, audioPlayer);
         victoryScreen = new VictoryScreen(this, audioPlayer);
 
-        chooseDimension = new ChooseDimension(this, audioPlayer);
-        introScene = new Scene(intro, 800, 600);
-        helpScene = new Scene(help, 800, 600);
+        ChooseDimension chooseDimension = new ChooseDimension(this, audioPlayer);
+        Scene introScene = new Scene(intro, WIDTH, HEIGHT);
+        helpScene = new Scene(help, WIDTH, HEIGHT);
 
-        highscoreScene = new Scene(highscoreList,800,600);
-        victoryScene = new Scene(victoryScreen,800,600);
+        highscoreScene = new Scene(highscoreList, WIDTH, HEIGHT);
+        victoryScene = new Scene(victoryScreen, WIDTH, HEIGHT);
 
 
-        victoryScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                String pattern = "[a-zA-Z0-9]";
-                String stringEvent;
-                switch (event.getCode()){
-                    case DIGIT0 -> stringEvent ="0";
-                    case DIGIT1 -> stringEvent ="1";
-                    case DIGIT2 -> stringEvent ="2";
-                    case DIGIT3 -> stringEvent ="3";
-                    case DIGIT4 -> stringEvent ="4";
-                    case DIGIT5 -> stringEvent ="5";
-                    case DIGIT6 -> stringEvent ="6";
-                    case DIGIT7 -> stringEvent ="7";
-                    case DIGIT8 -> stringEvent ="8";
-                    case DIGIT9 -> stringEvent ="9";
-                    default ->  stringEvent = String.valueOf(event.getCode());
-                }
-                if (stringEvent.matches(pattern) || stringEvent.equals("BACK_SPACE") || stringEvent.equals("ENTER")) {
-                    System.out.println(stringEvent);
-                    victoryScreen.setTextCurrent(stringEvent);
-                }else {
-                    victoryScreen.setTextCurrent("invalid");
-                }
+        victoryScene.setOnKeyPressed(event -> {
+            String pattern = "[a-zA-Z0-9]";
+            String stringEvent;
+            KeyCode code = event.getCode();
+            switch (code) {
+                case DIGIT0 -> stringEvent = "0";
+                case DIGIT1 -> stringEvent = "1";
+                case DIGIT2 -> stringEvent = "2";
+                case DIGIT3 -> stringEvent = "3";
+                case DIGIT4 -> stringEvent = "4";
+                case DIGIT5 -> stringEvent = "5";
+                case DIGIT6 -> stringEvent = "6";
+                case DIGIT7 -> stringEvent = "7";
+                case DIGIT8 -> stringEvent = "8";
+                case DIGIT9 -> stringEvent = "9";
+                default -> stringEvent = String.valueOf(code);
+            }
+            if (stringEvent.matches(pattern) || stringEvent.equals("BACK_SPACE") || stringEvent.equals("ENTER")) {
+                victoryScreen.setTextCurrent(stringEvent);
+            } else {
+                victoryScreen.setTextCurrent("invalid");
             }
         });
 
-        chooseDimensionScene = new Scene(chooseDimension, 800, 600);
+        chooseDimensionScene = new Scene(chooseDimension, WIDTH, HEIGHT);
 
         mainPaneRandomMaze = new BorderPane();
         mainPaneCampaign = new BorderPane();
         introAnimation = new WorldIntroAnimation();
 
         mainWindow = primaryStage;
-        cursorImage = new Image("file:files/imagecursor.png");
+        Image cursorImage = new Image("file:files/imagecursor.png");
 
         mainWindow.setTitle("Mazegen");
         mainWindow.setResizable(false);
@@ -143,20 +129,17 @@ public class MainProgram extends Application {
         world1Maps = new World1Maps();
         mainPaneCampaign.setRight(rightPanel);
 
-        rightPnlRndm = new RightPanel(this, "Random", audioPlayer, null);
+        RightPanel rightPnlRndm = new RightPanel(this, "Random", audioPlayer, null);
         rightPnlRndm.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         mainPaneRandomMaze.setRight(rightPnlRndm);
 
-        campaignScene = new Scene(mainPaneCampaign, 800, 600);
-        randomScene = new Scene(mainPaneRandomMaze, 800, 600);
-        menuScene = new Scene(menu, 800, 600);
+        campaignScene = new Scene(mainPaneCampaign, WIDTH, HEIGHT);
+        randomScene = new Scene(mainPaneRandomMaze, WIDTH, HEIGHT);
+        menuScene = new Scene(menu, WIDTH, HEIGHT);
 
         mainWindow.setScene(introScene);
         mainWindow.show();
-
-        totTime = new TotalTime(false);
-        totalTimeIsStarted = false;
 
         introScene.setCursor(new ImageCursor(cursorImage));
         menuScene.setCursor(new ImageCursor(cursorImage));
@@ -180,9 +163,9 @@ public class MainProgram extends Application {
      * @throws FileNotFoundException
      */
     public void changeToRandomize(int dimension) throws FileNotFoundException {
-        mazeGenerator = new MazeGenerator(dimension, true);
-        generateNextLevel = new GenerateNextLevel(this, mainPaneRandomMaze, mazeGenerator, rightPanel, dimension);
-        mapTemplate = new MapTemplate(mazeGenerator.getMaze(), this, generateNextLevel);
+        MazeGenerator mazeGenerator = new MazeGenerator(dimension, true);
+        generateNextLevel = new GenerateNextLevel(mainPaneRandomMaze, mazeGenerator, dimension);
+        MapTemplate mapTemplate = new MapTemplate(mazeGenerator.getMaze(), generateNextLevel);
         mainPaneRandomMaze.setCenter(mapTemplate);
         mainWindow.setScene(randomScene);
     }
@@ -194,7 +177,7 @@ public class MainProgram extends Application {
      */
     public void changeToCampaign() throws FileNotFoundException {
         lvlCleared = 0;
-        world1Template = new World1Template(world1Maps.getLevel11(), 1, 3, this, rightPanel, 0, audioPlayer, 25);
+        World1Template world1Template = new World1Template(world1Maps.getLevel11(), 1, 3, this, rightPanel, World.FOREST, audioPlayer, 25);
 
         mainPaneCampaign.setCenter(world1Template);
         mainWindow.setScene(campaignScene);
@@ -202,7 +185,7 @@ public class MainProgram extends Application {
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
 
-        startTotalTime(true);
+        startTotalTime();
     }
 
     /**
@@ -226,7 +209,7 @@ public class MainProgram extends Application {
      */
     public void gameOver() {
         victoryScreen.setTime(totTime.setGameOver(true));
-        gameOverScreen = new GameOverScreen(this);
+        GameOverScreen gameOverScreen = new GameOverScreen(this);
         mainPaneCampaign.getChildren().add(gameOverScreen);
     }
 
@@ -240,28 +223,31 @@ public class MainProgram extends Application {
      */
     public void nextWorld1Level(int level, int heartCrystals) throws FileNotFoundException, InterruptedException {
 
-        if (level == 1) {
-            lvlCleared = 11;
-            rightPanel.changeLevelCounter("12");
-            mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel12(), 2, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
-
-        } else if (level == 2) {
-            lvlCleared = 12;
-            rightPanel.changeLevelCounter("13");
-            mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel13(), 3, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
-        } else if (level == 3) {
-            lvlCleared = 13;
-            victoryScreen.setTime(totTime.setGameOver(true));
-            audioPlayer.stopMusic();
-            showVictoryScene();
-            //rightPanel.changeLevelCounter("14");
-            //mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel14(), 4, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
-        } else if (level == 4) {
-            lvlCleared = 14;
-            rightPanel.changeLevelCounter("15");
-            mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel15(), 5, heartCrystals, this, rightPanel, 0, audioPlayer, 25));
-        } else if (level == 5) {
-            nextWorld2Level(1, heartCrystals);
+        switch (level) {
+            case 1 -> {
+                lvlCleared = 11;
+                rightPanel.changeLevelCounter("12");
+                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel12(), 2, heartCrystals, this, rightPanel, World.FOREST, audioPlayer, 25));
+            }
+            case 2 -> {
+                lvlCleared = 12;
+                rightPanel.changeLevelCounter("13");
+                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel13(), 3, heartCrystals, this, rightPanel, World.FOREST, audioPlayer, 25));
+            }
+            case 3 -> {
+                lvlCleared = 13;
+                rightPanel.changeLevelCounter("14");
+                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel14(), 4, heartCrystals, this, rightPanel, World.FOREST, audioPlayer, 25));
+            }
+            case 4 -> {
+                lvlCleared = 14;
+                rightPanel.changeLevelCounter("15");
+                mainPaneCampaign.setCenter(new World1Template(world1Maps.getLevel15(), 5, heartCrystals, this, rightPanel, World.FOREST, audioPlayer, 25));
+            }
+            case 5 -> {
+                lvlCleared = 15;
+                nextWorld2Level(1, heartCrystals);
+            }
         }
 
     }
@@ -279,31 +265,39 @@ public class MainProgram extends Application {
 
         World2Maps world2Maps = new World2Maps();
 
-        if (level == 1) {
-            lvlCleared = 14;
-            rightPanel.changeLevelCounter("21");
-            mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel21(), 2, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));
-            introAnimation = new WorldIntroAnimation("2");
-            mainPaneCampaign.getChildren().add(introAnimation);
-            introAnimation.setDisable(true);
-            audioPlayer.playWorldIntroSound();
-        } else if (level == 2) {
-            lvlCleared = 21;
-            rightPanel.changeLevelCounter("22");
-            mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel22(), 3, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));
-        } else if (level == 3) {
-            lvlCleared = 22;
-            rightPanel.changeLevelCounter("23");
-            mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel23(), 4, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));
-        } else if (level == 4) {
-            lvlCleared = 23;
-            rightPanel.changeLevelCounter("24");
-            mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel24(), 5, heartCrystals, this, rightPanel, 1, audioPlayer, false, rightPanel));
-        } else if (level == 5) {
-            rightPanel.changeLevelCounter("25");
-            mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel25(), 6, heartCrystals, this, rightPanel, 1, audioPlayer, true, rightPanel));
-        } else if (level == 6) {
-            nextWorld3Level(1, heartCrystals);
+        switch (level) {
+            case 1 -> {
+                rightPanel.changeLevelCounter("21");
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel21(), 2, heartCrystals, this, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+                introAnimation = new WorldIntroAnimation("2");
+                mainPaneCampaign.getChildren().add(introAnimation);
+                introAnimation.setDisable(true);
+                audioPlayer.playWorldIntroSound();
+            }
+            case 2 -> {
+                lvlCleared = 21;
+                rightPanel.changeLevelCounter("22");
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel22(), 3, heartCrystals, this, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+            }
+            case 3 -> {
+                lvlCleared = 22;
+                rightPanel.changeLevelCounter("23");
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel23(), 4, heartCrystals, this, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+            }
+            case 4 -> {
+                lvlCleared = 23;
+                rightPanel.changeLevelCounter("24");
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel24(), 5, heartCrystals, this, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+            }
+            case 5 -> {
+                lvlCleared = 24;
+                rightPanel.changeLevelCounter("25");
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel25(), 6, heartCrystals, this, rightPanel, World.UNDERGROUND, audioPlayer, true, rightPanel));
+            }
+            case 6 -> {
+                lvlCleared = 25;
+                nextWorld3Level(1, heartCrystals);
+            }
         }
     }
 
@@ -319,29 +313,41 @@ public class MainProgram extends Application {
 
         World3Maps world3Maps = new World3Maps();
 
-        if (level == 1) {
-            rightPanel.changeLevelCounter("31");
-            mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel31(), 2, heartCrystals, this, rightPanel, 2, audioPlayer));
-            introAnimation = new WorldIntroAnimation("3");
-            mainPaneCampaign.getChildren().add(introAnimation);
-            introAnimation.setDisable(true);
-            audioPlayer.playWorldIntroSound();
-            audioPlayer.stopMusic();
-            audioPlayer.playLevelMusic("lava");
-        } else if (level == 2) {
-            rightPanel.changeLevelCounter("32");
-            mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel32(), 3, heartCrystals, this, rightPanel, 2, audioPlayer));
-        } else if (level == 3) {
-            rightPanel.changeLevelCounter("33");
-            mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel33(), 4, heartCrystals, this, rightPanel, 2, audioPlayer));
-        } else if (level == 4) {
-            rightPanel.changeLevelCounter("34");
-            mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel34(), 5, heartCrystals, this, rightPanel, 2, audioPlayer));
-        } else if (level == 5) {
-            rightPanel.changeLevelCounter("35");
-            mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel35(), 6, heartCrystals, this, rightPanel, 2, audioPlayer));
-        } else if (level == 6) {
-            nextWorld4Level(1, heartCrystals);
+        switch (level) {
+            case 1 -> {
+                rightPanel.changeLevelCounter("31");
+                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel31(), 2, heartCrystals, this, rightPanel, World.LAVA, audioPlayer));
+                introAnimation = new WorldIntroAnimation("3");
+                mainPaneCampaign.getChildren().add(introAnimation);
+                introAnimation.setDisable(true);
+                audioPlayer.playWorldIntroSound();
+                audioPlayer.stopMusic();
+                audioPlayer.playLevelMusic("lava");
+            }
+            case 2 -> {
+                lvlCleared = 31;
+                rightPanel.changeLevelCounter("32");
+                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel32(), 3, heartCrystals, this, rightPanel, World.LAVA, audioPlayer));
+            }
+            case 3 -> {
+                lvlCleared = 32;
+                rightPanel.changeLevelCounter("33");
+                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel33(), 4, heartCrystals, this, rightPanel, World.LAVA, audioPlayer));
+            }
+            case 4 -> {
+                lvlCleared = 33;
+                rightPanel.changeLevelCounter("34");
+                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel34(), 5, heartCrystals, this, rightPanel, World.LAVA, audioPlayer));
+            }
+            case 5 -> {
+                lvlCleared = 34;
+                rightPanel.changeLevelCounter("35");
+                mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel35(), 6, heartCrystals, this, rightPanel, World.LAVA, audioPlayer));
+            }
+            case 6 -> {
+                lvlCleared = 35;
+                nextWorld4Level(1, heartCrystals);
+            }
         }
     }
 
@@ -357,29 +363,41 @@ public class MainProgram extends Application {
 
         World4Maps world4Maps = new World4Maps();
 
-        if (level == 1) {
-            rightPanel.changeLevelCounter("41");
-            mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel41(), 2, heartCrystals, this, rightPanel, 3, audioPlayer));
-            introAnimation = new WorldIntroAnimation("4");
-            mainPaneCampaign.getChildren().add(introAnimation);
-            introAnimation.setDisable(true);
-            audioPlayer.playWorldIntroSound();
-            audioPlayer.stopMusic();
-            audioPlayer.playLevelMusic("heaven");
-        } else if (level == 2) {
-            rightPanel.changeLevelCounter("42");
-            mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel42(), 3, heartCrystals, this, rightPanel, 3, audioPlayer));
-        } else if (level == 3) {
-            rightPanel.changeLevelCounter("43");
-            mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel43(), 4, heartCrystals, this, rightPanel, 3, audioPlayer));
-        } else if (level == 4) {
-            rightPanel.changeLevelCounter("44");
-            mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel44(), 5, heartCrystals, this, rightPanel, 3, audioPlayer));
-        } else if (level == 5) {
-            rightPanel.changeLevelCounter("45");
-            mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel45(), 6, heartCrystals, this, rightPanel, 3, audioPlayer));
-        } else if (level == 6) {
-            nextWorld5Level(1, heartCrystals);
+        switch (level) {
+            case 1 -> {
+                rightPanel.changeLevelCounter("41");
+                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel41(), 2, heartCrystals, this, rightPanel, World.CLOUD, audioPlayer));
+                introAnimation = new WorldIntroAnimation("4");
+                mainPaneCampaign.getChildren().add(introAnimation);
+                introAnimation.setDisable(true);
+                audioPlayer.playWorldIntroSound();
+                audioPlayer.stopMusic();
+                audioPlayer.playLevelMusic("heaven");
+            }
+            case 2 -> {
+                lvlCleared = 41;
+                rightPanel.changeLevelCounter("42");
+                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel42(), 3, heartCrystals, this, rightPanel, World.CLOUD, audioPlayer));
+            }
+            case 3 -> {
+                lvlCleared = 42;
+                rightPanel.changeLevelCounter("43");
+                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel43(), 4, heartCrystals, this, rightPanel, World.CLOUD, audioPlayer));
+            }
+            case 4 -> {
+                lvlCleared = 43;
+                rightPanel.changeLevelCounter("44");
+                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel44(), 5, heartCrystals, this, rightPanel, World.CLOUD, audioPlayer));
+            }
+            case 5 -> {
+                lvlCleared = 44;
+                rightPanel.changeLevelCounter("45");
+                mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel45(), 6, heartCrystals, this, rightPanel, World.CLOUD, audioPlayer));
+            }
+            case 6 -> {
+                lvlCleared = 45;
+                nextWorld5Level(1, heartCrystals);
+            }
         }
     }
 
@@ -395,29 +413,41 @@ public class MainProgram extends Application {
 
         World5Maps world5Maps = new World5Maps();
 
-        if (level == 1) {
-            rightPanel.changeLevelCounter("51");
-            mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel51(), 2, heartCrystals, this, rightPanel, 4, audioPlayer));
-            introAnimation = new WorldIntroAnimation("5");
-            mainPaneCampaign.getChildren().add(introAnimation);
-            introAnimation.setDisable(true);
-            audioPlayer.playWorldIntroSound();
-            audioPlayer.stopMusic();
-            audioPlayer.playLevelMusic("egypt");
-        } else if (level == 2) {
-            rightPanel.changeLevelCounter("52");
-            mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel52(), 3, heartCrystals, this, rightPanel, 4, audioPlayer));
-        } else if (level == 3) {
-            rightPanel.changeLevelCounter("53");
-            mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel53(), 4, heartCrystals, this, rightPanel, 4, audioPlayer));
-        } else if (level == 4) {
-            rightPanel.changeLevelCounter("54");
-            mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel54(), 5, heartCrystals, this, rightPanel, 4, audioPlayer));
-        } else if (level == 5) {
-            rightPanel.changeLevelCounter("55");
-            mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel55(), 6, heartCrystals, this, rightPanel, 4, audioPlayer));
-        } else if (level == 6) {
-            nextWorld6Level(1, heartCrystals);
+        switch (level) {
+            case 1 -> {
+                rightPanel.changeLevelCounter("51");
+                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel51(), 2, heartCrystals, this, rightPanel, World.DESERT, audioPlayer));
+                introAnimation = new WorldIntroAnimation("5");
+                mainPaneCampaign.getChildren().add(introAnimation);
+                introAnimation.setDisable(true);
+                audioPlayer.playWorldIntroSound();
+                audioPlayer.stopMusic();
+                audioPlayer.playLevelMusic("egypt");
+            }
+            case 2 -> {
+                lvlCleared = 51;
+                rightPanel.changeLevelCounter("52");
+                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel52(), 3, heartCrystals, this, rightPanel, World.DESERT, audioPlayer));
+            }
+            case 3 -> {
+                lvlCleared = 52;
+                rightPanel.changeLevelCounter("53");
+                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel53(), 4, heartCrystals, this, rightPanel, World.DESERT, audioPlayer));
+            }
+            case 4 -> {
+                lvlCleared = 53;
+                rightPanel.changeLevelCounter("54");
+                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel54(), 5, heartCrystals, this, rightPanel, World.DESERT, audioPlayer));
+            }
+            case 5 -> {
+                lvlCleared = 54;
+                rightPanel.changeLevelCounter("55");
+                mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel55(), 6, heartCrystals, this, rightPanel, World.DESERT, audioPlayer));
+            }
+            case 6 -> {
+                lvlCleared = 55;
+                nextWorld6Level(1, heartCrystals);
+            }
         }
     }
 
@@ -433,29 +463,41 @@ public class MainProgram extends Application {
 
         World6Maps world6Maps = new World6Maps();
 
-        if (level == 1) {
-            rightPanel.changeLevelCounter("61");
-            mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel61(), 2, heartCrystals, this, rightPanel, 5, audioPlayer));
-            introAnimation = new WorldIntroAnimation("6");
-            mainPaneCampaign.getChildren().add(introAnimation);
-            introAnimation.setDisable(true);
-            audioPlayer.playWorldIntroSound();
-        } else if (level == 2) {
-            rightPanel.changeLevelCounter("62");
-            mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel62(), 3, heartCrystals, this, rightPanel, 5, audioPlayer));
-        } else if (level == 3) {
-            rightPanel.changeLevelCounter("63");
-            mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel63(), 4, heartCrystals, this, rightPanel, 5, audioPlayer));
-        } else if (level == 4) {
-            rightPanel.changeLevelCounter("64");
-            mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel64(), 5, heartCrystals, this, rightPanel, 5, audioPlayer));
-        } else if (level == 5) {
-            rightPanel.changeLevelCounter("65");
-            mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel65(), 5, heartCrystals, this, rightPanel, 5, audioPlayer));
-        } else if (level == 6) {
-            victoryScreen.setTime(totTime.setGameOver(true));
-            audioPlayer.stopMusic();
-            showVictoryScene();
+        switch (level) {
+            case 1 -> {
+                rightPanel.changeLevelCounter("61");
+                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel61(), 2, heartCrystals, this, rightPanel, World.SPACE, audioPlayer));
+                introAnimation = new WorldIntroAnimation("6");
+                mainPaneCampaign.getChildren().add(introAnimation);
+                introAnimation.setDisable(true);
+                audioPlayer.playWorldIntroSound();
+            }
+            case 2 -> {
+                lvlCleared = 61;
+                rightPanel.changeLevelCounter("62");
+                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel62(), 3, heartCrystals, this, rightPanel, World.SPACE, audioPlayer));
+            }
+            case 3 -> {
+                lvlCleared = 62;
+                rightPanel.changeLevelCounter("63");
+                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel63(), 4, heartCrystals, this, rightPanel, World.SPACE, audioPlayer));
+            }
+            case 4 -> {
+                lvlCleared = 63;
+                rightPanel.changeLevelCounter("64");
+                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel64(), 5, heartCrystals, this, rightPanel, World.SPACE, audioPlayer));
+            }
+            case 5 -> {
+                lvlCleared = 64;
+                rightPanel.changeLevelCounter("65");
+                mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel65(), 6, heartCrystals, this, rightPanel, World.SPACE, audioPlayer));
+            }
+            case 6 -> {
+                lvlCleared = 65;
+                victoryScreen.setTime(totTime.setGameOver(true));
+                audioPlayer.stopMusic();
+                showVictoryScene();
+            }
         }
     }
 
@@ -486,21 +528,14 @@ public class MainProgram extends Application {
         mainProgram = this;
     }
 
-    public void setTotalTime(int totalTime) {
-        victoryScreen.setTime(totalTime);
-    }
-
-    public boolean startTotalTime(boolean b) {
-        if (b) {
-            if (!totalTimeIsStarted) {
-                totTime.start();
-                totalTimeIsStarted = true;
-            } else {
-                totTime = new TotalTime(false);
-                totTime.start();
-            }
+    private boolean startTotalTime() {
+        try {
+            totTime = new TotalTime(false);
+            totTime.start();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
     public int getLvlCleared() {
@@ -522,5 +557,4 @@ public class MainProgram extends Application {
     public GenerateNextLevel getGenerateNextLevel() {
         return generateNextLevel;
     }
-
 }

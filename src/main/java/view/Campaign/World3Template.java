@@ -2,29 +2,18 @@ package view.Campaign;
 
 import control.MainProgram;
 import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.event.EventHandler;
-import javafx.scene.control.Label;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.Maps.Sprite;
-import model.TimeThread;
+import model.World;
+import model.time.TimeThread;
 import view.AudioPlayer;
 import view.Menu.RightPanel;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 public class World3Template extends World1Template {
 
@@ -49,8 +38,8 @@ public class World3Template extends World1Template {
     private TimeThread time;
     private AudioPlayer audioPlayer;
 
-    public World3Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int worldImage, AudioPlayer audioPlayer) throws FileNotFoundException {
-        super(level, currentLevel, heartCrystals, mainProgram, rightPanel, worldImage, audioPlayer, 60);
+    public World3Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
+        super(level, currentLevel, heartCrystals, mainProgram, rightPanel, world, audioPlayer, 60);
         squareSize = 600 / (level.length + 2);
         this.currentLevel = currentLevel;
         this.panel = rightPanel;

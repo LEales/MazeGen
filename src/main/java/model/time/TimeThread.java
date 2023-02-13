@@ -1,5 +1,6 @@
-package model;
+package model.time;
 
+import model.time.Time;
 import view.Menu.RightPanel;
 
 /**

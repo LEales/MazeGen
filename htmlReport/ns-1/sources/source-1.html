@@ -137,7 +137,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import model.Maps.*;
 &nbsp;
 &nbsp;import model.MazeGeneration.GenerateNextLevel;
-&nbsp;import model.TotalTime;
+&nbsp;import model.time.TotalTime;
 &nbsp;import view.AudioPlayer;
 &nbsp;import view.Campaign.*;
 &nbsp;import view.GameOverScreen;
@@ -151,8 +151,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import java.io.FileNotFoundException;
 &nbsp;
 &nbsp;/**
-&nbsp; * @author André Eklund
-&nbsp; * @edit Filip Örnling, Viktor Näslund, Sebastian Helin
+&nbsp; * @author Andrï¿½ Eklund
+&nbsp; * @edit Filip ï¿½rnling, Viktor Nï¿½slund, Sebastian Helin
 &nbsp; */
 &nbsp;
 <b class="fc">&nbsp;public class MainProgram extends Application {</b>
@@ -193,7 +193,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * En metod som startar programmet.
-&nbsp;     * Metoden instanierar även de olika komponenterna.
+&nbsp;     * Metoden instanierar ï¿½ven de olika komponenterna.
 &nbsp;     *
 &nbsp;     * @param primaryStage JavaFX top Container, huvudkomponenten till programmet.
 &nbsp;     * @throws Exception
@@ -297,7 +297,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    /**
 &nbsp;     * Byter scen till Randomize.
 &nbsp;     *
-&nbsp;     * @param dimension Storleken på labyrinten som ska genereras.
+&nbsp;     * @param dimension Storleken pï¿½ labyrinten som ska genereras.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     */
 &nbsp;    public void changeToRandomize(int dimension) throws FileNotFoundException {
@@ -309,7 +309,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Byter scen till kampanjläget.
+&nbsp;     * Byter scen till kampanjlï¿½get.
 &nbsp;     *
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     */
@@ -327,14 +327,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Byter scen till den del av menyn där användaren får välja dimension på labyrinten.
+&nbsp;     * Byter scen till den del av menyn dï¿½r anvï¿½ndaren fï¿½r vï¿½lja dimension pï¿½ labyrinten.
 &nbsp;     */
 &nbsp;    public void chooseDimension() {
 <b class="nc">&nbsp;        mainWindow.setScene(chooseDimensionScene);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Byter scen till hjälpfönstret.
+&nbsp;     * Byter scen till hjï¿½lpfï¿½nstret.
 &nbsp;     */
 &nbsp;    public boolean changeToHelp() {
 <b class="nc">&nbsp;        mainWindow.setScene(helpScene);</b>
@@ -342,8 +342,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Vid gameOver körs denna metod.
-&nbsp;     * Kör en enkel animation med texten &quot;Game Over&quot;.
+&nbsp;     * Vid gameOver kï¿½rs denna metod.
+&nbsp;     * Kï¿½r en enkel animation med texten &quot;Game Over&quot;.
 &nbsp;     */
 &nbsp;    public void gameOver() {
 <b class="nc">&nbsp;        victoryScreen.setTime(totTime.setGameOver(true));</b>
@@ -352,9 +352,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
+&nbsp;     * Byter scen till en ny nivï¿½ i kampanjlï¿½get baserad pï¿½ givna parametrar.
 &nbsp;     *
-&nbsp;     * @param level         Den aktuella nivån.
+&nbsp;     * @param level         Den aktuella nivï¿½n.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -388,9 +388,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
+&nbsp;     * Byter scen till en ny nivï¿½ i kampanjlï¿½get baserad pï¿½ givna parametrar.
 &nbsp;     *
-&nbsp;     * @param level         Den aktuella nivån.
+&nbsp;     * @param level         Den aktuella nivï¿½n.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -429,9 +429,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
+&nbsp;     * Byter scen till en ny nivï¿½ i kampanjlï¿½get baserad pï¿½ givna parametrar.
 &nbsp;     *
-&nbsp;     * @param level         Den aktuella nivån.
+&nbsp;     * @param level         Den aktuella nivï¿½n.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -467,9 +467,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
+&nbsp;     * Byter scen till en ny nivï¿½ i kampanjlï¿½get baserad pï¿½ givna parametrar.
 &nbsp;     *
-&nbsp;     * @param level         Den aktuella nivån.
+&nbsp;     * @param level         Den aktuella nivï¿½n.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -505,9 +505,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
+&nbsp;     * Byter scen till en ny nivï¿½ i kampanjlï¿½get baserad pï¿½ givna parametrar.
 &nbsp;     *
-&nbsp;     * @param level         Den aktuella nivån.
+&nbsp;     * @param level         Den aktuella nivï¿½n.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException
@@ -543,9 +543,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
+&nbsp;     * Byter scen till en ny nivï¿½ i kampanjlï¿½get baserad pï¿½ givna parametrar.
 &nbsp;     *
-&nbsp;     * @param level         Den aktuella nivån.
+&nbsp;     * @param level         Den aktuella nivï¿½n.
 &nbsp;     * @param heartCrystals Spelarens aktuella liv.
 &nbsp;     * @throws FileNotFoundException
 &nbsp;     * @throws InterruptedException

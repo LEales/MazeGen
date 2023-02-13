@@ -9,6 +9,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import model.Maps.Sprite;
+import model.World;
 import view.AudioPlayer;
 import view.Menu.RightPanel;
 
@@ -49,8 +50,8 @@ public class World6Template extends World1Template {
     private ImageView ghost10V;
 
 
-    public World6Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int worldImage, AudioPlayer audioPlayer) throws FileNotFoundException {
-        super(level, currentLevel, heartCrystals, mainProgram, rightPanel, worldImage, audioPlayer, 99);
+    public World6Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
+        super(level, currentLevel, heartCrystals, mainProgram, rightPanel, world, audioPlayer, 99);
         squareSize = 600/(level.length+2);
         this.currentLevel = currentLevel;
         rightPanel.changeHeartCounter(String.valueOf(heartCrystals));

@@ -14,11 +14,11 @@ public class MazeGenerator {
      * Edit Sebastian Helin, André Eklund
      */
 
-    private Stack<Node> stack = new Stack<>();
-    private Random rand = new Random();
+    private final Stack<Node> stack = new Stack<>();
+    private final Random rand = new Random();
     private Sprite[][] maze;
-    private int dimension;
-    private boolean generateGoalAndStart;
+    private final int dimension;
+    private final boolean generateGoalAndStart;
 
     /**
      * @param dim             Tar in en dimension för hur stor labyrinten ska vara
@@ -31,61 +31,37 @@ public class MazeGenerator {
         dimension = dim;
         generateMaze();
         createStartAndGoal();
-        System.out.println(getRawMaze());
     }
 
     private Sprite[][] fillArray(Sprite[][] maze) {
         for (Sprite[] sprites : maze) {
-            Arrays.fill(sprites, Sprite.Wall);
+            Arrays.fill(sprites, Sprite.WALL);
         }
         return maze;
     }
 
-    public void generateMaze() {
+    private void generateMaze() {
         stack.push(new Node(0, 0));
         while (!stack.empty()) {
             Node next = stack.pop();
             if (validNextNode(next)) {
-                maze[next.y][next.x] = Sprite.Path;
+                maze[next.y][next.x] = Sprite.PATH;
                 ArrayList<Node> neighbors = findNeighbors(next);
                 randomlyAddNodesToStack(neighbors);
             }
         }
     }
 
-    public String getRawMaze() {
-        StringBuilder sb = new StringBuilder();
-        for (Sprite[] row : maze) {
-            sb.append(Arrays.toString(row)).append("\n");
-        }
-        return sb.toString();
-    }
-
-    /**
-     * @return
-     * @edit av Andre Eklund & Sebastian Helin
-     */
-    public String getSymbolicMaze() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < dimension; i++) {
-            for (int j = 0; j < dimension; j++) {
-                sb.append(maze[i][j] == Sprite.Path ? "*" : " ");
-            }
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
-
     private boolean validNextNode(Node node) {
         int numNeighboringOnes = 0;
         for (int y = node.y - 1; y < node.y + 2; y++) {
             for (int x = node.x - 1; x < node.x + 2; x++) {
-                if (pointOnGrid(x, y) && pointNotNode(node, x, y) && maze[y][x] == Sprite.Path) {
+                if (pointOnGrid(x, y) && pointNotNode(node, x, y) && Sprite.PATH == maze[y][x]) {
                     numNeighboringOnes++;
                 }
             }
         }
-        return (numNeighboringOnes < 3) && maze[node.y][node.x] != Sprite.Path;
+        return (3 > numNeighboringOnes) && Sprite.PATH != maze[node.y][node.x];
     }
 
     private void randomlyAddNodesToStack(ArrayList<Node> nodes) {
@@ -112,14 +88,14 @@ public class MazeGenerator {
     /**
      * Edit av Sebastian Helin & Andre Eklund
      */
-    public void createStartAndGoal() {
+    private void createStartAndGoal() {
         if (generateGoalAndStart) {
-            maze[randomIndex()][0] = Sprite.Start;
-            maze[randomIndex()][maze.length - 1] = Sprite.Goal;
+            maze[randomIndex()][0] = Sprite.START;
+            maze[randomIndex()][maze.length - 1] = Sprite.GOAL;
         }
     }
 
-    public int randomIndex() {
+    private int randomIndex() {
         return new Random().nextBoolean() ? 0 : maze.length - 1;
     }
 
@@ -128,7 +104,7 @@ public class MazeGenerator {
     }
 
     private Boolean pointOnGrid(int x, int y) {
-        return x >= 0 && y >= 0 && x < dimension && y < dimension;
+        return 0 <= x && y >= 0 && x < dimension && y < dimension;
     }
 
     private Boolean pointNotCorner(Node node, int x, int y) {

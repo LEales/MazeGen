@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import model.PlayerScore;
+import model.Player;
 import view.AudioPlayer;
 
 import java.io.BufferedInputStream;
@@ -71,12 +71,12 @@ public class HighscoreList extends HBox{
     public int setupHighscoreList (){
         setupVBoxes();
         String file = "files/ScoreList.dat";
-        PlayerScore[] scoreList = new PlayerScore[10];
-        PlayerScore player;
+        Player[] scoreList = new Player[10];
+        Player player;
         int counter = 0;
         try{
             ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
-            while((player = (PlayerScore)ois.readObject())!=null){
+            while((player = (Player)ois.readObject())!=null){
                 scoreList[counter] = player;
                 labelArr[counter]=new Label(player.getPlayer());
                 counter++;
