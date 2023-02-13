@@ -60,7 +60,7 @@ public class World1Maps {
         return level11;
     }
 
-    public Sprite[][] getLevel12 {
+    public Sprite[][] getLevel12() {
         return level12;
     }
 

@@ -17,6 +17,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Polyline;
 import javafx.util.Duration;
+import model.Maps.Sprite;
 import model.TimeThread;
 import view.AudioPlayer;
 import view.Menu.RightPanel;
@@ -47,7 +48,7 @@ public class World2Template extends World1Template {
     private AudioPlayer audioPlayer;
     private int seconds;
 
-    public World2Template(int[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int world, AudioPlayer audioPlayer, boolean bossMap, RightPanel panel) throws FileNotFoundException {
+    public World2Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int world, AudioPlayer audioPlayer, boolean bossMap, RightPanel panel) throws FileNotFoundException {
         super(level, currentLevel, heartCrystals, mainProgram, rightPanel, world, audioPlayer, 35);
         squareSize = 600 / (level.length + 2);
         this.panel = panel;

@@ -1,5 +1,6 @@
 package model.MazeGeneration;
 
+import model.Maps.Sprite;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ class MazeGeneratorTest {
         for (int i = 0; i < 1000; i++) {
             G.clear();
             MazeGenerator mg = new MazeGenerator(dim, true);
-            int[][] maze = mg.getMaze();
+            Sprite[][] maze = mg.getMaze();
             Node start = start(maze);
             G.put(start, new ArrayList<>());
             if (start.equals(new Node(-1, -1))) {
@@ -86,7 +87,7 @@ class MazeGeneratorTest {
      * Builds a graph structure out of a 2-D maze.
      * @param maze the maze that is converted to a graph.
      */
-    private void buildGraph(int[][] maze) {
+    private void buildGraph(Sprite[][] maze) {
         for (int j = 0; j < maze.length; j++) {
             for (int k = 0; k < maze[j].length; k++) {
                 if (road(j, k, maze)) {
@@ -114,8 +115,8 @@ class MazeGeneratorTest {
      * @param maze The maze to check in
      * @return True if the position is a valid connection between two nodes, otherwise false
      */
-    private boolean road(int i, int j, int[][] maze) {
-        return maze[i][j] == 1 || maze[i][j] == 2 || maze[i][j] == 3;
+    private boolean road(int i, int j, Sprite[][] maze) {
+        return maze[i][j] == Sprite.Path || maze[i][j] == Sprite.Start || maze[i][j] == Sprite.Goal;
     }
 
     /**
@@ -149,10 +150,10 @@ class MazeGeneratorTest {
      * @param maze 2-D Maze to search in
      * @return The end node if one exists otherwise a Node with -1,-1 as coordinates
      */
-    private Node end(int[][] maze) {
+    private Node end(Sprite[][] maze) {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
-                if (maze[i][j] == 3) {
+                if (maze[i][j] == Sprite.Goal) {
                     return new Node(i, j);
                 }
             }
@@ -165,10 +166,10 @@ class MazeGeneratorTest {
      * @param maze 2-D Maze to search in
      * @return The start node if one exists otherwise a Node with -1,-1 as coordinates
      */
-    private Node start(int[][] maze) {
+    private Node start(Sprite[][] maze) {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
-                if (maze[i][j] == 2) {
+                if (maze[i][j] == Sprite.Start) {
                     return new Node(i, j);
                 }
             }

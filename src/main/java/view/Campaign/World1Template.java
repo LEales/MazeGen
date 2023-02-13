@@ -11,6 +11,7 @@ import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
+import model.Maps.Sprite;
 import model.TimeThread;
 import model.TotalTime;
 import view.AudioPlayer;
@@ -28,7 +29,7 @@ public class World1Template extends GridPane {
 
 
     private MainProgram mainProgram;
-    private int[][] level;
+    private Sprite[][] level;
     private ArrayList<Label> collectibles = new ArrayList<>();
     private ArrayList<Label> pickaxes = new ArrayList<>();
     private MouseListener mouseListener = new MouseListener();
@@ -74,7 +75,7 @@ public class World1Template extends GridPane {
      */
 
     //Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
-    public World1Template(int[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int world, AudioPlayer audioPlayer, int seconds) throws FileNotFoundException {
+    public World1Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int world, AudioPlayer audioPlayer, int seconds) throws FileNotFoundException {
         this.mainProgram = mainProgram;
         this.currentLevel = currentLevel;
         this.level = level;
@@ -133,23 +134,23 @@ public class World1Template extends GridPane {
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level.length; j++) {
 
-                if (level[i][j] == 1) {
+                if (level[i][j] == Sprite.Path) {
                     add(getPath(), j + 1, i + 1);
-                } else if (level[i][j] == 0) {
+                } else if (level[i][j] == Sprite.Wall) {
                     add(getWall(), j + 1, i + 1);
-                } else if (level[i][j] == 2) {
+                } else if (level[i][j] == Sprite.Start) {
                     add(getStart(), j + 1, i + 1);
-                } else if (level[i][j] == 3) {
+                } else if (level[i][j] == Sprite.Goal) {
                     add(getGoal(), j + 1, i + 1);
-                } else if (level[i][j] == 4) {
+                } else if (level[i][j] == Sprite.Collectible) {
                     add(getPath(), j + 1, i + 1);
                     add(addCollectible(), j + 1, i + 1);
-                } else if (level[i][j] == 5) {
+                } else if (level[i][j] == Sprite.Axe) {
                     add(getPath(), j + 1, i + 1);
                     add(addPickAxe(), j + 1, i + 1);
-                } else if (level[i][j] == 6) {
+                } else if (level[i][j] == Sprite.BreakableWall) {
                     add(getBreakableWall(), j + 1, i + 1);
-                } else if (level[i][j] == 7) {
+                } else if (level[i][j] == Sprite.Heart) {
                     add(getPath(), j + 1, i + 1);
                     add(addHeartCrystal(), j + 1, i + 1);
                 }

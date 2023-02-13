@@ -2,6 +2,7 @@ package model.MazeGeneration;
 
 import control.MainProgram;
 import javafx.scene.layout.BorderPane;
+import model.Maps.Sprite;
 import view.Randomize.MapTemplate;
 import view.Menu.RightPanel;
 
@@ -45,21 +46,21 @@ public class GenerateNextLevel {
      * @throws FileNotFoundException
      */
     public void generateNewMaze() throws FileNotFoundException {
-        int currentMaze[][] = mazeGenerator.getMaze();
+        Sprite[][] currentMaze = mazeGenerator.getMaze();
         MazeGenerator newMazegenerator = new MazeGenerator(dimension, false);
-        int nextMaze[][] = newMazegenerator.getMaze();
+        Sprite[][] nextMaze = newMazegenerator.getMaze();
         int col = 0;
 
         for (int i = 0; i < currentMaze.length; i++) {
             for (int j = 0; j < currentMaze[i].length; j++) {
-                if (currentMaze[i][j] == 3) {
-                    nextMaze[i][j] = 2;
-                } else if (currentMaze[i][j] == 2) {
+                if (currentMaze[i][j] == Sprite.Goal) {
+                    nextMaze[i][j] = Sprite.Start;
+                } else if (currentMaze[i][j] == Sprite.Start) {
                     col = j;
                 }
             }
         }
-        nextMaze[new Random().nextBoolean() ? 0 : nextMaze.length - 1][col] = 3;
+        nextMaze[new Random().nextBoolean() ? 0 : nextMaze.length - 1][col] = Sprite.Goal;
         mainPane.setCenter(new MapTemplate(checkStartAndGoalNeighbors(nextMaze), mainProgram, this));
         this.mazeGenerator = newMazegenerator;
     }
@@ -71,7 +72,7 @@ public class GenerateNextLevel {
      * @param maze Arrayen som ska granskas.
      * @return returnerar den modifierade arrayen.
      */
-    public int[][] checkStartAndGoalNeighbors(int[][] maze) {
+    public Sprite[][] checkStartAndGoalNeighbors(Sprite[][] maze) {
 
         int wallCounterStart = 0;
         int wallCounterGoal = 0;
@@ -79,14 +80,14 @@ public class GenerateNextLevel {
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
 
-                if (maze[i][j] == 2) {
+                if (maze[i][j] == Sprite.Start) {
                     for (int offsetRow = i - 1; offsetRow <= i + 1; offsetRow++) {
                         for (int offsetCol = j - 1; offsetCol <= j + 1; offsetCol++) {
 
                             if ((offsetRow >= 0) && (offsetRow < maze.length)) {
 
                                 if ((offsetCol >= 0) && (offsetCol < maze[0].length)) {
-                                    if (maze[offsetRow][offsetCol] == 0) {
+                                    if (maze[offsetRow][offsetCol] == Sprite.Wall) {
                                         if ((i == 0) && (j == 0)) {
                                             if ((offsetRow != 1 && offsetCol != 1) || (offsetRow != 1 && offsetCol != maze.length - 1) || (offsetRow != maze.length - 1 && offsetCol != 1) || (offsetRow != maze.length - 1 && offsetCol != maze.length - 1)) {
                                                 wallCounterStart++;
@@ -97,8 +98,8 @@ public class GenerateNextLevel {
                                             for (int offsetCol2 = offsetCol - 1; offsetCol2 <= offsetCol + 1; offsetCol2++) {
                                                 if ((offsetRow2 >= 0) && (offsetRow2 < maze.length)) {
                                                     if ((offsetCol2 >= 0) && (offsetCol2 < maze[0].length)) {
-                                                        if (maze[offsetRow2][offsetCol2] == 0) {
-                                                            maze[offsetRow2][offsetCol2] = 1;
+                                                        if (maze[offsetRow2][offsetCol2] == Sprite.Wall) {
+                                                            maze[offsetRow2][offsetCol2] = Sprite.Path;
                                                         }
                                                     }
                                                 }
@@ -109,13 +110,13 @@ public class GenerateNextLevel {
                             }
                         }
                     }
-                } else if (maze[i][j] == 3) {
+                } else if (maze[i][j] == Sprite.Goal) {
                     for (int offsetRow = i - 1; offsetRow <= i + 1; offsetRow++) {
                         for (int offsetCol = j - 1; offsetCol <= j + 1; offsetCol++) {
 
                             if ((offsetRow >= 0) && (offsetRow < maze.length)) {
                                 if ((offsetCol >= 0) && (offsetCol < maze[0].length)) {
-                                    if (maze[offsetRow][offsetCol] == 0) {
+                                    if (maze[offsetRow][offsetCol] == Sprite.Wall) {
                                         if ((offsetRow != 1 && offsetCol != 1) || (offsetRow != 1 && offsetCol != maze.length - 1) || (offsetRow != maze.length - 1 && offsetCol != 1) || (offsetRow != maze.length - 1 && offsetCol != maze.length - 1)) {
                                             wallCounterGoal++;
                                         }
@@ -124,8 +125,8 @@ public class GenerateNextLevel {
                                             for (int offsetCol2 = offsetCol - 1; offsetCol2 <= offsetCol + 1; offsetCol2++) {
                                                 if ((offsetRow2 >= 0) && (offsetRow2 < maze.length)) {
                                                     if ((offsetCol2 >= 0) && (offsetCol2 < maze[0].length)) {
-                                                        if (maze[offsetRow2][offsetCol2] == 0) {
-                                                            maze[offsetRow2][offsetCol2] = 1;
+                                                        if (maze[offsetRow2][offsetCol2] == Sprite.Wall) {
+                                                            maze[offsetRow2][offsetCol2] = Sprite.Path;
                                                         }
                                                     }
                                                 }

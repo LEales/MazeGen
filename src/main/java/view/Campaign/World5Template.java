@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import model.Maps.Sprite;
 import view.AudioPlayer;
 import view.Menu.RightPanel;
 
@@ -30,7 +31,7 @@ public class World5Template extends World1Template {
 
 
 
-    public World5Template(int[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int worldImage, AudioPlayer audioPlayer) throws FileNotFoundException {
+    public World5Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int worldImage, AudioPlayer audioPlayer) throws FileNotFoundException {
 
         super(level, currentLevel, heartCrystals, mainProgram, rightPanel, worldImage, audioPlayer, 90);
 

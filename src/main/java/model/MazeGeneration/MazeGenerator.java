@@ -1,5 +1,7 @@
 package model.MazeGeneration;
 
+import model.Maps.Sprite;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -14,7 +16,7 @@ public class MazeGenerator {
 
     private Stack<Node> stack = new Stack<>();
     private Random rand = new Random();
-    private int[][] maze;
+    private Sprite[][] maze;
     private int dimension;
     private boolean generateGoalAndStart;
 
@@ -24,7 +26,7 @@ public class MazeGenerator {
      */
     public MazeGenerator(int dim, boolean setGoalAndStart) {
         this.generateGoalAndStart = setGoalAndStart;
-        maze = new int[dim][dim];
+        maze = new Sprite[dim][dim];
         dimension = dim;
         generateMaze();
         createStartAndGoal();
@@ -36,7 +38,7 @@ public class MazeGenerator {
         while (!stack.empty()) {
             Node next = stack.pop();
             if (validNextNode(next)) {
-                maze[next.y][next.x] = 1;
+                maze[next.y][next.x] = Sprite.Path;
                 ArrayList<Node> neighbors = findNeighbors(next);
                 randomlyAddNodesToStack(neighbors);
             }
@@ -45,8 +47,8 @@ public class MazeGenerator {
 
     public String getRawMaze() {
         StringBuilder sb = new StringBuilder();
-        for (int[] row : maze) {
-            sb.append(Arrays.toString(row) + "\n");
+        for (Sprite[] row : maze) {
+            sb.append(Arrays.toString(row)).append("\n");
         }
         return sb.toString();
     }
@@ -59,7 +61,7 @@ public class MazeGenerator {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
-                sb.append(maze[i][j] == 1 ? "*" : " ");
+                sb.append(maze[i][j] == Sprite.Path ? "*" : " ");
             }
             sb.append("\n");
         }
@@ -70,12 +72,12 @@ public class MazeGenerator {
         int numNeighboringOnes = 0;
         for (int y = node.y - 1; y < node.y + 2; y++) {
             for (int x = node.x - 1; x < node.x + 2; x++) {
-                if (pointOnGrid(x, y) && pointNotNode(node, x, y) && maze[y][x] == 1) {
+                if (pointOnGrid(x, y) && pointNotNode(node, x, y) && maze[y][x] == Sprite.Path) {
                     numNeighboringOnes++;
                 }
             }
         }
-        return (numNeighboringOnes < 3) && maze[node.y][node.x] != 1;
+        return (numNeighboringOnes < 3) && maze[node.y][node.x] != Sprite.Path;
     }
 
     private void randomlyAddNodesToStack(ArrayList<Node> nodes) {
@@ -104,8 +106,8 @@ public class MazeGenerator {
      */
     public void createStartAndGoal() {
         if (generateGoalAndStart) {
-            maze[randomIndex()][0] = 2;
-            maze[randomIndex()][maze.length - 1] = 3;
+            maze[randomIndex()][0] = Sprite.Start;
+            maze[randomIndex()][maze.length - 1] = Sprite.Goal;
         }
     }
 
@@ -113,7 +115,7 @@ public class MazeGenerator {
         return new Random().nextBoolean() ? 0 : maze.length - 1;
     }
 
-    public int[][] getMaze() {
+    public Sprite[][] getMaze() {
         return maze;
     }
 

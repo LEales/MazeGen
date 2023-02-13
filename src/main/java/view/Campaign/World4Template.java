@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import model.Maps.Sprite;
 import view.AudioPlayer;
 import view.Menu.RightPanel;
 
@@ -33,7 +34,7 @@ public class World4Template extends World1Template {
     private Thread platfrom;
     private int currentLevel;
 
-    public World4Template(int[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int worldImage, AudioPlayer audioPlayer) throws FileNotFoundException {
+    public World4Template(Sprite[][] level, int currentLevel, int heartCrystals, MainProgram mainProgram, RightPanel rightPanel, int worldImage, AudioPlayer audioPlayer) throws FileNotFoundException {
         super(level, currentLevel, heartCrystals, mainProgram, rightPanel, worldImage, audioPlayer, 80);
         rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
         this.currentLevel = currentLevel;

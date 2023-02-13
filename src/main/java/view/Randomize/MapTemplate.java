@@ -1,6 +1,7 @@
 package view.Randomize;
 
 
+import model.Maps.Sprite;
 import model.MazeGeneration.GenerateNextLevel;
 import control.MainProgram;
 import javafx.animation.FadeTransition;
@@ -29,7 +30,7 @@ public class MapTemplate extends GridPane {
 
     private MainProgram mainProgram;
     private GenerateNextLevel generateNextLevel;
-    private int[][] level;
+    private Sprite[][] level;
     private ArrayList<Label> collectibles = new ArrayList<>();
     private MouseListener mouseListener = new MouseListener();
 
@@ -66,7 +67,7 @@ public class MapTemplate extends GridPane {
     /**
      * Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
      */
-    public MapTemplate(int[][] level, MainProgram mainProgram, GenerateNextLevel generateNextLevel) throws FileNotFoundException {
+    public MapTemplate(Sprite[][] level, MainProgram mainProgram, GenerateNextLevel generateNextLevel) throws FileNotFoundException {
         this.mainProgram = mainProgram;
         this.level = level;
         this.generateNextLevel = generateNextLevel;
@@ -111,19 +112,19 @@ public class MapTemplate extends GridPane {
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level.length; j++) {
 
-                if (level[i][j] == 1) {
+                if (level[i][j] == Sprite.Path) {
                     add(getPath(),j + 1,i + 1);
                     if (new Random().nextInt(5) == 4) {
                         add(addCollectible(),j + 1,i + 1);
                     }
                 }
-                else if (level[i][j] == 0){
+                else if (level[i][j] == Sprite.Wall){
                     add(getWall(),j + 1,i + 1);
                 }
-                else if (level[i][j] == 2){
+                else if (level[i][j] == Sprite.Start){
                     add(getStart(),j + 1,i + 1);
                 }
-                else if (level[i][j] == 3){
+                else if (level[i][j] == Sprite.Goal){
                     add(getGoal(),j + 1,i + 1);
                 }
             }
