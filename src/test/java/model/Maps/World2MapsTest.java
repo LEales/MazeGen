@@ -16,17 +16,17 @@ class World2MapsTest {
     }
     @Test
     void level21pos() {
-        int[][] level = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {4, 0, 4, 1, 1, 0, 0, 0, 3, 0},
-                {1, 1, 1, 0, 1, 0, 0, 0, 4, 0},
-                {0, 0, 0, 1, 1, 1, 1, 1, 1, 0},
-                {1, 1, 1, 1, 0, 1, 0, 0, 0, 0},
-                {1, 0, 0, 0, 0, 4, 1, 1, 0, 0},
-                {1, 0, 4, 1, 0, 0, 0, 1, 0, 0},
-                {1, 0, 0, 1, 1, 4, 0, 1, 1, 4},
-                {1, 0, 1, 1, 0, 1, 0, 0, 0, 1},
-                {7, 0, 2, 0, 0, 1, 1, 1, 1, 4}};
-        int[][] level1Get = w.getLevel21();
+        Sprite[][] level = {{Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Goal, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible},
+                {Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Heart, Sprite.Wall, Sprite.Start, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible}};
+        Sprite[][] level1Get = w.getLevel21();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
@@ -41,17 +41,17 @@ class World2MapsTest {
 
     @Test
     void level21neg() {
-        int[][] level = {{1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {4, 0, 4, 1, 1, 0, 0, 0, 3, 0},
-                {1, 1, 1, 0, 1, 0, 0, 0, 4, 0},
-                {0, 0, 0, 1, 1, 1, 1, 1, 1, 0},
-                {1, 1, 1, 1, 0, 1, 0, 0, 0, 0},
-                {1, 0, 0, 0, 0, 4, 1, 1, 0, 0},
-                {1, 0, 4, 1, 0, 0, 0, 1, 0, 0},
-                {1, 0, 0, 1, 1, 4, 0, 1, 1, 4},
-                {1, 0, 1, 1, 0, 1, 4, 0, 0, 1},
-                {7, 0, 2, 0, 0, 1, 1, 1, 1, 4}};
-        int[][] level1Get = w.getLevel21();
+        Sprite[][] level = {{Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Goal, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible},
+                {Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Heart, Sprite.Wall, Sprite.Start, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible}};
+        Sprite[][] level1Get = w.getLevel21();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
@@ -66,17 +66,17 @@ class World2MapsTest {
 
     @Test
     void level22pos() {
-        int[][] level = {{0, 5, 1, 4, 0, 0, 4, 1, 1, 0},
-                {1, 0, 0, 1, 1, 0, 1, 0, 2, 0},
-                {1, 4, 1, 0, 1, 1, 1, 0, 0, 0},
-                {1, 0, 1, 1, 1, 0, 1, 1, 0, 0},
-                {1, 0, 0, 1, 0, 0, 0, 1, 0, 0},
-                {4, 1, 0, 1, 1, 4, 0, 1, 4, 0},
-                {0, 1, 0, 6, 0, 1, 1, 0, 1, 0},
-                {0, 1, 1, 4, 0, 0, 1, 0, 1, 0},
-                {0, 0, 0, 1, 0, 1, 4, 0, 1, 0},
-                {1, 4, 1, 1, 0, 3, 0, 0, 1, 4}};
-        int[][] level1Get = w.getLevel22();
+        Sprite[][] level = {{Sprite.Wall, Sprite.Axe, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Start, Sprite.Wall},
+                {Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.BreakableWall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Goal, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible}};
+        Sprite[][] level1Get = w.getLevel22();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
@@ -91,17 +91,17 @@ class World2MapsTest {
 
     @Test
     void level22neg() {
-        int[][] level = {{1, 5, 1, 4, 0, 0, 4, 1, 1, 0},
-                {1, 0, 0, 1, 1, 0, 1, 0, 2, 0},
-                {1, 4, 1, 0, 1, 1, 1, 0, 0, 0},
-                {1, 0, 1, 1, 1, 0, 1, 1, 0, 0},
-                {1, 0, 0, 1, 0, 0, 0, 1, 0, 0},
-                {4, 1, 0, 1, 1, 4, 0, 1, 4, 0},
-                {0, 1, 0, 6, 0, 1, 1, 0, 1, 4},
-                {0, 1, 1, 4, 0, 0, 1, 0, 1, 0},
-                {0, 0, 0, 1, 0, 1, 4, 0, 1, 0},
-                {1, 4, 1, 1, 0, 3, 0, 0, 1, 4}};
-        int[][] level1Get = w.getLevel22();
+        Sprite[][] level = {{Sprite.Path, Sprite.Axe, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Start, Sprite.Wall},
+                {Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.BreakableWall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Goal, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible}};
+        Sprite[][] level1Get = w.getLevel22();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
@@ -116,17 +116,17 @@ class World2MapsTest {
 
     @Test
     void level23pos() {
-        int[][] level = {{0, 1, 1, 4, 0, 0, 1, 0, 0, 0},
-                {1, 4, 0, 1, 0, 0, 1, 4, 6, 4},
-                {4, 0, 1, 1, 0, 1, 1, 0, 0, 1},
-                {1, 0, 4, 0, 0, 1, 0, 0, 0, 4},
-                {4, 0, 1, 0, 0, 4, 1, 1, 0, 1},
-                {1, 0, 4, 1, 0, 1, 0, 0, 0, 4},
-                {4, 0, 0, 1, 1, 1, 0, 1, 1, 1},
-                {1, 1, 0, 0, 0, 4, 1, 4, 0, 0},
-                {0, 1, 0, 0, 0, 1, 0, 1, 1, 1},
-                {5, 4, 1, 1, 1, 2, 0, 0, 0, 3}};
-        int[][] level1Get = w.getLevel23();
+        Sprite[][] level = {{Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.BreakableWall, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Axe, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Start, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Goal}};
+        Sprite[][] level1Get = w.getLevel23();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
@@ -141,17 +141,17 @@ class World2MapsTest {
 
     @Test
     void level23neg() {
-        int[][] level = {{4, 1, 1, 4, 0, 0, 1, 0, 0, 0},
-                {1, 4, 0, 1, 0, 0, 1, 4, 6, 4},
-                {4, 0, 1, 1, 0, 1, 1, 0, 0, 1},
-                {1, 0, 4, 0, 0, 1, 0, 0, 0, 4},
-                {4, 0, 1, 0, 0, 4, 1, 1, 0, 1},
-                {1, 0, 4, 1, 0, 1, 0, 0, 0, 4},
-                {4, 0, 0, 1, 1, 1, 3, 1, 1, 1},
-                {1, 1, 0, 0, 0, 4, 1, 4, 0, 0},
-                {0, 1, 0, 0, 0, 1, 0, 1, 1, 1},
-                {5, 4, 1, 1, 1, 2, 0, 0, 0, 3}};
-        int[][] level1Get = w.getLevel23();
+        Sprite[][] level = {{Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.BreakableWall, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Axe, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Start, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Goal}};
+        Sprite[][] level1Get = w.getLevel23();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
@@ -166,17 +166,17 @@ class World2MapsTest {
 
     @Test
     void level24pos() {
-        int[][] level = {{0, 1, 4, 6, 1, 0, 0, 0, 1, 1},
-                {0, 1, 0, 0, 1, 0, 1, 1, 1, 3},
-                {0, 1, 1, 0, 1, 0, 1, 0, 0, 0},
-                {0, 0, 1, 0, 1, 4, 1, 1, 1, 4},
-                {5, 1, 1, 1, 1, 0, 0, 0, 0, 1},
-                {0, 0, 1, 0, 0, 0, 0, 0, 0, 4},
-                {0, 1, 4, 0, 0, 4, 1, 4, 0, 1},
-                {0, 4, 0, 0, 0, 1, 0, 1, 0, 4},
-                {0, 1, 1, 4, 0, 1, 0, 1, 0, 1},
-                {0, 0, 0, 1, 1, 1, 0, 1, 1, 2}};
-        int[][] level1Get = w.getLevel24();
+        Sprite[][] level = {{Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.BreakableWall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Goal},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible},
+                {Sprite.Axe, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Start}};
+        Sprite[][] level1Get = w.getLevel24();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
@@ -191,17 +191,17 @@ class World2MapsTest {
 
     @Test
     void level24neg() {
-        int[][] level = {{0, 1, 4, 6, 1, 0, 0, 0, 1, 1},
-                {0, 1, 0, 2, 1, 0, 1, 1, 1, 3},
-                {0, 1, 1, 0, 1, 0, 1, 0, 0, 0},
-                {0, 0, 1, 0, 1, 4, 1, 1, 1, 4},
-                {5, 1, 1, 1, 1, 0, 0, 0, 0, 1},
-                {0, 0, 1, 0, 0, 0, 0, 0, 0, 4},
-                {0, 1, 4, 0, 0, 4, 1, 4, 0, 1},
-                {0, 4, 0, 0, 4, 1, 0, 1, 0, 4},
-                {0, 1, 1, 4, 0, 1, 0, 1, 0, 1},
-                {0, 0, 0, 1, 1, 1, 0, 1, 1, 2}};
-        int[][] level1Get = w.getLevel24();
+        Sprite[][] level = {{Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.BreakableWall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Goal},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible},
+                {Sprite.Axe, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Start}};
+        Sprite[][] level1Get = w.getLevel24();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
@@ -216,18 +216,18 @@ class World2MapsTest {
 
     @Test
     void level25pos() {
-        int[][] level = {{0, 0, 0, 0, 0, 3, 0, 0, 5, 0, 0},
-                {0, 5, 0, 0, 0, 7, 0, 0, 1, 0, 0},
-                {4, 1, 1, 0, 0, 1, 0, 0, 4, 1, 2},
-                {1, 0, 1, 4, 0, 6, 0, 0, 1, 0, 0},
-                {4, 1, 0, 1, 0, 1, 0, 0, 1, 4, 0},
-                {0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0},
-                {4, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0},
-                {1, 0, 0, 1, 1, 4, 0, 1, 0, 0, 0},
-                {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0},
-                {1, 0, 4, 1, 1, 0, 1, 0, 0, 1, 4},
-                {4, 1, 1, 0, 1, 6, 1, 1, 4, 1, 0}};
-        int[][] level1Get = w.getLevel25();
+        Sprite[][] level = {{Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Goal, Sprite.Wall, Sprite.Wall, Sprite.Axe, Sprite.Wall, Sprite.Wall},
+                {Sprite.Wall, Sprite.Axe, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Heart, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Start},
+                {Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.BreakableWall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.BreakableWall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall}};
+        Sprite[][] level1Get = w.getLevel25();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
@@ -242,18 +242,18 @@ class World2MapsTest {
 
     @Test
     void level25neg() {
-        int[][] level = {{0, 2, 0, 0, 0, 3, 0, 0, 5, 0, 0},
-                {0, 5, 0, 0, 0, 7, 0, 0, 1, 0, 0},
-                {4, 1, 1, 0, 0, 1, 0, 0, 4, 1, 2},
-                {1, 0, 1, 4, 0, 6, 0, 0, 1, 0, 0},
-                {4, 1, 4, 1, 0, 1, 0, 0, 1, 4, 0},
-                {0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0},
-                {4, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0},
-                {1, 0, 0, 1, 1, 4, 0, 1, 0, 0, 0},
-                {1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0},
-                {1, 0, 4, 1, 1, 0, 1, 0, 0, 1, 4},
-                {4, 1, 1, 0, 1, 6, 1, 1, 4, 1, 0}};
-        int[][] level1Get = w.getLevel25();
+        Sprite[][] level = {{Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Goal, Sprite.Wall, Sprite.Wall, Sprite.Axe, Sprite.Wall, Sprite.Wall},
+                {Sprite.Wall, Sprite.Axe, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Heart, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Start},
+                {Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.BreakableWall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.BreakableWall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall}};
+        Sprite[][] level1Get = w.getLevel25();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
