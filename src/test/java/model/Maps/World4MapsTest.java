@@ -17,25 +17,26 @@ class World4MapsTest {
 
     @Test
     void level41pos() {
-        int[][] level = {{7, 0, 0, 1, 1, 1, 1, 4, 1, 1, 1, 0, 0, 2},
-                {1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
-                {4, 0, 1, 0, 0, 4, 0, 1, 0, 1, 1, 1, 0, 1},
-                {1, 0, 1, 1, 1, 1, 0, 4, 0, 4, 0, 1, 1, 1},
-                {4, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-                {1, 1, 1, 0, 1, 1, 1, 4, 0, 1, 1, 1, 1, 1},
-                {0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 4, 0},
-                {1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-                {4, 0, 0, 0, 4, 1, 1, 1, 0, 0, 0, 0, 0, 1},
-                {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-                {0, 0, 1, 0, 1, 1, 1, 4, 1, 1, 1, 4, 0, 1},
-                {0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {4, 1, 0, 0, 0, 0, 0, 1, 1, 4, 1, 0, 0, 1},
-                {0, 0, 4, 1, 4, 1, 4, 1, 0, 0, 1, 1, 1, 3}};
-        int[][] level1Get = w.getLevel41();
+        Sprite[][] level = new Sprite[][]{{Sprite.Heart, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Start},
+                {Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Goal}};
+
+        Sprite[][] level4Get = w.getLevel41();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
-                if (level1Get[i][j] != level[i][j]) {
+                if (level4Get[i][j] != level[i][j]) {
                     equal = false;
                     break;
                 }
@@ -46,25 +47,26 @@ class World4MapsTest {
 
     @Test
     void level41neg() {
-        int[][] level = {{7, 0, 9, 1, 1, 1, 1, 4, 1, 1, 1, 0, 0, 2},
-                {1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
-                {4, 0, 1, 0, 0, 4, 0, 1, 0, 1, 1, 1, 0, 1},
-                {1, 0, 1, 1, 1, 1, 0, 4, 0, 4, 0, 1, 1, 1},
-                {4, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-                {1, 1, 1, 0, 1, 1, 1, 4, 0, 1, 1, 1, 1, 1},
-                {0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 4, 0},
-                {1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-                {4, 0, 0, 0, 4, 1, 1, 1, 0, 0, 0, 0, 0, 1},
-                {1, 1, 1, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1},
-                {0, 0, 1, 0, 1, 1, 1, 4, 1, 1, 1, 4, 0, 1},
-                {0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {4, 1, 0, 0, 0, 0, 0, 1, 1, 4, 1, 0, 0, 1},
-                {0, 0, 4, 1, 4, 1, 4, 1, 0, 0, 1, 1, 1, 3}};
-        int[][] level1Get = w.getLevel41();
+        Sprite[][] level = new Sprite[][]{{Sprite.Heart, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Start},
+                {Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.BreakableWall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Goal}};
+
+        Sprite[][] level4Get = w.getLevel41();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
-                if (level1Get[i][j] != level[i][j]) {
+                if (level4Get[i][j] != level[i][j]) {
                     equal = false;
                     break;
                 }
@@ -75,25 +77,26 @@ class World4MapsTest {
 
     @Test
     void level42pos() {
-        int[][] level = {{4, 1, 0, 0, 7, 0, 4, 0, 0, 0, 1, 1, 1, 1},
-                {0, 4, 1, 1, 4, 0, 1, 4, 1, 4, 1, 0, 0, 1},
-                {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 4},
-                {1, 1, 1, 1, 1, 1, 0, 4, 0, 4, 1, 1, 1, 0},
-                {4, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 4},
-                {0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-                {4, 1, 1, 1, 1, 4, 0, 4, 1, 1, 0, 4, 1, 1},
-                {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-                {1, 1, 4, 0, 4, 0, 1, 1, 4, 1, 0, 0, 1, 1},
-                {0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 4},
-                {4, 1, 1, 0, 0, 1, 0, 4, 0, 0, 1, 0, 0, 1},
-                {1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 4, 0, 1},
-                {1, 1, 4, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 4},
-                {3, 0, 1, 1, 4, 1, 1, 4, 0, 1, 1, 1, 4, 2}};
-        int[][] level1Get = w.getLevel42();
+        Sprite[][] level = new Sprite[][]{{Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Heart, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Goal, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Start}};
+
+        Sprite[][] level4Get = w.getLevel42();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
-                if (level1Get[i][j] != level[i][j]) {
+                if (level4Get[i][j] != level[i][j]) {
                     equal = false;
                     break;
                 }
@@ -104,25 +107,26 @@ class World4MapsTest {
 
     @Test
     void level42neg() {
-        int[][] level = {{4, 1, 7, 0, 7, 0, 4, 0, 0, 0, 1, 1, 1, 1},
-                {0, 4, 1, 1, 4, 0, 1, 4, 1, 4, 1, 0, 0, 1},
-                {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 4},
-                {1, 1, 1, 1, 1, 1, 0, 4, 0, 4, 1, 1, 1, 0},
-                {4, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 4},
-                {0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
-                {4, 1, 1, 1, 1, 4, 0, 4, 1, 1, 0, 4, 1, 1},
-                {1, 0, 0, 0, 1, 99, 0, 0, 0, 0, 0, 0, 1, 0},
-                {1, 1, 4, 0, 4, 0, 1, 1, 4, 1, 0, 0, 1, 1},
-                {0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 4},
-                {4, 1, 1, 0, 0, 1, 0, 4, 0, 0, 1, 0, 0, 1},
-                {1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 4, 0, 1},
-                {1, 1, 4, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 4},
-                {3, 0, 1, 1, 4, 1, 1, 4, 0, 1, 1, 1, 4, 2}};
-        int[][] level1Get = w.getLevel42();
+        Sprite[][] level = new Sprite[][]{{Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Heart, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Goal, Sprite.Start, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Start}};
+
+        Sprite[][] level4Get = w.getLevel42();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
-                if (level1Get[i][j] != level[i][j]) {
+                if (level4Get[i][j] != level[i][j]) {
                     equal = false;
                     break;
                 }
@@ -133,25 +137,26 @@ class World4MapsTest {
 
     @Test
     void level43pos() {
-        int[][] level = {{3, 1, 1, 4, 0, 6, 4, 1, 1, 0, 1, 0, 0, 4},
-                {0, 0, 0, 1, 1, 4, 0, 0, 1, 4, 1, 0, 4, 1},
-                {0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0},
-                {0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0},
-                {0, 1, 1, 5, 0, 4, 0, 1, 0, 0, 1, 1, 1, 0},
-                {0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 4, 1},
-                {7, 1, 0, 0, 1, 4, 0, 4, 0, 0, 1, 0, 0, 1},
-                {1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 4},
-                {1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 4},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 4, 0, 1, 0, 0, 1, 4},
-                {1, 0, 0, 0, 4, 1, 1, 1, 0, 1, 0, 4, 1, 0},
-                {2, 1, 4, 1, 1, 0, 0, 1, 1, 4, 1, 1, 0, 0}};
-        int[][] level1Get = w.getLevel43();
+        Sprite[][] level = new Sprite[][]{{Sprite.Goal, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.BreakableWall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Axe, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path},
+                {Sprite.Heart, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall},
+                {Sprite.Start, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall}};
+
+        Sprite[][] level4Get = w.getLevel43();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
-                if (level1Get[i][j] != level[i][j]) {
+                if (level4Get[i][j] != level[i][j]) {
                     equal = false;
                     break;
                 }
@@ -162,25 +167,26 @@ class World4MapsTest {
 
     @Test
     void level43neg() {
-        int[][] level = {{3, 1, 1, 4, 0, 6, 4, 8, 1, 0, 1, 0, 0, 4},
-                {0, 0, 0, 1, 1, 4, 0, 0, 1, 4, 1, 0, 4, 1},
-                {0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0},
-                {0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0},
-                {0, 1, 1, 5, 0, 4, 0, 1, 0, 0, 1, 1, 1, 0},
-                {0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 4, 1},
-                {7, 1, 0, 0, 1, 4, 0, 4, 0, 0, 1, 0, 0, 1},
-                {1, 2, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 4},
-                {1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 4},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 4, 0, 1, 0, 0, 1, 4},
-                {1, 0, 0, 0, 4, 1, 1, 1, 0, 1, 0, 4, 1, 0},
-                {2, 1, 4, 1, 1, 0, 0, 1, 1, 4, 1, 1, 0, 0}};
-        int[][] level1Get = w.getLevel43();
+        Sprite[][] level = new Sprite[][]{{Sprite.Heart, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.BreakableWall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Axe, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path},
+                {Sprite.Heart, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall},
+                {Sprite.Start, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall}};
+
+        Sprite[][] level4Get = w.getLevel43();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
-                if (level1Get[i][j] != level[i][j]) {
+                if (level4Get[i][j] != level[i][j]) {
                     equal = false;
                     break;
                 }
@@ -191,25 +197,26 @@ class World4MapsTest {
 
     @Test
     void level44pos() {
-        int[][] level = {{2, 1, 1, 4, 1, 1, 0, 1, 4, 1, 0, 4, 1, 1},
-                {0, 0, 0, 0, 0, 1, 4, 1, 0, 1, 0, 1, 0, 1},
-                {4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 4},
-                {1, 1, 1, 1, 4, 1, 1, 7, 0, 0, 6, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1},
-                {5, 0, 4, 1, 1, 1, 4, 6, 4, 1, 0, 1, 1, 4},
-                {0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {1, 1, 0, 0, 4, 1, 4, 0, 1, 1, 0, 4, 1, 1},
-                {1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1},
-                {4, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 4},
-                {0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 4, 0, 0},
-                {4, 1, 0, 4, 0, 1, 1, 4, 0, 1, 4, 1, 1, 0},
-                {1, 0, 0, 1, 0, 1, 0, 0, 4, 1, 0, 0, 4, 1},
-                {1, 1, 1, 4, 0, 1, 4, 1, 1, 0, 0, 0, 0, 3}};
-        int[][] level1Get = w.getLevel44();
+        Sprite[][] level = new Sprite[][]{{Sprite.Start, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Heart, Sprite.Wall, Sprite.Wall, Sprite.BreakableWall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Axe, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.BreakableWall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Goal}};
+
+        Sprite[][] level4Get = w.getLevel44();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
-                if (level1Get[i][j] != level[i][j]) {
+                if (level4Get[i][j] != level[i][j]) {
                     equal = false;
                     break;
                 }
@@ -220,25 +227,26 @@ class World4MapsTest {
 
     @Test
     void level44neg() {
-        int[][] level = {{2, 1, 1, 4, 1, 1, 0, 1, 4, 1, 9, 4, 1, 1},
-                {0, 0, 0, 0, 0, 1, 4, 1, 0, 1, 0, 1, 0, 1},
-                {4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 4},
-                {1, 1, 1, 1, 4, 1, 1, 7, 0, 0, 6, 0, 0, 1},
-                {1, 0, 0, 0, 0, 2, 1, 0, 0, 1, 1, 1, 0, 1},
-                {5, 0, 4, 1, 1, 1, 4, 6, 4, 1, 0, 1, 1, 4},
-                {0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {1, 1, 0, 0, 4, 1, 4, 0, 1, 1, 0, 4, 1, 1},
-                {1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1},
-                {4, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 4},
-                {0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 4, 0, 0},
-                {4, 1, 0, 4, 0, 1, 1, 4, 0, 1, 4, 1, 1, 0},
-                {1, 0, 0, 1, 0, 1, 0, 0, 4, 1, 0, 0, 4, 1},
-                {1, 1, 1, 4, 0, 1, 4, 1, 1, 0, 0, 0, 0, 3}};
-        int[][] level1Get = w.getLevel44();
+        Sprite[][] level = new Sprite[][]{{Sprite.Start, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Heart, Sprite.Wall, Sprite.Wall, Sprite.BreakableWall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Axe, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.BreakableWall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall},
+                {Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Wall},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path},
+                {Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Axe, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Goal}};
+
+        Sprite[][] level4Get = w.getLevel44();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
-                if (level1Get[i][j] != level[i][j]) {
+                if (level4Get[i][j] != level[i][j]) {
                     equal = false;
                     break;
                 }
@@ -249,25 +257,26 @@ class World4MapsTest {
 
     @Test
     void level45pos() {
-        int[][] level = {{3, 1, 0, 4, 1, 1, 4, 1, 1, 4, 0, 4, 1, 4},
-                {0, 4, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1},
-                {0, 0, 4, 1, 0, 0, 1, 0, 0, 1, 4, 0, 0, 1},
-                {4, 1, 0, 4, 1, 0, 1, 0, 1, 4, 0, 1, 1, 4},
-                {0, 1, 0, 0, 4, 0, 4, 1, 4, 0, 0, 1, 0, 0},
-                {0, 1, 4, 6, 1, 4, 1, 0, 0, 0, 0, 1, 0, 4},
-                {1, 1, 0, 0, 0, 0, 0, 0, 4, 4, 0, 1, 4, 1},
-                {1, 0, 0, 7, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0},
-                {1, 4, 0, 0, 0, 0, 1, 0, 1, 1, 4, 0, 1, 0},
-                {0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0},
-                {0, 1, 0, 0, 0, 0, 4, 1, 1, 0, 1, 1, 0, 4},
-                {4, 1, 1, 1, 4, 0, 1, 0, 0, 0, 1, 0, 0, 1},
-                {1, 0, 0, 0, 1, 0, 1, 4, 0, 1, 1, 4, 1, 1},
-                {5, 1, 1, 1, 4, 0, 0, 1, 1, 4, 0, 0, 0, 2}};
-        int[][] level1Get = w.getLevel45();
+        Sprite[][] level = new Sprite[][]{{Sprite.Goal, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.BreakableWall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Heart, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path},
+                {Sprite.Axe, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Start}};
+
+        Sprite[][] level4Get = w.getLevel45();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
-                if (level1Get[i][j] != level[i][j]) {
+                if (level4Get[i][j] != level[i][j]) {
                     equal = false;
                     break;
                 }
@@ -278,25 +287,26 @@ class World4MapsTest {
 
     @Test
     void level45neg() {
-        int[][] level = {{3, 1, 0, 4, 1, 1, 4, 1, 1, 4, 0, 4, 1, 4},
-                {0, 4, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1},
-                {0, 0, 4, 1, 0, 2, 1, 0, 0, 1, 4, 0, 0, 1},
-                {4, 1, 0, 4, 1, 0, 1, 0, 1, 4, 0, 1, 1, 4},
-                {0, 1, 0, 0, 4, 0, 4, 1, 4, 0, 0, 1, 0, 0},
-                {0, 1, 4, 6, 1, 4, 1, 0, 0, 0, 0, 1, 0, 4},
-                {1, 1, 0, 0, 0, 0, 0, 0, 4, 4, 0, 1, 4, 1},
-                {1, 0, 0, 7, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0},
-                {1, 4, 0, 0, 0, 0, 1, 0, 1, 1, 4, 0, 1, 0},
-                {0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0},
-                {0, 1, 0, 0, 0, 0, 4, 1, 1, 0, 1, 1, 0, 4},
-                {4, 1, 1, 1, 4, 0, 1, 0, 0, 0, 1, 0, 99, 1},
-                {1, 0, 0, 0, 1, 0, 1, 4, 0, 1, 1, 4, 1, 1},
-                {5, 1, 1, 1, 4, 0, 0, 1, 1, 4, 0, 0, 0, 2}};
-        int[][] level1Get = w.getLevel45();
+        Sprite[][] level = new Sprite[][]{{Sprite.Goal, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path},
+                {Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.BreakableWall, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Heart, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall},
+                {Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Wall, Sprite.Collectible},
+                {Sprite.Collectible, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Path},
+                {Sprite.Path, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Wall, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Path, Sprite.Path},
+                {Sprite.Axe, Sprite.Path, Sprite.Path, Sprite.Path, Sprite.Collectible, Sprite.Wall, Sprite.Wall, Sprite.Path, Sprite.Path, Sprite.Heart, Sprite.Wall, Sprite.Wall, Sprite.Wall, Sprite.Start}};
+
+        Sprite[][] level4Get = w.getLevel45();
         boolean equal = true;
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level[i].length; j++) {
-                if (level1Get[i][j] != level[i][j]) {
+                if (level4Get[i][j] != level[i][j]) {
                     equal = false;
                     break;
                 }
