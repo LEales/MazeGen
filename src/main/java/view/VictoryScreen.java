@@ -16,7 +16,7 @@ public class VictoryScreen extends Pane {
     private MainProgram mainProgram;
     private AudioPlayer audioPlayer;
     private TextField textField;
-    private int[] totalTime;
+    private int totalTime;
     private int scoreListCounter;
 
     private Label errorLabel;
@@ -87,7 +87,7 @@ public class VictoryScreen extends Pane {
 
         String file = "files/ScoreList.dat";
         System.out.println(buildName());
-        PlayerScore playerToAdd = new PlayerScore(buildName(),totalTime[0],totalTime[1],totalTime[2], mainProgram.getLvlCleared());
+        PlayerScore playerToAdd = new PlayerScore(buildName(),totalTime, mainProgram.getLvlCleared());
         PlayerScore[] scoreList = new PlayerScore[10];
         PlayerScore player;
         int counter = 0;
@@ -139,10 +139,10 @@ public class VictoryScreen extends Pane {
     private int findIndex(PlayerScore[] scoreList, int indexToChangePLayer, PlayerScore playerToAdd) {
         for (int i = scoreList.length-1; i >= 0 ; i--) {
             if (scoreList[i]!=null) {
-                System.out.println(scoreList[i].getPlayer()+" ---TIME: "+scoreList[i].getTotalTimeInSeconds());
+                System.out.println(scoreList[i].getPlayer()+" ---TIME: "+scoreList[i].getSeconds());
                 if ((scoreList[i].getLvl() <= playerToAdd.getLvl())){
                     indexToChangePLayer = i;
-                    if (playerToAdd.getTotalTimeInSeconds() < scoreList[i].getTotalTimeInSeconds()){
+                    if (playerToAdd.getSeconds() < scoreList[i].getSeconds()){
                         indexToChangePLayer = i;
                     }
                 }
@@ -196,7 +196,7 @@ public class VictoryScreen extends Pane {
                         scoreList[i] = scoreList[j];
                         scoreList[j] = temp;
                     }else if (scoreList[i].getLvl() == scoreList[j].getLvl()){
-                        if (scoreList[i].getTotalTimeInSeconds() > scoreList[j].getTotalTimeInSeconds()){
+                        if (scoreList[i].getSeconds() > scoreList[j].getSeconds()){
                             PlayerScore temp = scoreList[i];
                             scoreList[i] = scoreList[j];
                             scoreList[j] = temp;
@@ -208,11 +208,8 @@ public class VictoryScreen extends Pane {
         return scoreList;
     }
 
-    public int[] setTime(int[] time) {
-        this.totalTime = new int[3];
-        totalTime[0] = time[0];
-        totalTime[1] = time[1];
-        totalTime[2] = time[2];
+    public int setTime(int time) {
+        totalTime = time;
         return totalTime;
     }
 

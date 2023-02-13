@@ -91,7 +91,7 @@ public class HighscoreList extends HBox{
                 //Label label = createLabels((i+1)+": "+scoreList[i].getPlayer()+"    (LVL)   "+ scoreList[i].getLvl() +" // PLAYERS TIME: "+ scoreList[i].getTotalTimeInSeconds());
                 Label label = createLabels((i+1)+": "+scoreList[i].getPlayer(),0, 0);
                 Label label2 = createLabels(" LVL CLEARED: "+scoreList[i].getLvl(),0, 0);
-                Label label3 = createLabels(" TIME: "+scoreList[i].getTotalTimeInSeconds(),0, 0);
+                Label label3 = createLabels(" TIME: "+scoreList[i].getSeconds(),0, 0);
                 nameVbox.getChildren().add(label);
                 lvlVbox.getChildren().add(label2);
                 timeVbox.getChildren().add(label3);

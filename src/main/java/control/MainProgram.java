@@ -486,7 +486,7 @@ public class MainProgram extends Application {
         mainProgram = this;
     }
 
-    public void setTotalTime(int[] totalTime) {
+    public void setTotalTime(int totalTime) {
         victoryScreen.setTime(totalTime);
     }
 

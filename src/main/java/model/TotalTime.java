@@ -7,9 +7,7 @@ package model;
 public class TotalTime extends Thread {
 
     private boolean gameOver;
-    private int seconds = 0;
-    private int minutes = 0;
-    private int hour = 0;
+    private Time time = new Time();
 
     /**
      * @param gameOver Tar en boolen som används som villkor
@@ -27,15 +25,7 @@ public class TotalTime extends Thread {
         while (!gameOver) {
             try {
                 Thread.sleep(1000);
-                seconds++;
-                if (seconds == 60) {
-                    minutes++;
-                    seconds = 0;
-                }
-                if (minutes == 60) {
-                    hour++;
-                    minutes = 0;
-                }
+                time.increment();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -45,8 +35,8 @@ public class TotalTime extends Thread {
     /**
      * @param gameOver Setter för villkoret
      */
-    public int[] setGameOver(boolean gameOver) {
+    public int setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
-        return new int[]{hour, minutes, seconds};
+        return time.getSeconds();
     }
 }

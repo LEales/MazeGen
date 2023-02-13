@@ -10,7 +10,7 @@ import view.Menu.RightPanel;
 
 public class TimeThread extends Thread {
 
-    private int seconds;
+    private Time time;
     private RightPanel panel;
     private boolean gameOver = false;
 
@@ -19,7 +19,7 @@ public class TimeThread extends Thread {
      * @param panel
      */
     public TimeThread(int seconds, RightPanel panel) {
-        this.seconds = seconds;
+        this.time = new Time(seconds);
         this.panel = panel;
     }
 
@@ -31,13 +31,11 @@ public class TimeThread extends Thread {
         while (!gameOver) {
             try {
                 Thread.sleep(1000);
-                if (seconds > 0) {
-                    seconds--;
-                }
-                if (seconds == 5) {
+                time.decrement();
+                if (time.getSeconds() == 5) {
                     panel.fiveSecLeft();
                 }
-                if (seconds == 0) {
+                if (time.getSeconds() == 0) {
                     panel.startTask();
                     gameOver = true;
                 }

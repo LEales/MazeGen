@@ -39,25 +39,25 @@ class VictoryScreenTest {
             file.delete();
             try {
                 mp.nextWorld6Level(1, 3);
-                addScores(new int[]{0, 0, 0}, v);
+                addScores(0, v);
                 mp.nextWorld6Level(2, 3);
-                addScores(new int[]{0, 0, 0}, v);
+                addScores(0, v);
                 mp.nextWorld5Level(4, 3);
-                addScores(new int[]{0, 0, 0}, v);
+                addScores(0, v);
                 mp.nextWorld5Level(1, 3);
-                addScores(new int[]{0, 0, 0}, v);
+                addScores(0, v);
                 mp.nextWorld4Level(1, 3);
-                addScores(new int[]{0, 0, 0}, v);
+                addScores(0, v);
                 mp.nextWorld4Level(1, 3);
-                addScores(new int[]{0, 0, 1}, v);
+                addScores(0, v);
                 mp.nextWorld3Level(1, 3);
-                addScores(new int[]{0, 0, 0}, v);
+                addScores(0, v);
                 mp.nextWorld2Level(1, 3);
-                addScores(new int[]{0, 0, 0}, v);
+                addScores(0, v);
                 mp.nextWorld1Level(1, 3);
-                addScores(new int[]{0, 0, 0}, v);
+                addScores(0, v);
                 mp.nextWorld6Level(6, 3);
-                addScores(new int[]{0, 0, 0}, v);
+                addScores(0, v);
             } catch (FileNotFoundException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -97,19 +97,19 @@ class VictoryScreenTest {
 
             File file = new File("files/ScoreList.dat");
             file.delete();
-            addScores(new int[]{10, 20, 30}, v);
-            addScores(new int[]{0, 20, 30}, v);
-            addScores(new int[]{9, 20, 30}, v);
-            addScores(new int[]{8, 20, 30}, v);
-            addScores(new int[]{10, 20, 29}, v);
-            addScores(new int[]{10, 20, 31}, v);
-            addScores(new int[]{7, 20, 30}, v);
-            addScores(new int[]{3, 20, 30}, v);
-            addScores(new int[]{2, 20, 30}, v);
-            addScores(new int[]{1, 20, 30}, v);
-            addScores(new int[]{5, 20, 30}, v);
-            addScores(new int[]{6, 20, 30}, v);
-            addScores(new int[]{0, 0, 1}, v);
+            addScores(33631, v);
+            addScores(1230, v);
+            addScores(33630, v);
+            addScores(30030, v);
+            addScores(37809, v);
+            addScores(41999, v);
+            addScores(26430, v);
+            addScores(12030, v);
+            addScores(8430, v);
+            addScores(4830, v);
+            addScores(19230, v);
+            addScores(22830, v);
+            addScores(1, v);
         });
         try {
             Thread.sleep(2000);
@@ -123,7 +123,7 @@ class VictoryScreenTest {
             int i = 0;
             while ((o = ois.readObject()) != null) {
                 PlayerScore ps = (PlayerScore) o;
-                assertEquals(expected[i++], ps.getTotalTimeInSeconds());
+                assertEquals(expected[i++], ps.getSeconds());
             }
         } catch (Exception e) {
             fail("failed to read file");
@@ -131,7 +131,7 @@ class VictoryScreenTest {
     }
 
     //help methods for access to private methods.
-    void addScores(int[] time, VictoryScreen v) {
+    void addScores(int time, VictoryScreen v) {
         v.setTime(time);
         try {
             getAddToScoreList().invoke(v);
@@ -162,14 +162,14 @@ class VictoryScreenTest {
         }
         MainProgram mp = MainProgram.getMainProgram();
         v = mp.getVictoryScreen();
-        PlayerScore[] ps = new PlayerScore[]{new PlayerScore("A", 0, 0, 0, 11),
-                new PlayerScore("B", 0, 0, 0, 21),
-                new PlayerScore("C", 0, 0, 0, 13),
-                new PlayerScore("C", 0, 0, 0, 12),
-                new PlayerScore("C", 0, 0, 0, 21),
-                new PlayerScore("C", 0, 0, 0, 41),
-                new PlayerScore("C", 0, 0, 0, 31),
-                new PlayerScore("C", 0, 0, 0, 0),
+        PlayerScore[] ps = new PlayerScore[]{new PlayerScore("A", 0, 11),
+                new PlayerScore("B", 0, 21),
+                new PlayerScore("C", 0, 13),
+                new PlayerScore("C", 0, 12),
+                new PlayerScore("C", 0, 21),
+                new PlayerScore("C", 0, 41),
+                new PlayerScore("C", 0, 31),
+                new PlayerScore("C", 0, 0),
         };
         //int[] expected = new int[]{0, 11, 12, 13, 21, 21, 31, 41};
         int[] expected = new int[]{41, 31, 21, 21, 13, 12, 11, 0};
@@ -202,14 +202,14 @@ class VictoryScreenTest {
         }
         MainProgram mp = MainProgram.getMainProgram();
         v = mp.getVictoryScreen();
-        PlayerScore[] ps = new PlayerScore[]{new PlayerScore("A", 0, 0, 20, 0),
-                new PlayerScore("B", 0, 0, 20, 0),
-                new PlayerScore("C", 0, 0, 19, 0),
-                new PlayerScore("C", 0, 0, 17, 0),
-                new PlayerScore("C", 0, 0, 18, 0),
-                new PlayerScore("C", 0, 0, 17, 0),
-                new PlayerScore("C", 0, 0, 21, 0),
-                new PlayerScore("C", 0, 0, 15, 0),
+        PlayerScore[] ps = new PlayerScore[]{new PlayerScore("A", 20, 0),
+                new PlayerScore("B", 20, 0),
+                new PlayerScore("C", 19, 0),
+                new PlayerScore("C", 17, 0),
+                new PlayerScore("C", 18, 0),
+                new PlayerScore("C", 17, 0),
+                new PlayerScore("C", 21, 0),
+                new PlayerScore("C", 15, 0),
         };
         //int[] expected = new int[]{0, 11, 12, 13, 21, 21, 31, 41};
         int[] expected = new int[]{15, 17, 17, 18, 19, 20, 20, 21};
@@ -229,7 +229,7 @@ class VictoryScreenTest {
 
         for (int i = 0; i < sorted.length; i++) {
             System.out.println();
-            assertEquals(expected[i], sorted[i].getTotalTimeInSeconds());
+            assertEquals(expected[i], sorted[i].getSeconds());
         }
     }
 }
