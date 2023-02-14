@@ -504,6 +504,10 @@ public class World6Template extends World1Template {
                 animation3.setCycleCount(Animation.INDEFINITE);
                 animation3.setPath(rectangle2);
                 animation3.play();
+
+                ghost1V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost2V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost3V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 6 -> {
                 ImageView ghost1V = new ImageView();
@@ -567,6 +571,11 @@ public class World6Template extends World1Template {
                 animation4.setCycleCount(Animation.INDEFINITE);
                 animation4.setPath(rectangle3);
                 animation4.play();
+
+                ghost1V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost2V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost3V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost4V.setOnMouseEntered(e -> enteredGhost(e));
             }
         }
     }

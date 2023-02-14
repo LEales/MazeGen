@@ -3,6 +3,7 @@ package view.Campaign;
 import control.MainProgram;
 import javafx.animation.Animation;
 import javafx.animation.PathTransition;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -49,9 +50,7 @@ public class World5Template extends World1Template {
 
         Image ghost = new Image("file:files/mob_egypt.png", squareSize, squareSize, false, false);
 
-        PathTransition animation;
-        PathTransition animation2;
-        PathTransition animation3;
+
         switch (currentLevel) {
             case 2 -> {
                 ImageView ghost3V = new ImageView();
@@ -63,27 +62,12 @@ public class World5Template extends World1Template {
                 add(ghost3V, 10, 10);
                 add(ghost1V, 20, 5);
 
-                Rectangle rectangle = new Rectangle(300.0, 150.0);
-                rectangle.setY(65.0);
-                rectangle.setX(-150.0);
+                Rectangle rectangle = createRectangle(300.0, 150.0, 65.0, -150.0);
+                Rectangle rectangle2 = createRectangle(97.0, 280.0, 65.0, -150.0);
 
-                Rectangle rectangle2 = new Rectangle(97.0, 280.0);
-                rectangle2.setY(65.0);
-                rectangle2.setX(-150.0);
+                createPathTransition(ghost3V, 4.0, rectangle, false).play();
 
-                animation = new PathTransition();
-                animation.setNode(ghost3V);
-                animation.setDuration(Duration.seconds(4));
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.play();
-
-                animation2 = new PathTransition();
-                animation2.setNode(ghost1V);
-                animation2.setDuration(Duration.seconds(4));
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle2);
-                animation2.play();
+                createPathTransition(ghost1V, 4.0, rectangle2, false).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost3V.setOnMouseEntered(e -> enteredGhost(e));
@@ -98,27 +82,13 @@ public class World5Template extends World1Template {
                 add(ghost1V, 6, 3);
                 add(ghost2V, 20, 5);
 
-                Rectangle rectangle = new Rectangle(270, 100);
-                rectangle.setY(50);
-                rectangle.setX(-150);
 
-                Rectangle rectangle1 = new Rectangle(100, 100);
-                rectangle1.setY(80);
-                rectangle1.setX(-150);
 
-                animation = new PathTransition();
-                animation.setNode(ghost1V);
-                animation.setDuration(Duration.seconds(2));
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.play();
+                Rectangle rectangle = createRectangle(270.0, 100.0, 50.0, -150.0);
+                Rectangle rectangle1 = createRectangle(100.0, 100.0, 80.0, -150.0);
 
-                animation2 = new PathTransition();
-                animation2.setNode(ghost2V);
-                animation2.setDuration(Duration.seconds(2));
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle1);
-                animation2.play();
+                createPathTransition(ghost1V, 2.0, rectangle, false).play();
+                createPathTransition(ghost2V, 2.0, rectangle1, false).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));
@@ -134,27 +104,12 @@ public class World5Template extends World1Template {
                 add(ghost1V, 13, 3);
                 add(ghost2V, 12, 10);
 
-                Rectangle rectangle = new Rectangle(132, 100);
-                rectangle.setY(50);
-                rectangle.setX(-150);
+                Rectangle rectangle = createRectangle(132.0, 100.0, 50.0, -150.0);
 
-                Rectangle rectangle1 = new Rectangle(100, 100);
-                rectangle1.setY(80);
-                rectangle1.setX(-150);
+                Rectangle rectangle1 = createRectangle(100.0, 100.0, 80.0, -150.0);
 
-                animation = new PathTransition();
-                animation.setNode(ghost1V);
-                animation.setDuration(Duration.seconds(1.5));
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.play();
-
-                animation2 = new PathTransition();
-                animation2.setNode(ghost2V);
-                animation2.setDuration(Duration.seconds(1.5));
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle1);
-                animation2.play();
+                createPathTransition(ghost1V, 1.5, rectangle, false).play();
+                createPathTransition(ghost2V, 1.5, rectangle1, false).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));
@@ -173,39 +128,15 @@ public class World5Template extends World1Template {
                 add(ghost2V, 14, 0);
                 //add(ghost3V, 8, 12);
 
-                Rectangle rectangle = new Rectangle(132, 200);
-                rectangle.setY(80);
-                rectangle.setX(-150);
+                Rectangle rectangle = createRectangle(132.0, 200.0, 80.0, -150.0);
 
-                Rectangle rectangle1 = new Rectangle(0, 135);
-                rectangle1.setY(80);
-                rectangle1.setX(-150);
+                Rectangle rectangle1 = createRectangle(0.0, 135.0, 80.0, -150.0);
 
-                Rectangle rectangle2 = new Rectangle(400, 0);
-                rectangle2.setY(20);
-                rectangle2.setX(-150);
+                Rectangle rectangle2 = createRectangle(400.0, 0.0, 20.0, -150.0);
 
-                animation = new PathTransition();
-                animation.setNode(ghost1V);
-                animation.setDuration(Duration.seconds(2));
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.play();
-
-                animation2 = new PathTransition();
-                animation2.setNode(ghost2V);
-                animation2.setDuration(Duration.seconds(3));
-                animation2.setAutoReverse(true);
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle1);
-                animation2.play();
-
-                animation3 = new PathTransition();
-                animation3.setNode(ghost3V);
-                animation3.setDuration(Duration.seconds(2.5));
-                animation3.setCycleCount(Animation.INDEFINITE);
-                animation3.setPath(rectangle2);
-                animation3.play();
+                createPathTransition(ghost1V, 2.0, rectangle, false).play();
+                createPathTransition(ghost2V, 3.0, rectangle1, true).play();
+                createPathTransition(ghost3V, 2.5, rectangle2, false).play();
             }
             case 6 -> {
                 ImageView ghost1V = new ImageView();
@@ -223,53 +154,37 @@ public class World5Template extends World1Template {
                 add(ghost3V, 16, 0);
                 add(ghost4V, 17, 10);
 
-                Rectangle rectangle = new Rectangle(100, 100);
-                rectangle.setY(80);
-                rectangle.setX(-150);
+                Rectangle rectangle = createRectangle(100.0, 100.0, 80.0, -150.0);
 
-                Rectangle rectangle1 = new Rectangle(100, 0);
-                rectangle1.setY(80);
-                rectangle1.setX(-150);
+                Rectangle rectangle1 = createRectangle(100.0, 0.0, 80.0, -150.0);
 
-                Rectangle rectangle2 = new Rectangle(0, 450);
-                rectangle2.setY(80);
-                rectangle2.setX(17);
+                Rectangle rectangle2 = createRectangle(0.0, 450.0, 80.0, 17);
 
-                Rectangle rectangle3 = new Rectangle(70, 130);
-                rectangle3.setY(80);
-                rectangle3.setX(-150);
+                Rectangle rectangle3 = createRectangle(70.0, 130.0, 80.0, -150.0);
 
-                animation = new PathTransition();
-                animation.setNode(ghost1V);
-                animation.setDuration(Duration.seconds(2));
-                animation.setAutoReverse(false);
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.play();
+                createPathTransition(ghost1V, 2.0, rectangle, false).play();
+                createPathTransition(ghost2V, 2.5, rectangle1, true).play();
+                createPathTransition(ghost3V, 2.0, rectangle2, true).play();
 
-                animation2 = new PathTransition();
-                animation2.setNode(ghost2V);
-                animation2.setDuration(Duration.seconds(2.5));
-                animation2.setAutoReverse(true);
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle1);
-                animation2.play();
-
-                animation3 = new PathTransition();
-                animation3.setNode(ghost3V);
-                animation3.setDuration(Duration.seconds(2));
-                animation3.setAutoReverse(true);
-                animation3.setCycleCount(Animation.INDEFINITE);
-                animation3.setPath(rectangle2);
-                animation3.play();
-
-                PathTransition animation4 = new PathTransition();
-                animation4.setNode(ghost4V);
-                animation4.setDuration(Duration.seconds(3));
-                animation4.setCycleCount(Animation.INDEFINITE);
-                animation4.setPath(rectangle3);
-                animation4.play();
+                createPathTransition(ghost4V, 3.0, rectangle3, false).play();
             }
         }
+    }
+
+    private PathTransition createPathTransition(Node node, double duration, Rectangle path, boolean autoReverse) {
+        PathTransition pathTransition = new PathTransition();
+        pathTransition.setNode(node);
+        pathTransition.setAutoReverse(autoReverse);
+        pathTransition.setDuration(Duration.seconds(duration));
+        pathTransition.setCycleCount(Animation.INDEFINITE);
+        pathTransition.setPath(path);
+        return pathTransition;
+    }
+
+    private Rectangle createRectangle(double v, double v1, double y, double x) {
+        Rectangle rectangle = new Rectangle(v, v1);
+        rectangle.setY(y);
+        rectangle.setX(x);
+        return rectangle;
     }
 }
