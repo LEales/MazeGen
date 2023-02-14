@@ -186,7 +186,7 @@ public class MainProgram extends Application {
         introAnimation.setDisable(true);
 
         try {
-            nextWorld2Level(5,3);
+            nextWorld3Level(1,3);
         } catch (Exception e){}
 
         startTotalTime();
@@ -272,7 +272,7 @@ public class MainProgram extends Application {
         switch (level) {
             case 1 -> {
                 rightPanel.changeLevelCounter("21");
-                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel21(), 2, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel21(), 2, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer));
                 introAnimation = new WorldIntroAnimation("2");
                 mainPaneCampaign.getChildren().add(introAnimation);
                 introAnimation.setDisable(true);
@@ -281,22 +281,22 @@ public class MainProgram extends Application {
             case 2 -> {
                 lvlCleared = 21;
                 rightPanel.changeLevelCounter("22");
-                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel22(), 3, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel22(), 3, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer));
             }
             case 3 -> {
                 lvlCleared = 22;
                 rightPanel.changeLevelCounter("23");
-                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel23(), 4, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel23(), 4, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer));
             }
             case 4 -> {
                 lvlCleared = 23;
                 rightPanel.changeLevelCounter("24");
-                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel24(), 5, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer, false, rightPanel));
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel24(), 5, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer));
             }
             case 5 -> {
                 lvlCleared = 24;
                 rightPanel.changeLevelCounter("25");
-                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel25(), 6, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer, true, rightPanel));
+                mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel25(), 6, heartCrystals, rightPanel, World.UNDERGROUND, audioPlayer));
             }
             case 6 -> {
                 lvlCleared = 25;

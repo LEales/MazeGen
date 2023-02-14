@@ -1,7 +1,6 @@
 package view.Campaign;
 
 import control.MainProgram;
-import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
 import javafx.scene.Node;
@@ -12,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import model.Maps.Sprite;
 import model.World;
@@ -43,6 +43,7 @@ public class World1Template extends GridPane {
     private Image start;
     private Image heart;
     private Image breakableWall;
+    private Image pickAxeImage;
     private boolean startButtonPressed;
     private boolean allCollectiblesObtained;
     private boolean wallDestroyed;
@@ -50,14 +51,12 @@ public class World1Template extends GridPane {
     private final int squareSize;
     private final int currentLevel;
     private int heartCrystals;
-    private Image pickAxeImage;
     private boolean pickaxeObtained;
     private boolean gameStarted;
     private boolean startNotClickedOnce = true;
-    private boolean totalTimeStarted = true;
+    private boolean firstStart = true;
     private final World world;
     private int seconds;
-
     private final RightPanel rightPanel;
     private final AudioPlayer audioPlayer;
     private TimeThread time;
@@ -82,7 +81,6 @@ public class World1Template extends GridPane {
         this.level = level.clone();
         this.heartCrystals = heartCrystals;
         this.seconds = seconds;
-
         rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
         this.rightPanel = rightPanel;
         this.audioPlayer = audioPlayer;
@@ -99,14 +97,15 @@ public class World1Template extends GridPane {
     /**
      * Sätter bakgrunden i fönstret.
      */
-    public void setBackground() {
+    private void setBackground() {
         BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg",
                 MainProgram.WIDTH, MainProgram.HEIGHT, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(menuBackground));
     }
-    PathTransition createPathTransition(Node node, double duration, int cycleCount, Rectangle path, boolean autoReverse) {
+
+    PathTransition createPathTransition(Node node, double duration, int cycleCount, Shape path, boolean autoReverse) {
         PathTransition pathTransition = new PathTransition();
         pathTransition.setNode(node);
         pathTransition.setAutoReverse(autoReverse);
@@ -114,6 +113,12 @@ public class World1Template extends GridPane {
         pathTransition.setCycleCount(cycleCount);
         pathTransition.setPath(path);
         return pathTransition;
+    }
+
+    ImageView createImageView(Image image, int i, int i1) {
+        ImageView view = new ImageView(image);
+        add(view, i, i1);
+        return view;
     }
 
     Rectangle createRectangle(double v, double v1, double y, double x) {
@@ -146,9 +151,9 @@ public class World1Template extends GridPane {
      * Exempelvis så representerar 1:or väg, 0:or väggar, och 7:or hjärtan osv.
      */
     private void setupLevel() {
-        for (int i = 1; i < level.length+1; i++) {
-            for (int j = 1; j < level.length+1; j++) {
-                switch (level[i-1][j-1]) {
+        for (int i = 1; i < level.length + 1; i++) {
+            for (int j = 1; j < level.length + 1; j++) {
+                switch (level[i - 1][j - 1]) {
                     case PATH -> add(getPath(), j, i);
                     case WALL -> add(getWall(), j, i);
                     case START -> add(getStart(), j, i);
@@ -166,7 +171,7 @@ public class World1Template extends GridPane {
                         add(getPath(), j, i);
                         add(addHeartCrystal(), j, i);
                     }
-                    default -> throw new IllegalStateException("Unexpected value: " + level[i-1][j-1]);
+                    default -> throw new IllegalStateException("Unexpected value: " + level[i - 1][j - 1]);
                 }
             }
         }
@@ -178,8 +183,7 @@ public class World1Template extends GridPane {
      *
      * @param world Den aktuella världen.
      */
-    public void setupImages(World world) {
-
+    private void setupImages(World world) {
         path = new Image("file:files/" + world + "/path.png", squareSize, squareSize, false, false);
         goal = new Image("file:files/" + world + "/goal.png", squareSize, squareSize, false, false);
         diamond = new Image("file:files/" + world + "/collectible.png", squareSize, squareSize, false, false);
@@ -202,7 +206,7 @@ public class World1Template extends GridPane {
      *
      * @return Returnerar en label.
      */
-    public Label getWall() {
+    private Label getWall() {
         Label label = new Label();
         ImageView wallView = new ImageView(wall);
         wallView.setFitHeight(squareSize);
@@ -352,9 +356,7 @@ public class World1Template extends GridPane {
      */
 
     private void heartCrystalObtained(MouseEvent e) {
-
         Label label = (Label) e.getSource();
-
         if (startButtonPressed) {
             audioPlayer.playHeartSound();
             label.setVisible(false);
@@ -401,10 +403,9 @@ public class World1Template extends GridPane {
      *
      * @param e Används för att hitta rätt label.
      */
-    public void enteredWall(MouseEvent e) {
+    private void enteredWall(MouseEvent e) {
         Label label = (Label) e.getSource();
         createFadeTransition(label, 0.3, 10.0, 0.6).play();
-
         if (startButtonPressed) {
             rightPanel.changeHeartCounter(String.valueOf(--heartCrystals));
             if (0 == heartCrystals) {
@@ -422,7 +423,7 @@ public class World1Template extends GridPane {
      *
      * @param e
      */
-    public void enteredGhost(MouseEvent e) {
+    void enteredGhost(MouseEvent e) {
         if (startButtonPressed) {
             ImageView view = (ImageView) e.getSource();
             createFadeTransition(view, 0.2, 10, 0.6).play();
@@ -449,7 +450,6 @@ public class World1Template extends GridPane {
         time.setGameOver(true);
         time = null;
         rightPanel.removePickaxe();
-
     }
 
     /**
@@ -492,11 +492,10 @@ public class World1Template extends GridPane {
      * Startar spelrundan och timern.
      */
     private void startLevel() {
-        if (totalTimeStarted) {
+        if (firstStart) {
             rightPanel.startTotalTimer();
             rightPanel.setTimerIsStarted(true);
         }
-
         if (!gameStarted) {
             rightPanel.resumeClock();
             gameStarted = true;
@@ -511,7 +510,7 @@ public class World1Template extends GridPane {
             time.start();
 
         }
-        totalTimeStarted = false;
+        firstStart = false;
         startNotClickedOnce = false;
         audioPlayer.playStartSound();
         startButtonPressed = true;
@@ -533,7 +532,6 @@ public class World1Template extends GridPane {
         fade.setDuration(Duration.seconds(duration));
         fade.setFromValue(from);
         fade.setToValue(to);
-
         return fade;
     }
 
@@ -544,10 +542,8 @@ public class World1Template extends GridPane {
      * @param e Används för att hitta rätt label.
      */
     private void enteredBreakableWall(MouseEvent e) {
-
         Label label = (Label) e.getSource();
         ImageView pathView = new ImageView(path);
-
         if (startButtonPressed) {
             if (pickaxeObtained) {
                 label.setGraphic(pathView);

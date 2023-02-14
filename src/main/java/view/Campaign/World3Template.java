@@ -1,12 +1,9 @@
 package view.Campaign;
 
 import control.MainProgram;
-import javafx.animation.Animation;
-import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import model.Maps.Sprite;
 import model.World;
 import view.AudioPlayer;
@@ -15,16 +12,7 @@ import view.Menu.RightPanel;
 import java.io.FileNotFoundException;
 
 public class World3Template extends World1Template {
-
-
-    /**
-     * @author Filip Örnling
-     */
-
-    private Image ghost;
-
     private final int squareSize;
-    private final ImageView imageView = new ImageView();
     private final int currentLevel;
     public World3Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
         super(level, currentLevel, heartCrystals, rightPanel, world, audioPlayer, 60);
@@ -33,24 +21,8 @@ public class World3Template extends World1Template {
         rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
         rightPanel.setSTARTTIME(60);
         rightPanel.resetTimerLabel();
-        setupGhost();
-
-    }
-
-    //Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
-    private void setupGhost() throws FileNotFoundException {
-        ghost = new Image("file:files/ghost.png", squareSize, squareSize, false, false);
-
-        imageView.setImage(ghost);
-
-        imageView.setX(1);
-        imageView.setY(1);
-        imageView.setFitHeight(squareSize);
-        imageView.setFitWidth(squareSize);
-
-        imageView.setOnMouseEntered(e -> enteredWall(e));
-
         initialize();
+
     }
 
     /**
@@ -61,162 +33,50 @@ public class World3Template extends World1Template {
      */
 
     public void initialize() {
-        PathTransition animation;
-        PathTransition animation2;
-        PathTransition animation3;
-        PathTransition animation4;
+        Image ghost = new Image("file:files/ghost.png", squareSize, squareSize, false, false);
 
         switch (currentLevel) {
             case 2 -> {
-                ImageView ghost3V = new ImageView();
-                ImageView ghost1V = new ImageView();
-                ghost3V.setImage(ghost);
-                ghost1V.setImage(ghost);
-                add(ghost3V, 5, 5);
-                add(ghost1V, 14, 5);
+                ImageView ghost1V = createImageView(ghost, 14, 5);
+                ImageView ghost2V = createImageView(ghost, 5, 5);
 
-                Rectangle rectangle = new Rectangle(125, 251);
-                rectangle.setY(65);
-                rectangle.setX(-147);
+                Rectangle rectangle = createRectangle(125.0, 251.0, 65.0, -147.0);
+                Rectangle rectangle1 = createRectangle(84.0, 123.0, 65.0, -147.0);
 
-                Rectangle rectangle2 = new Rectangle(84, 123);
-                rectangle2.setY(65);
-                rectangle2.setX(-147);
-
-                animation = new PathTransition();
-                animation.setNode(ghost3V);
-                animation.setDuration(Duration.seconds(4));
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.play();
-
-                animation2 = new PathTransition();
-                animation2.setNode(ghost1V);
-                animation2.setDuration(Duration.seconds(4));
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle2);
-                animation2.play();
+                createPathTransition(ghost2V, 4.0, -1, rectangle, false).play();
+                createPathTransition(ghost1V, 4.0, -1, rectangle1, false).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
-                ghost3V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost2V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 3 -> {
-                ImageView ghost1V = new ImageView();
-                ImageView ghost2V = new ImageView();
+                ImageView ghost1V = createImageView(ghost, 5, 8);
+                ImageView ghost2V = createImageView(ghost, 9, 3);
 
-                ghost1V.setImage(ghost);
-                ghost2V.setImage(ghost);
+                Rectangle rectangle = createRectangle(125.0, 120.0, 65.0, -147.0);
+                Rectangle rectangle1 = createRectangle(210.0, 125.0, 190.0, -231.0);
 
-                //add(ghost1V,5,8);
-                add(ghost2V, 9, 3);
-
-                Rectangle rectangle = new Rectangle(125, 120);
-                rectangle.setY(65);
-                rectangle.setX(-147);
-
-                Rectangle rectangle1 = new Rectangle(210, 125);
-                rectangle1.setY(190);
-                rectangle1.setX(-231);
-
-                animation = new PathTransition();
-                animation.setNode(ghost1V);
-                animation.setDuration(Duration.seconds(2));
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.play();
-
-                animation2 = new PathTransition();
-                animation2.setNode(ghost2V);
-                animation2.setDuration(Duration.seconds(2));
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle1);
-                animation2.play();
+                createPathTransition(ghost1V, 2.0, -1, rectangle, false).play();
+                createPathTransition(ghost2V, 2.0, -1, rectangle1, false).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 4 -> {
-                ImageView ghost4V = new ImageView();
-                ImageView ghost2V = new ImageView();
-                ImageView ghost1V = new ImageView();
-                ImageView ghost3V = new ImageView();
-                ImageView ghost5V = new ImageView();
+                ImageView ghost1V = createImageView(ghost, 10, 1);
+                ImageView ghost2V = createImageView(ghost, 15, 4);
+                ImageView ghost3V = createImageView(ghost, 15, 1);
+                ImageView ghost4V = createImageView(ghost, 10, 4);
+                ImageView ghost5V = createImageView(ghost, 12, 1);
 
-                ghost1V.setImage(ghost);
-                ghost2V.setImage(ghost);
-                ghost3V.setImage(ghost);
-                ghost4V.setImage(ghost);
-                ghost5V.setImage(ghost);
+                Rectangle rectangle = createRectangle(125.0, 83.0, 190.0, -230.0);
+                Rectangle rectangle1 = createRectangle(0.0, 83.0, 105.0, -232.0);
 
-                add(ghost2V, 15, 4);
-                add(ghost4V, 10, 4);
-                add(ghost1V, 10, 1);
-                add(ghost3V, 15, 1);
-                add(ghost5V, 12, 1);
-
-                Rectangle rectangle = new Rectangle(125, 83);
-                rectangle.setY(190);
-                rectangle.setX(-230);
-
-                Rectangle rectangle1 = new Rectangle(125, 83);
-                rectangle1.setY(190);
-                rectangle1.setX(-230);
-
-                Rectangle rectangle2 = new Rectangle(0, 83);
-                rectangle2.setY(105);
-                rectangle2.setX(-232);
-
-                Rectangle rectangle3 = new Rectangle(0, 83);
-                rectangle3.setY(105);
-                rectangle3.setX(-232);
-
-                Rectangle rectangle4 = new Rectangle(0, 83);
-                rectangle4.setY(105);
-                rectangle4.setX(-232);
-
-                //Övre spöken
-
-                animation3 = new PathTransition();
-                animation3.setNode(ghost1V);
-                animation3.setDuration(Duration.seconds(2));
-                animation3.setCycleCount(Animation.INDEFINITE);
-                animation3.setPath(rectangle2);
-                animation3.setAutoReverse(true);
-                animation3.play();
-
-                animation4 = new PathTransition();
-                animation4.setNode(ghost3V);
-                animation4.setDuration(Duration.seconds(2));
-                animation4.setCycleCount(Animation.INDEFINITE);
-                animation4.setPath(rectangle3);
-                animation4.setAutoReverse(true);
-                animation4.play();
-
-                PathTransition animation5 = new PathTransition();
-                animation5.setNode(ghost5V);
-                animation5.setDuration(Duration.seconds(2));
-                animation5.setCycleCount(Animation.INDEFINITE);
-                animation5.setPath(rectangle4);
-                animation5.setAutoReverse(true);
-                animation5.play();
-
-                //Undre spöken
-
-                animation = new PathTransition();
-                animation.setNode(ghost4V);
-                animation.setDuration(Duration.seconds(2));
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.setAutoReverse(true);
-                animation.play();
-
-                animation2 = new PathTransition();
-                animation2.setNode(ghost2V);
-                animation2.setDuration(Duration.seconds(3));
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle1);
-                animation2.setAutoReverse(true);
-                animation2.play();
+                createPathTransition(ghost1V, 2.0, -1, rectangle1, true).play();
+                createPathTransition(ghost2V, 3.0, -1, rectangle, true).play();
+                createPathTransition(ghost3V, 2.0, -1, rectangle1, true).play();
+                createPathTransition(ghost4V, 2.0, -1, rectangle, true).play();
+                createPathTransition(ghost5V, 2.0, -1, rectangle1, true).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));
@@ -225,138 +85,39 @@ public class World3Template extends World1Template {
                 ghost5V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 5 -> {
-                ImageView ghost1V = new ImageView();
-                ImageView ghost2V = new ImageView();
-                ImageView ghost3V = new ImageView();
-                ImageView ghost4V = new ImageView();
+                ImageView ghost1V = createImageView(ghost, 8, 3);
+                ImageView ghost2V = createImageView(ghost, 8, 8);
+                ImageView ghost3V = createImageView(ghost, 8, 12);
+                ImageView ghost4V = createImageView(ghost, 8, 11);
 
-                ghost4V.setImage(ghost);
-                ghost3V.setImage(ghost);
-                ghost2V.setImage(ghost);
-                ghost1V.setImage(ghost);
+                Rectangle rectangle = createRectangle(83.0, 125.0, 65.0, -150.0);
+                Rectangle rectangle1 = createRectangle(0.0, 125.0, 65.0, -150.0);
+                Rectangle rectangle2 = createRectangle(400.0, 0.0, 20.0, -150.0);
+
+                createPathTransition(ghost1V, 2.0, -1, rectangle, true).play();
+                createPathTransition(ghost2V, 1.5, -1, rectangle1, true).play();
+                createPathTransition(ghost3V, 2.5, -1, rectangle2, true).play();
+                createPathTransition(ghost4V, 3.0, -1, rectangle2, true).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost3V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost4V.setOnMouseEntered(e -> enteredGhost(e));
-
-                add(ghost4V, 8, 11);
-                add(ghost1V, 8, 3);
-                add(ghost2V, 8, 8);
-                add(ghost3V, 8, 12);
-
-                Rectangle rectangle = new Rectangle(83, 125);
-                rectangle.setY(65);
-                rectangle.setX(-150);
-
-                Rectangle rectangle1 = new Rectangle(0, 125);
-                rectangle1.setY(65);
-                rectangle1.setX(-150);
-
-                Rectangle rectangle2 = new Rectangle(400, 0);
-                rectangle2.setY(20);
-                rectangle2.setX(-150);
-
-                Rectangle rectangle3 = new Rectangle(400, 0);
-                rectangle3.setY(20);
-                rectangle3.setX(-150);
-
-                animation4 = new PathTransition();
-                animation4.setNode(ghost4V);
-                animation4.setDuration(Duration.seconds(3));
-                animation4.setAutoReverse(true);
-                animation4.setCycleCount(Animation.INDEFINITE);
-                animation4.setPath(rectangle3);
-                animation4.play();
-
-                animation3 = new PathTransition();
-                animation3.setNode(ghost3V);
-                animation3.setDuration(Duration.seconds(2.5));
-                animation3.setAutoReverse(true);
-                animation3.setCycleCount(Animation.INDEFINITE);
-                animation3.setPath(rectangle2);
-                animation3.play();
-
-                animation2 = new PathTransition();
-                animation2.setNode(ghost2V);
-                animation2.setDuration(Duration.seconds(1.5));
-                animation2.setAutoReverse(true);
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle1);
-                animation2.play();
-
-                animation = new PathTransition();
-                animation.setNode(ghost1V);
-                animation.setDuration(Duration.seconds(2));
-                animation.setAutoReverse(true);
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.play();
             }
             case 6 -> {
-                ImageView ghost1V = new ImageView();
-                ImageView ghost2V = new ImageView();
-                ImageView ghost3V = new ImageView();
-                ImageView ghost4V = new ImageView();
+                ImageView ghost1V = createImageView(ghost, 7, 6);
+                ImageView ghost2V = createImageView(ghost, 8, 2);
+                ImageView ghost3V = createImageView(ghost, 8, 6);
+                ImageView ghost4V = createImageView(ghost, 8, 10);
 
-                ghost4V.setImage(ghost);
-                ghost3V.setImage(ghost);
-                ghost2V.setImage(ghost);
-                ghost1V.setImage(ghost);
+                Rectangle rectangle = createRectangle(83.0, 125.0, 65.0, -150.0);
+                Rectangle rectangle1 = createRectangle(0.0, 40.0, 65.0, -150.0);
+                Rectangle rectangle2 = createRectangle(170.0, 87.0, 20.0, 20.0);
 
-                add(ghost4V, 8, 10);
-                add(ghost3V, 8, 6);
-
-                add(ghost1V, 7, 6);
-                add(ghost2V, 8, 2);
-
-                Rectangle rectangle = new Rectangle(83, 125);
-                rectangle.setY(65);
-                rectangle.setX(-150);
-
-                Rectangle rectangle1 = new Rectangle(0, 40);
-                rectangle1.setY(65);
-                rectangle1.setX(-150);
-
-                Rectangle rectangle2 = new Rectangle(170, 87);
-                rectangle2.setY(20);
-                rectangle2.setX(20);
-
-                Rectangle rectangle3 = new Rectangle(170, 87);
-                rectangle3.setY(20);
-                rectangle3.setX(20);
-
-                animation4 = new PathTransition();
-                animation4.setNode(ghost4V);
-                animation4.setDuration(Duration.seconds(3));
-                animation4.setAutoReverse(true);
-                animation4.setCycleCount(Animation.INDEFINITE);
-                animation4.setPath(rectangle3);
-                animation4.play();
-
-                animation3 = new PathTransition();
-                animation3.setNode(ghost3V);
-                animation3.setDuration(Duration.seconds(2.5));
-                animation3.setAutoReverse(true);
-                animation3.setCycleCount(Animation.INDEFINITE);
-                animation3.setPath(rectangle2);
-                animation3.play();
-
-                animation2 = new PathTransition();
-                animation2.setNode(ghost2V);
-                animation2.setDuration(Duration.seconds(1.5));
-                animation2.setAutoReverse(true);
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle1);
-                animation2.play();
-
-                animation = new PathTransition();
-                animation.setNode(ghost1V);
-                animation.setDuration(Duration.seconds(2));
-                animation.setAutoReverse(false);
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.play();
+                createPathTransition(ghost1V, 2.0, -1, rectangle, false).play();
+                createPathTransition(ghost2V, 1.5, -1, rectangle1, true).play();
+                createPathTransition(ghost3V, 2.5, -1, rectangle2, true).play();
+                createPathTransition(ghost4V, 3.0, -1, rectangle2, true).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));

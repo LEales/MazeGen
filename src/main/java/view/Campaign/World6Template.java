@@ -25,7 +25,7 @@ public class World6Template extends World1Template {
 
     public World6Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
         super(level, currentLevel, heartCrystals, rightPanel, world, audioPlayer, 99);
-        squareSize = (int) MainProgram.HEIGHT/(level.length+2);
+        squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
         this.currentLevel = currentLevel;
         rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
         rightPanel.resetTimerLabel();
@@ -34,6 +34,12 @@ public class World6Template extends World1Template {
     }
 
     private void ghostCycleEnded(PathTransition animation, double duration, int cycleCount, boolean autoReverse) {
+        if (0 >= duration) {
+            throw new IllegalArgumentException("Duration cannot be bellow 0");
+        }
+        if (-1 > cycleCount) {
+            throw new IllegalArgumentException("Cycle count cannot be bellow -1");
+        }
         animation.setCycleCount(cycleCount);
         animation.setDuration(Duration.seconds(duration));
         animation.setAutoReverse(autoReverse);
@@ -52,164 +58,84 @@ public class World6Template extends World1Template {
 
         Image ghost = new Image("file:files/space_mob3.png", squareSize, squareSize, false, false);
 
-        ImageView ghost4V1;
-        ImageView ghost3V1;
-        ImageView ghost1V1;
-        ImageView ghost2V1;
-        ImageView ghost5V1;
-
         switch (currentLevel) {
             case 2 -> {
-                ImageView ghost4V = new ImageView();
-                ImageView ghost3V = new ImageView();
-                ImageView ghost1V = new ImageView();
-                ImageView ghost2V = new ImageView();
-                ImageView ghost5V = new ImageView();
-                ghost5V.setImage(ghost);
-                ghost4V.setImage(ghost);
-                ghost3V.setImage(ghost);
-                ghost2V.setImage(ghost);
-                ghost1V.setImage(ghost);
-                add(ghost5V, 16, 4);
-                add(ghost3V, 9, 4);
-                add(ghost1V, 5, 10);
-                add(ghost2V, 4, 5);
-                add(ghost4V, 10, 13);
-                Rectangle rectangle = createRectangle(120.0,93.0,72.0,-45.0);
+                ImageView ghost1V = createImageView(ghost,5,10);
+                ImageView ghost2V = createImageView(ghost,4,5);
+                ImageView ghost3V = createImageView(ghost,9,4);
+                ImageView ghost4V = createImageView(ghost,10,13);
+                ImageView ghost5V = createImageView(ghost,16,4);
 
-                createPathTransition(ghost3V, 4.0, -1, rectangle, false).play();
+                Rectangle rectangle = createRectangle(120.0, 93.0, 72.0, -45.0);
+
                 createPathTransition(ghost1V, 4.0, -1, rectangle, false).play();
                 createPathTransition(ghost2V, 4.0, -1, rectangle, false).play();
+                createPathTransition(ghost3V, 4.0, -1, rectangle, false).play();
                 createPathTransition(ghost4V, 4.0, -1, rectangle, false).play();
                 createPathTransition(ghost5V, 4.0, -1, rectangle, false).play();
 
-                ghost5V.setOnMouseEntered(event -> enteredGhost(event));
-                ghost4V.setOnMouseEntered(event -> enteredGhost(event));
-                ghost2V.setOnMouseEntered(event -> enteredGhost(event));
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost2V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost3V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost4V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost5V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 3 -> {
-                ghost4V1 = new ImageView();
-                ghost3V1 = new ImageView();
-                ghost1V1 = new ImageView();
-                ghost2V1 = new ImageView();
-                ghost5V1 = new ImageView();
-                ghost5V1.setImage(ghost);
-                ghost4V1.setImage(ghost);
-                ghost3V1.setImage(ghost);
-                ghost2V1.setImage(ghost);
-                ghost1V1.setImage(ghost);
-                add(ghost5V1, 16, 4);
-                add(ghost3V1, 9, 4);
-                add(ghost1V1, 5, 10);
-                add(ghost2V1, 4, 5);
-                add(ghost4V1, 10, 13);
+                ImageView ghost1V = createImageView(ghost, 5,10);
+                ImageView ghost2V = createImageView(ghost, 4,5);
+                ImageView ghost3V = createImageView(ghost, 9, 4);
+                ImageView ghost4V = createImageView(ghost,10, 13);
+                ImageView ghost5V = createImageView(ghost, 16,4);
 
 
                 Rectangle rectangle = createRectangle(120.0, 93.0, 72.0, -45.0);
 
-                PathTransition animation = createPathTransition(ghost3V1, 5.0, 1, rectangle, false);
+                PathTransition animation = createPathTransition(ghost1V, 5.0, 1, rectangle, false);
                 animation.play();
                 animation.setOnFinished(e -> ghostCycleEnded(animation, 2.0, -1, true));
 
-                PathTransition animation2 = createPathTransition(ghost2V1, 5.0, 1, rectangle, false);
+                PathTransition animation2 = createPathTransition(ghost2V, 5.0, 1, rectangle, false);
                 animation2.play();
                 animation2.setOnFinished(e -> ghostCycleEnded(animation2, 2.0, -1, true));
 
-                PathTransition animation3 = createPathTransition(ghost3V1, 5.0, 1, rectangle, false);
+                PathTransition animation3 = createPathTransition(ghost3V, 5.0, 1, rectangle, false);
                 animation3.play();
                 animation3.setOnFinished(e -> ghostCycleEnded(animation3, 2.0, -1, true));
 
-                PathTransition animation4 = createPathTransition(ghost4V1, 5.0, 1, rectangle, false);
-                animation3.play();
-                animation3.setOnFinished(e -> ghostCycleEnded(animation3, 2.0, -1, true));
-
-
-                animation4 = new PathTransition();
-                animation4.setNode(ghost4V1);
-                animation4.setDuration(Duration.seconds(5));
-                animation4.setCycleCount(1);
-                animation4.setPath(rectangle);
+                PathTransition animation4 = createPathTransition(ghost4V, 5.0, 1, rectangle, false);
                 animation4.play();
+                animation4.setOnFinished(e -> ghostCycleEnded(animation3, 2.0, -1, true));
 
-                animation4.setOnFinished(actionEvent -> {
-                    animation4.setDuration(Duration.seconds(2));
-                    animation4.setCycleCount(Animation.INDEFINITE);
-                    animation4.setAutoReverse(true);
-                    animation4.play();
-                });
-
-
-                animation5 = new PathTransition();
-                animation5.setNode(ghost5V1);
-                animation5.setDuration(Duration.seconds(5));
-                animation5.setCycleCount(1);
-                animation5.setPath(rectangle);
+                PathTransition animation5 = createPathTransition(ghost5V, 5.0, 1, rectangle, false);
                 animation5.play();
+                animation5.setOnFinished(e -> ghostCycleEnded(animation5, 2.0, -1, true));
 
-                animation5.setOnFinished(actionEvent -> {
-                    animation5.setDuration(Duration.seconds(2));
-                    animation5.setCycleCount(Animation.INDEFINITE);
-                    animation5.setAutoReverse(true);
-                    animation5.play();
-                });
-
-                ghost5V1.setOnMouseEntered(event -> enteredGhost(event));
-                ghost4V1.setOnMouseEntered(event -> enteredGhost(event));
-                ghost2V1.setOnMouseEntered(event -> enteredGhost(event));
-                ghost1V1.setOnMouseEntered(e -> enteredGhost(e));
-                ghost3V1.setOnMouseEntered(e -> enteredGhost(e));
+                ghost1V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost2V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost3V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost4V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost5V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 4 -> {
-                ghost4V1 = new ImageView();
-                ghost3V1 = new ImageView();
-                ghost1V1 = new ImageView();
-                ghost2V1 = new ImageView();
-                ghost5V1 = new ImageView();
-                ImageView ghost6V = new ImageView();
-                ImageView ghost7V = new ImageView();
-                ImageView ghost8V = new ImageView();
-                ImageView ghost9V = new ImageView();
-                ImageView ghost10V = new ImageView();
-                ghost10V.setImage(ghost);
-                ghost9V.setImage(ghost);
-                ghost8V.setImage(ghost);
-                ghost7V.setImage(ghost);
-                ghost6V.setImage(ghost);
-                ghost5V1.setImage(ghost);
-                ghost4V1.setImage(ghost);
-                ghost3V1.setImage(ghost);
-                ghost2V1.setImage(ghost);
-                ghost1V1.setImage(ghost);
-                add(ghost5V1, 3, 1);
-                add(ghost3V1, 3, 3);
-                add(ghost1V1, 3, 5);
-                add(ghost2V1, 3, 7);
-                add(ghost4V1, 3, 9);
-                add(ghost6V, 3, 11);
-                add(ghost7V, 3, 13);
-                add(ghost8V, 3, 15);
-                add(ghost9V, 3, 17);
-                rectangle = new Rectangle(525, 0);
-                rectangle.setY(72);
-                rectangle.setX(-45);
+                ImageView ghost1V = createImageView(ghost, 3, 5);
+                ImageView ghost2V = createImageView(ghost, 3, 7);
+                ImageView ghost3V = createImageView(ghost, 3, 3);
+                ImageView ghost4V = createImageView(ghost, 3, 9);
+                ImageView ghost5V = createImageView(ghost, 3, 1);
+                ImageView ghost6V = createImageView(ghost, 3, 11);
+                ImageView ghost7V = createImageView(ghost, 3, 13);
+                ImageView ghost8V = createImageView(ghost, 3, 15);
+                ImageView ghost9V = createImageView(ghost, 3, 17);
 
-                Rectangle rectangle2 = new Rectangle(525, 0);
-                rectangle2.setY(105);
-                rectangle2.setX(-45);
+                Rectangle rectangle = createRectangle(525.0, 0.0, 72.0, -45.0);
+                Rectangle rectangle1 = createRectangle(525.0, 0.0, 105.0, -45.0);
 
-                animation = new PathTransition();
-                animation.setNode(ghost3V1);
-                animation.setDuration(Duration.seconds(5));
-                animation.setCycleCount(3);
-                animation.setPath(rectangle);
+                PathTransition animation = createPathTransition(ghost3V, 5.0, 3, rectangle, false);
                 animation.play();
-
                 animation.setOnFinished(actionEvent -> {
                     animation.setCycleCount(1);
                     animation.setAutoReverse(true);
-                    animation.setPath(rectangle2);
+                    animation.setPath(rectangle1);
                     animation.play();
                     animation.setOnFinished(actionEvent1 -> {
                         animation.setCycleCount(Animation.INDEFINITE);
@@ -219,16 +145,12 @@ public class World6Template extends World1Template {
                     });
                 });
 
-                animation2 = new PathTransition();
-                animation2.setNode(ghost1V1);
-                animation2.setDuration(Duration.seconds(5));
-                animation2.setCycleCount(3);
-                animation2.setPath(rectangle);
+                PathTransition animation2 = createPathTransition(ghost1V, 5.0, 3, rectangle, false);
                 animation2.play();
                 animation2.setOnFinished(actionEvent -> {
                     animation2.setCycleCount(1);
                     animation2.setAutoReverse(true);
-                    animation2.setPath(rectangle2);
+                    animation2.setPath(rectangle1);
                     animation2.play();
                     animation2.setOnFinished(actionEvent1 -> {
                         animation2.setCycleCount(Animation.INDEFINITE);
@@ -238,15 +160,10 @@ public class World6Template extends World1Template {
                     });
                 });
 
-                animation3 = new PathTransition();
-                animation3.setNode(ghost2V1);
-                animation3.setDuration(Duration.seconds(5));
-                animation3.setCycleCount(3);
-                animation3.setPath(rectangle);
+                PathTransition animation3 = createPathTransition(ghost2V, 5.0, 3, rectangle, false);
                 animation3.play();
-
                 animation3.setOnFinished(actionEvent -> {
-                    animation3.setPath(rectangle2);
+                    animation3.setPath(rectangle1);
                     animation3.setCycleCount(1);
                     animation3.setAutoReverse(true);
                     animation3.play();
@@ -258,15 +175,10 @@ public class World6Template extends World1Template {
                 });
 
 
-                animation4 = new PathTransition();
-                animation4.setNode(ghost4V1);
-                animation4.setDuration(Duration.seconds(5));
-                animation4.setCycleCount(3);
-                animation4.setPath(rectangle);
+                PathTransition animation4 = createPathTransition(ghost4V, 5.0, 3, rectangle, false);
                 animation4.play();
-
                 animation4.setOnFinished(actionEvent -> {
-                    animation4.setPath(rectangle2);
+                    animation4.setPath(rectangle1);
                     animation4.setCycleCount(1);
                     animation4.setAutoReverse(true);
                     animation4.play();
@@ -277,16 +189,10 @@ public class World6Template extends World1Template {
                     });
                 });
 
-
-                animation5 = new PathTransition();
-                animation5.setNode(ghost5V1);
-                animation5.setDuration(Duration.seconds(5));
-                animation5.setCycleCount(3);
-                animation5.setPath(rectangle);
+                PathTransition animation5 = createPathTransition(ghost5V, 5.0, 3, rectangle, false);
                 animation5.play();
-
                 animation5.setOnFinished(actionEvent -> {
-                    animation5.setPath(rectangle2);
+                    animation5.setPath(rectangle1);
                     animation5.setCycleCount(1);
                     animation5.setAutoReverse(true);
                     animation5.play();
@@ -296,15 +202,10 @@ public class World6Template extends World1Template {
                         animation5.play();
                     });
                 });
-                animation6 = new PathTransition();
-                animation6.setNode(ghost6V);
-                animation6.setDuration(Duration.seconds(5));
-                animation6.setCycleCount(3);
-                animation6.setPath(rectangle);
+                PathTransition animation6 = createPathTransition(ghost6V, 5.0, 3, rectangle, false);
                 animation6.play();
-
                 animation6.setOnFinished(actionEvent -> {
-                    animation6.setPath(rectangle2);
+                    animation6.setPath(rectangle1);
                     animation6.setCycleCount(1);
                     animation6.setAutoReverse(true);
                     animation6.play();
@@ -315,15 +216,10 @@ public class World6Template extends World1Template {
                     });
                 });
 
-                animation7 = new PathTransition();
-                animation7.setNode(ghost7V);
-                animation7.setDuration(Duration.seconds(5));
-                animation7.setCycleCount(3);
-                animation7.setPath(rectangle);
+                PathTransition animation7 = createPathTransition(ghost7V, 5.0, 3, rectangle, false);
                 animation7.play();
-
                 animation7.setOnFinished(actionEvent -> {
-                    animation7.setPath(rectangle2);
+                    animation7.setPath(rectangle1);
                     animation7.setCycleCount(1);
                     animation7.setAutoReverse(true);
                     animation7.play();
@@ -334,15 +230,10 @@ public class World6Template extends World1Template {
                     });
                 });
 
-                animation8 = new PathTransition();
-                animation8.setNode(ghost8V);
-                animation8.setDuration(Duration.seconds(5));
-                animation8.setCycleCount(3);
-                animation8.setPath(rectangle);
+                PathTransition animation8 = createPathTransition(ghost8V, 5.0, 3, rectangle, false);
                 animation8.play();
-
                 animation8.setOnFinished(actionEvent -> {
-                    animation8.setPath(rectangle2);
+                    animation8.setPath(rectangle1);
                     animation8.setCycleCount(1);
                     animation8.setAutoReverse(true);
                     animation8.play();
@@ -354,14 +245,10 @@ public class World6Template extends World1Template {
                 });
 
 
-                animation9 = new PathTransition();
-                animation9.setNode(ghost9V);
-                animation9.setDuration(Duration.seconds(5));
-                animation9.setCycleCount(3);
-                animation9.setPath(rectangle);
+                PathTransition animation9 = createPathTransition(ghost9V, 5.0, 3, rectangle, false);
                 animation9.play();
                 animation9.setOnFinished(actionEvent -> {
-                    animation9.setPath(rectangle2);
+                    animation9.setPath(rectangle1);
                     animation9.setCycleCount(1);
                     animation9.setAutoReverse(true);
                     animation9.play();
@@ -372,130 +259,48 @@ public class World6Template extends World1Template {
                     });
                 });
 
-
-                ghost9V.setOnMouseEntered(event -> enteredGhost(event));
-                ghost8V.setOnMouseEntered(event -> enteredGhost(event));
-                ghost7V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost1V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost2V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost3V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost4V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost5V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost6V.setOnMouseEntered(e -> enteredGhost(e));
-                ghost5V1.setOnMouseEntered(event -> enteredGhost(event));
-                ghost4V1.setOnMouseEntered(event -> enteredGhost(event));
-                ghost2V1.setOnMouseEntered(event -> enteredGhost(event));
-                ghost1V1.setOnMouseEntered(e -> enteredGhost(e));
-                ghost3V1.setOnMouseEntered(e -> enteredGhost(e));
+                ghost7V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost8V.setOnMouseEntered(e -> enteredGhost(e));
+                ghost9V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 5 -> {
-                ImageView ghost1V = new ImageView();
-                ImageView ghost2V = new ImageView();
-                ImageView ghost3V = new ImageView();
+                ImageView ghost1V = createImageView(ghost,12, 8);
+                ImageView ghost2V = createImageView(ghost, 14,0);
+                ImageView ghost3V = createImageView(ghost, 8,12);
 
-                ghost3V.setImage(ghost);
-                ghost2V.setImage(ghost);
-                ghost1V.setImage(ghost);
+                Rectangle rectangle = createRectangle(132.0, 200.0, 80.0, -150.0);
+                Rectangle rectangle1 = createRectangle(0.0, 135.0, 80.0, -150.0);
+                Rectangle rectangle2 = createRectangle(400.0, 0.0, 20.0, -150.0);
 
-                add(ghost1V, 12, 8);
-                add(ghost2V, 14, 0);
-                //add(ghost3V, 8, 12);
-
-                Rectangle rectangle = new Rectangle(132, 200);
-                rectangle.setY(80);
-                rectangle.setX(-150);
-
-                Rectangle rectangle1 = new Rectangle(0, 135);
-                rectangle1.setY(80);
-                rectangle1.setX(-150);
-
-                Rectangle rectangle2 = new Rectangle(400, 0);
-                rectangle2.setY(20);
-                rectangle2.setX(-150);
-
-                animation = new PathTransition();
-                animation.setNode(ghost1V);
-                animation.setDuration(Duration.seconds(2));
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.play();
-
-                animation2 = new PathTransition();
-                animation2.setNode(ghost2V);
-                animation2.setDuration(Duration.seconds(3));
-                animation2.setAutoReverse(true);
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle1);
-                animation2.play();
-
-                animation3 = new PathTransition();
-                animation3.setNode(ghost3V);
-                animation3.setDuration(Duration.seconds(2.5));
-                animation3.setCycleCount(Animation.INDEFINITE);
-                animation3.setPath(rectangle2);
-                animation3.play();
+                createPathTransition(ghost1V, 2.0, -1, rectangle, false).play();
+                createPathTransition(ghost2V, 3.0, -1, rectangle1, true).play();
+                createPathTransition(ghost3V, 2.5, -1, rectangle2, false).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost3V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 6 -> {
-                ImageView ghost1V = new ImageView();
-                ImageView ghost2V = new ImageView();
-                ImageView ghost3V = new ImageView();
-                ImageView ghost4V = new ImageView();
+                ImageView ghost1V = createImageView(ghost, 7,6);
+                ImageView ghost2V = createImageView(ghost,6,3);
+                ImageView ghost3V = createImageView(ghost, 16, 0);
+                ImageView ghost4V = createImageView(ghost, 17, 10);
 
-                ghost4V.setImage(ghost);
-                ghost3V.setImage(ghost);
-                ghost2V.setImage(ghost);
-                ghost1V.setImage(ghost);
+                Rectangle rectangle = createRectangle(100.0, 100.0, 80.0, -150.0);
+                Rectangle rectangle1 = createRectangle(100.0, 0.0, 80.0, -150.0);
+                Rectangle rectangle2 = createRectangle(0.0, 450.0, 80.0, 17.0);
+                Rectangle rectangle3 = createRectangle(70.0, 130.0, 80.0, -150.0);
 
-                add(ghost1V, 7, 6);
-                add(ghost2V, 6, 3);
-                add(ghost3V, 16, 0);
-                add(ghost4V, 17, 10);
-
-                Rectangle rectangle = new Rectangle(100, 100);
-                rectangle.setY(80);
-                rectangle.setX(-150);
-
-                Rectangle rectangle1 = new Rectangle(100, 0);
-                rectangle1.setY(80);
-                rectangle1.setX(-150);
-
-                Rectangle rectangle2 = new Rectangle(0, 450);
-                rectangle2.setY(80);
-                rectangle2.setX(17);
-
-                Rectangle rectangle3 = new Rectangle(70, 130);
-                rectangle3.setY(80);
-                rectangle3.setX(-150);
-
-                animation = new PathTransition();
-                animation.setNode(ghost1V);
-                animation.setDuration(Duration.seconds(2));
-                animation.setAutoReverse(false);
-                animation.setCycleCount(Animation.INDEFINITE);
-                animation.setPath(rectangle);
-                animation.play();
-
-                animation2 = new PathTransition();
-                animation2.setNode(ghost2V);
-                animation2.setDuration(Duration.seconds(2.5));
-                animation2.setAutoReverse(true);
-                animation2.setCycleCount(Animation.INDEFINITE);
-                animation2.setPath(rectangle1);
-                animation2.play();
-
-                animation3 = new PathTransition();
-                animation3.setNode(ghost3V);
-                animation3.setDuration(Duration.seconds(2));
-                animation3.setAutoReverse(true);
-                animation3.setCycleCount(Animation.INDEFINITE);
-                animation3.setPath(rectangle2);
-                animation3.play();
-
-                animation4 = new PathTransition();
-                animation4.setNode(ghost4V);
-                animation4.setDuration(Duration.seconds(3));
-                animation4.setCycleCount(Animation.INDEFINITE);
-                animation4.setPath(rectangle3);
-                animation4.play();
+                createPathTransition(ghost1V, 2.0, -1, rectangle, false).play();
+                createPathTransition(ghost2V, 2.5, -1, rectangle1, true).play();
+                createPathTransition(ghost3V, 2.0, -1, rectangle2, true).play();
+                createPathTransition(ghost4V, 3.0, -1, rectangle3, false).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));
