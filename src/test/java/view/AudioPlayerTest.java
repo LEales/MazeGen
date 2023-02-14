@@ -42,13 +42,13 @@ class AudioPlayerTest {
 
     @Test
     void playLevelMusicHeaven() {
-        File f = new File("files/music/heaven.mp3");
+        File f = new File("files/music/cloud.mp3");
         assertEquals(f, ap.playLevelMusic("heaven"));
     }
 
     @Test
     void playLevelMusicEgypt() {
-        File f = new File("files/music/egypt.mp3");
+        File f = new File("files/music/desert.mp3");
         assertEquals(f, ap.playLevelMusic("egypt"));
     }
 

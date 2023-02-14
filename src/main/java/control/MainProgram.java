@@ -185,10 +185,6 @@ public class MainProgram extends Application {
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
 
-        try {
-            nextWorld2Level(5,3);
-        } catch (Exception e){}
-
         startTotalTime();
     }
 
@@ -326,7 +322,7 @@ public class MainProgram extends Application {
                 introAnimation.setDisable(true);
                 audioPlayer.playWorldIntroSound();
                 audioPlayer.stopMusic();
-                audioPlayer.playLevelMusic("lava");
+                audioPlayer.playLevelMusic(World.LAVA);
             }
             case 2 -> {
                 lvlCleared = 31;
@@ -376,7 +372,7 @@ public class MainProgram extends Application {
                 introAnimation.setDisable(true);
                 audioPlayer.playWorldIntroSound();
                 audioPlayer.stopMusic();
-                audioPlayer.playLevelMusic("heaven");
+                audioPlayer.playLevelMusic(World.CLOUD);
             }
             case 2 -> {
                 lvlCleared = 41;
@@ -426,7 +422,7 @@ public class MainProgram extends Application {
                 introAnimation.setDisable(true);
                 audioPlayer.playWorldIntroSound();
                 audioPlayer.stopMusic();
-                audioPlayer.playLevelMusic("egypt");
+                audioPlayer.playLevelMusic(World.DESERT);
             }
             case 2 -> {
                 lvlCleared = 51;
@@ -546,7 +542,7 @@ public class MainProgram extends Application {
         return lvlCleared;
     }
 
-    public boolean getMusiIsOn() {
+    public boolean getMusicIsOn() {
         return rightPanel.getMusicOn();
     }
 

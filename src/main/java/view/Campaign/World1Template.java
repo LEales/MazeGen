@@ -44,7 +44,7 @@ public class World1Template extends GridPane {
     private Image heart;
     private Image breakableWall;
     private Image pickAxeImage;
-    private boolean startButtonPressed;
+    private boolean startButtonPressed = false;
     private boolean allCollectiblesObtained;
     private boolean wallDestroyed;
     private int collectiblesObtained = 0;
@@ -334,12 +334,14 @@ public class World1Template extends GridPane {
     }
 
     private void collectibleObtained(MouseEvent e) {
-        audioPlayer.playCollectibleSound();
-        Label label = (Label) e.getSource();
-        label.setVisible(false);
-        collectiblesObtained++;
-        if (collectiblesObtained == collectibles.size()) {
-            allCollectiblesObtained = true;
+        if (startButtonPressed) {
+            audioPlayer.playCollectibleSound();
+            Label label = (Label) e.getSource();
+            label.setVisible(false);
+            collectiblesObtained++;
+            if (collectiblesObtained == collectibles.size()) {
+                allCollectiblesObtained = true;
+            }
         }
     }
 

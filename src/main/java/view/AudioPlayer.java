@@ -4,6 +4,8 @@ import control.MainProgram;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import model.World;
+
 import java.io.File;
 
 /**
@@ -115,36 +117,20 @@ public class AudioPlayer {
 
     /**
      * Spelar musik baserad på given input.
+     *
      * @param songToPlay Låten som ska spelas.
      */
-    public File playLevelMusic(String songToPlay) {
+    public File playLevelMusic(World songToPlay) {
         MainProgram mainProgram = MainProgram.getMainProgram();
-        if (mainProgram.getMusiIsOn()) {
-            switch (songToPlay) {
-                case "forest" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
-                case "lava" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
-                case "heaven" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
-                case "egypt" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
-            }
-
-            currentMedia = new Media(currentSong.toURI().toString());
-            currentSongPlayer = new MediaPlayer(currentMedia);
-            currentSongPlayer.setOnEndOfMedia(() -> currentSongPlayer.seek(Duration.ZERO));
-            currentSongPlayer.play();
-        }else {
-            switch (songToPlay) {
-                case "forest" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
-                case "lava" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
-                case "heaven" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
-                case "egypt" -> currentSong = new File("files/music/" + songToPlay + ".mp3");
-            }
-
-            currentMedia = new Media(currentSong.toURI().toString());
-            currentSongPlayer = new MediaPlayer(currentMedia);
-            currentSongPlayer.setOnEndOfMedia(() -> currentSongPlayer.seek(Duration.ZERO));
-            currentSongPlayer.play();
+        currentSong = new File("files/music/" + songToPlay + ".mp3");
+        currentMedia = new Media(currentSong.toURI().toString());
+        currentSongPlayer = new MediaPlayer(currentMedia);
+        currentSongPlayer.setOnEndOfMedia(() -> currentSongPlayer.seek(Duration.ZERO));
+        currentSongPlayer.play();
+        if (!mainProgram.getMusicIsOn()) {
             currentSongPlayer.setMute(true);
         }
+        System.out.println(currentSongPlayer.isMute());
         return currentSong;
     }
 
@@ -254,6 +240,7 @@ public class AudioPlayer {
 
     /**
      * En metod som mutear alla speleffekters ljud.
+     *
      * @param mute True om ljudet ska vara avstängt och false om ljudet ska vara på.
      */
     public boolean muteSound(boolean mute) {
@@ -265,6 +252,7 @@ public class AudioPlayer {
         diamondPlayer.setMute(mute);
         worldIntroMediaPlayer.setMute(mute);
         timeLeftMediaPlayer.setMute(mute);
+        gameOverMediaPlayer.setMute(mute);
 
         return breakableWallPlayer.isMute() &&
                 deathPlayer.isMute() &&
@@ -273,7 +261,8 @@ public class AudioPlayer {
                 goalPlayer.isMute() &&
                 diamondPlayer.isMute() &&
                 worldIntroMediaPlayer.isMute() &&
-                timeLeftMediaPlayer.isMute();
+                timeLeftMediaPlayer.isMute() &&
+                gameOverMediaPlayer.isMute();
     }
 
     /**
@@ -340,7 +329,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när spelaren kolliderar med en fiende.
      */
-    public boolean playMobSound(){
+    public boolean playMobSound() {
         try {
             mobSoundMediaPlayer.play();
             mobSoundMediaPlayer.seek(Duration.ZERO);
@@ -352,9 +341,10 @@ public class AudioPlayer {
 
     /**
      * En metod som mutear all musik .
+     *
      * @param mute True om ljudet ska vara avstängt och false om ljudet ska vara på.
      */
-    public boolean muteMusic(boolean mute){
+    public boolean muteMusic(boolean mute) {
         currentSongPlayer.setMute(mute);
         return currentSongPlayer.isMute();
     }

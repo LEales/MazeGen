@@ -4,6 +4,7 @@ import control.MainProgram;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import model.World;
 import view.AudioPlayer;
 
 import java.io.FileNotFoundException;
@@ -92,7 +93,7 @@ public class Menu extends Pane {
         campaignView.setOnMouseClicked(e -> {
             try {
                 mainProgram.changeToCampaign();
-                audioPlayer.playLevelMusic("forest");
+                audioPlayer.playLevelMusic(World.FOREST);
                 panel.setTheTime(25);
                 panel.resetTimerLabel();
             } catch (FileNotFoundException fileNotFoundException) {
