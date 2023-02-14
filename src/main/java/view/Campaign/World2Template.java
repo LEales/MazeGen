@@ -40,7 +40,7 @@ public class World2Template extends World1Template {
      * Animationerna kan gå i olika hastigheter
      */
 
-    public void initialize() {
+    private void initialize() {
         Image ghost = new Image("file:files/ghost.png", squareSize, squareSize, false, false);
 
         ImageView ghost1V = createImageView(ghost, 10, 0);
@@ -68,7 +68,7 @@ public class World2Template extends World1Template {
         createPathTransition(ghost2V, 3.0, -1, line2, false).play();
         createPathTransition(ghost3V, 4.0, -1, line3, false).play();
         createPathTransition(ghost4V, 3.5, -1, line1, false).play();
-        createPathTransition(ghost4V, 3.0, -1, line2, false).play();
+        createPathTransition(ghost5V, 3.0, -1, line2, false).play();
         createPathTransition(ghost6V, 4.0, -1, line3, false).play();
 
         ghost1V.setOnMouseEntered(e -> enteredGhost(e));

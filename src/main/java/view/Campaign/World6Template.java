@@ -54,10 +54,8 @@ public class World6Template extends World1Template {
      */
 
 
-    public void initialize() {
-
+    private void initialize() {
         Image ghost = new Image("file:files/space_mob3.png", squareSize, squareSize, false, false);
-
         switch (currentLevel) {
             case 2 -> {
                 ImageView ghost1V = createImageView(ghost,5,10);

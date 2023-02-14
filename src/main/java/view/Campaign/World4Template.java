@@ -1,12 +1,9 @@
 package view.Campaign;
 
 import control.MainProgram;
-import javafx.animation.Animation;
-import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import model.Maps.Sprite;
 import model.World;
 import view.AudioPlayer;
@@ -40,9 +37,8 @@ public class World4Template extends World1Template {
      * Animationerna kan gå i olika hastigheter
      */
 
-    public void initialize() {
+    private void initialize() {
         Image ghost = new Image("file:files/god_mob2.png", squareSize, squareSize, false, false);
-
         switch (currentLevel) {
             case 2 -> {
                 ImageView ghost1V = createImageView(ghost, 14, 5);

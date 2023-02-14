@@ -32,9 +32,8 @@ public class World3Template extends World1Template {
      * Animationerna kan gå i olika hastigheter
      */
 
-    public void initialize() {
+    private void initialize() {
         Image ghost = new Image("file:files/ghost.png", squareSize, squareSize, false, false);
-
         switch (currentLevel) {
             case 2 -> {
                 ImageView ghost1V = createImageView(ghost, 14, 5);

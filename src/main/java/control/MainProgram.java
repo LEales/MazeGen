@@ -186,7 +186,7 @@ public class MainProgram extends Application {
         introAnimation.setDisable(true);
 
         try {
-            nextWorld3Level(1,3);
+            nextWorld2Level(5,3);
         } catch (Exception e){}
 
         startTotalTime();

@@ -106,6 +106,15 @@ public class World1Template extends GridPane {
     }
 
     PathTransition createPathTransition(Node node, double duration, int cycleCount, Shape path, boolean autoReverse) {
+        if (0.0 >= duration) {
+            throw new IllegalArgumentException("Duration invalid");
+        }
+        if (-1 > cycleCount || 0 == cycleCount) {
+            throw new IllegalArgumentException("Cycle count invalid");
+        }
+        if (null == node) {
+            throw new IllegalArgumentException("Invalid node");
+        }
         PathTransition pathTransition = new PathTransition();
         pathTransition.setNode(node);
         pathTransition.setAutoReverse(autoReverse);
@@ -116,8 +125,14 @@ public class World1Template extends GridPane {
     }
 
     ImageView createImageView(Image image, int i, int i1) {
+        if (null == image) {
+            throw new IllegalArgumentException("Image invalid");
+        }
+        if (0 > i || 0 >i1) {
+            throw new IllegalArgumentException("Negative numbers not allowed");
+        }
         ImageView view = new ImageView(image);
-        add(view, i, i1);
+        this.add(view, i, i1);
         return view;
     }
 
