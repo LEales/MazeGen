@@ -1,7 +1,9 @@
 package view.Campaign;
 
 import control.MainProgram;
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
+import javafx.animation.PathTransition;
 import javafx.scene.Node;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
@@ -9,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.Maps.Sprite;
 import model.World;
@@ -102,6 +105,22 @@ public class World1Template extends GridPane {
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(menuBackground));
+    }
+    PathTransition createPathTransition(Node node, double duration, int cycleCount, Rectangle path, boolean autoReverse) {
+        PathTransition pathTransition = new PathTransition();
+        pathTransition.setNode(node);
+        pathTransition.setAutoReverse(autoReverse);
+        pathTransition.setDuration(Duration.seconds(duration));
+        pathTransition.setCycleCount(cycleCount);
+        pathTransition.setPath(path);
+        return pathTransition;
+    }
+
+    Rectangle createRectangle(double v, double v1, double y, double x) {
+        Rectangle rectangle = new Rectangle(v, v1);
+        rectangle.setY(y);
+        rectangle.setX(x);
+        return rectangle;
     }
 
     /**

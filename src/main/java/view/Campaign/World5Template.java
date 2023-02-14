@@ -65,9 +65,9 @@ public class World5Template extends World1Template {
                 Rectangle rectangle = createRectangle(300.0, 150.0, 65.0, -150.0);
                 Rectangle rectangle2 = createRectangle(97.0, 280.0, 65.0, -150.0);
 
-                createPathTransition(ghost3V, 4.0, rectangle, false).play();
+                createPathTransition(ghost3V, 4.0, -1, rectangle, false).play();
 
-                createPathTransition(ghost1V, 4.0, rectangle2, false).play();
+                createPathTransition(ghost1V, 4.0, -1, rectangle2, false).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost3V.setOnMouseEntered(e -> enteredGhost(e));
@@ -87,8 +87,8 @@ public class World5Template extends World1Template {
                 Rectangle rectangle = createRectangle(270.0, 100.0, 50.0, -150.0);
                 Rectangle rectangle1 = createRectangle(100.0, 100.0, 80.0, -150.0);
 
-                createPathTransition(ghost1V, 2.0, rectangle, false).play();
-                createPathTransition(ghost2V, 2.0, rectangle1, false).play();
+                createPathTransition(ghost1V, 2.0, -1, rectangle, false).play();
+                createPathTransition(ghost2V, 2.0, -1, rectangle1, false).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));
@@ -108,8 +108,8 @@ public class World5Template extends World1Template {
 
                 Rectangle rectangle1 = createRectangle(100.0, 100.0, 80.0, -150.0);
 
-                createPathTransition(ghost1V, 1.5, rectangle, false).play();
-                createPathTransition(ghost2V, 1.5, rectangle1, false).play();
+                createPathTransition(ghost1V, 1.5, -1, rectangle, false).play();
+                createPathTransition(ghost2V, 1.5, -1, rectangle1, false).play();
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));
@@ -134,9 +134,9 @@ public class World5Template extends World1Template {
 
                 Rectangle rectangle2 = createRectangle(400.0, 0.0, 20.0, -150.0);
 
-                createPathTransition(ghost1V, 2.0, rectangle, false).play();
-                createPathTransition(ghost2V, 3.0, rectangle1, true).play();
-                createPathTransition(ghost3V, 2.5, rectangle2, false).play();
+                createPathTransition(ghost1V, 2.0, -1, rectangle, false).play();
+                createPathTransition(ghost2V, 3.0, -1, rectangle1, true).play();
+                createPathTransition(ghost3V, 2.5, -1, rectangle2, false).play();
             }
             case 6 -> {
                 ImageView ghost1V = new ImageView();
@@ -162,29 +162,13 @@ public class World5Template extends World1Template {
 
                 Rectangle rectangle3 = createRectangle(70.0, 130.0, 80.0, -150.0);
 
-                createPathTransition(ghost1V, 2.0, rectangle, false).play();
-                createPathTransition(ghost2V, 2.5, rectangle1, true).play();
-                createPathTransition(ghost3V, 2.0, rectangle2, true).play();
-
-                createPathTransition(ghost4V, 3.0, rectangle3, false).play();
+                createPathTransition(ghost1V, 2.0,-1, rectangle, false).play();
+                createPathTransition(ghost2V, 2.5,-1, rectangle1, true).play();
+                createPathTransition(ghost3V, 2.0,-1, rectangle2, true).play();
+                createPathTransition(ghost4V, 3.0,-1, rectangle3, false).play();
             }
         }
     }
 
-    private PathTransition createPathTransition(Node node, double duration, Rectangle path, boolean autoReverse) {
-        PathTransition pathTransition = new PathTransition();
-        pathTransition.setNode(node);
-        pathTransition.setAutoReverse(autoReverse);
-        pathTransition.setDuration(Duration.seconds(duration));
-        pathTransition.setCycleCount(Animation.INDEFINITE);
-        pathTransition.setPath(path);
-        return pathTransition;
-    }
 
-    private Rectangle createRectangle(double v, double v1, double y, double x) {
-        Rectangle rectangle = new Rectangle(v, v1);
-        rectangle.setY(y);
-        rectangle.setX(x);
-        return rectangle;
-    }
 }
