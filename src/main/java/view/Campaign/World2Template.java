@@ -23,37 +23,24 @@ import java.io.FileNotFoundException;
 
 public class World2Template extends World1Template {
 
-    private int squareSize;
-    private int duration = 10;
-    private PathTransition animation;
-    private PathTransition animation2;
-    private PathTransition animation3;
-    private PathTransition animation4;
-    private PathTransition animation5;
-    private PathTransition animation6;
+    private final int squareSize;
     private Image ghost;
-    private ImageView imageView = new ImageView();
-    private TimeThread time;
-    private RightPanel panel;
-    private AudioPlayer audioPlayer;
-    private int seconds;
+    private final ImageView imageView = new ImageView();
 
     public World2Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, AudioPlayer audioPlayer, boolean bossMap, RightPanel panel) throws FileNotFoundException {
         super(level, currentLevel, heartCrystals, rightPanel, world, audioPlayer, 35);
-        squareSize = 600 / (level.length + 2);
-        this.panel = panel;
-        this.audioPlayer = audioPlayer;
+        squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
         rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
         if (bossMap) {
             setupGhost();
             initialize();
         }
-        time = new TimeThread(35, rightPanel);
+        new TimeThread(35, rightPanel);
         rightPanel.setSTARTTIME(35);
         rightPanel.resetTimerLabel();
     }
 
-    public void setupGhost() {
+    private void setupGhost() {
         ghost = new Image("file:files/ghost.png", squareSize, squareSize, false, false);
     }
 
@@ -128,42 +115,42 @@ public class World2Template extends World1Template {
                 10.5, 650.0);
 
 
-        animation3 = new PathTransition();
+        PathTransition animation3 = new PathTransition();
         animation3.setNode(ghost3V);
         animation3.setDuration(Duration.seconds(4));
         animation3.setCycleCount(Animation.INDEFINITE);
         animation3.setPath(line3);
         animation3.play();
 
-        animation2 = new PathTransition();
+        PathTransition animation2 = new PathTransition();
         animation2.setNode(ghost2V);
         animation2.setDuration(Duration.seconds(3));
         animation2.setCycleCount(Animation.INDEFINITE);
         animation2.setPath(line2);
         animation2.play();
 
-        animation = new PathTransition();
+        PathTransition animation = new PathTransition();
         animation.setNode(ghost1V);
         animation.setDuration(Duration.seconds(3.5));
         animation.setCycleCount(Animation.INDEFINITE);
         animation.setPath(line1);
         animation.play();
 
-        animation4 = new PathTransition();
+        PathTransition animation4 = new PathTransition();
         animation4.setNode(ghost4V);
         animation4.setDuration(Duration.seconds(3.5));
         animation4.setCycleCount(Animation.INDEFINITE);
         animation4.setPath(line4);
         animation4.play();
 
-        animation5 = new PathTransition();
+        PathTransition animation5 = new PathTransition();
         animation5.setNode(ghost5V);
         animation5.setDuration(Duration.seconds(3));
         animation5.setCycleCount(Animation.INDEFINITE);
         animation5.setPath(line5);
         animation5.play();
 
-        animation6 = new PathTransition();
+        PathTransition animation6 = new PathTransition();
         animation6.setNode(ghost6V);
         animation6.setDuration(Duration.seconds(4));
         animation6.setCycleCount(Animation.INDEFINITE);
@@ -178,6 +165,7 @@ public class World2Template extends World1Template {
                 200.0, -150.0);
         animation = new PathTransition();
         animation.setNode(imageView);
+        int duration = 10;
         animation.setDuration(Duration.seconds(duration));
         animation.setPath(line);
         animation.setCycleCount(PathTransition.INDEFINITE);
