@@ -19,7 +19,6 @@ public class TimeThreadtest {
     static void initJFXRuntime() {
         new Thread(() -> Application.launch(MainProgram.class)).start();
     }
-    //Testar om tråden dör efter x antal sekunder
 
     @Test
     void minusOneSecondsLeft() {
