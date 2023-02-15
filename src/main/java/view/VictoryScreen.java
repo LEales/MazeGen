@@ -3,7 +3,6 @@ package view;
 import control.MainProgram;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -14,30 +13,23 @@ import java.io.*;
 
 public class VictoryScreen extends Pane {
     private MainProgram mainProgram;
-    private AudioPlayer audioPlayer;
-    private TextField textField;
     private int totalTime;
     private int scoreListCounter;
-
+    private int backSpaceCheck;
     private Label errorLabel;
-
     private Label first;
     private Label second;
     private Label third;
-    private int backspcaeCheck=0;
     private String current;
-    private String remover = "third";
 
 
-    public VictoryScreen(MainProgram mainProgram, AudioPlayer audioPlayer) {
-        this.audioPlayer = audioPlayer;
-        this.mainProgram = mainProgram;
+    public VictoryScreen() {
+        this.mainProgram = MainProgram.getMainProgram();
         this.setBackground(new Background(setBackground()));
         setupTextLabels();
         setupScene();
 
         this.setOnMouseClicked(e->mainProgram.showHighScoreList());
-        //this.getChildren().addAll(setupTextArea(),setupSendButton());
     }
 
     private void setupScene() {
@@ -234,34 +226,34 @@ public class VictoryScreen extends Pane {
                 this.getChildren().remove(0);
                 this.getChildren().add(0,setupTextArea(code,315,200));
                 current = "second";
-                backspcaeCheck ++;
+                backSpaceCheck++;
                 break;
             case "second":
                 this.getChildren().remove(1);
                 this.getChildren().add(1,setupTextArea(code,375,200));
                 current = "third";
-                backspcaeCheck ++;
+                backSpaceCheck++;
                 break;
             case "third":
                 this.getChildren().remove(2);
                 this.getChildren().add(2,setupTextArea(code,435,200));
-                if (backspcaeCheck<2){
-                    backspcaeCheck ++;
+                if (backSpaceCheck <2){
+                    backSpaceCheck++;
                 }
                 break;
             case "BACK_SPACE":
-                if (backspcaeCheck==2){
+                if (backSpaceCheck ==2){
                     this.getChildren().remove(2);
                     this.getChildren().add(2,setupTextArea("_",435,200));
-                    backspcaeCheck --;
+                    backSpaceCheck--;
                     current = "third";
-                }else if (backspcaeCheck==1) {
+                }else if (backSpaceCheck ==1) {
                     this.getChildren().remove(1);
                     this.getChildren().add(1, setupTextArea("_", 375, 200));
-                    backspcaeCheck--;
+                    backSpaceCheck--;
                     current = "second";
                 }
-                else if (backspcaeCheck==0){
+                else if (backSpaceCheck ==0){
                     this.getChildren().remove(0);
                     this.getChildren().add(0,setupTextArea("_",315,200));
                     current ="first";

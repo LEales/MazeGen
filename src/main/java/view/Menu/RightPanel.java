@@ -1,22 +1,20 @@
 package view.Menu;
 
 import control.MainProgram;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import model.time.TimeThread;
 import view.AudioPlayer;
 
 import java.io.FileNotFoundException;
@@ -28,329 +26,248 @@ import java.io.FileNotFoundException;
 
 public class RightPanel extends GridPane {
 
-    private MainProgram mainProgram;
-    private String gameMode;
-    private int seconds;
-
-    private Image imageMenu;
-    private ImageView menuView;
-
+    private final MainProgram mainProgram;
     private Image levelNumber;
-    private ImageView currentLevelView;
-    private Label levelLabel;
-    private Thread timer;
-
     private Image heart;
-    private ImageView currentHeartView;
-    private Label heartLabel;
-
-    private Image pickaxe;
-    private ImageView pickaxeView;
-    private Label pickaxeLabel;
-
     private Image soundImage;
-    private ImageView soundView;
-    private Label soundLabel;
-    private boolean soundOn;
-
     private Image musicImage;
-    private ImageView musicView;
-    private Label musicLabel;
+
+    private final ImageView currentLevelView;
+    private final ImageView currentHeartView;
+    private final ImageView pickaxeView;
+    private final ImageView soundView;
+    private final ImageView musicView;
+    private final ImageView emptyView;
+
+    private final Label levelLabel;
+    private final Label heartLabel;
+    private final Label pickaxeLabel;
+    private final Label soundLabel;
+    private final Label musicLabel;
+    private final Label timerLabel;
+
+    private boolean soundOn;
     private boolean musicOn;
-    private boolean timerIsStartedOnce = false;
 
-    private Image emptySprite;
-    private ImageView emptyView;
-
-    private static Integer STARTTIME = 15;
+    private final IntegerProperty timeSeconds = new SimpleIntegerProperty(15);
     private Timeline timeline = new Timeline();
-    private Label timerLabel = new Label();
-    private IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
-    private IntegerProperty stackedSeconds = new SimpleIntegerProperty();
-    private Font font = Font.loadFont("file:files/fonts/PressStart2P.ttf", 35);
-
-    private AudioPlayer audioPlayer;
-    private TimeThread time;
 
 
     /**
      * Instansierar objekten och lägger till bilder och labels på scenen
-     * @param mainProgram Huvudprogrammet
-     * @param gameMode Kollar ifall användaren valt randomized eller kampanjläge
-     * @param audioPlayer Klass som spelar upp ljud & musik
-     * @param time En tråd som räknar hur många sekunder spelaren har på sig
+     * @param gameMode    Kollar ifall användaren valt randomized eller kampanjläge
      * @throws FileNotFoundException
      */
-    public RightPanel(MainProgram mainProgram, String gameMode, AudioPlayer audioPlayer, TimeThread time) throws FileNotFoundException {
-        this.mainProgram = mainProgram;
-        this.gameMode = gameMode;
-        this.audioPlayer = audioPlayer;
-        this.time = time;
+    public RightPanel(String gameMode) throws FileNotFoundException { //TODO ska gameMode va string?
+        this.mainProgram = MainProgram.getMainProgram();
 
         soundOn = true;
         musicOn = true;
 
-        imageMenu = new Image("file:files/texts/Menu.png", 90, 30, false, false);
-        menuView = new ImageView(imageMenu);
+        Image imageMenu = new Image("file:files/texts/Menu.png", 90, 30, false, false);
+        ImageView menuView = new ImageView(imageMenu);
 
-        emptySprite = new Image("file:files/emptySprite.png", 30, 30, false, false);
+        Image emptySprite = new Image("file:files/emptySprite.png", 30, 30, false, false);
         emptyView = new ImageView(emptySprite);
 
-        pickaxe = new Image("file:files/items/pickaxe.png", 30, 30, false, false);
+        Image pickaxe = new Image("file:files/items/pickaxe.png", 30, 30, false, false);
         pickaxeView = new ImageView(pickaxe);
         pickaxeLabel = new Label();
         pickaxeLabel.setGraphic(emptyView);
 
-        levelNumber = new Image("file:files/levelcounter/"+ gameMode +".png", 90, 30, false, false);
+        levelNumber = new Image("file:files/levelcounter/" + gameMode + ".png", 90, 30, false, false);
         currentLevelView = new ImageView(levelNumber);
         levelLabel = new Label();
         levelLabel.setGraphic(currentLevelView);
 
-        soundImage = new Image("file:files/soundbuttons/soundon.png", 30,30,false,false);
+        soundImage = new Image("file:files/soundbuttons/soundon.png", 30, 30, false, false);
         soundView = new ImageView(soundImage);
         soundLabel = new Label();
         soundLabel.setTranslateX(30);
         soundLabel.setTranslateY(440);
         soundLabel.setGraphic(soundView);
 
-        musicImage = new Image("file:files/soundbuttons/musicon.png", 30,30,false,false);
+        musicImage = new Image("file:files/soundbuttons/musicon.png", 30, 30, false, false);
         musicView = new ImageView(musicImage);
         musicLabel = new Label();
         musicLabel.setTranslateX(60);
         musicLabel.setTranslateY(440);
         musicLabel.setGraphic(musicView);
 
-        //Hearts only in Campaign
-        if(gameMode!="Random"){
+        heartLabel = new Label();
+        currentHeartView = new ImageView(heart);
+        if (!gameMode.equals("Random")) {
             heart = new Image("file:files/hearts/3heart.png", 90, 30, false, false);
-            currentHeartView = new ImageView(heart);
-            heartLabel = new Label();
             heartLabel.setGraphic(currentHeartView);
-            add(heartLabel,0,2);
+            add(heartLabel, 0, 2);
         }
 
+        timerLabel = new Label();
         timerLabel.textProperty().bind(timeSeconds.asString());
         timerLabel.setTextFill(Color.WHITE);
+        Font font = Font.loadFont("file:files/fonts/PressStart2P.ttf", 35);
         timerLabel.setFont(font);
         timerLabel.setTranslateY(200);
         timerLabel.setTranslateX(8);
 
         add(timerLabel, 0, 4);
-        add(levelLabel,0,1);
+        add(levelLabel, 0, 1);
         add(pickaxeLabel, 0, 3);
 
         soundLabel.setOnMouseClicked(e -> soundLabelClicked());
         musicLabel.setOnMouseClicked(e -> musicLabelClicked());
 
-        add(soundLabel,0,4);
-        add(musicLabel,0,4);
+        add(soundLabel, 0, 4);
+        add(musicLabel, 0, 4);
 
-        menuView.setOnMouseClicked(e -> MainMenuClicked(e));
-        add(menuView,0,0);
+        menuView.setOnMouseClicked(e -> mainMenuClicked());
+        add(menuView, 0, 0);
 
     }
+
     /**
      * Slår på/av spelljud
      */
-    public void soundLabelClicked(){
-        if(soundOn){
-            soundImage = new Image("file:files/soundbuttons/soundoff.png", 30,30,false,false);
-            audioPlayer.muteSound(true);
+    private boolean soundLabelClicked() {
+        if (soundOn) {
+            soundImage = new Image("file:files/soundbuttons/soundoff.png", 30, 30, false, false);
+            AudioPlayer.muteSound(true);
             soundOn = false;
-        } else{
-            soundImage = new Image("file:files/soundbuttons/soundon.png", 30,30,false,false);
-            audioPlayer.muteSound(false);
+        } else {
+            soundImage = new Image("file:files/soundbuttons/soundon.png", 30, 30, false, false);
+            AudioPlayer.muteSound(false);
             soundOn = true;
         }
         soundView.setImage(soundImage);
         soundLabel.setGraphic(soundView);
+        return soundOn;
     }
+
     /**
      * Slår på/av musik
      */
-    public void musicLabelClicked(){
-        if(musicOn){
-            musicImage = new Image("file:files/soundbuttons/musicoff.png",30,30,false,false);
-            audioPlayer.muteMusic(true);
+    private boolean musicLabelClicked() {
+        if (musicOn) {
+            musicImage = new Image("file:files/soundbuttons/musicoff.png", 30, 30, false, false);
+            AudioPlayer.muteMusic(true);
             musicOn = false;
-        } else{
-            musicImage = new Image("file:files/soundbuttons/musicon.png",30,30,false,false);
-            audioPlayer.muteMusic(false);
+        } else {
+            musicImage = new Image("file:files/soundbuttons/musicon.png", 30, 30, false, false);
+            AudioPlayer.muteMusic(false);
             musicOn = true;
         }
         musicView.setImage(musicImage);
         musicLabel.setGraphic(musicView);
-    }
-
-    public boolean getMusicOn(){
         return musicOn;
     }
+
+    public boolean getMusicOn() {
+        return musicOn;
+    }
+
     /**
      * Sätter en ny bild beroende på om man plockar upp/tappar ett liv
-     * @param number
+     *
+     * @param amountOfHearts
      */
-    public void changeHeartCounter(String number){
-        heart = new Image("file:files/hearts/" + number + "heart.png", 90, 30, false, false);
-        currentHeartView.setImage(heart);
-        heartLabel.setGraphic(currentHeartView);
+    public void changeHeartCounter(int amountOfHearts) {
+        if (0 <= amountOfHearts && 3 >= amountOfHearts) {
+            heart = new Image("file:files/hearts/" + amountOfHearts + "heart.png", 90, 30, false, false);
+            currentHeartView.setImage(heart);
+            heartLabel.setGraphic(currentHeartView);
+        } else {
+            throw new IllegalArgumentException("Invalid amount of hearts");
+        }
     }
+
     /**
-     * Sätter bilden på yxan i en label
+     * Lägger till yxan i guit.
      */
-    public void addPickaxe(){
+    public void addPickaxe() {
         pickaxeLabel.setGraphic(pickaxeView);
     }
+
     /**
-     * Tar bort yxan när man plcokat upp den
+     * Tar bort yxan från guit.
      */
-    public void removePickaxe(){
+    public void removePickaxe() {
         pickaxeLabel.setGraphic(emptyView);
     }
+
     /**
      * Byter bild beroende vilken nivå man befinner sig på
+     *
      * @param number
      */
-    public void changeLevelCounter(String number){
+
+    public void changeLevelCounter(String number) { //TODO is number the right datatype?
         levelNumber = new Image("file:files/levelcounter/" + number + ".png", 90, 30, false, false);
         currentLevelView.setImage(levelNumber);
         levelLabel.setGraphic(currentLevelView);
     }
+
     /**
      * Byter scen till menyn
-     * @param e
      */
-    private void MainMenuClicked(MouseEvent e){
+    private void mainMenuClicked() {
         mainProgram.changeToMenu();
-        audioPlayer.playButtonSound();
-        audioPlayer.stopMusic();
+        AudioPlayer.playButtonSound();
+        AudioPlayer.stopMusic();
     }
-    /**
-     * Startar den visuella klockan i GUIt
-     */
-    public void runClock() {
-        timeSeconds.set(STARTTIME);
 
-        timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(STARTTIME),
-                        new KeyValue(timeSeconds, 0)));
-        timeline.playFromStart();
-    }
     /**
      * Pausar klockan vid avancemang till ny nivå
      */
-    public void pauseClock(){
-        seconds = timeSeconds.getValue().intValue();
+    public boolean pauseClock() {
         timeline.stop();
-
-        timeSeconds.set(seconds);
-        timeline = null;
+        return timeline.getStatus().equals(Animation.Status.STOPPED);
     }
+
     /**
      * Sätter tiden som visuella klockan ska visa
-     * @param timesec
+     *
+     * @param time
      */
-    public void setTheTime(int timesec){
-        timeSeconds.set(timesec);
+    public void setTheTime(int time) {
+        timeSeconds.set(time);
     }
+
     /**
      * Kör igång klockan när spelaren trycker på startknappen
      */
-    public void resumeClock(){
-        timeSeconds.set(STARTTIME);
-        timeline = new Timeline();
-        timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(STARTTIME),
-                        new KeyValue(timeSeconds, 0)));
+    public boolean resumeClock(int startTime) {
+        timeSeconds.set(startTime);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(startTime), new KeyValue(timeSeconds, 0)));
         timeline.playFromStart();
+        return timeline.getStatus().equals(Animation.Status.RUNNING);
+    }
 
-    }
-    /**
-     * En setter som finns i varje maptemplate för att bestämma antal sekunder spelaren
-     * har på sig
-     * @param STARTTIME
-     */
-    public void setSTARTTIME(Integer STARTTIME) {
-        RightPanel.STARTTIME = STARTTIME;
-    }
-    /**
-     * Startar en tråd som räknar den totala tiden
-     */
-    public void startTotalTimer(){
-        /*if (!timerIsStartedOnce) {
-            totTime.start();
-        }
-        else {
-            totTime = new TotalTime(false);
-            totTime.start();
-        }*/
-    }
-    /**
-     * Startar en task för Game Over
-     */
-    public void startTask(){
-        timer = null;
-
-        timer = new Thread(startNewTask());
-        timer.start();
-    }
     /**
      * Tasks run-metod som sätter den totala tiden det tog att spela
      * Pausar musik & visar Game Over texten
      */
-    public void gameIsOver(){
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-
-                mainProgram.gameOver();
-                audioPlayer.playGameOverSound();
-                audioPlayer.stopMusic();
-                removePickaxe();
-            }
+    public void gameIsOver() {
+        Platform.runLater(() -> {
+            mainProgram.gameOver();
+            AudioPlayer.playGameOverSound();
+            AudioPlayer.stopMusic();
+            removePickaxe();
         });
     }
-    /**
-     * Skapar en task vid gameOver
-     * @return
-     */
-    public Task startNewTask() {
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
 
-                gameIsOver();
-                return null;
-            }
-        };
-        return task;
-    }
-    /**
-     * Setter för Tråden att veta när det blir GameOver
-     * @param b
-     */
-    public void setGameOver(boolean b) {
-        //return totTime.setGameOver(b);
-    }
-    /**
-     * Setter för att kontrollera om tiden har startat
-     * @param timerIsStartedOnce
-     */
-    public void setTimerIsStarted(boolean timerIsStartedOnce) {
-        this.timerIsStartedOnce = timerIsStartedOnce;
-    }
     /**
      * Om spelaren har 5 sekunder kvar kallas denna metod från tråden
      */
     public void fiveSecLeft() {
-        audioPlayer.playTimeLeftSound();
+        AudioPlayer.playTimeLeftSound();
         timerLabel.setStyle("-fx-text-fill: red;");
     }
+
     /**
      * Nollställer textens färg till vit och stoppar klockljudet
      */
-    public void resetTimerLabel(){
+    public void resetTimerLabel() {
         timerLabel.setStyle("-fx-text-fill: white;");
-        audioPlayer.stopClockSound();
+        AudioPlayer.stopClockSound();
     }
 }

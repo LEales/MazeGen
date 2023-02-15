@@ -14,12 +14,11 @@ import java.io.FileNotFoundException;
 public class World3Template extends World1Template {
     private final int squareSize;
     private final int currentLevel;
-    public World3Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
-        super(level, currentLevel, heartCrystals, rightPanel, world, audioPlayer, 60);
+    public World3Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world) throws FileNotFoundException {
+        super(level, currentLevel, heartCrystals, rightPanel, world, 60);
         squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
         this.currentLevel = currentLevel;
-        rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
-        rightPanel.setSTARTTIME(60);
+        rightPanel.changeHeartCounter(heartCrystals);
         rightPanel.resetTimerLabel();
         initialize();
 

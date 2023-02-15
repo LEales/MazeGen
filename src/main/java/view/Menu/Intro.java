@@ -3,10 +3,8 @@ package view.Menu;
 import control.MainProgram;
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 import view.AudioPlayer;
@@ -22,17 +20,13 @@ public class Intro extends Pane {
     private Image mazeGen;
     private Image mazeGenGlow;
     private Image pressMouse;
-    private AudioPlayer audioPlayer;
 
     /**
      * Konstruktor som tar emot mainProgram och audioPlayer
      * Kör sedan metoder för bakgrundsbild, bilder i övrigt och listener
-     * @param mainProgram tas emot och sätts
-     * @param audioPlayer tas emot och sätts
      */
-    public Intro(MainProgram mainProgram, AudioPlayer audioPlayer){
-        this.mainProgram = mainProgram;
-        this.audioPlayer = audioPlayer;
+    public Intro(){
+        this.mainProgram = MainProgram.getMainProgram();
         setBackground();
         addListener();
         setupImages();
@@ -65,13 +59,10 @@ public class Intro extends Pane {
      * Lägger till listener för att stänga av ljudet och byta scen
      */
     public void addListener(){
-        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                audioPlayer.stopMusic();
-                audioPlayer.playButtonSound();
-                mainProgram.changeToMenu();
-            }
+        this.setOnMouseClicked(mouseEvent -> {
+            AudioPlayer.stopMusic();
+            AudioPlayer.playButtonSound();
+            mainProgram.changeToMenu();
         });
     }
 

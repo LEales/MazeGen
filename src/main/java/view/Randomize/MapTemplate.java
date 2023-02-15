@@ -28,7 +28,6 @@ import java.util.Random;
 
 public class MapTemplate extends GridPane {
 
-    private MainProgram mainProgram;
     private GenerateNextLevel generateNextLevel;
     private Sprite[][] level;
     private ArrayList<Label> collectibles = new ArrayList<>();
@@ -68,7 +67,6 @@ public class MapTemplate extends GridPane {
      * Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
      */
     public MapTemplate(Sprite[][] level, GenerateNextLevel generateNextLevel) throws FileNotFoundException {
-        this.mainProgram = MainProgram.getMainProgram();
         this.level = level;
         this.generateNextLevel = generateNextLevel;
 

@@ -33,11 +33,11 @@ public class TimeThread extends Thread {
             try {
                 Thread.sleep(1000);
                 time.decrement();
-                if (time.getSeconds() == 5) {
+                if (5 == time.getSeconds()) {
                     panel.fiveSecLeft();
                 }
-                if (time.getSeconds() == 0) {
-                    panel.startTask();
+                if (0 == time.getSeconds() && !gameOver) {
+                    panel.gameIsOver();
                     gameOver = true;
                 }
 

@@ -21,11 +21,11 @@ public class World5Template extends World1Template {
     private final int currentLevel;
 
 
-    public World5Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
-        super(level, currentLevel, heartCrystals, rightPanel, world, audioPlayer, 90);
+    public World5Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world) throws FileNotFoundException {
+        super(level, currentLevel, heartCrystals, rightPanel, world, 90);
         squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
         this.currentLevel = currentLevel;
-        rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
+        rightPanel.changeHeartCounter(heartCrystals);
         rightPanel.resetTimerLabel();
         initialize();
     }

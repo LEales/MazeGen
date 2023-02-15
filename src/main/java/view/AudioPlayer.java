@@ -15,48 +15,44 @@ import java.io.File;
 
 public class AudioPlayer {
 
-    private MediaPlayer diamondPlayer;
+    private static MediaPlayer diamondPlayer;
 
-    private MediaPlayer deathPlayer;
+    private static MediaPlayer deathPlayer;
 
-    private MediaPlayer startPlayer;
+    private static MediaPlayer startPlayer;
 
-    private MediaPlayer goalPlayer;
+    private static MediaPlayer goalPlayer;
 
-    private MediaPlayer heartPlayer;
+    private static MediaPlayer heartPlayer;
 
-    private MediaPlayer breakableWallPlayer;
+    private static MediaPlayer breakableWallPlayer;
 
-    private File currentSong;
-    private Media currentMedia;
-    private MediaPlayer currentSongPlayer;
+    private static File currentSong;
+    private static Media currentMedia;
+    private static MediaPlayer currentSongPlayer;
 
-    private MediaPlayer pickAxeMediaPlayer;
+    private static MediaPlayer pickAxeMediaPlayer;
 
-    private MediaPlayer gameOverMediaPlayer;
+    private static MediaPlayer gameOverMediaPlayer;
 
-    private MediaPlayer buttonClickedMediaPlayer;
+    private static MediaPlayer buttonClickedMediaPlayer;
 
-    private MediaPlayer introMediaPlayer;
+    private static MediaPlayer introMediaPlayer;
 
-    private MediaPlayer worldIntroMediaPlayer;
+    private static MediaPlayer worldIntroMediaPlayer;
 
-    private MediaPlayer timeLeftMediaPlayer;
+    private static MediaPlayer timeLeftMediaPlayer;
 
-    private MediaPlayer mobSoundMediaPlayer;
+    private static MediaPlayer mobSoundMediaPlayer;
 
     /**
      * Kör metoden som instanierar ljudfilerna.
      */
-    public AudioPlayer() {
-        setupAudioFiles();
-    }
-
     /**
      * Instansierar alla ljudfiler.
      */
-    public void setupAudioFiles() {
-
+    static {
+        System.out.println("Hello");
         File diamondSound = new File("files/sounds/Diamond1.mp3");
         Media diamondMedia = new Media(diamondSound.toURI().toString());
         diamondPlayer = new MediaPlayer(diamondMedia);
@@ -112,7 +108,6 @@ public class AudioPlayer {
         File mobSound = new File("files/sounds/mobsound.mp3");
         Media mobSoundMedia = new Media(mobSound.toURI().toString());
         mobSoundMediaPlayer = new MediaPlayer(mobSoundMedia);
-
     }
 
     /**
@@ -120,7 +115,7 @@ public class AudioPlayer {
      *
      * @param songToPlay Låten som ska spelas.
      */
-    public File playLevelMusic(World songToPlay) {
+    public static File playLevelMusic(World songToPlay) {
         MainProgram mainProgram = MainProgram.getMainProgram();
         currentSong = new File("files/music/" + songToPlay + ".mp3");
         currentMedia = new Media(currentSong.toURI().toString());
@@ -130,14 +125,13 @@ public class AudioPlayer {
         if (!mainProgram.getMusicIsOn()) {
             currentSongPlayer.setMute(true);
         }
-        System.out.println(currentSongPlayer.isMute());
         return currentSong;
     }
 
     /**
      * Spelar ett ljud när spelaren plockar upp en collectible.
      */
-    public boolean playCollectibleSound() {
+    public static boolean playCollectibleSound() {
         try {
             diamondPlayer.play();
             diamondPlayer.seek(Duration.ZERO);
@@ -150,7 +144,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när spelaren dör.
      */
-    public boolean playDeathSound() {
+    public static boolean playDeathSound() {
         try {
             deathPlayer.play();
             deathPlayer.seek(Duration.ZERO);
@@ -163,7 +157,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när spelrundan startas.
      */
-    public boolean playStartSound() {
+    public static boolean playStartSound() {
         try {
             startPlayer.play();
             startPlayer.seek(Duration.ZERO);
@@ -176,7 +170,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när spelaren går i mål.
      */
-    public boolean playGoalSound() {
+    public static boolean playGoalSound() {
         try {
             goalPlayer.play();
             goalPlayer.seek(Duration.ZERO);
@@ -189,7 +183,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när spelaren plockar upp ett liv.
      */
-    public boolean playHeartSound() {
+    public static boolean playHeartSound() {
         try {
             heartPlayer.play();
             heartPlayer.seek(Duration.ZERO);
@@ -202,7 +196,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när spelaren förstör en vägg.
      */
-    public boolean playBreakableWallSound() {
+    public static boolean playBreakableWallSound() {
         try {
             breakableWallPlayer.play();
             breakableWallPlayer.seek(Duration.ZERO);
@@ -215,7 +209,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när spelaren plockar upp en yxa.
      */
-    public boolean playPickAxeSound() {
+    public static boolean playPickAxeSound() {
         try {
             pickAxeMediaPlayer.play();
             pickAxeMediaPlayer.seek(Duration.ZERO);
@@ -228,7 +222,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när det blir gameOver.
      */
-    public boolean playGameOverSound() {
+    public static boolean playGameOverSound() {
         try {
             gameOverMediaPlayer.play();
             gameOverMediaPlayer.seek(Duration.ZERO);
@@ -243,7 +237,7 @@ public class AudioPlayer {
      *
      * @param mute True om ljudet ska vara avstängt och false om ljudet ska vara på.
      */
-    public boolean muteSound(boolean mute) {
+    public static boolean muteSound(boolean mute) {
         breakableWallPlayer.setMute(mute);
         deathPlayer.setMute(mute);
         heartPlayer.setMute(mute);
@@ -268,7 +262,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när spelet startas.
      */
-    public boolean playIntroMusic() {
+    public static boolean playIntroMusic() {
         try {
             introMediaPlayer.play();
             introMediaPlayer.seek(Duration.ZERO);
@@ -281,16 +275,16 @@ public class AudioPlayer {
     /**
      * Stänger av all musik.
      */
-    public boolean stopMusic() {
+    public static boolean stopMusic() {
         currentSongPlayer.stop();
         introMediaPlayer.stop();
-        return currentSongPlayer.currentCountProperty().intValue() == 0 && introMediaPlayer.currentCountProperty().intValue() == 0;
+        return 0 == currentSongPlayer.currentCountProperty().intValue() && 0 == introMediaPlayer.currentCountProperty().intValue();
     }
 
     /**
      * Spelar ett ljud vid alla knapptryck i menyerna.
      */
-    public boolean playButtonSound() {
+    public static boolean playButtonSound() {
         try {
             buttonClickedMediaPlayer.play();
             buttonClickedMediaPlayer.seek(Duration.ZERO);
@@ -303,7 +297,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud vid varje ny värld.
      */
-    public boolean playWorldIntroSound() {
+    public static boolean playWorldIntroSound() {
         try {
             worldIntroMediaPlayer.play();
             worldIntroMediaPlayer.seek(Duration.ZERO);
@@ -316,7 +310,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när det endast är fem sekunder kvar på timern.
      */
-    public boolean playTimeLeftSound() {
+    public static boolean playTimeLeftSound() {
         try {
             timeLeftMediaPlayer.play();
             timeLeftMediaPlayer.seek(Duration.ZERO);
@@ -329,7 +323,7 @@ public class AudioPlayer {
     /**
      * Spelar ett ljud när spelaren kolliderar med en fiende.
      */
-    public boolean playMobSound() {
+    public static boolean playMobSound() {
         try {
             mobSoundMediaPlayer.play();
             mobSoundMediaPlayer.seek(Duration.ZERO);
@@ -344,7 +338,7 @@ public class AudioPlayer {
      *
      * @param mute True om ljudet ska vara avstängt och false om ljudet ska vara på.
      */
-    public boolean muteMusic(boolean mute) {
+    public static boolean muteMusic(boolean mute) {
         currentSongPlayer.setMute(mute);
         return currentSongPlayer.isMute();
     }
@@ -353,7 +347,7 @@ public class AudioPlayer {
      * Stänger av timerns ljud.
      */
 
-    public boolean stopClockSound() {
+    public static boolean stopClockSound() {
         timeLeftMediaPlayer.stop();
         return timeLeftMediaPlayer.currentCountProperty().intValue() == 0;
     }

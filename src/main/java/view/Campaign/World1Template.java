@@ -53,12 +53,9 @@ public class World1Template extends GridPane {
     private int heartCrystals;
     private boolean pickaxeObtained;
     private boolean gameStarted;
-    private boolean startNotClickedOnce = true;
-    private boolean firstStart = true;
     private final World world;
     private int seconds;
     private final RightPanel rightPanel;
-    private final AudioPlayer audioPlayer;
     private TimeThread time;
 
     /**
@@ -69,29 +66,27 @@ public class World1Template extends GridPane {
      * @param heartCrystals Spelarens liv.
      * @param rightPanel    Panelen som visar information så som liv, tid, nivå osv.
      * @param world         Används för att sätta rätt grafik på världen.
-     * @param audioPlayer   Används för att spela upp ljud inne i spelet.
      * @param seconds       Tidsbegränsningen för varje bana.
      * @throws FileNotFoundException
      */
 
     //Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
-    public World1Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, AudioPlayer audioPlayer, int seconds) throws FileNotFoundException {
+    public World1Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, int seconds) throws FileNotFoundException {
         this.mainProgram = MainProgram.getMainProgram();
         this.currentLevel = currentLevel;
         this.level = level.clone();
         this.heartCrystals = heartCrystals;
         this.seconds = seconds;
-        rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
+        rightPanel.changeHeartCounter(heartCrystals);
         this.rightPanel = rightPanel;
-        this.audioPlayer = audioPlayer;
         this.world = world;
         squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
         setBackground();
         setupImages(world);
         setupBorders();
         setupLevel();
-        rightPanel.setSTARTTIME(seconds);
         rightPanel.resetTimerLabel();
+        rightPanel.setTheTime(seconds);
     }
 
     /**
@@ -359,7 +354,7 @@ public class World1Template extends GridPane {
 
     private void collectibleObtained(MouseEvent e) {
         if (startButtonPressed) {
-            audioPlayer.playCollectibleSound();
+            AudioPlayer.playCollectibleSound();
             Label label = (Label) e.getSource();
             label.setVisible(false);
             collectiblesObtained++;
@@ -399,10 +394,10 @@ public class World1Template extends GridPane {
     private void heartCrystalObtained(MouseEvent e) {
         Label label = (Label) e.getSource();
         if (startButtonPressed) {
-            audioPlayer.playHeartSound();
+            AudioPlayer.playHeartSound();
             label.setVisible(false);
             if (3 > heartCrystals) {
-                rightPanel.changeHeartCounter(String.valueOf(++heartCrystals));
+                rightPanel.changeHeartCounter(++heartCrystals);
             }
         }
     }
@@ -433,7 +428,7 @@ public class World1Template extends GridPane {
      */
     private void pickAxeObtained(MouseEvent e) {
         if (startButtonPressed) {
-            audioPlayer.playPickAxeSound();
+            AudioPlayer.playPickAxeSound();
             Label label = (Label) e.getSource();
             label.setVisible(false);
             pickaxeObtained = true;
@@ -452,11 +447,11 @@ public class World1Template extends GridPane {
         Label label = (Label) e.getSource();
         createFadeTransition(label, 0.3, 10.0, 0.6).play();
         if (startButtonPressed) {
-            rightPanel.changeHeartCounter(String.valueOf(--heartCrystals));
+            rightPanel.changeHeartCounter(--heartCrystals);
             if (0 == heartCrystals) {
                 gameOver();
             }
-            audioPlayer.playDeathSound();
+            AudioPlayer.playDeathSound();
             startButtonPressed = false;
         }
     }
@@ -472,9 +467,9 @@ public class World1Template extends GridPane {
         if (startButtonPressed) {
             ImageView view = (ImageView) e.getSource();
             createFadeTransition(view, 0.2, 10, 0.6).play();
-            audioPlayer.playMobSound();
-            audioPlayer.playDeathSound();
-            rightPanel.changeHeartCounter(String.valueOf(--heartCrystals));
+            AudioPlayer.playMobSound();
+            AudioPlayer.playDeathSound();
+            rightPanel.changeHeartCounter(--heartCrystals);
             if (0 == heartCrystals) {
                 gameOver();
             }
@@ -487,8 +482,8 @@ public class World1Template extends GridPane {
      * Avslutar spelrundan och kör metoden gameOver i mainProgram.
      */
     private void gameOver() {
-        audioPlayer.playGameOverSound();
-        audioPlayer.stopMusic();
+        AudioPlayer.playGameOverSound();
+        AudioPlayer.stopMusic();
         mainProgram.gameOver();
         rightPanel.pauseClock();
         gameStarted = true;
@@ -505,10 +500,10 @@ public class World1Template extends GridPane {
      */
     private void enteredGoal() throws FileNotFoundException, InterruptedException {
         if (startButtonPressed && allCollectiblesObtained) {
-            audioPlayer.stopClockSound();
-            audioPlayer.playGoalSound();
-            nextLevel();
             rightPanel.pauseClock();
+            AudioPlayer.stopClockSound();
+            AudioPlayer.playGoalSound();
+            nextLevel();
             rightPanel.setTheTime(seconds);
             gameStarted = true;
             time.setGameOver(true);
@@ -537,27 +532,14 @@ public class World1Template extends GridPane {
      * Startar spelrundan och timern.
      */
     private void startLevel() {
-        if (firstStart) {
-            rightPanel.startTotalTimer();
-            rightPanel.setTimerIsStarted(true);
-        }
         if (!gameStarted) {
-            rightPanel.resumeClock();
             gameStarted = true;
             time = new TimeThread(seconds, rightPanel);
             time.setGameOver(false);
+            rightPanel.resumeClock(seconds);
             time.start();
-
-        } else if (startNotClickedOnce) {
-            rightPanel.runClock();
-            time = new TimeThread(seconds, rightPanel);
-            time.setGameOver(false);
-            time.start();
-
         }
-        firstStart = false;
-        startNotClickedOnce = false;
-        audioPlayer.playStartSound();
+        AudioPlayer.playStartSound();
         startButtonPressed = true;
     }
 
@@ -595,7 +577,7 @@ public class World1Template extends GridPane {
                 pickaxeObtained = false;
                 rightPanel.removePickaxe();
                 wallDestroyed = true;
-                audioPlayer.playBreakableWallSound();
+                AudioPlayer.playBreakableWallSound();
             } else if (!wallDestroyed) {
                 enteredWall(e);
             }

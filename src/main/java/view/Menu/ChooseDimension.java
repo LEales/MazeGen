@@ -1,7 +1,6 @@
 package view.Menu;
 
 import control.MainProgram;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -26,18 +25,14 @@ public class ChooseDimension extends Pane {
     private Image painResize;
     private Image returnImage;
     private Image returnResize;
-    private AudioPlayer audioPlayer;
 
 
     /**
      * Konstruktor som tar emot mainProgram och audioPlayer och kör några metoder för att
      * sätta bilder och knappar
-     * @param mainProgram tas emot och instansvariabeln sätts
-     * @param audioPlayer tas emot och instansvariabeln sätts
      */
-    public ChooseDimension(MainProgram mainProgram, AudioPlayer audioPlayer){
-        this.mainProgram = mainProgram;
-        this.audioPlayer = audioPlayer;
+    public ChooseDimension(){
+        this.mainProgram = MainProgram.getMainProgram();
         setBackground();
         setupImages();
         addButtons();
@@ -97,7 +92,7 @@ public class ChooseDimension extends Pane {
         tenByTenView.setOnMouseClicked(e -> {
             try {
                 mainProgram.changeToRandomize(10);
-                audioPlayer.playButtonSound();
+                AudioPlayer.playButtonSound();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
@@ -121,7 +116,7 @@ public class ChooseDimension extends Pane {
         fourteenView.setOnMouseClicked(e -> {
             try {
                 mainProgram.changeToRandomize(14);
-                audioPlayer.playButtonSound();
+                AudioPlayer.playButtonSound();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
@@ -145,7 +140,7 @@ public class ChooseDimension extends Pane {
         eighteenView.setOnMouseClicked(e -> {
             try {
                 mainProgram.changeToRandomize(18);
-                audioPlayer.playButtonSound();
+                AudioPlayer.playButtonSound();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
@@ -169,7 +164,7 @@ public class ChooseDimension extends Pane {
         painView.setOnMouseClicked(e -> {
             try {
                 mainProgram.changeToRandomize(28);
-                audioPlayer.playButtonSound();
+                AudioPlayer.playButtonSound();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
@@ -192,7 +187,7 @@ public class ChooseDimension extends Pane {
         });
         returnView.setOnMouseClicked(e -> {
             mainProgram.changeToMenu();
-            audioPlayer.playButtonSound();
+            AudioPlayer.playButtonSound();
         });
 
         getChildren().addAll(dimensionView,tenByTenView,fourteenView,eighteenView,painView,returnView);

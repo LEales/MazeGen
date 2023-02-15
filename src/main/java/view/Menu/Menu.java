@@ -22,7 +22,6 @@ public class Menu extends Pane {
     private Image help;
     private Image helpResize;
     private Image mazegen;
-    private AudioPlayer audioPlayer;
     private RightPanel panel;
     private Image highscoreImage;
     private Image highscoreImageRezise;
@@ -31,13 +30,10 @@ public class Menu extends Pane {
     /**
      * Konstruktor som tar emot mainProgram, audioPlayer och panel
      * Kör sedan metoder för att länka Image-objekten med png-filer
-     * @param mainProgram tas emot och sätts
-     * @param audioPlayer tas emot och sätts
      * @param panel tas emot och sätts
      */
-    public Menu(MainProgram mainProgram, AudioPlayer audioPlayer, RightPanel panel){
-        this.mainProgram = mainProgram;
-        this.audioPlayer = audioPlayer;
+    public Menu(RightPanel panel){
+        this.mainProgram = MainProgram.getMainProgram();
         this.panel = panel;
         this.setBackground(new Background(setBackground()));
         setupImages();
@@ -93,8 +89,7 @@ public class Menu extends Pane {
         campaignView.setOnMouseClicked(e -> {
             try {
                 mainProgram.changeToCampaign();
-                audioPlayer.playLevelMusic(World.FOREST);
-                panel.setTheTime(25);
+                AudioPlayer.playLevelMusic(World.FOREST);
                 panel.resetTimerLabel();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
@@ -121,7 +116,7 @@ public class Menu extends Pane {
         });
         randomizeView.setOnMouseClicked(e -> {
             mainProgram.chooseDimension();
-            audioPlayer.playButtonSound();
+            AudioPlayer.playButtonSound();
         });
         return randomizeView;
     }
@@ -144,7 +139,7 @@ public class Menu extends Pane {
         });
         helpView.setOnMouseClicked(e -> {
             mainProgram.changeToHelp();
-            audioPlayer.playButtonSound();
+            AudioPlayer.playButtonSound();
         });
         return helpView;
     }
@@ -166,7 +161,7 @@ public class Menu extends Pane {
         });
         testView.setOnMouseClicked(e -> {
             mainProgram.showHighScoreList();
-            audioPlayer.playButtonSound();
+            AudioPlayer.playButtonSound();
         });
         return testView;
     }

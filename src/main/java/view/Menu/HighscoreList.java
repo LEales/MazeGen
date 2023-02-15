@@ -16,7 +16,6 @@ import java.io.ObjectInputStream;
 
 public class HighscoreList extends HBox{
     private MainProgram mainProgram;
-    private AudioPlayer audioPlayer;
     private Label[] labelArr = new Label[10];
 
     private VBox nameVbox;
@@ -25,10 +24,9 @@ public class HighscoreList extends HBox{
     private Image image;
     private ImageView imageView = new ImageView(image);
 
-    public HighscoreList(MainProgram mainProgram, AudioPlayer audioPlayer) {
+    public HighscoreList() {
         this.setOnMouseClicked(e->backToMenu());
-        this.audioPlayer = audioPlayer;
-        this.mainProgram = mainProgram;
+        this.mainProgram = MainProgram.getMainProgram();
         this.setBackground(new Background(setBackground()));
     }
 

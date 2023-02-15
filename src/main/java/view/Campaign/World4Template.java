@@ -19,13 +19,12 @@ public class World4Template extends World1Template {
     private final int squareSize;
     private final int currentLevel;
 
-    public World4Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world, AudioPlayer audioPlayer) throws FileNotFoundException {
-        super(level, currentLevel, heartCrystals, rightPanel, world, audioPlayer, 80);
-        rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
+    public World4Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world) throws FileNotFoundException {
+        super(level, currentLevel, heartCrystals, rightPanel, world, 80);
+        rightPanel.changeHeartCounter(heartCrystals);
         this.currentLevel = currentLevel;
         squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
-
-        rightPanel.changeHeartCounter(String.valueOf(heartCrystals));
+        rightPanel.changeHeartCounter(heartCrystals);
         rightPanel.resetTimerLabel();
         initialize();
     }
