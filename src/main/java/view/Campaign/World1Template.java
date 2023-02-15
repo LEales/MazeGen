@@ -538,8 +538,8 @@ public class World1Template extends GridPane {
             time.setGameOver(false);
             rightPanel.resumeClock(seconds);
             time.start();
+            AudioPlayer.playStartSound();
         }
-        AudioPlayer.playStartSound();
         startButtonPressed = true;
     }
 
