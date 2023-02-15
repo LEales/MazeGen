@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
-import javafx.event.EventHandler;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import javafx.scene.media.Media;
@@ -148,24 +147,14 @@ public class MapTemplate extends GridPane {
      * @param world Den aktuella världen.
      */
     public void setupImages(World world){
-
-        String folder = switch (world) {
-            case FOREST -> World.FOREST.toString();
-            case LAVA -> World.LAVA.toString();
-            case UNDERGROUND -> World.UNDERGROUND.toString();
-            case CLOUD -> World.CLOUD.toString();
-            case DESERT -> World.DESERT.toString();
-            case SPACE -> World.SPACE.toString();
-        };
-
-        path = new Image("file:files/" + folder + "/path.png", squareSize, squareSize, false, false);
-        goal = new Image("file:files/" + folder + "/goal.png", squareSize, squareSize, false, false);
-        diamond = new Image("file:files/" + folder + "/collectible.png", squareSize, squareSize, false, false);
-        start = new Image("file:files/" + folder + "/start.png", squareSize, squareSize, false, false);
+        path = new Image("file:files/" + world + "/path.png", squareSize, squareSize, false, false);
+        goal = new Image("file:files/" + world + "/goal.png", squareSize, squareSize, false, false);
+        diamond = new Image("file:files/" + world + "/collectible.png", squareSize, squareSize, false, false);
+        start = new Image("file:files/" + world + "/start.png", squareSize, squareSize, false, false);
 
         if(World.SPACE != world){
-            border = new Image("file:files/" + folder + "/border.png", squareSize, squareSize, false, false);
-            wall = new Image("file:files/" + folder + "/wall.png", squareSize, squareSize, false, false);
+            border = new Image("file:files/" + world + "/border.png", squareSize, squareSize, false, false);
+            wall = new Image("file:files/" + world + "/wall.png", squareSize, squareSize, false, false);
         }
     }
 
