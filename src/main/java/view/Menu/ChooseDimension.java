@@ -13,122 +13,184 @@ import java.io.FileNotFoundException;
  */
 
 public class ChooseDimension extends Pane {
-    private final MainProgram mainProgram;
+    private MainProgram mainProgram;
+    private Image chooseDimension;
+    private Image tenByTen;
+    private Image tenByTenResize;
+    private Image fourteen;
+    private Image fourteenResize;
+    private Image eighteen;
+    private Image eighteenResize;
+    private Image pain;
+    private Image painResize;
+    private Image returnImage;
+    private Image returnResize;
+
+
     /**
      * Konstruktor som tar emot mainProgram och audioPlayer och kör några metoder för att
      * sätta bilder och knappar
      */
-    public ChooseDimension() {
+    public ChooseDimension(){
         this.mainProgram = MainProgram.getMainProgram();
         setBackground();
+        setupImages();
         addButtons();
+    }
+
+    /**
+     * Metod som länkar Image-objekten till png-filer
+     */
+    public void setupImages(){
+        chooseDimension = new Image("file:files/texts/ChooseDimension.png", 800, 600, false,false);
+        tenByTen = new Image("file:files/texts/10x10.png", 250, 30, false, false);
+        tenByTenResize = new Image("file:files/texts/10x10.png", 255, 33, false, false);
+        fourteen = new Image("file:files/texts/14x14.png", 250, 30, false, false);
+        fourteenResize = new Image("file:files/texts/14x14.png", 255, 33, false, false);
+        eighteen = new Image("file:files/texts/18x18.png", 250, 30, false, false);
+        eighteenResize = new Image("file:files/texts/18x18.png", 255, 33, false, false);
+        pain = new Image("file:files/texts/Pain.png", 250, 30, false, false);
+        painResize = new Image("file:files/texts/Pain.png", 255, 33, false, false);
+        returnImage = new Image("file:files/texts/return.png", 250,30,false,false);
+        returnResize = new Image("file:files/texts/return.png", 255,33,false,false);
     }
 
     /**
      * Metod som sätter bakgrundsbilden
      */
-    private void setBackground() {
-        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg", 800, 600, false, true),
+    public void setBackground(){
+        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(menuBackground));
-    }
-
-    private ImageView createImageView(Image image, double translateX, double translateY) {
-        validate(image, translateX, translateY);
-        ImageView view = new ImageView(image);
-        view.setStyle("fx-background-color: transparent;");
-        view.setTranslateX(translateX);
-        view.setTranslateY(translateY);
-        view.toFront();
-        return view;
-    }
-
-    private boolean validate(Image image, double translateX, double translateY) {
-        if (0 >= translateY || MainProgram.HEIGHT < translateY) {
-            throw new IllegalArgumentException("Invalid translateY");
-        }
-        if (0 >= translateX || MainProgram.WIDTH < translateX) {
-            throw new IllegalArgumentException("Invalid translateX");
-        }
-        if (null == image) {
-            throw new NullPointerException("Invalid image");
-        }
-        return true;
-    }
-
-    private void onEnterAndExit(ImageView view, Image image, double translateX, double translateY) {
-        validate(image, translateX, translateY);
-        if (null == view) {
-            throw new IllegalArgumentException("Invalid Imageview");
-        }
-        view.setImage(image);
-        view.setTranslateY(translateY);
-        view.setTranslateX(translateX);
-    }
-
-    private void onClick(ImageView view, int dim) {
-        if (null == view) {
-            throw new IllegalArgumentException("Invalid Imageview");
-        }
-        if (dim != 10 && dim != 14 && dim != 18 && dim != 28) {
-            throw new IllegalArgumentException("Invalid dimension");
-        }
-        try {
-            mainProgram.changeToRandomize(dim);
-            AudioPlayer.playButtonSound();
-        } catch (FileNotFoundException ignored) {
-            mainProgram.changeToMenu();
-        }
     }
 
     /**
      * Metod som placerar bilderna som klickbara ImageViews i scenen med events för knapptryck och hovering.
      * Bilderna förstoras när man hovrar över dem och scenen byts när man trycker på dem.
      */
-    private void addButtons() {
-        Image chooseDimension = new Image("file:files/texts/ChooseDimension.png", 800, 600, false, false);
-        Image tenByTen = new Image("file:files/texts/10x10.png", 250, 30, false, false);
-        Image tenByTenResize = new Image("file:files/texts/10x10.png", 255, 33, false, false);
-        Image fourteen = new Image("file:files/texts/14x14.png", 250, 30, false, false);
-        Image fourteenResize = new Image("file:files/texts/14x14.png", 255, 33, false, false);
-        Image eighteen = new Image("file:files/texts/18x18.png", 250, 30, false, false);
-        Image eighteenResize = new Image("file:files/texts/18x18.png", 255, 33, false, false);
-        Image pain = new Image("file:files/texts/Pain.png", 250, 30, false, false);
-        Image painResize = new Image("file:files/texts/Pain.png", 255, 33, false, false);
-        Image returnImage = new Image("file:files/texts/return.png", 250, 30, false, false);
-        Image returnResize = new Image("file:files/texts/return.png", 255, 33, false, false);
-
+    public void addButtons(){
         ImageView dimensionView = new ImageView(chooseDimension);
         dimensionView.setStyle("fx-background-color: transparent;");
 
-        ImageView tenByTenView = createImageView(tenByTen, 275.0, 200.0);
-        tenByTenView.setOnMouseEntered(e -> onEnterAndExit(tenByTenView, tenByTenResize, 273.0, 198.0));
-        tenByTenView.setOnMouseExited(e -> onEnterAndExit(tenByTenView, tenByTen, 275.0, 200.0));
-        tenByTenView.setOnMouseClicked(e -> onClick(tenByTenView, 10));
 
-        ImageView fourteenView = createImageView(fourteen, 275.0, 250.0);
-        fourteenView.setOnMouseEntered(e -> onEnterAndExit(fourteenView, fourteenResize, 273.0, 248.0));
-        fourteenView.setOnMouseExited(e -> onEnterAndExit(fourteenView, fourteen, 275.0, 250.0));
-        fourteenView.setOnMouseClicked(e -> onClick(fourteenView, 14));
+        ImageView tenByTenView = new ImageView(tenByTen);
+        tenByTenView.setStyle("fx-background-color: transparent;");
+        tenByTenView.setTranslateX(275);
+        tenByTenView.setTranslateY(200);
+        tenByTenView.toFront();
+        tenByTenView.setOnMouseEntered(e -> {
+            tenByTenView.setImage(tenByTenResize);
+            tenByTenView.setTranslateX(273);
+            tenByTenView.setTranslateY(198);
+        });
+        tenByTenView.setOnMouseExited(e -> {
+            tenByTenView.setImage(tenByTen);
+            tenByTenView.setTranslateX(275);
+            tenByTenView.setTranslateY(200);
+        });
+        tenByTenView.setOnMouseClicked(e -> {
+            try {
+                mainProgram.changeToRandomize(10);
+                AudioPlayer.playButtonSound();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+        });
 
-        ImageView eighteenView = createImageView(eighteen, 275.0, 300.0);
-        eighteenView.setOnMouseEntered(e -> onEnterAndExit(eighteenView, eighteenResize, 273.0, 298.0));
-        eighteenView.setOnMouseExited(e -> onEnterAndExit(eighteenView, eighteen, 275.0, 300.0));
-        eighteenView.setOnMouseClicked(e -> onClick(eighteenView, 18));
+        ImageView fourteenView = new ImageView(fourteen);
+        fourteenView.setStyle("fx-background-color: transparent;");
+        fourteenView.setTranslateX(275);
+        fourteenView.setTranslateY(250);
+        fourteenView.toFront();
+        fourteenView.setOnMouseEntered(e -> {
+            fourteenView.setImage(fourteenResize);
+            fourteenView.setTranslateX(273);
+            fourteenView.setTranslateY(248);
+        });
+        fourteenView.setOnMouseExited(e -> {
+            fourteenView.setImage(fourteen);
+            fourteenView.setTranslateX(275);
+            fourteenView.setTranslateY(250);
+        });
+        fourteenView.setOnMouseClicked(e -> {
+            try {
+                mainProgram.changeToRandomize(14);
+                AudioPlayer.playButtonSound();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+        });
 
-        ImageView painView = createImageView(pain, 275.0, 350.0);
-        painView.setOnMouseEntered(e -> onEnterAndExit(painView, painResize, 273.0, 348.0));
-        painView.setOnMouseExited(e -> onEnterAndExit(painView, pain, 275.0, 350.0));
-        painView.setOnMouseClicked(e -> onClick(painView, 28));
+        ImageView eighteenView = new ImageView(eighteen);
+        eighteenView.setStyle("fx-background-color: transparent;");
+        eighteenView.setTranslateX(275);
+        eighteenView.setTranslateY(300);
+        eighteenView.toFront();
+        eighteenView.setOnMouseEntered(e -> {
+            eighteenView.setImage(eighteenResize);
+            eighteenView.setTranslateX(273);
+            eighteenView.setTranslateY(298);
+        });
+        eighteenView.setOnMouseExited(e -> {
+            eighteenView.setImage(eighteen);
+            eighteenView.setTranslateX(275);
+            eighteenView.setTranslateY(300);
+        });
+        eighteenView.setOnMouseClicked(e -> {
+            try {
+                mainProgram.changeToRandomize(18);
+                AudioPlayer.playButtonSound();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+        });
 
-        ImageView returnView = createImageView(returnImage, 300.0, 450.0);
-        returnView.setOnMouseEntered(e -> onEnterAndExit(returnView, returnResize, 298.0, 448.0));
-        returnView.setOnMouseExited(e -> onEnterAndExit(returnView, returnImage, 300.0, 450.0));
+        ImageView painView = new ImageView(pain);
+        painView.setStyle("fx-background-color: transparent;");
+        painView.setTranslateX(275);
+        painView.setTranslateY(350);
+        painView.toFront();
+        painView.setOnMouseEntered(e -> {
+            painView.setImage(painResize);
+            painView.setTranslateX(273);
+            painView.setTranslateY(348);
+        });
+        painView.setOnMouseExited(e -> {
+            painView.setImage(pain);
+            painView.setTranslateX(275);
+            painView.setTranslateY(350);
+        });
+        painView.setOnMouseClicked(e -> {
+            try {
+                mainProgram.changeToRandomize(28);
+                AudioPlayer.playButtonSound();
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+        });
+
+        ImageView returnView = new ImageView(returnImage);
+        returnView.setStyle("fx-background-color: transparent;");
+        returnView.setTranslateX(300);
+        returnView.setTranslateY(450);
+        returnView.toFront();
+        returnView.setOnMouseEntered(e -> {
+            returnView.setImage(returnResize);
+            returnView.setTranslateX(298);
+            returnView.setTranslateY(448);
+        });
+        returnView.setOnMouseExited(e -> {
+            returnView.setImage(returnImage);
+            returnView.setTranslateX(300);
+            returnView.setTranslateY(450);
+        });
         returnView.setOnMouseClicked(e -> {
             mainProgram.changeToMenu();
             AudioPlayer.playButtonSound();
         });
-        getChildren().addAll(dimensionView, tenByTenView, fourteenView, eighteenView, painView, returnView);
+
+        getChildren().addAll(dimensionView,tenByTenView,fourteenView,eighteenView,painView,returnView);
     }
+
 }
