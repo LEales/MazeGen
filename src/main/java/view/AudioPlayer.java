@@ -115,6 +115,7 @@ public class AudioPlayer {
      * @param songToPlay Låten som ska spelas.
      */
     public static File playLevelMusic(World songToPlay) {
+        if (null == songToPlay) return null;
         MainProgram mainProgram = MainProgram.getMainProgram();
         currentSong = new File("files/music/" + songToPlay + ".mp3");
         currentMedia = new Media(currentSong.toURI().toString());
