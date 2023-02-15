@@ -35,7 +35,6 @@ public class MapTemplate extends GridPane {
     private final List<Label> collectibles;
 
     private boolean startButtonPressed;
-    private boolean allCollectiblesObtained;
     private int collectiblesObtained;
     private final int squareSize;
 
@@ -268,9 +267,6 @@ public class MapTemplate extends GridPane {
                 if (e.getSource() == label) {
                     label.setVisible(false);
                     collectiblesObtained++;
-                    if (collectiblesObtained == collectibles.size()) {
-                        allCollectiblesObtained = true;
-                    }
                 }
             }
         }
@@ -301,7 +297,7 @@ public class MapTemplate extends GridPane {
      * @throws InterruptedException
      */
     private void enteredGoal() throws FileNotFoundException, InterruptedException {
-        if (startButtonPressed && allCollectiblesObtained) {
+        if (startButtonPressed && collectiblesObtained == collectibles.size()) {
             goalPlayer.play();
             goalPlayer.seek(Duration.ZERO);
             generateNextLevel.generateNewMaze();
