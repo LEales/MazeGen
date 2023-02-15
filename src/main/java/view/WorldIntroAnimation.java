@@ -19,11 +19,13 @@ public class WorldIntroAnimation extends Pane {
     /**
      * Default konstruktor
      */
-    public WorldIntroAnimation(){}
+    public WorldIntroAnimation() {
+    }
 
     /**
      * Konstruktor som tar emot en sträng
      * Sätter sedan bilderna och animationen
+     *
      * @param world tas emot och currentWorld sätts
      */
     public WorldIntroAnimation(World world) {
@@ -34,13 +36,19 @@ public class WorldIntroAnimation extends Pane {
      * Metod som länkar worldIntro-objektet till en png-fil för currentWorld.
      */
     private Image setupImages(World world) {
-        return new Image("file:files/worlds/World" + world + ".png", 600, 600, false, false);
+        if (null == world) return null;
+        return new Image("file:files/worlds/World" + world + ".png", 600.0, 600.0, false, false);
     }
 
     /**
      * En fade transition för animation av bilden
      */
     private boolean introAnimation(Image image) {
+        if (null == image) return false;
+        if (600.0 != image.getHeight()) return false;
+        if (600.0 != image.getWidth()) return false;
+        if (image.isSmooth()) return false;
+        if (image.isPreserveRatio()) return false;
         try {
             ImageView introView = new ImageView(image);
             introView.setStyle("fx-background-color: transparent;");
