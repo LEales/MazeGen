@@ -44,10 +44,10 @@ public class World1Template extends GridPane {
     private Image heart;
     private Image breakableWall;
     private Image pickAxeImage;
-    private boolean startButtonPressed = false;
+    private boolean startButtonPressed;
     private boolean allCollectiblesObtained;
     private boolean wallDestroyed;
-    private int collectiblesObtained = 0;
+    private int collectiblesObtained;
     private final int squareSize;
     private final int currentLevel;
     private int heartCrystals;
@@ -105,6 +105,15 @@ public class World1Template extends GridPane {
         this.setBackground(new Background(menuBackground));
     }
 
+    /**
+     * Creates a path transition for an animation
+     * @param node The node to be animation
+     * @param duration The duration in seconds of the animation
+     * @param cycleCount How many cycles the animation will run
+     * @param path The path of the animation
+     * @param autoReverse If the animation returns to the starting point, following the same path
+     * @return the path transition
+     */
     PathTransition createPathTransition(Node node, double duration, int cycleCount, Shape path, boolean autoReverse) {
         if (0.0 >= duration) {
             throw new IllegalArgumentException("Duration invalid");
@@ -124,6 +133,13 @@ public class World1Template extends GridPane {
         return pathTransition;
     }
 
+    /**
+     * Creates an Image View and adds it to the grid pane
+     * @param image The image to be added
+     * @param i The row index
+     * @param i1 The column index
+     * @return
+     */
     ImageView createImageView(Image image, int i, int i1) {
         if (null == image) {
             throw new IllegalArgumentException("Image invalid");
@@ -132,10 +148,18 @@ public class World1Template extends GridPane {
             throw new IllegalArgumentException("Negative numbers not allowed");
         }
         ImageView view = new ImageView(image);
-        this.add(view, i, i1);
+        add(view, i, i1);
         return view;
     }
 
+    /**
+     * Creates a path for a ghost in the shape of a rectangle
+     * @param v The width of the rectangle
+     * @param v1 The height of the rectangle
+     * @param y The y-position of the rectangle
+     * @param x The x-position of the rectangle
+     * @return the created rectangle
+     */
     Rectangle createRectangle(double v, double v1, double y, double x) {
         Rectangle rectangle = new Rectangle(v, v1);
         rectangle.setY(y);
@@ -403,6 +427,10 @@ public class World1Template extends GridPane {
         return pickAxe;
     }
 
+    /**
+     * If the game is started, adds a pickaxe to the players inventory
+     * @param e MouseEvent
+     */
     private void pickAxeObtained(MouseEvent e) {
         if (startButtonPressed) {
             audioPlayer.playPickAxeSound();

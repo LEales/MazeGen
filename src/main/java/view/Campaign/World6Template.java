@@ -6,6 +6,7 @@ import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import model.Maps.Sprite;
 import model.World;
@@ -33,17 +34,72 @@ public class World6Template extends World1Template {
 
     }
 
-    private void ghostCycleEnded(PathTransition animation, double duration, int cycleCount, boolean autoReverse) {
-        if (0 >= duration) {
+    /**
+     * Updates the ghost animation
+     * @param animation The animation to be updated
+     * @param duration The length in seconds of the animation
+     * @param cycleCount How many cycles the animation will run (-1 equals indefinitely)
+     * @param autoReverse If the animation returns to the starting point, following the same path
+     */
+    private void ghostCycleEnded(PathTransition animation, double duration,  int cycleCount, boolean autoReverse) {
+        validateDurationAndCycle(duration, cycleCount);
+        animation.setCycleCount(cycleCount);
+        animation.setDuration(Duration.seconds(duration));
+        animation.setAutoReverse(autoReverse);
+        animation.play();
+    }
+
+    /**
+     * Updates the ghost animation and prepares a second update
+     * @param animation The animation to be updated
+     * @param duration The length in seconds of the first animation
+     * @param nextDuration The length in seconds of the updated animation
+     * @param cycleCount How many cycles the animation will run (-1 equals indefinitely)
+     * @param nextCycleCount How many cycles the next animation will run
+     * @param autoReverse If the animation returns to the starting point, following the same path
+     * @param path The path of the animation
+     * @param nextPath The path of the next animation
+     */
+    private void ghostCycleEnded(PathTransition animation, double duration, double nextDuration, int cycleCount, int nextCycleCount, boolean autoReverse, Shape path, Shape nextPath) {
+        validateDurationAndCycle(duration, cycleCount);
+        animation.setDuration(Duration.seconds(duration));
+        animation.setCycleCount(cycleCount);
+        animation.setPath(path);
+        animation.setAutoReverse(autoReverse);
+        animation.play();
+        animation.setOnFinished(e -> ghostCycleEnded(animation, nextDuration, nextCycleCount, autoReverse, path));
+    }
+    /**
+     * Updates the ghost animation
+     * @param animation The animation to be updated
+     * @param duration The length in seconds of the animation
+     * @param cycleCount How many cycles the animation will run (-1 equals indefinitely)
+     * @param autoReverse If the animation returns to the starting point, following the same path
+     * @param path The path of the animation
+     */
+    private void ghostCycleEnded(PathTransition animation, double duration, int cycleCount, boolean autoReverse, Shape path) {
+        validateDurationAndCycle(duration, cycleCount);
+        animation.setDuration(Duration.seconds(duration));
+        animation.setCycleCount(cycleCount);
+        animation.setAutoReverse(autoReverse);
+        animation.setPath(path);
+        animation.play();
+    }
+
+    /**
+     * Validates that the duration and cycleCount are in bounds
+     * @param duration The duration of an animation
+     * @param cycleCount How many cycles an animation will run
+     * @return true or throws an exception
+     */
+    private boolean validateDurationAndCycle(double duration, int cycleCount) {
+        if (0.0 >= duration) {
             throw new IllegalArgumentException("Duration cannot be bellow 0");
         }
         if (-1 > cycleCount) {
             throw new IllegalArgumentException("Cycle count cannot be bellow -1");
         }
-        animation.setCycleCount(cycleCount);
-        animation.setDuration(Duration.seconds(duration));
-        animation.setAutoReverse(autoReverse);
-        animation.play();
+        return true;
     }
 
     /**
@@ -130,132 +186,39 @@ public class World6Template extends World1Template {
 
                 PathTransition animation = createPathTransition(ghost3V, 5.0, 3, rectangle, false);
                 animation.play();
-                animation.setOnFinished(actionEvent -> {
-                    animation.setCycleCount(1);
-                    animation.setAutoReverse(true);
-                    animation.setPath(rectangle1);
-                    animation.play();
-                    animation.setOnFinished(actionEvent1 -> {
-                        animation.setCycleCount(Animation.INDEFINITE);
-                        animation.setAutoReverse(true);
-                        animation.setPath(rectangle);
-                        animation.play();
-                    });
-                });
+                animation.setOnFinished(e -> ghostCycleEnded(animation, 5.0, 5.0, 1, -1, true, rectangle1, rectangle));
 
                 PathTransition animation2 = createPathTransition(ghost1V, 5.0, 3, rectangle, false);
                 animation2.play();
-                animation2.setOnFinished(actionEvent -> {
-                    animation2.setCycleCount(1);
-                    animation2.setAutoReverse(true);
-                    animation2.setPath(rectangle1);
-                    animation2.play();
-                    animation2.setOnFinished(actionEvent1 -> {
-                        animation2.setCycleCount(Animation.INDEFINITE);
-                        animation2.setAutoReverse(true);
-                        animation2.setPath(rectangle);
-                        animation2.play();
-                    });
-                });
+                animation2.setOnFinished(e -> ghostCycleEnded(animation2, 5.0, 5.0, 1, -1, true, rectangle1, rectangle));
 
                 PathTransition animation3 = createPathTransition(ghost2V, 5.0, 3, rectangle, false);
                 animation3.play();
-                animation3.setOnFinished(actionEvent -> {
-                    animation3.setPath(rectangle1);
-                    animation3.setCycleCount(1);
-                    animation3.setAutoReverse(true);
-                    animation3.play();
-                    animation3.setOnFinished(actionEvent1 -> {
-                        animation3.setCycleCount(Animation.INDEFINITE);
-                        animation3.setPath(rectangle);
-                        animation3.play();
-                    });
-                });
-
+                animation3.setOnFinished(e -> ghostCycleEnded(animation3, 5.0, 5.0, 1, -1, true, rectangle1, rectangle));
 
                 PathTransition animation4 = createPathTransition(ghost4V, 5.0, 3, rectangle, false);
                 animation4.play();
-                animation4.setOnFinished(actionEvent -> {
-                    animation4.setPath(rectangle1);
-                    animation4.setCycleCount(1);
-                    animation4.setAutoReverse(true);
-                    animation4.play();
-                    animation4.setOnFinished(actionEvent1 -> {
-                        animation4.setCycleCount(Animation.INDEFINITE);
-                        animation4.setPath(rectangle);
-                        animation4.play();
-                    });
-                });
+                animation4.setOnFinished(e -> ghostCycleEnded(animation4, 5.0, 5.0, 1, -1, true, rectangle1, rectangle));
 
                 PathTransition animation5 = createPathTransition(ghost5V, 5.0, 3, rectangle, false);
                 animation5.play();
-                animation5.setOnFinished(actionEvent -> {
-                    animation5.setPath(rectangle1);
-                    animation5.setCycleCount(1);
-                    animation5.setAutoReverse(true);
-                    animation5.play();
-                    animation5.setOnFinished(actionEvent1 -> {
-                        animation5.setCycleCount(Animation.INDEFINITE);
-                        animation5.setPath(rectangle);
-                        animation5.play();
-                    });
-                });
+                animation5.setOnFinished(e -> ghostCycleEnded(animation5, 5.0, 5.0, 1, -1, true, rectangle1, rectangle));
+
                 PathTransition animation6 = createPathTransition(ghost6V, 5.0, 3, rectangle, false);
                 animation6.play();
-                animation6.setOnFinished(actionEvent -> {
-                    animation6.setPath(rectangle1);
-                    animation6.setCycleCount(1);
-                    animation6.setAutoReverse(true);
-                    animation6.play();
-                    animation6.setOnFinished(actionEvent1 -> {
-                        animation6.setCycleCount(Animation.INDEFINITE);
-                        animation6.setPath(rectangle);
-                        animation6.play();
-                    });
-                });
+                animation6.setOnFinished(e -> ghostCycleEnded(animation6, 5.0, 5.0, 1, -1, true, rectangle1, rectangle));
 
                 PathTransition animation7 = createPathTransition(ghost7V, 5.0, 3, rectangle, false);
                 animation7.play();
-                animation7.setOnFinished(actionEvent -> {
-                    animation7.setPath(rectangle1);
-                    animation7.setCycleCount(1);
-                    animation7.setAutoReverse(true);
-                    animation7.play();
-                    animation7.setOnFinished(actionEvent1 -> {
-                        animation7.setCycleCount(Animation.INDEFINITE);
-                        animation7.setPath(rectangle);
-                        animation7.play();
-                    });
-                });
+                animation7.setOnFinished(e -> ghostCycleEnded(animation7, 5.0, 5.0, 1, -1, true, rectangle1, rectangle));
 
                 PathTransition animation8 = createPathTransition(ghost8V, 5.0, 3, rectangle, false);
                 animation8.play();
-                animation8.setOnFinished(actionEvent -> {
-                    animation8.setPath(rectangle1);
-                    animation8.setCycleCount(1);
-                    animation8.setAutoReverse(true);
-                    animation8.play();
-                    animation8.setOnFinished(actionEvent1 -> {
-                        animation8.setCycleCount(Animation.INDEFINITE);
-                        animation8.setPath(rectangle);
-                        animation8.play();
-                    });
-                });
-
+                animation8.setOnFinished(e -> ghostCycleEnded(animation8, 5.0, 5.0, 1, -1, true, rectangle1, rectangle));
 
                 PathTransition animation9 = createPathTransition(ghost9V, 5.0, 3, rectangle, false);
                 animation9.play();
-                animation9.setOnFinished(actionEvent -> {
-                    animation9.setPath(rectangle1);
-                    animation9.setCycleCount(1);
-                    animation9.setAutoReverse(true);
-                    animation9.play();
-                    animation9.setOnFinished(actionEvent1 -> {
-                        animation9.setCycleCount(Animation.INDEFINITE);
-                        animation9.setPath(rectangle);
-                        animation9.play();
-                    });
-                });
+                animation9.setOnFinished(e -> ghostCycleEnded(animation9, 5.0, 5.0, 1, -1, true, rectangle1, rectangle));
 
                 ghost1V.setOnMouseEntered(e -> enteredGhost(e));
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));

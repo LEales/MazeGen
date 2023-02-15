@@ -54,15 +54,9 @@ public class World2Template extends World1Template {
         Polyline line2 = new Polyline();
         Polyline line3 = new Polyline();
 
-        line1.getPoints().addAll(
-                16.0, -10.5,
-                10.5, 650.0);
-        line2.getPoints().addAll(
-                15.0, -10.5,
-                10.5, 650.0);
-        line3.getPoints().addAll(
-                14.0, -10.5,
-                10.5, 650.0);
+        line1.getPoints().addAll(16.0, -10.5, 10.5, 650.0);
+        line2.getPoints().addAll(15.0, -10.5, 10.5, 650.0);
+        line3.getPoints().addAll(14.0, -10.5, 10.5, 650.0);
 
         createPathTransition(ghost1V, 3.5, -1, line1, false).play();
         createPathTransition(ghost2V, 3.0, -1, line2, false).play();
