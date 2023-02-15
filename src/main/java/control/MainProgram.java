@@ -68,8 +68,6 @@ public class MainProgram extends Application {
 
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
-
-
         AudioPlayer.playIntroMusic();
 
         rightPanel = new RightPanel( "11");
@@ -183,12 +181,12 @@ public class MainProgram extends Application {
         introAnimation = new WorldIntroAnimation(World.FOREST);
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
-/*
+
         try {
             nextWorld6Level(1, 3);
         } catch (Exception e) {}
 
- */
+
 
         startTotalTime();
     }
@@ -272,6 +270,7 @@ public class MainProgram extends Application {
 
         switch (level) {
             case 1 -> {
+                lvlCleared = 15;
                 rightPanel.changeLevelCounter("21");
                 mainPaneCampaign.setCenter(new World2Template(world2Maps.getLevel21(), 2, heartCrystals, rightPanel, World.UNDERGROUND));
                 introAnimation = new WorldIntroAnimation(World.UNDERGROUND);
@@ -320,6 +319,7 @@ public class MainProgram extends Application {
 
         switch (level) {
             case 1 -> {
+                lvlCleared = 25;
                 rightPanel.changeLevelCounter("31");
                 mainPaneCampaign.setCenter(new World3Template(world3Maps.getLevel31(), 2, heartCrystals, rightPanel, World.LAVA));
                 introAnimation = new WorldIntroAnimation(World.LAVA);
@@ -370,6 +370,7 @@ public class MainProgram extends Application {
 
         switch (level) {
             case 1 -> {
+                lvlCleared = 35;
                 rightPanel.changeLevelCounter("41");
                 mainPaneCampaign.setCenter(new World4Template(world4Maps.getLevel41(), 2, heartCrystals, rightPanel, World.CLOUD));
                 introAnimation = new WorldIntroAnimation(World.CLOUD);
@@ -420,6 +421,7 @@ public class MainProgram extends Application {
 
         switch (level) {
             case 1 -> {
+                lvlCleared = 45;
                 rightPanel.changeLevelCounter("51");
                 mainPaneCampaign.setCenter(new World5Template(world5Maps.getLevel51(), 2, heartCrystals, rightPanel, World.DESERT));
                 introAnimation = new WorldIntroAnimation(World.DESERT);
@@ -470,6 +472,7 @@ public class MainProgram extends Application {
 
         switch (level) {
             case 1 -> {
+                lvlCleared = 55;
                 rightPanel.changeLevelCounter("61");
                 mainPaneCampaign.setCenter(new World6Template(world6Maps.getLevel61(), 2, heartCrystals, rightPanel, World.SPACE));
                 introAnimation = new WorldIntroAnimation(World.SPACE);
