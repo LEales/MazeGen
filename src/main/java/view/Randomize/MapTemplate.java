@@ -11,12 +11,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import javafx.scene.media.Media;
 import model.World;
+import view.AudioPlayer;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,11 +42,6 @@ public class MapTemplate extends GridPane {
     private Image diamond;
     private Image start;
 
-    private MediaPlayer diamondPlayer;
-    private MediaPlayer deathPlayer;
-    private MediaPlayer startPlayer;
-    private MediaPlayer goalPlayer;
-
 
     /**
      * Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
@@ -59,30 +52,10 @@ public class MapTemplate extends GridPane {
         collectibles = new ArrayList<>();
 
         squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
-        setupMediaPlayers();
         setBackground();
         setupImages(randomizeWorld());
         setupBorders();
         setupLevel();
-    }
-
-    private void setupMediaPlayers() {
-        File diamondSound = new File("files/sounds/Diamond1.mp3");
-        Media diamondMedia = new Media(diamondSound.toURI().toString());
-        diamondPlayer = new MediaPlayer(diamondMedia);
-
-        File deathSound = new File("files/sounds/MazegenDeath.mp3");
-        Media deathMedia = new Media(deathSound.toURI().toString());
-        deathPlayer = new MediaPlayer(deathMedia);
-
-
-        File startSound = new File("files/sounds/MazegenStart.mp3");
-        Media startMedia = new Media(startSound.toURI().toString());
-        startPlayer = new MediaPlayer(startMedia);
-
-        File goalSound = new File("files/sounds/MazegenGoal.mp3");
-        Media goalMedia = new Media(goalSound.toURI().toString());
-        goalPlayer = new MediaPlayer(goalMedia);
     }
 
     /**
@@ -250,8 +223,7 @@ public class MapTemplate extends GridPane {
     }
     private void collectibleEntered(MouseEvent e) {
         if (startButtonPressed) {
-            diamondPlayer.play();
-            diamondPlayer.seek(Duration.ZERO);
+            AudioPlayer.playCollectibleSound();
             for (Label label: collectibles) {
                 if (e.getSource() == label) {
                     label.setVisible(false);
@@ -275,8 +247,7 @@ public class MapTemplate extends GridPane {
         fade.play();
 
         if (startButtonPressed) {
-            deathPlayer.play();
-            deathPlayer.seek(Duration.ZERO);
+            AudioPlayer.playDeathSound();
             startButtonPressed = false;
         }
     }
@@ -287,8 +258,7 @@ public class MapTemplate extends GridPane {
      */
     private void enteredGoal() throws FileNotFoundException, InterruptedException {
         if (startButtonPressed && collectiblesObtained == collectibles.size()) {
-            goalPlayer.play();
-            goalPlayer.seek(Duration.ZERO);
+            AudioPlayer.playGoalSound();
             generateNextLevel.generateNewMaze();
         }
     }
@@ -296,8 +266,7 @@ public class MapTemplate extends GridPane {
      * Startar spelrundan och timern.
      */
     private void startLevel() {
-        startPlayer.play();
-        startPlayer.seek(Duration.ZERO);
+        AudioPlayer.playStartSound();
         startButtonPressed = true;
     }
     /**
