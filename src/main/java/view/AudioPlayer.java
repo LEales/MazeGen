@@ -52,7 +52,6 @@ public class AudioPlayer {
      * Instansierar alla ljudfiler.
      */
     static {
-        System.out.println("Hello");
         File diamondSound = new File("files/sounds/Diamond1.mp3");
         Media diamondMedia = new Media(diamondSound.toURI().toString());
         diamondPlayer = new MediaPlayer(diamondMedia);
@@ -247,6 +246,7 @@ public class AudioPlayer {
         worldIntroMediaPlayer.setMute(mute);
         timeLeftMediaPlayer.setMute(mute);
         gameOverMediaPlayer.setMute(mute);
+        pickAxeMediaPlayer.setMute(mute);
 
         return breakableWallPlayer.isMute() &&
                 deathPlayer.isMute() &&
@@ -256,7 +256,8 @@ public class AudioPlayer {
                 diamondPlayer.isMute() &&
                 worldIntroMediaPlayer.isMute() &&
                 timeLeftMediaPlayer.isMute() &&
-                gameOverMediaPlayer.isMute();
+                gameOverMediaPlayer.isMute() &&
+                pickAxeMediaPlayer.isMute();
     }
 
     /**
