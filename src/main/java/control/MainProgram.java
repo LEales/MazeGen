@@ -86,7 +86,6 @@ public class MainProgram extends Application {
         highscoreScene = new Scene(highscoreList, WIDTH, HEIGHT);
         victoryScene = new Scene(victoryScreen, WIDTH, HEIGHT);
 
-
         victoryScene.setOnKeyPressed(event -> {
             String pattern = "[a-zA-Z0-9]";
             String stringEvent;
@@ -110,6 +109,7 @@ public class MainProgram extends Application {
                 victoryScreen.setTextCurrent("invalid");
             }
         });
+
 
         chooseDimensionScene = new Scene(chooseDimension, WIDTH, HEIGHT);
 
@@ -181,12 +181,6 @@ public class MainProgram extends Application {
         introAnimation = new WorldIntroAnimation(World.FOREST);
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
-
-        try {
-            nextWorld6Level(1, 3);
-        } catch (Exception e) {}
-
-
 
         startTotalTime();
     }

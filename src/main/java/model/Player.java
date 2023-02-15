@@ -4,7 +4,7 @@ import model.time.Time;
 
 import java.io.Serializable;
 
-public class Player implements Serializable {
+public class Player implements Serializable, Comparable<Player> {
 
     public static final long serialVersionUID = 3482904832L;
     private String player = "";
@@ -45,5 +45,13 @@ public class Player implements Serializable {
 
     public int getLvl() {
         return lvl;
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        if (o.lvl == lvl) {
+            return Integer.compare(time.getSeconds(), o.time.getSeconds());
+        }
+        return Integer.compare(o.lvl, lvl);
     }
 }

@@ -45,14 +45,6 @@ public class HighscoreList extends HBox{
         this.getChildren().add(timeVbox);
     }
 
-    private ImageView setupImage() {
-        image = new Image("file:files/texts/Highscore.png", 255, 33, false, false);
-        imageView = new ImageView(image);
-        imageView.setTranslateX(0);
-        imageView.setTranslateY(0);
-        return imageView;
-    }
-
     private void backToMenu() {
         cleaChildren(true);
         mainProgram.changeToMenu();
