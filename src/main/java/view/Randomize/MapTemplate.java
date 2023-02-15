@@ -15,10 +15,12 @@ import javafx.event.EventHandler;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import javafx.scene.media.Media;
+import model.World;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -28,15 +30,14 @@ import java.util.Random;
 
 public class MapTemplate extends GridPane {
 
-    private GenerateNextLevel generateNextLevel;
-    private Sprite[][] level;
-    private ArrayList<Label> collectibles = new ArrayList<>();
-    private MouseListener mouseListener = new MouseListener();
+    private final GenerateNextLevel generateNextLevel;
+    private final Sprite[][] level;
+    private final List<Label> collectibles;
 
     private boolean startButtonPressed;
     private boolean allCollectiblesObtained;
-    private int collectiblesObtained = 0;
-    private int squareSize;;
+    private int collectiblesObtained;
+    private final int squareSize;
 
     private Image wall;
     private Image path;
@@ -45,22 +46,10 @@ public class MapTemplate extends GridPane {
     private Image diamond;
     private Image start;
 
-    private File diamondSound = new File("files/sounds/Diamond1.mp3");
-    private Media diamondMedia = new Media(diamondSound.toURI().toString());
-    private MediaPlayer diamondPlayer = new MediaPlayer(diamondMedia);
-
-    private File deathSound = new File("files/sounds/MazegenDeath.mp3");
-    private Media deathMedia = new Media(deathSound.toURI().toString());
-    private MediaPlayer deathPlayer = new MediaPlayer(deathMedia);
-
-
-    private File startSound = new File("files/sounds/MazegenStart.mp3");
-    private Media startMedia = new Media(startSound.toURI().toString());
-    private MediaPlayer startPlayer = new MediaPlayer(startMedia);
-
-    private File goalSound = new File("files/sounds/MazegenGoal.mp3");
-    private Media goalMedia = new Media(goalSound.toURI().toString());
-    private MediaPlayer goalPlayer = new MediaPlayer(goalMedia);
+    private MediaPlayer diamondPlayer;
+    private MediaPlayer deathPlayer;
+    private MediaPlayer startPlayer;
+    private MediaPlayer goalPlayer;
 
 
     /**
@@ -69,13 +58,35 @@ public class MapTemplate extends GridPane {
     public MapTemplate(Sprite[][] level, GenerateNextLevel generateNextLevel) throws FileNotFoundException {
         this.level = level;
         this.generateNextLevel = generateNextLevel;
+        collectibles = new ArrayList<>();
 
-        squareSize = 600/(level.length+2);
+        squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
+        setupMediaPlayers();
         setBackground();
-        setupImages(new Random().nextInt(6));
+        setupImages(randomizeWorld());
         setupBorders();
         setupLevel();
     }
+
+    private void setupMediaPlayers() {
+        File diamondSound = new File("files/sounds/Diamond1.mp3");
+        Media diamondMedia = new Media(diamondSound.toURI().toString());
+        diamondPlayer = new MediaPlayer(diamondMedia);
+
+        File deathSound = new File("files/sounds/MazegenDeath.mp3");
+        Media deathMedia = new Media(deathSound.toURI().toString());
+        deathPlayer = new MediaPlayer(deathMedia);
+
+
+        File startSound = new File("files/sounds/MazegenStart.mp3");
+        Media startMedia = new Media(startSound.toURI().toString());
+        startPlayer = new MediaPlayer(startMedia);
+
+        File goalSound = new File("files/sounds/MazegenGoal.mp3");
+        Media goalMedia = new Media(goalSound.toURI().toString());
+        goalPlayer = new MediaPlayer(goalMedia);
+    }
+
     /**
      * Sätter bakgrunden i fönstret.
      */
@@ -83,12 +94,12 @@ public class MapTemplate extends GridPane {
         BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-        this.setBackground(new Background(menuBackground));
+        setBackground(new Background(menuBackground));
     }
     /**
      * Skapar en ram runt spelplanen.
      */
-    public void setupBorders() {
+    private void setupBorders() {
         for (int i = 0; i < level.length + 1; i++) {
             add(getBorders(), i, 0);
         }
@@ -104,64 +115,56 @@ public class MapTemplate extends GridPane {
     }
     /**
      * Omvandlar värdena i arrayen av siffror till olika grafiska komponenter baserat på vilken siffra en position har.
-     * Exempelvis så representerar 1:or väg, 0:or väggar, och 7:or hjärtan osv.
      */
-    public void setupLevel() {
+    private void setupLevel() {
         for (int i = 0; i < level.length; i++) {
             for (int j = 0; j < level.length; j++) {
 
-                if (level[i][j] == Sprite.PATH) {
-                    add(getPath(),j + 1,i + 1);
-                    if (new Random().nextInt(5) == 4) {
-                        add(addCollectible(),j + 1,i + 1);
+                switch (level[i][j]) {
+                    case PATH -> {
+                        add(getPath(), j + 1, i + 1);
+                        if (new Random().nextInt(5) == 4) {
+                            add(addCollectible(), j + 1, i + 1);
+                        }
                     }
-                }
-                else if (level[i][j] == Sprite.WALL){
-                    add(getWall(),j + 1,i + 1);
-                }
-                else if (level[i][j] == Sprite.START){
-                    add(getStart(),j + 1,i + 1);
-                }
-                else if (level[i][j] == Sprite.GOAL){
-                    add(getGoal(),j + 1,i + 1);
+                    case WALL -> add(getWall(), j + 1, i + 1);
+                    case START -> add(getStart(), j + 1, i + 1);
+                    case GOAL -> add(getGoal(), j + 1, i + 1);
                 }
             }
         }
     }
+
+    /**
+     * Randomizes a world
+     * @return The randomized world
+     */
+    private World randomizeWorld() {
+        World[] worlds = World.values();
+        return worlds[new Random().nextInt(worlds.length)];
+    }
     /**
      * Instansierar de olika bilderna som används som grafik inuti spelet.
      * Baserad på value så sätts bilderna till en specifik folder per värld.
-     * @param value Den aktuella världen.
+     * @param world Den aktuella världen.
      */
-    public void setupImages(int value){
+    public void setupImages(World world){
 
-        String folder = "";
-
-        if (value == 0) {
-            folder = "forest";
-        }
-        else if (value == 1) {
-            folder = "lava";
-        }
-        else if (value == 2) {
-            folder = "underground";
-        }
-        else if(value == 3) {
-            folder = "cloud";
-        }
-        else if(value == 4) {
-            folder = "desert";
-        }
-        else if(value == 5) {
-            folder = "space";
-        }
+        String folder = switch (world) {
+            case FOREST -> World.FOREST.toString();
+            case LAVA -> World.LAVA.toString();
+            case UNDERGROUND -> World.UNDERGROUND.toString();
+            case CLOUD -> World.CLOUD.toString();
+            case DESERT -> World.DESERT.toString();
+            case SPACE -> World.SPACE.toString();
+        };
 
         path = new Image("file:files/" + folder + "/path.png", squareSize, squareSize, false, false);
         goal = new Image("file:files/" + folder + "/goal.png", squareSize, squareSize, false, false);
         diamond = new Image("file:files/" + folder + "/collectible.png", squareSize, squareSize, false, false);
         start = new Image("file:files/" + folder + "/start.png", squareSize, squareSize, false, false);
 
-        if(value!=5){
+        if(World.SPACE != world){
             border = new Image("file:files/" + folder + "/border.png", squareSize, squareSize, false, false);
             wall = new Image("file:files/" + folder + "/wall.png", squareSize, squareSize, false, false);
         }
@@ -243,7 +246,7 @@ public class MapTemplate extends GridPane {
      * En metod som skapar ett objekt av label som representerar en collectible.
      * @return Returnerar en label.
      */
-    public Label addCollectible() {
+    private Label addCollectible() {
         Label collectible = new Label();
         ImageView borderView = new ImageView(diamond);
         borderView.setFitHeight(squareSize);
@@ -253,9 +256,24 @@ public class MapTemplate extends GridPane {
         borderView.setEffect(glow);
         collectible.setStyle("fx-background-color: transparent;");
         collectible.setGraphic(borderView);
-        collectible.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseListener);
+        collectible.setOnMouseEntered(e -> collectibleEntered(e));
         collectibles.add(collectible);
         return collectible;
+    }
+    private void collectibleEntered(MouseEvent e) {
+        if (startButtonPressed) {
+            diamondPlayer.play();
+            diamondPlayer.seek(Duration.ZERO);
+            for (Label label: collectibles) {
+                if (e.getSource() == label) {
+                    label.setVisible(false);
+                    collectiblesObtained++;
+                    if (collectiblesObtained == collectibles.size()) {
+                        allCollectiblesObtained = true;
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -282,18 +300,17 @@ public class MapTemplate extends GridPane {
      * @throws FileNotFoundException
      * @throws InterruptedException
      */
-    public void enteredGoal() throws FileNotFoundException, InterruptedException {
+    private void enteredGoal() throws FileNotFoundException, InterruptedException {
         if (startButtonPressed && allCollectiblesObtained) {
             goalPlayer.play();
             goalPlayer.seek(Duration.ZERO);
             generateNextLevel.generateNewMaze();
-
         }
     }
     /**
      * Startar spelrundan och timern.
      */
-    public void startLevel() {
+    private void startLevel() {
         startPlayer.play();
         startPlayer.seek(Duration.ZERO);
         startButtonPressed = true;
@@ -314,23 +331,4 @@ public class MapTemplate extends GridPane {
     /**
      * En listener som körs när spelaren plockar upp en collectible.
      */
-    private class MouseListener implements EventHandler<MouseEvent> {
-
-        @Override
-        public void handle(MouseEvent e) {
-            if (startButtonPressed) {
-                diamondPlayer.play();
-                diamondPlayer.seek(Duration.ZERO);
-                for (Label label: collectibles) {
-                    if (e.getSource() == label) {
-                        label.setVisible(false);
-                        collectiblesObtained++;
-                        if (collectiblesObtained == collectibles.size()) {
-                            allCollectiblesObtained = true;
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
