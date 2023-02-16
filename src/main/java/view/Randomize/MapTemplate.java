@@ -94,7 +94,7 @@ public class MapTemplate extends GridPane {
                 switch (level[i][j]) {
                     case PATH -> {
                         add(getPath(), j + 1, i + 1);
-                        if (new Random().nextInt(5) == 4) {
+                        if (4 == new Random().nextInt(5)) {
                             add(addCollectible(), j + 1, i + 1);
                         }
                     }
@@ -119,7 +119,8 @@ public class MapTemplate extends GridPane {
      * Baserad på value så sätts bilderna till en specifik folder per värld.
      * @param world Den aktuella världen.
      */
-    public void setupImages(World world){
+    public void setupImages(World world) {
+        if (null == world) throw new IllegalArgumentException("Invalid world");
         path = new Image("file:files/" + world + "/path.png", squareSize, squareSize, false, false);
         goal = new Image("file:files/" + world + "/goal.png", squareSize, squareSize, false, false);
         diamond = new Image("file:files/" + world + "/collectible.png", squareSize, squareSize, false, false);

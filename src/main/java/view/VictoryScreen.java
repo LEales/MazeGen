@@ -151,7 +151,7 @@ public class VictoryScreen extends Pane {
             scoreList = sortList(scoreList);
 
             for (Player current : scoreList) {
-                if (current!=null) {
+                if (null != current) {
                     oos.writeObject(current);
                 }
             }
@@ -167,7 +167,7 @@ public class VictoryScreen extends Pane {
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
             for (Player score : scoreList) {
-                if (score != null) {
+                if (null != score) {
                     oos.writeObject(score);
                 }
             }
@@ -209,13 +209,13 @@ public class VictoryScreen extends Pane {
         String temp="";
         errorLabel.setVisible(false);
 
-        if (code.equals("BACK_SPACE")){
-            current="BACK_SPACE";
-        }else if (code.equals("ENTER")){
-            current = "ENTER";
-        }else if (code.equals("invalid")){
-            temp = current;
-            current = "invalid";
+        switch (code) {
+            case "BACK_SPACE" -> current = "BACK_SPACE";
+            case "ENTER" -> current = "ENTER";
+            case "invalid" -> {
+                temp = current;
+                current = "invalid";
+            }
         }
         switch (current){
             case "invalid":
@@ -237,7 +237,7 @@ public class VictoryScreen extends Pane {
             case "third":
                 this.getChildren().remove(2);
                 this.getChildren().add(2,setupTextArea(code,435,200));
-                if (backSpaceCheck <2){
+                if (backSpaceCheck < 2){
                     backSpaceCheck++;
                 }
                 break;

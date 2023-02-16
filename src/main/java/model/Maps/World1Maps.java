@@ -57,22 +57,22 @@ public class World1Maps {
      * @return returnerar en array av siffror.
      */
     public Sprite[][] getLevel11() {
-        return this.level11;
+        return level11;
     }
 
     public Sprite[][] getLevel12() {
-        return this.level12;
+        return level12;
     }
 
     public Sprite[][] getLevel13() {
-        return this.level13;
+        return level13;
     }
 
     public Sprite[][] getLevel14() {
-        return this.level14;
+        return level14;
     }
 
     public Sprite[][] getLevel15() {
-        return this.level15;
+        return level15;
     }
 }
