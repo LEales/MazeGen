@@ -16,7 +16,7 @@ import javafx.util.Duration;
 import model.Maps.Sprite;
 import model.World;
 import model.time.TimeThread;
-import view.AudioPlayer;
+import control.AudioPlayer;
 import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;
@@ -538,6 +538,8 @@ public class World1Template extends GridPane {
             time.setGameOver(false);
             rightPanel.resumeClock(seconds);
             time.start();
+        }
+        if (!startButtonPressed) {
             AudioPlayer.playStartSound();
         }
         startButtonPressed = true;

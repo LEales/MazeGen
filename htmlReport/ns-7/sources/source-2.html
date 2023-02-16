@@ -111,10 +111,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import javafx.scene.input.MouseEvent;
 &nbsp;import javafx.scene.layout.*;
 &nbsp;import javafx.util.Duration;
-&nbsp;import view.AudioPlayer;
+&nbsp;import control.AudioPlayer;
 &nbsp;
 &nbsp;/**
-&nbsp; * @author Viktor Näslund
+&nbsp; * @author Viktor Nï¿½slund
 &nbsp; */
 &nbsp;
 &nbsp;public class Help extends VBox {
@@ -124,9 +124,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private AudioPlayer audioPlayer;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Konstruktor som skapar pressMouse-objektet för animation och tar emot mainProgram och audioPlayer
-&nbsp;     * @param mainProgram tas emot och instansvariabeln sätts
-&nbsp;     * @param audioPlayer tas emot och instansvariabeln sätts
+&nbsp;     * Konstruktor som skapar pressMouse-objektet fï¿½r animation och tar emot mainProgram och audioPlayer
+&nbsp;     * @param mainProgram tas emot och instansvariabeln sï¿½tts
+&nbsp;     * @param audioPlayer tas emot och instansvariabeln sï¿½tts
 &nbsp;     */
 <b class="fc">&nbsp;    public Help(MainProgram mainProgram, AudioPlayer audioPlayer){</b>
 <b class="fc">&nbsp;        pressMouse = new Image(&quot;file:files/menuImages/helppicmouse.png&quot;);</b>
@@ -138,7 +138,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Metod som sätter bakgrundsbilden
+&nbsp;     * Metod som sï¿½tter bakgrundsbilden
 &nbsp;     */
 &nbsp;    public void setBackground(){
 <b class="fc">&nbsp;        BackgroundImage myBI= new BackgroundImage(new Image(&quot;file:files/menuImages/helppicnew.png&quot;,800,600,false,true),</b>
@@ -148,7 +148,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Metod som får pressMouseView-objektet att blinka genom en FadeTransition
+&nbsp;     * Metod som fï¿½r pressMouseView-objektet att blinka genom en FadeTransition
 &nbsp;     */
 &nbsp;    public void pressMouseAnimation(){
 <b class="fc">&nbsp;        ImageView pressMouseView = new ImageView(pressMouse);</b>
@@ -166,7 +166,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Lägger till listener för knapptryck och skiftar scen till menyn
+&nbsp;     * Lï¿½gger till listener fï¿½r knapptryck och skiftar scen till menyn
 &nbsp;     */
 &nbsp;    public void addListener(){
 <b class="fc">&nbsp;        this.setOnMouseClicked(new EventHandler&lt;MouseEvent&gt;() {</b>

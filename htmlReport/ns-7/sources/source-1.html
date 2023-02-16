@@ -81,12 +81,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import javafx.scene.image.Image;
 &nbsp;import javafx.scene.image.ImageView;
 &nbsp;import javafx.scene.layout.*;
-&nbsp;import view.AudioPlayer;
+&nbsp;import control.AudioPlayer;
 &nbsp;
 &nbsp;import java.io.FileNotFoundException;
 &nbsp;
 &nbsp;/**
-&nbsp; * @author Viktor Näslund
+&nbsp; * @author Viktor Nï¿½slund
 &nbsp; */
 &nbsp;
 &nbsp;public class ChooseDimension extends Pane {
@@ -106,10 +106,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Konstruktor som tar emot mainProgram och audioPlayer och kör några metoder för att
-&nbsp;     * sätta bilder och knappar
-&nbsp;     * @param mainProgram tas emot och instansvariabeln sätts
-&nbsp;     * @param audioPlayer tas emot och instansvariabeln sätts
+&nbsp;     * Konstruktor som tar emot mainProgram och audioPlayer och kï¿½r nï¿½gra metoder fï¿½r att
+&nbsp;     * sï¿½tta bilder och knappar
+&nbsp;     * @param mainProgram tas emot och instansvariabeln sï¿½tts
+&nbsp;     * @param audioPlayer tas emot och instansvariabeln sï¿½tts
 &nbsp;     */
 <b class="fc">&nbsp;    public ChooseDimension(MainProgram mainProgram, AudioPlayer audioPlayer){</b>
 <b class="fc">&nbsp;        this.mainProgram = mainProgram;</b>
@@ -120,7 +120,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Metod som länkar Image-objekten till png-filer
+&nbsp;     * Metod som lï¿½nkar Image-objekten till png-filer
 &nbsp;     */
 &nbsp;    public void setupImages(){
 <b class="fc">&nbsp;        chooseDimension = new Image(&quot;file:files/texts/ChooseDimension.png&quot;, 800, 600, false,false);</b>
@@ -137,7 +137,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Metod som sätter bakgrundsbilden
+&nbsp;     * Metod som sï¿½tter bakgrundsbilden
 &nbsp;     */
 &nbsp;    public void setBackground(){
 <b class="fc">&nbsp;        BackgroundImage menuBackground = new BackgroundImage(new Image(&quot;file:files/MenuBackground.jpg&quot;,800,600,false,true),</b>
@@ -147,8 +147,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Metod som placerar bilderna som klickbara ImageViews i scenen med events för knapptryck och hovering.
-&nbsp;     * Bilderna förstoras när man hovrar över dem och scenen byts när man trycker på dem.
+&nbsp;     * Metod som placerar bilderna som klickbara ImageViews i scenen med events fï¿½r knapptryck och hovering.
+&nbsp;     * Bilderna fï¿½rstoras nï¿½r man hovrar ï¿½ver dem och scenen byts nï¿½r man trycker pï¿½ dem.
 &nbsp;     */
 &nbsp;    public void addButtons(){
 <b class="fc">&nbsp;        ImageView dimensionView = new ImageView(chooseDimension);</b>

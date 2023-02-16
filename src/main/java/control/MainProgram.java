@@ -13,14 +13,11 @@ import javafx.stage.Stage;
 
 import model.Maps.*;
 
-import model.MazeGeneration.GenerateNextLevel;
 import model.World;
 import model.time.TotalTime;
-import view.AudioPlayer;
 import view.Campaign.*;
 import view.GameOverScreen;
 import view.Randomize.MapTemplate;
-import model.MazeGeneration.MazeGenerator;
 import view.Menu.*;
 import view.VictoryScreen;
 import view.WorldIntroAnimation;
@@ -34,6 +31,9 @@ import java.io.FileNotFoundException;
 
 public class MainProgram extends Application {
 
+    public static MainProgram mainProgram;
+    public static final double WIDTH = 800.0d;
+    public static final double HEIGHT = 600.0d;
     private Stage mainWindow;
     private BorderPane mainPaneRandomMaze;
     private BorderPane mainPaneCampaign;
@@ -42,21 +42,17 @@ public class MainProgram extends Application {
     private Scene chooseDimensionScene;
     private Scene highscoreScene;
     private Scene victoryScene;
-    private HighscoreList highscoreList;
-    private VictoryScreen victoryScreen;
     private Scene randomScene;
     private Scene campaignScene;
+    private HighscoreList highscoreList;
+    private VictoryScreen victoryScreen;
     private RightPanel rightPanel;
     private GenerateNextLevel generateNextLevel;
     private World1Maps world1Maps;
     private WorldIntroAnimation introAnimation;
-
-    public static MainProgram mainProgram;
     private int lvlCleared;
     private TotalTime totTime;
 
-    public static final double WIDTH = 800.0d;
-    public static final double HEIGHT = 600.0d;
 
     /**
      * En metod som startar programmet.
@@ -70,10 +66,10 @@ public class MainProgram extends Application {
     public void start(Stage primaryStage) throws FileNotFoundException {
         AudioPlayer.playIntroMusic();
 
-        rightPanel = new RightPanel( "11");
+        rightPanel = new RightPanel("11");
         rightPanel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        Menu menu = new Menu(rightPanel);
+        Menu menu = new Menu();
         Intro intro = new Intro();
         Help help = new Help();
         highscoreList = new HighscoreList();
@@ -126,7 +122,7 @@ public class MainProgram extends Application {
         world1Maps = new World1Maps();
         mainPaneCampaign.setRight(rightPanel);
 
-        RightPanel rightPnlRndm = new RightPanel( "Random");
+        RightPanel rightPnlRndm = new RightPanel("Random");
         rightPnlRndm.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         mainPaneRandomMaze.setRight(rightPnlRndm);
@@ -181,7 +177,7 @@ public class MainProgram extends Application {
         introAnimation = new WorldIntroAnimation(World.FOREST);
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
-
+        
         startTotalTime();
     }
 

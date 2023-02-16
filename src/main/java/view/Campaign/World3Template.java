@@ -6,7 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import model.Maps.Sprite;
 import model.World;
-import view.AudioPlayer;
 import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;

@@ -1,4 +1,4 @@
-package model.MazeGeneration;
+package control;
 
 import javafx.scene.layout.BorderPane;
 import model.Maps.Sprite;

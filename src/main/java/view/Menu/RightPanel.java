@@ -15,7 +15,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import view.AudioPlayer;
+import control.AudioPlayer;
 
 import java.io.FileNotFoundException;
 

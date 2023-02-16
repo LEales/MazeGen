@@ -2,7 +2,7 @@ package view.Randomize;
 
 
 import model.Maps.Sprite;
-import model.MazeGeneration.GenerateNextLevel;
+import control.GenerateNextLevel;
 import control.MainProgram;
 import javafx.animation.FadeTransition;
 import javafx.scene.effect.Glow;
@@ -13,7 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import model.World;
-import view.AudioPlayer;
+import control.AudioPlayer;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -61,12 +61,13 @@ public class MapTemplate extends GridPane {
     /**
      * Sätter bakgrunden i fönstret.
      */
-    public void setBackground(){
-        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
+    public void setBackground() {
+        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg", 800, 600, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         setBackground(new Background(menuBackground));
     }
+
     /**
      * Skapar en ram runt spelplanen.
      */
@@ -84,6 +85,7 @@ public class MapTemplate extends GridPane {
             add(getBorders(), level.length + 1, i);
         }
     }
+
     /**
      * Omvandlar värdena i arrayen av siffror till olika grafiska komponenter baserat på vilken siffra en position har.
      */
@@ -108,15 +110,18 @@ public class MapTemplate extends GridPane {
 
     /**
      * Randomizes a world
+     *
      * @return The randomized world
      */
     private World randomizeWorld() {
         World[] worlds = World.values();
         return worlds[new Random().nextInt(worlds.length)];
     }
+
     /**
      * Instansierar de olika bilderna som används som grafik inuti spelet.
      * Baserad på value så sätts bilderna till en specifik folder per värld.
+     *
      * @param world Den aktuella världen.
      */
     public void setupImages(World world) {
@@ -126,7 +131,7 @@ public class MapTemplate extends GridPane {
         diamond = new Image("file:files/" + world + "/collectible.png", squareSize, squareSize, false, false);
         start = new Image("file:files/" + world + "/start.png", squareSize, squareSize, false, false);
 
-        if(World.SPACE != world){
+        if (World.SPACE != world) {
             border = new Image("file:files/" + world + "/border.png", squareSize, squareSize, false, false);
             wall = new Image("file:files/" + world + "/wall.png", squareSize, squareSize, false, false);
         }
@@ -134,6 +139,7 @@ public class MapTemplate extends GridPane {
 
     /**
      * En metod som skapar ett objekt av label som representerar en vägg.
+     *
      * @return Returnerar en label.
      */
     public Label getWall() {
@@ -146,8 +152,10 @@ public class MapTemplate extends GridPane {
         label.setOnMouseExited(e -> exitedLabel(e));
         return label;
     }
+
     /**
      * En metod som skapar ett objekt av label som representerar en väg.
+     *
      * @return Returnerar en label.
      */
     private Label getPath() {
@@ -158,8 +166,10 @@ public class MapTemplate extends GridPane {
         label.setGraphic(pathView);
         return label;
     }
+
     /**
      * En metod som skapar ett objekt av label som representerar en border.
+     *
      * @return Returnerar en label.
      */
     private Label getBorders() {
@@ -172,8 +182,10 @@ public class MapTemplate extends GridPane {
         label.setOnMouseExited(e -> exitedLabel(e));
         return label;
     }
+
     /**
      * En metod som skapar ett objekt av label som representerar en förstörbar vägg.
+     *
      * @return Returnerar en label.
      */
     private Label getGoal() {
@@ -191,8 +203,10 @@ public class MapTemplate extends GridPane {
         });
         return label;
     }
+
     /**
      * En metod som skapar ett objekt av label som representerar start.
+     *
      * @return Returnerar en label.
      */
     private Label getStart() {
@@ -204,8 +218,10 @@ public class MapTemplate extends GridPane {
         label.setOnMouseClicked(e -> startLevel());
         return label;
     }
+
     /**
      * En metod som skapar ett objekt av label som representerar en collectible.
+     *
      * @return Returnerar en label.
      */
     private Label addCollectible() {
@@ -222,10 +238,11 @@ public class MapTemplate extends GridPane {
         collectibles.add(collectible);
         return collectible;
     }
+
     private void collectibleEntered(MouseEvent e) {
         if (startButtonPressed) {
             AudioPlayer.playCollectibleSound();
-            for (Label label: collectibles) {
+            for (Label label : collectibles) {
                 if (e.getSource() == label) {
                     label.setVisible(false);
                     collectiblesObtained++;
@@ -236,10 +253,11 @@ public class MapTemplate extends GridPane {
 
     /**
      * Om spelaren vidrör muspekaren vid en vägg avslutas spelrundan.
+     *
      * @param e Används för att hitta rätt label.
      */
     public void enteredWall(MouseEvent e) {
-        Label label = (Label)e.getSource();
+        Label label = (Label) e.getSource();
         FadeTransition fade = new FadeTransition();
         fade.setNode(label);
         fade.setDuration(Duration.seconds(0.3));
@@ -252,8 +270,10 @@ public class MapTemplate extends GridPane {
             startButtonPressed = false;
         }
     }
+
     /**
      * Om spelrundan är aktiverad och spelaren har plockat upp alla collectibles startas nästa nivå.
+     *
      * @throws FileNotFoundException
      * @throws InterruptedException
      */
@@ -263,19 +283,24 @@ public class MapTemplate extends GridPane {
             generateNextLevel.generateNewMaze();
         }
     }
+
     /**
      * Startar spelrundan och timern.
      */
     private void startLevel() {
-        AudioPlayer.playStartSound();
+        if (!startButtonPressed) {
+            AudioPlayer.playStartSound();
+        }
         startButtonPressed = true;
     }
+
     /**
      * När muspekaren lämnar en label slutar den att highlightas.
+     *
      * @param e Används för att hitta rätt label.
      */
     private void exitedLabel(MouseEvent e) {
-        Label label = (Label)e.getSource();
+        Label label = (Label) e.getSource();
         FadeTransition fade = new FadeTransition();
         fade.setNode(label);
         fade.setDuration(Duration.seconds(0.3));

@@ -1,6 +1,7 @@
-package model.MazeGeneration;
+package control;
 
 import model.Maps.Sprite;
+import model.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;

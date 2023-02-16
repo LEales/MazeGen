@@ -1,7 +1,6 @@
 package view.Campaign;
 
 import control.MainProgram;
-import javafx.animation.Animation;
 import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,7 +9,6 @@ import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import model.Maps.Sprite;
 import model.World;
-import view.AudioPlayer;
 import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;

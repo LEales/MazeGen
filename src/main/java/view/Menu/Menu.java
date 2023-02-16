@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import model.World;
-import view.AudioPlayer;
+import control.AudioPlayer;
 
 import java.io.FileNotFoundException;
 
@@ -14,83 +14,77 @@ import java.io.FileNotFoundException;
  */
 
 public class Menu extends Pane {
-    private MainProgram mainProgram;
-    private Image campaign;
-    private Image campaignResize;
-    private Image randomize;
-    private Image randomizeResize;
-    private Image help;
-    private Image helpResize;
-    private Image mazegen;
-    private RightPanel panel;
-    private Image highscoreImage;
-    private Image highscoreImageRezise;
-
-
+    private final MainProgram mainProgram;
     /**
      * Konstruktor som tar emot mainProgram, audioPlayer och panel
      * Kör sedan metoder för att länka Image-objekten med png-filer
-     * @param panel tas emot och sätts
+     *
      */
-    public Menu(RightPanel panel){
+    public Menu() {
         this.mainProgram = MainProgram.getMainProgram();
-        this.panel = panel;
         this.setBackground(new Background(setBackground()));
-        setupImages();
-        this.getChildren().addAll(getCampaignView(),getRandomizeView(),getHelpView(),getMazegenView(),getTestView());
+        this.getChildren().addAll(getCampaignView(), getRandomizeView(), getHelpView(), getMazeGenView(), getHighscoreView());
     }
 
-    /**
-     * Metod som länkar Image-objekten till png-filer
-     */
-    public void setupImages(){
-        mazegen = new Image("file:files/texts/MazegenTitel.png", 800, 600, false,false);
-        campaign = new Image("file:files/texts/Campaign.png", 250, 30, false, false);
-        campaignResize = new Image("file:files/texts/Campaign.png", 255, 33, false, false);
-        randomize = new Image("file:files/texts/Randomize.png", 250, 30, false, false);
-        randomizeResize = new Image("file:files/texts/Randomize.png", 255, 33, false, false);
-        help = new Image("file:files/texts/Help.png", 250, 30, false, false);
-        helpResize = new Image("file:files/texts/Help.png", 255, 33, false, false);
-        highscoreImage = new Image("file:files/texts/Highscore.png", 250, 30, false, false);
-        highscoreImageRezise = new Image("file:files/texts/Highscore.png", 255, 33, false, false);
-    }
 
     /**
      * Metod som sätter bakgrundsbilden
      */
-    public BackgroundImage setBackground(){
-        return new BackgroundImage(new Image("file:files/MenuBackground.jpg",800,600,false,true),
+    private BackgroundImage setBackground() {
+        return new BackgroundImage(new Image("file:files/MenuBackground.jpg", 800, 600, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
     }
 
-    public ImageView getMazegenView() {
+    private ImageView getMazeGenView() {
+        Image mazegen = new Image("file:files/texts/MazegenTitel.png", 800, 600, false, false);
         ImageView mazegenView = new ImageView(mazegen);
         mazegenView.setStyle("fx-background-color: transparent;");
         return mazegenView;
     }
 
-    public ImageView getCampaignView() {
-        ImageView campaignView = new ImageView(campaign);
-        campaignView.setStyle("fx-background-color: transparent;");
-        campaignView.setTranslateX(275);
-        campaignView.setTranslateY(200);
-        campaignView.toFront();
-        campaignView.setOnMouseEntered(e -> {
-            campaignView.setImage(campaignResize);
-            campaignView.setTranslateX(273);
-            campaignView.setTranslateY(197);
-        });
-        campaignView.setOnMouseExited(e -> {
-            campaignView.setImage(campaign);
-            campaignView.setTranslateX(275);
-            campaignView.setTranslateY(200);
-        });
+    private void onEnterAndExit(ImageView view, Image image, double translateX, double translateY) {
+        validate(image, translateX, translateY);
+        if (null == view) {
+            throw new IllegalArgumentException("Invalid Imageview");
+        }
+        view.setImage(image);
+        view.setTranslateY(translateY);
+        view.setTranslateX(translateX);
+    }
+
+    private boolean validate(Image image, double translateX, double translateY) {
+        if (0 >= translateY || MainProgram.HEIGHT < translateY) {
+            throw new IllegalArgumentException("Invalid translateY");
+        }
+        if (0 >= translateX || MainProgram.WIDTH < translateX) {
+            throw new IllegalArgumentException("Invalid translateX");
+        }
+        if (null == image) {
+            throw new NullPointerException("Invalid image");
+        }
+        return true;
+    }
+    private ImageView createImageView(Image image, double translateX, double translateY) {
+        validate(image, translateX, translateY);
+        ImageView view = new ImageView(image);
+        view.setStyle("fx-background-color: transparent;");
+        view.setTranslateX(translateX);
+        view.setTranslateY(translateY);
+        view.toFront();
+        return view;
+    }
+
+    private ImageView getCampaignView() {
+        Image campaign = new Image("file:files/texts/Campaign.png", 250, 30, false, false);
+        Image campaignResize = new Image("file:files/texts/Campaign.png", 255, 33, false, false);
+        ImageView campaignView = createImageView(campaign, 275.0, 200.0);
+        campaignView.setOnMouseEntered(e -> onEnterAndExit(campaignView, campaignResize, 273.0, 197.0));
+        campaignView.setOnMouseExited(e -> onEnterAndExit(campaignView, campaign, 275.0, 200.0));
         campaignView.setOnMouseClicked(e -> {
             try {
                 mainProgram.changeToCampaign();
                 AudioPlayer.playLevelMusic(World.FOREST);
-                panel.resetTimerLabel();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
@@ -98,22 +92,12 @@ public class Menu extends Pane {
         return campaignView;
     }
 
-    public ImageView getRandomizeView() {
-        ImageView randomizeView = new ImageView(randomize);
-        randomizeView.setStyle("fx-background-color: transparent;");
-        randomizeView.setTranslateX(275);
-        randomizeView.setTranslateY(250);
-        randomizeView.toFront();
-        randomizeView.setOnMouseEntered(e -> {
-            randomizeView.setImage(randomizeResize);
-            randomizeView.setTranslateX(273);
-            randomizeView.setTranslateY(247);
-        });
-        randomizeView.setOnMouseExited(e -> {
-            randomizeView.setImage(randomize);
-            randomizeView.setTranslateX(275);
-            randomizeView.setTranslateY(250);
-        });
+    private ImageView getRandomizeView() {
+        Image randomize = new Image("file:files/texts/Randomize.png", 250, 30, false, false);
+        Image randomizeResize = new Image("file:files/texts/Randomize.png", 255, 33, false, false);
+        ImageView randomizeView = createImageView(randomize, 275.0, 250.0);
+        randomizeView.setOnMouseEntered(e -> onEnterAndExit(randomizeView, randomizeResize, 273.0, 247.0));
+        randomizeView.setOnMouseExited(e -> onEnterAndExit(randomizeView, randomize, 275.0, 250.0));
         randomizeView.setOnMouseClicked(e -> {
             mainProgram.chooseDimension();
             AudioPlayer.playButtonSound();
@@ -122,21 +106,11 @@ public class Menu extends Pane {
     }
 
     public ImageView getHelpView() {
-        ImageView helpView = new ImageView(help);
-        helpView.setStyle("fx-background-color: transparent;");
-        helpView.setTranslateX(275);
-        helpView.setTranslateY(300);
-        helpView.toFront();
-        helpView.setOnMouseEntered(e -> {
-            helpView.setImage(helpResize);
-            helpView.setTranslateX(273);
-            helpView.setTranslateY(297);
-        });
-        helpView.setOnMouseExited(e -> {
-            helpView.setImage(help);
-            helpView.setTranslateX(275);
-            helpView.setTranslateY(300);
-        });
+        Image help = new Image("file:files/texts/Help.png", 250, 30, false, false);
+        Image helpResize = new Image("file:files/texts/Help.png", 255, 33, false, false);
+        ImageView helpView = createImageView(help, 275.0, 300.0);
+        helpView.setOnMouseEntered(e -> onEnterAndExit(helpView, helpResize, 273.0, 297.0));
+        helpView.setOnMouseExited(e -> onEnterAndExit(helpView, help, 275.0, 300.0));
         helpView.setOnMouseClicked(e -> {
             mainProgram.changeToHelp();
             AudioPlayer.playButtonSound();
@@ -144,25 +118,16 @@ public class Menu extends Pane {
         return helpView;
     }
 
-    public ImageView getTestView() {
-        ImageView testView = new ImageView(highscoreImage);
-        testView.setStyle("fx-background-color: transparent;");
-        testView.setTranslateX(275);
-        testView.setTranslateY(347);
-        testView.toFront();
-        testView.setOnMouseEntered(e -> {
-            testView.setImage(highscoreImageRezise);
-            testView.setTranslateX(273);
-            testView.setTranslateY(347);
-        });
-        testView.setOnMouseExited(e -> {testView.setImage(highscoreImage);
-            testView.setTranslateX(275);
-            testView.setTranslateY(350);
-        });
-        testView.setOnMouseClicked(e -> {
+    private ImageView getHighscoreView() {
+        Image highscoreImage = new Image("file:files/texts/Highscore.png", 250.0, 30.0, false, false);
+        Image highscoreImageRezise = new Image("file:files/texts/Highscore.png", 255.0, 33.0, false, false);
+        ImageView highscoreView = createImageView(highscoreImage, 275.0, 350.0);
+        highscoreView.setOnMouseEntered(e -> onEnterAndExit(highscoreView, highscoreImageRezise, 273.0, 347.0));
+        highscoreView.setOnMouseExited(e -> onEnterAndExit(highscoreView, highscoreImage, 275.0, 350.0));
+        highscoreView.setOnMouseClicked(e -> {
             mainProgram.showHighScoreList();
             AudioPlayer.playButtonSound();
         });
-        return testView;
+        return highscoreView;
     }
 }

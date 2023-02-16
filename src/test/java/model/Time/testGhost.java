@@ -1,18 +1,14 @@
 package model.Time;
 
-import com.sun.tools.javac.Main;
 import control.MainProgram;
 import javafx.application.Application;
 import javafx.application.Platform;
-import model.MazeGeneration.GenerateNextLevel;
-import model.MazeGeneration.MazeGenerator;
-import model.time.TotalTime;
+import control.MazeGenerator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import view.Randomize.MapTemplate;
 
 import java.io.FileNotFoundException;
-import javafx.scene.input.MouseButton;
+
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit.ApplicationTest;
 

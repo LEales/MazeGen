@@ -111,10 +111,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import javafx.scene.input.MouseEvent;
 &nbsp;import javafx.scene.layout.*;
 &nbsp;import javafx.util.Duration;
-&nbsp;import view.AudioPlayer;
+&nbsp;import control.AudioPlayer;
 &nbsp;
 &nbsp;/**
-&nbsp; * @author Viktor Näslund
+&nbsp; * @author Viktor Nï¿½slund
 &nbsp; */
 &nbsp;
 &nbsp;public class Intro extends Pane {
@@ -128,9 +128,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Konstruktor som tar emot mainProgram och audioPlayer
-&nbsp;     * Kör sedan metoder för bakgrundsbild, bilder i övrigt och listener
-&nbsp;     * @param mainProgram tas emot och sätts
-&nbsp;     * @param audioPlayer tas emot och sätts
+&nbsp;     * Kï¿½r sedan metoder fï¿½r bakgrundsbild, bilder i ï¿½vrigt och listener
+&nbsp;     * @param mainProgram tas emot och sï¿½tts
+&nbsp;     * @param audioPlayer tas emot och sï¿½tts
 &nbsp;     */
 <b class="fc">&nbsp;    public Intro(MainProgram mainProgram, AudioPlayer audioPlayer){</b>
 <b class="fc">&nbsp;        this.mainProgram = mainProgram;</b>
@@ -143,7 +143,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Metod som sätter bakgrundsbilden
+&nbsp;     * Metod som sï¿½tter bakgrundsbilden
 &nbsp;     */
 &nbsp;    public void setBackground(){
 <b class="fc">&nbsp;        BackgroundImage backgroundImage= new BackgroundImage(new Image(&quot;file:files/intropics/1.png&quot;,800,600,false,true),</b>
@@ -153,7 +153,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Metod som länkar Image-objekten till png-filer
+&nbsp;     * Metod som lï¿½nkar Image-objekten till png-filer
 &nbsp;     */
 &nbsp;    public void setupImages(){
 <b class="fc">&nbsp;        spaceImage = new Image(&quot;file:files/intropics/2.png&quot;, 800,600,false,false);</b>
@@ -164,7 +164,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Lägger till listener för att stänga av ljudet och byta scen
+&nbsp;     * Lï¿½gger till listener fï¿½r att stï¿½nga av ljudet och byta scen
 &nbsp;     */
 &nbsp;    public void addListener(){
 <b class="fc">&nbsp;        this.setOnMouseClicked(new EventHandler&lt;MouseEvent&gt;() {</b>

@@ -15,13 +15,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class VictoryScreen extends Pane {
-    private MainProgram mainProgram;
+    private final MainProgram mainProgram;
     private int totalTime;
     private int backSpaceCheck;
     private Label errorLabel;
-    private Label first;
-    private Label second;
-    private Label third;
     StringProperty firstProperty = new SimpleStringProperty("_");
     StringProperty secondProperty = new SimpleStringProperty("_");
     StringProperty thirdProperty = new SimpleStringProperty("_");
@@ -48,9 +45,9 @@ public class VictoryScreen extends Pane {
     }
 
     private void setupTextLabels() {
-        first = setupTextArea(315.0, 200.0);
-        second = setupTextArea(375.0, 200.0);
-        third = setupTextArea(435.0, 200.0);
+        Label first = setupTextArea(315.0, 200.0);
+        Label second = setupTextArea(375.0, 200.0);
+        Label third = setupTextArea(435.0, 200.0);
         first.textProperty().bind(firstProperty);
         second.textProperty().bind(secondProperty);
         third.textProperty().bind(thirdProperty);
@@ -107,7 +104,7 @@ public class VictoryScreen extends Pane {
             ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
             if (10 == scoreList.size() && 0 < scoreList.get(9).compareTo(playerToAdd)) {
                 scoreList.set(9, playerToAdd);
-            } else {
+            } else if (10 > scoreList.size()){
                 scoreList.add(playerToAdd);
             }
             Collections.sort(scoreList);
@@ -132,36 +129,36 @@ public class VictoryScreen extends Pane {
         String temp = "";
         errorLabel.setVisible(false);
 
-        if (code.equals("BACK_SPACE")) {
-            current = "BACK_SPACE";
-        } else if (code.equals("ENTER")) {
-            current = "ENTER";
-        } else if (code.equals("invalid")) {
-            temp = current;
-            current = "invalid";
+        switch (code) {
+            case "BACK_SPACE" -> current = "BACK_SPACE";
+            case "ENTER" -> current = "ENTER";
+            case "invalid" -> {
+                temp = current;
+                current = "invalid";
+            }
         }
         switch (current) {
-            case "invalid":
+            case "invalid" -> {
                 current = temp;
                 errorLabel.setVisible(!errorLabel.isVisible());
-                break;
-            case "first":
+            }
+            case "first" -> {
                 firstProperty.set(code);
                 current = "second";
                 backSpaceCheck++;
-                break;
-            case "second":
+            }
+            case "second" -> {
                 secondProperty.set(code);
                 current = "third";
                 backSpaceCheck++;
-                break;
-            case "third":
+            }
+            case "third" -> {
                 thirdProperty.set(code);
                 if (2 > backSpaceCheck) {
                     backSpaceCheck++;
                 }
-                break;
-            case "BACK_SPACE":
+            }
+            case "BACK_SPACE" -> {
                 if (2 == backSpaceCheck) {
                     thirdProperty.set("_");
                     backSpaceCheck--;
@@ -174,14 +171,14 @@ public class VictoryScreen extends Pane {
                     firstProperty.set("_");
                     current = "first";
                 }
-                break;
-            case "ENTER":
+            }
+            case "ENTER" -> {
                 updateToScoreList();
                 firstProperty.set("_");
                 secondProperty.set("_");
                 thirdProperty.set("_");
                 current = "first";
-                break;
+            }
         }
     }
 }

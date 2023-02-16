@@ -5,7 +5,6 @@ import javafx.application.Application;
 import model.time.TimeThread;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import view.AudioPlayer;
 import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;

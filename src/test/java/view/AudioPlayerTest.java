@@ -1,14 +1,6 @@
 package view;
 
-import control.MainProgram;
-import javafx.application.Application;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.*;
+import control.AudioPlayer;
 
 class AudioPlayerTest {
     AudioPlayer ap;

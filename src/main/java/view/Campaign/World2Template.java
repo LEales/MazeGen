@@ -7,7 +7,6 @@ import javafx.scene.shape.Polyline;
 import model.Maps.Sprite;
 import model.World;
 import model.time.TimeThread;
-import view.AudioPlayer;
 import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;

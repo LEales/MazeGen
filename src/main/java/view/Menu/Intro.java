@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
-import view.AudioPlayer;
+import control.AudioPlayer;
 
 /**
  * @author Viktor Näslund
@@ -15,21 +15,15 @@ import view.AudioPlayer;
 
 public class Intro extends Pane {
 
-    private MainProgram mainProgram;
-    private Image spaceImage;
-    private Image mazeGen;
-    private Image mazeGenGlow;
-    private Image pressMouse;
-
+    private final MainProgram mainProgram;
     /**
      * Konstruktor som tar emot mainProgram och audioPlayer
      * Kör sedan metoder för bakgrundsbild, bilder i övrigt och listener
      */
-    public Intro(){
+    public Intro() {
         this.mainProgram = MainProgram.getMainProgram();
         setBackground();
         addListener();
-        setupImages();
         introAnimation();
 
     }
@@ -37,28 +31,17 @@ public class Intro extends Pane {
     /**
      * Metod som sätter bakgrundsbilden
      */
-    public void setBackground(){
-        BackgroundImage backgroundImage= new BackgroundImage(new Image("file:files/intropics/1.png",800,600,false,true),
+    private void setBackground() {
+        BackgroundImage backgroundImage = new BackgroundImage(new Image("file:files/intropics/1.png", MainProgram.WIDTH, MainProgram.HEIGHT, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
     }
 
     /**
-     * Metod som länkar Image-objekten till png-filer
-     */
-    public void setupImages(){
-        spaceImage = new Image("file:files/intropics/2.png", 800,600,false,false);
-        mazeGen = new Image("file:files/intropics/3.png", 800,600,false,false);
-        mazeGenGlow = new Image("file:files/intropics/4.png", 800,600,false,false);
-        pressMouse = new Image("file:files/intropics/5.png", 800,600,false,false);
-    }
-
-
-    /**
      * Lägger till listener för att stänga av ljudet och byta scen
      */
-    public void addListener(){
+    private void addListener() {
         this.setOnMouseClicked(mouseEvent -> {
             AudioPlayer.stopMusic();
             AudioPlayer.playButtonSound();
@@ -71,17 +54,17 @@ public class Intro extends Pane {
      * Metod som animerar in bilder med olika delays och durations
      * med FadeTransitions
      */
-    public void introAnimation() {
+    private void introAnimation() {
+        Image spaceImage = new Image("file:files/intropics/2.png", MainProgram.WIDTH, MainProgram.HEIGHT, false, false);
         ImageView introView = new ImageView(spaceImage);
         introView.setStyle("fx-background-color: transparent;");
         FadeTransition ft = new FadeTransition(Duration.millis(3000), introView);
-
         getChildren().add(introView);
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.play();
 
-
+        Image mazeGen = new Image("file:files/intropics/3.png", MainProgram.WIDTH, MainProgram.HEIGHT, false, false);
         ImageView mazeGenView = new ImageView(mazeGen);
         mazeGenView.setStyle("fx-background-color: transparent;");
         mazeGenView.toFront();
@@ -89,11 +72,11 @@ public class Intro extends Pane {
         mazeGenView.setOpacity(0);
         getChildren().add(mazeGenView);
         ft2.setDelay(Duration.millis(2000));
-
         ft2.setFromValue(0);
         ft2.setToValue(1);
         ft2.play();
 
+        Image mazeGenGlow = new Image("file:files/intropics/4.png", MainProgram.WIDTH, MainProgram.HEIGHT, false, false);
         ImageView mazeGenGlowView = new ImageView(mazeGenGlow);
         mazeGenGlowView.setStyle("fx-background-color: transparent;");
         mazeGenGlowView.toFront();
@@ -101,11 +84,11 @@ public class Intro extends Pane {
         mazeGenGlowView.setOpacity(0);
         getChildren().add(mazeGenGlowView);
         ft3.setDelay(Duration.millis(3500));
-
         ft3.setFromValue(0);
         ft3.setToValue(1);
         ft3.play();
 
+        Image pressMouse = new Image("file:files/intropics/5.png", MainProgram.WIDTH, MainProgram.HEIGHT, false, false);
         ImageView pressMouseView = new ImageView(pressMouse);
         pressMouseView.setStyle("fx-background-color: transparent;");
         pressMouseView.toFront();
@@ -114,11 +97,9 @@ public class Intro extends Pane {
         pressMouseView.setOpacity(0);
         getChildren().add(pressMouseView);
         ft4.setDelay(Duration.millis(5500));
-
         ft4.setFromValue(0);
         ft4.setToValue(1);
         ft4.play();
-
     }
 
 }

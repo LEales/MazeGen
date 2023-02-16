@@ -1,4 +1,4 @@
-package view;
+package control;
 
 import control.MainProgram;
 import javafx.scene.media.Media;

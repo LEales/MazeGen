@@ -1,9 +1,12 @@
 package model.MazeGeneration;
 
+import control.GenerateNextLevel;
 import control.MainProgram;
+import control.MazeGenerator;
 import javafx.application.Application;
 import javafx.application.Platform;
 import model.Maps.Sprite;
+import model.Node;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

@@ -80,12 +80,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import javafx.scene.image.Image;
 &nbsp;import javafx.scene.image.ImageView;
 &nbsp;import javafx.scene.layout.*;
-&nbsp;import view.AudioPlayer;
+&nbsp;import control.AudioPlayer;
 &nbsp;
 &nbsp;import java.io.FileNotFoundException;
 &nbsp;
 &nbsp;/**
-&nbsp; * @author Viktor Näslund
+&nbsp; * @author Viktor Nï¿½slund
 &nbsp; */
 &nbsp;
 &nbsp;public class Menu extends Pane {
@@ -105,10 +105,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    /**
 &nbsp;     * Konstruktor som tar emot mainProgram, audioPlayer och panel
-&nbsp;     * Kör sedan metoder för att länka Image-objekten med png-filer
-&nbsp;     * @param mainProgram tas emot och sätts
-&nbsp;     * @param audioPlayer tas emot och sätts
-&nbsp;     * @param panel tas emot och sätts
+&nbsp;     * Kï¿½r sedan metoder fï¿½r att lï¿½nka Image-objekten med png-filer
+&nbsp;     * @param mainProgram tas emot och sï¿½tts
+&nbsp;     * @param audioPlayer tas emot och sï¿½tts
+&nbsp;     * @param panel tas emot och sï¿½tts
 &nbsp;     */
 <b class="fc">&nbsp;    public Menu(MainProgram mainProgram, AudioPlayer audioPlayer, RightPanel panel){</b>
 <b class="fc">&nbsp;        this.mainProgram = mainProgram;</b>
@@ -120,7 +120,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Metod som länkar Image-objekten till png-filer
+&nbsp;     * Metod som lï¿½nkar Image-objekten till png-filer
 &nbsp;     */
 &nbsp;    public void setupImages(){
 <b class="fc">&nbsp;        mazegen = new Image(&quot;file:files/texts/MazegenTitel.png&quot;, 800, 600, false,false);</b>
@@ -135,7 +135,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Metod som sätter bakgrundsbilden
+&nbsp;     * Metod som sï¿½tter bakgrundsbilden
 &nbsp;     */
 &nbsp;    public BackgroundImage setBackground(){
 <b class="fc">&nbsp;        return new BackgroundImage(new Image(&quot;file:files/MenuBackground.jpg&quot;,800,600,false,true),</b>
