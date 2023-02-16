@@ -19,7 +19,7 @@ public class ChooseDimension extends Pane {
      * sätta bilder och knappar
      */
     public ChooseDimension() {
-        this.mainProgram = MainProgram.getMainProgram();
+        mainProgram = MainProgram.getMainProgram();
         setBackground();
         addButtons();
     }
@@ -31,7 +31,7 @@ public class ChooseDimension extends Pane {
         BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg", 800, 600, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-        this.setBackground(new Background(menuBackground));
+        setBackground(new Background(menuBackground));
     }
 
     private ImageView createImageView(Image image, double translateX, double translateY) {

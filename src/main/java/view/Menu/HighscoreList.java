@@ -13,15 +13,12 @@ import java.io.*;
 public class HighscoreList extends HBox {
     private final MainProgram mainProgram;
     private Label[] labelArr = new Label[10];
-
-    private VBox nameVbox;
-    private VBox lvlVbox;
-    private VBox timeVbox;
+    private VBox nameVbox, lvlVbox, timeVbox;
 
     public HighscoreList() {
-        this.setOnMouseClicked(e -> backToMenu());
-        this.mainProgram = MainProgram.getMainProgram();
-        this.setBackground(new Background(setBackground()));
+        setOnMouseClicked(e -> backToMenu());
+        mainProgram = MainProgram.getMainProgram();
+        setBackground(new Background(setBackground()));
     }
 
     private void setupVBoxes() {

@@ -27,27 +27,10 @@ import java.io.FileNotFoundException;
 public class RightPanel extends GridPane {
 
     private final MainProgram mainProgram;
-    private Image levelNumber;
-    private Image heart;
-    private Image soundImage;
-    private Image musicImage;
-
-    private final ImageView currentLevelView;
-    private final ImageView currentHeartView;
-    private final ImageView pickaxeView;
-    private final ImageView soundView;
-    private final ImageView musicView;
-    private final ImageView emptyView;
-
-    private final Label levelLabel;
-    private final Label heartLabel;
-    private final Label pickaxeLabel;
-    private final Label soundLabel;
-    private final Label musicLabel;
-    private final Label timerLabel;
-
-    private boolean soundOn;
-    private boolean musicOn;
+    private Image levelNumber, heart, soundImage, musicImage;
+    private final ImageView currentLevelView, currentHeartView, pickaxeView, soundView, musicView, emptyView;
+    private final Label levelLabel, heartLabel, pickaxeLabel, soundLabel, musicLabel, timerLabel;
+    private boolean soundOn, musicOn;
 
     private final IntegerProperty timeSeconds = new SimpleIntegerProperty(15);
     private Timeline timeline = new Timeline();

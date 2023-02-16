@@ -16,13 +16,11 @@ import java.util.Collections;
 
 public class VictoryScreen extends Pane {
     private final MainProgram mainProgram;
-    private int totalTime;
-    private int backSpaceCheck;
+    private int totalTime, backSpaceCheck;
     private Label errorLabel;
     StringProperty firstProperty = new SimpleStringProperty("_");
     StringProperty secondProperty = new SimpleStringProperty("_");
     StringProperty thirdProperty = new SimpleStringProperty("_");
-
     private String current;
 
 

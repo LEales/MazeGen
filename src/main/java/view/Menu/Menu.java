@@ -21,9 +21,9 @@ public class Menu extends Pane {
      *
      */
     public Menu() {
-        this.mainProgram = MainProgram.getMainProgram();
-        this.setBackground(new Background(setBackground()));
-        this.getChildren().addAll(getCampaignView(), getRandomizeView(), getHelpView(), getMazeGenView(), getHighscoreView());
+        mainProgram = MainProgram.getMainProgram();
+        setBackground(new Background(setBackground()));
+        getChildren().addAll(getCampaignView(), getRandomizeView(), getHelpView(), getMazeGenView(), getHighscoreView());
     }
 
 

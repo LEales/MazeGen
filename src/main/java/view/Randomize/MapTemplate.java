@@ -34,15 +34,7 @@ public class MapTemplate extends GridPane {
     private boolean startButtonPressed;
     private int collectiblesObtained;
     private final int squareSize;
-
-    private Image wall;
-    private Image path;
-    private Image border;
-    private Image goal;
-    private Image diamond;
-    private Image start;
-
-
+    private Image wall, path, border, goal, diamond, start;
     /**
      * Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
      */
