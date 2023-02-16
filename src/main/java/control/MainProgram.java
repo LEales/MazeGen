@@ -136,10 +136,12 @@ public class MainProgram extends Application {
 
         introScene.setCursor(new ImageCursor(cursorImage));
         menuScene.setCursor(new ImageCursor(cursorImage));
-        campaignScene.setCursor(new ImageCursor(cursorImage));
+        campaignScene.setCursor(new ImageCursor(new Image("file:files/cursorImage.png")));
         chooseDimensionScene.setCursor(new ImageCursor(cursorImage));
         helpScene.setCursor(new ImageCursor(cursorImage));
-        randomScene.setCursor(new ImageCursor(cursorImage));
+        randomScene.setCursor(new ImageCursor(new Image("file:files/cursorImage.png")));
+        highscoreScene.setCursor(new ImageCursor(cursorImage));
+        victoryScene.setCursor(new ImageCursor(cursorImage));
     }
 
     /**
