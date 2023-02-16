@@ -54,7 +54,7 @@ public class GenerateNextLevel {
         }
         nextMaze[new Random().nextBoolean() ? 0 : nextMaze.length - 1][col] = Sprite.GOAL;
         mainPane.setCenter(new MapTemplate(checkStartAndGoalNeighbors(nextMaze), this));
-        this.mazeGenerator = newMazegenerator;
+        mazeGenerator = newMazegenerator;
     }
 
     /**
