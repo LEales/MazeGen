@@ -35,15 +35,8 @@ public class MainProgram extends Application {
     public static final double WIDTH = 800.0d;
     public static final double HEIGHT = 600.0d;
     private Stage mainWindow;
-    private BorderPane mainPaneRandomMaze;
-    private BorderPane mainPaneCampaign;
-    private Scene menuScene;
-    private Scene helpScene;
-    private Scene chooseDimensionScene;
-    private Scene highscoreScene;
-    private Scene victoryScene;
-    private Scene randomScene;
-    private Scene campaignScene;
+    private BorderPane mainPaneRandomMaze, mainPaneCampaign;
+    private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene;;
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
     private RightPanel rightPanel;

@@ -15,39 +15,14 @@ import java.io.File;
 
 public class AudioPlayer {
 
-    private static MediaPlayer diamondPlayer;
-
-    private static MediaPlayer deathPlayer;
-
-    private static MediaPlayer startPlayer;
-
-    private static MediaPlayer goalPlayer;
-
-    private static MediaPlayer heartPlayer;
-
-    private static MediaPlayer breakableWallPlayer;
-
+    private static final MediaPlayer diamondPlayer, deathPlayer, startPlayer, goalPlayer, heartPlayer,
+            breakableWallPlayer, pickAxeMediaPlayer, gameOverMediaPlayer, buttonClickedMediaPlayer, introMediaPlayer,
+            worldIntroMediaPlayer, timeLeftMediaPlayer, mobSoundMediaPlayer;
     private static File currentSong;
     private static Media currentMedia;
     private static MediaPlayer currentSongPlayer;
 
-    private static MediaPlayer pickAxeMediaPlayer;
 
-    private static MediaPlayer gameOverMediaPlayer;
-
-    private static MediaPlayer buttonClickedMediaPlayer;
-
-    private static MediaPlayer introMediaPlayer;
-
-    private static MediaPlayer worldIntroMediaPlayer;
-
-    private static MediaPlayer timeLeftMediaPlayer;
-
-    private static MediaPlayer mobSoundMediaPlayer;
-
-    /**
-     * Kör metoden som instanierar ljudfilerna.
-     */
     /**
      * Instansierar alla ljudfiler.
      */
