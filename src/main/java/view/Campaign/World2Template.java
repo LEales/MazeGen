@@ -6,7 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polyline;
 import model.Maps.Sprite;
 import model.World;
-import model.time.TimeThread;
 import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;
@@ -18,16 +17,13 @@ import java.io.FileNotFoundException;
 
 public class World2Template extends World1Template {
 
-    private final int squareSize;
-
     public World2Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world) throws FileNotFoundException {
         super(level, currentLevel, heartCrystals, rightPanel, world, 35);
-        squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
+        int squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
         rightPanel.changeHeartCounter(heartCrystals);
         if (6 == currentLevel) {
-            initialize();
+            initialize(squareSize);
         }
-        new TimeThread(35, rightPanel);
         rightPanel.resetTimerLabel();
     }
 
@@ -38,7 +34,7 @@ public class World2Template extends World1Template {
      * Animationerna kan gå i olika hastigheter
      */
 
-    private void initialize() {
+    private void initialize(int squareSize) {
         Image ghost = new Image("file:files/ghost.png", squareSize, squareSize, false, false);
 
         ImageView ghost1V = createImageView(ghost, 10, 0);

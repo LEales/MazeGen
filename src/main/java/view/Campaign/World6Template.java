@@ -18,17 +18,12 @@ import java.io.FileNotFoundException;
  */
 
 public class World6Template extends World1Template {
-
-    private final int squareSize;
-    private final int currentLevel;
-
     public World6Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world) throws FileNotFoundException {
         super(level, currentLevel, heartCrystals, rightPanel, world, 99);
-        squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
-        this.currentLevel = currentLevel;
+        int squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
         rightPanel.changeHeartCounter(heartCrystals);
         rightPanel.resetTimerLabel();
-        initialize();
+        initialize(currentLevel, squareSize);
 
     }
 
@@ -108,7 +103,7 @@ public class World6Template extends World1Template {
      */
 
 
-    private void initialize() {
+    private void initialize(int currentLevel, int squareSize) {
         Image ghost = new Image("file:files/space_mob3.png", squareSize, squareSize, false, false);
         switch (currentLevel) {
             case 2 -> {

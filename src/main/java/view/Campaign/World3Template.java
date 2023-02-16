@@ -11,15 +11,12 @@ import view.Menu.RightPanel;
 import java.io.FileNotFoundException;
 
 public class World3Template extends World1Template {
-    private final int squareSize;
-    private final int currentLevel;
     public World3Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world) throws FileNotFoundException {
         super(level, currentLevel, heartCrystals, rightPanel, world, 60);
-        squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
-        this.currentLevel = currentLevel;
-        rightPanel.changeHeartCounter(heartCrystals);
+        int squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
+                rightPanel.changeHeartCounter(heartCrystals);
         rightPanel.resetTimerLabel();
-        initialize();
+        initialize(currentLevel, squareSize);
 
     }
 
@@ -30,7 +27,7 @@ public class World3Template extends World1Template {
      * Animationerna kan gå i olika hastigheter
      */
 
-    private void initialize() {
+    private void initialize(int currentLevel, int squareSize) {
         Image ghost = new Image("file:files/ghost.png", squareSize, squareSize, false, false);
         switch (currentLevel) {
             case 2 -> {
