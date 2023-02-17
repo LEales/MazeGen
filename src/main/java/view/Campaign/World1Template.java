@@ -266,6 +266,7 @@ public class World1Template extends GridPane {
         borderView.setFitWidth(squareSize);
         label.setGraphic(borderView);
         label.setOnMouseEntered(e -> enteredBreakableWall(e));
+        label.setOnMouseExited(e -> exitedLabel(e));
         return label;
     }
 
