@@ -33,7 +33,7 @@ public class Player implements Serializable, Comparable<Player> {
             throw new IllegalArgumentException("Name not allowed to contain new line");
         } else if (name.contains("\t")) {
             throw new IllegalArgumentException("Name not allowed to contain tab");
-        } else if (name.length() != 3) {
+        } else if (3 != name.length()) {
             throw new IllegalArgumentException("Name length invalid");
         }
     }
