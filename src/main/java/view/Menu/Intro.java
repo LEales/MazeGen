@@ -11,6 +11,7 @@ import control.AudioPlayer;
 
 /**
  * @author Viktor Näslund
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 
 public class Intro extends Pane {
@@ -21,7 +22,7 @@ public class Intro extends Pane {
      * Kör sedan metoder för bakgrundsbild, bilder i övrigt och listener
      */
     public Intro() {
-        this.mainProgram = MainProgram.getMainProgram();
+        mainProgram = MainProgram.getMainProgram();
         setBackground();
         addListener();
         introAnimation();
@@ -35,14 +36,14 @@ public class Intro extends Pane {
         BackgroundImage backgroundImage = new BackgroundImage(new Image("file:files/intropics/1.png", MainProgram.WIDTH, MainProgram.HEIGHT, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-        this.setBackground(new Background(backgroundImage));
+        setBackground(new Background(backgroundImage));
     }
 
     /**
      * Lägger till listener för att stänga av ljudet och byta scen
      */
     private void addListener() {
-        this.setOnMouseClicked(mouseEvent -> {
+        setOnMouseClicked(mouseEvent -> {
             AudioPlayer.stopMusic();
             AudioPlayer.playButtonSound();
             mainProgram.changeToMenu();
@@ -101,5 +102,4 @@ public class Intro extends Pane {
         ft4.setToValue(1);
         ft4.play();
     }
-
 }

@@ -7,7 +7,6 @@ import model.World;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.Assert.*;
 import java.io.File;
 
 import static org.junit.Assert.*;

@@ -9,6 +9,7 @@ import javafx.util.Duration;
 
 /**
  * @author André Eklund
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 public class GameOverScreen extends Pane {
 

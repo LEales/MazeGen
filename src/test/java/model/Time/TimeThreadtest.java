@@ -2,7 +2,7 @@ package model.Time;
 
 import control.MainProgram;
 import javafx.application.Application;
-import model.time.TimeThread;
+import control.time.TimeThread;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import view.Menu.RightPanel;
@@ -82,11 +82,5 @@ public class TimeThreadtest {
         assertFalse(timeThread.isAlive());
     }
 
-    //skicka in 0 sekunder, sov och se om spelet avslutas efter det
-
-
-    //skicka in 1 sekunder och se om spelet körs fortfarande
-
-    //skicka in 15 sekunder och se om spelet körs fortfarande
 
 }

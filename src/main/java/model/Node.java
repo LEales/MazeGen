@@ -7,8 +7,7 @@ import java.util.Objects;
  * Skapar en nod med en x & y position
  */
 public class Node {
-    public final int x;
-    public final int y;
+    public final int x, y;
 
     public Node(int x, int y) {
         this.x = x;

@@ -1,6 +1,6 @@
-package model.time;
+package control.time;
 
-import model.time.Time;
+import model.Time;
 import view.Menu.RightPanel;
 
 /**
@@ -13,14 +13,14 @@ public class TimeThread extends Thread {
 
     private Time time;
     private RightPanel panel;
-    private boolean gameOver = false;
+    private boolean gameOver;
 
     /**
      * @param seconds Varje nivå skickar in en seconds variabel till tråden
      * @param panel
      */
     public TimeThread(int seconds, RightPanel panel) {
-        this.time = new Time(seconds);
+        time = new Time(seconds);
         this.panel = panel;
     }
 

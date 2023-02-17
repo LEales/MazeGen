@@ -1,6 +1,6 @@
-package model.time;
+package control.time;
 
-import model.time.Time;
+import model.Time;
 
 /**
  * @author Sebastian Helin
