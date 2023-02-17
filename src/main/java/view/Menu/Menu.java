@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 
 /**
  * @author Viktor Näslund
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 
 public class Menu extends Pane {
@@ -21,9 +22,9 @@ public class Menu extends Pane {
      *
      */
     public Menu() {
-        this.mainProgram = MainProgram.getMainProgram();
-        this.setBackground(new Background(setBackground()));
-        this.getChildren().addAll(getCampaignView(), getRandomizeView(), getHelpView(), getMazeGenView(), getHighscoreView());
+        mainProgram = MainProgram.getMainProgram();
+        setBackground(new Background(setBackground()));
+        getChildren().addAll(getCampaignView(), getRandomizeView(), getHelpView(), getMazeGenView(), getHighscoreView());
     }
 
 

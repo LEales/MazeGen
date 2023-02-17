@@ -11,6 +11,7 @@ import control.AudioPlayer;
 
 /**
  * @author Viktor Näslund
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 
 public class Help extends VBox {
@@ -21,7 +22,7 @@ public class Help extends VBox {
      * Konstruktor som skapar pressMouse-objektet för animation och tar emot mainProgram och audioPlayer
      */
     public Help() {
-        this.mainProgram = MainProgram.getMainProgram();
+        mainProgram = MainProgram.getMainProgram();
         setBackground();
         pressMouseAnimation();
         addListener();
@@ -34,7 +35,7 @@ public class Help extends VBox {
         BackgroundImage backgroundImage = new BackgroundImage(new Image("file:files/menuImages/helppicnew.png", 800, 600, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-        this.setBackground(new Background(backgroundImage));
+        setBackground(new Background(backgroundImage));
     }
 
     /**
@@ -60,7 +61,7 @@ public class Help extends VBox {
      * Lägger till listener för knapptryck och skiftar scen till menyn
      */
     private void addListener() {
-        this.setOnMouseClicked(mouseEvent -> {
+        setOnMouseClicked(mouseEvent -> {
             mainProgram.changeToMenu();
             AudioPlayer.playButtonSound();
         });

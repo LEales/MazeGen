@@ -1,6 +1,6 @@
 package model.Time;
 
-import model.time.TotalTime;
+import control.time.TotalTime;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

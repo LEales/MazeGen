@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author Luke Eales, Teodor Wegestål
+ * enum for handling the worlds
+ */
 public enum World {
     FOREST("forest"),
     LAVA("lava"),

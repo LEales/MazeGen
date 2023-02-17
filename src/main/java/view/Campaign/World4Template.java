@@ -4,6 +4,7 @@ import control.MainProgram;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+import model.Maps.Maps;
 import model.Maps.Sprite;
 import model.World;
 import view.Menu.RightPanel;
@@ -12,20 +13,14 @@ import java.io.FileNotFoundException;
 
 /**
  * @author Filip Örnling
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 
 public class World4Template extends World1Template {
-    private final int squareSize;
-    private final int currentLevel;
 
-    public World4Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world) throws FileNotFoundException {
-        super(level, currentLevel, heartCrystals, rightPanel, world, 80);
-        rightPanel.changeHeartCounter(heartCrystals);
-        this.currentLevel = currentLevel;
-        squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
-        rightPanel.changeHeartCounter(heartCrystals);
-        rightPanel.resetTimerLabel();
-        initialize();
+    public World4Template(Maps map, RightPanel rightPanel) throws FileNotFoundException {
+        super(map, rightPanel);
+        initialize(map.getNextLevel());
     }
 
     /**
@@ -35,7 +30,7 @@ public class World4Template extends World1Template {
      * Animationerna kan gå i olika hastigheter
      */
 
-    private void initialize() {
+    private void initialize(int currentLevel) {
         Image ghost = new Image("file:files/god_mob2.png", squareSize, squareSize, false, false);
         switch (currentLevel) {
             case 2 -> {

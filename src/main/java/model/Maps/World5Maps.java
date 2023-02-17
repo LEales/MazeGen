@@ -1,12 +1,19 @@
 package model.Maps;
 
+import model.World;
+
+import java.util.Map;
+
 /**
  * @author André Eklund, Sebastian Helin, Viktor Näslund, Filip Örnling
- * @edit 2023-02-13 Teodor Wegestål, Luke Eales
- * Changed all int[][] to Sprites
+ * @edit Teodor Wegestål, Luke Eales - Changed int[][] to Sprite[][]
  */
 
-public class World5Maps {
+public class World5Maps extends Maps {
+
+    public World5Maps(int heartCrystals, int seconds, int nextLevel, World world) {
+        super(heartCrystals, seconds, nextLevel, world);
+    }
 
     private final Sprite[][] level51 = {{Sprite.START, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.GOAL},
             {Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH},
@@ -99,23 +106,14 @@ public class World5Maps {
      *
      * @return returnerar en array av siffror.
      */
-    public Sprite[][] getLevel51() {
-        return this.level51;
-    }
-
-    public Sprite[][] getLevel52() {
-        return this.level52;
-    }
-
-    public Sprite[][] getLevel53() {
-        return this.level53;
-    }
-
-    public Sprite[][] getLevel54() {
-        return this.level54;
-    }
-
-    public Sprite[][] getLevel55() {
-        return this.level55;
+    public Sprite[][] getMap() {
+        return switch (getNextLevel()) {
+            case 1 -> level51;
+            case 2 -> level52;
+            case 3 -> level53;
+            case 4 -> level54;
+            case 5 -> level55;
+            default -> throw new IllegalStateException("Unexpected value: " + getNextLevel());
+        };
     }
 }

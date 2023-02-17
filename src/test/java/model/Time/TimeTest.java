@@ -3,7 +3,7 @@ package model.Time;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import model.time.Time;
+import model.Time;
 import org.junit.jupiter.api.Test;
 
 public class TimeTest {

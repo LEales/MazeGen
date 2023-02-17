@@ -14,15 +14,18 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * @author Max Tideman, Linus Regander
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
+ */
+
 public class VictoryScreen extends Pane {
     private final MainProgram mainProgram;
-    private int totalTime;
-    private int backSpaceCheck;
+    private int totalTime, backSpaceCheck;
     private Label errorLabel;
     StringProperty firstProperty = new SimpleStringProperty("_");
     StringProperty secondProperty = new SimpleStringProperty("_");
     StringProperty thirdProperty = new SimpleStringProperty("_");
-
     private String current;
 
 

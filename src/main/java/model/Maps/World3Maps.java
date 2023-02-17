@@ -1,11 +1,17 @@
 package model.Maps;
 
-public class World3Maps {
+import model.World;
 
-    /**
-     * @author André Eklund, Sebastian Helin, Viktor Näslund, Filip Örnling
-     */
+/**
+ * @author André Eklund, Sebastian Helin, Viktor Näslund, Filip Örnling
+ * @edit Teodor Wegestål, Luke Eales - Changed int[][] to Sprite[][]
+ */
 
+public class World3Maps extends Maps {
+
+    public World3Maps(int heartCrystals, int seconds, int nextLevel, World world) {
+        super(heartCrystals, seconds, nextLevel, world);
+    }
     private final Sprite[][] level31 = {{Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.GOAL},
             {Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL},
             {Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL},
@@ -77,23 +83,14 @@ public class World3Maps {
      *
      * @return returnerar en array av siffror.
      */
-    public Sprite[][] getLevel31() {
-        return this.level31;
-    }
-
-    public Sprite[][] getLevel32() {
-        return this.level32;
-    }
-
-    public Sprite[][] getLevel33() {
-        return this.level33;
-    }
-
-    public Sprite[][] getLevel34() {
-        return this.level34;
-    }
-
-    public Sprite[][] getLevel35() {
-        return this.level35;
+    public Sprite[][] getMap() {
+        return switch (getNextLevel()) {
+            case 1 -> level31;
+            case 2 -> level32;
+            case 3 -> level33;
+            case 4 -> level34;
+            case 5 -> level35;
+            default -> throw new IllegalStateException("Unexpected value: " + getNextLevel());
+        };
     }
 }
