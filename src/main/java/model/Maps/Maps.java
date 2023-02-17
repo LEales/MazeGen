@@ -5,19 +5,22 @@ import model.World;
 import java.util.HashSet;
 
 public abstract class Maps {
-    HashSet<Label> destroyedWalls = new HashSet<>();
-    private boolean pickAxeInInventory, gameStarted, timeStarted;
+    private final HashSet<Label> destroyedWalls = new HashSet<>();
+    private World world;
     private final int seconds, nextLevel;
-    private int collectibles;
-    private int collectiblesObtained;
-    private int heartCrystals;
-    private final World world;
+    private int collectibles, collectiblesObtained, heartCrystals;
+    private boolean pickAxeInInventory, gameStarted, timeStarted;
 
     public Maps(int heartCrystals, int seconds, int nextLevel, World world) {
         this.seconds = seconds;
         this.heartCrystals = heartCrystals;
         this.nextLevel = nextLevel;
         this.world = world;
+    }
+    public Maps(int heartCrystals, int seconds) {
+        this.heartCrystals = heartCrystals;
+        this.seconds = seconds;
+        this.nextLevel = 0;
     }
 
     public void incrementCollectible() {
@@ -52,10 +55,6 @@ public abstract class Maps {
         if (3 > heartCrystals) {
             heartCrystals++;
         }
-    }
-
-    public boolean noHeartCrystalsLeft() {
-        return 0 == heartCrystals;
     }
 
     public void setPickAxeInInventory(boolean pickAxeInInventory) {
@@ -99,4 +98,8 @@ public abstract class Maps {
     }
 
     public abstract Sprite[][] getMap();
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
 }

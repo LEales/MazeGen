@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import model.Player;
 
 import java.io.*;
+import java.util.LinkedList;
 
 /**
  * @author Max Tideman, Linus Regander
@@ -55,26 +56,16 @@ public class HighscoreList extends HBox {
 
     public int setupHighscoreList() {
         setupVBoxes();
-        String file = "files/ScoreList.dat";
-        Player[] scoreList = new Player[10];
-        Player player;
-        int counter = 0;
-        try {
-            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
-            while (null != (player = (Player) ois.readObject())) {
-                if (counter == 10) break;
-                scoreList[counter] = player;
-                labelArr[counter++] = new Label(player.getPlayer());
-            }
-            ois.close();
-        } catch (IOException | ClassNotFoundException ignored) {
-
+        LinkedList<Player> scoreList = mainProgram.getPlayerList();
+        int index = 0;
+        for (Player p : scoreList) {
+            labelArr[index++] = new Label(p.getPlayer());
         }
         for (int i = 0; i < labelArr.length; i++) {
-            if (null != scoreList[i]) {
-                Label label = createLabels(String.format("%3d : %s", (i + 1), scoreList[i].getPlayer()), 0, 0);
-                Label label2 = createLabels(String.format(" LEVEL: %2d", scoreList[i].getLvl()), 0, 0);
-                Label label3 = createLabels(String.format(" TIME: %4d", scoreList[i].getSeconds()), 0, 0);
+            if (null != labelArr[i]) {
+                Label label = createLabels(String.format("%3d : %s", (i + 1), scoreList.get(i).getPlayer()), 0, 0);
+                Label label2 = createLabels(String.format(" LEVEL: %2d", scoreList.get(i).getLvl()), 0, 0);
+                Label label3 = createLabels(String.format(" TIME: %4d", scoreList.get(i).getSeconds()), 0, 0);
                 nameVbox.getChildren().add(label);
                 lvlVbox.getChildren().add(label2);
                 timeVbox.getChildren().add(label3);
@@ -83,7 +74,7 @@ public class HighscoreList extends HBox {
                 nameVbox.getChildren().add(label);
             }
         }
-        return counter;
+        return index;
     }
 
     private Label createLabels(String text, int positionX, int positionY) {

@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import model.Maps.*;
 
+import model.Player;
 import model.World;
 import control.time.TotalTime;
 import view.Campaign.*;
@@ -23,7 +24,11 @@ import view.VictoryScreen;
 import view.WorldIntroAnimation;
 
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.LinkedList;
 
 /**
  * @author André Eklund
@@ -153,9 +158,21 @@ public class MainProgram extends Application {
     public void changeToRandomize(int dimension) throws FileNotFoundException {
         MazeGenerator mazeGenerator = new MazeGenerator(dimension, true);
         generateNextLevel = new GenerateNextLevel(mainPaneRandomMaze, mazeGenerator, dimension);
-        MapTemplate mapTemplate = new MapTemplate(mazeGenerator.getMaze(), generateNextLevel);
+        RandomizeMap map = new RandomizeMap(3, getSeconds(dimension), dimension);
+        map.setMap(mazeGenerator.getMaze());
+        MapTemplate mapTemplate = new MapTemplate(map, generateNextLevel);
         mainPaneRandomMaze.setCenter(mapTemplate);
         mainWindow.setScene(randomScene);
+    }
+
+    public int getSeconds(int dimension) {
+        return switch (dimension) {
+            case 10 -> 25;
+            case 14 -> 60;
+            case 18 -> 80;
+            case 28 -> 99;
+            default -> throw new IllegalStateException("Unexpected value: " + dimension);
+        };
     }
 
     /**
@@ -505,6 +522,17 @@ public class MainProgram extends Application {
 
     public boolean getMusicIsOn() {
         return rightPanel.getMusicOn();
+    }
+
+    public LinkedList<Player> getPlayerList() {
+        LinkedList<Player> list = new LinkedList<>();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("files/ScoreList.dat"))) {
+            Player player;
+            while (null != (player = (Player) ois.readObject())) {
+                list.add(player);
+            }
+        } catch (IOException | ClassNotFoundException e) {}
+        return list;
     }
 
     public HighscoreList getHighscoreList() {

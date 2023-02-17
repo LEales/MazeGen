@@ -1,6 +1,7 @@
 package view.Randomize;
 
 
+import model.Maps.Maps;
 import model.Maps.Sprite;
 import control.GenerateNextLevel;
 import control.MainProgram;
@@ -18,6 +19,7 @@ import control.AudioPlayer;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -27,25 +29,20 @@ import java.util.Random;
 
 public class MapTemplate extends GridPane {
 
+    private final Maps map;
     private final GenerateNextLevel generateNextLevel;
-    private final Sprite[][] level;
-    private final List<Label> collectibles;
-
-    private boolean startButtonPressed;
-    private int collectiblesObtained;
     private final int squareSize;
     private Image wall, path, border, goal, diamond, start;
     /**
      * Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
      */
-    public MapTemplate(Sprite[][] level, GenerateNextLevel generateNextLevel) throws FileNotFoundException {
-        this.level = level;
+    public MapTemplate(Maps map, GenerateNextLevel generateNextLevel) throws FileNotFoundException {
         this.generateNextLevel = generateNextLevel;
-        collectibles = new ArrayList<>();
-
-        squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
+        this.map = map;
+        squareSize = (int) MainProgram.HEIGHT / (map.getMap().length + 2);
         setBackground();
-        setupImages(randomizeWorld());
+        map.setWorld(randomizeWorld());
+        setupImages(map.getWorld());
         setupBorders();
         setupLevel();
     }
@@ -54,7 +51,7 @@ public class MapTemplate extends GridPane {
      * Sätter bakgrunden i fönstret.
      */
     public void setBackground() {
-        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg", 800, 600, false, true),
+        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg", MainProgram.WIDTH, MainProgram.HEIGHT, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         setBackground(new Background(menuBackground));
@@ -64,17 +61,17 @@ public class MapTemplate extends GridPane {
      * Skapar en ram runt spelplanen.
      */
     private void setupBorders() {
-        for (int i = 0; i < level.length + 1; i++) {
+        for (int i = 0; i < map.getMap().length + 1; i++) {
             add(getBorders(), i, 0);
         }
-        for (int i = 0; i < level.length + 1; i++) {
+        for (int i = 0; i < map.getMap().length + 1; i++) {
             add(getBorders(), 0, i);
         }
-        for (int i = 0; i < level.length + 2; i++) {
-            add(getBorders(), i, level.length + 1);
+        for (int i = 0; i < map.getMap().length + 2; i++) {
+            add(getBorders(), i, map.getMap().length + 1);
         }
-        for (int i = 0; i < level.length + 2; i++) {
-            add(getBorders(), level.length + 1, i);
+        for (int i = 0; i < map.getMap().length + 2; i++) {
+            add(getBorders(), map.getMap().length + 1, i);
         }
     }
 
@@ -82,10 +79,10 @@ public class MapTemplate extends GridPane {
      * Omvandlar värdena i arrayen av siffror till olika grafiska komponenter baserat på vilken siffra en position har.
      */
     private void setupLevel() {
-        for (int i = 0; i < level.length; i++) {
-            for (int j = 0; j < level.length; j++) {
+        for (int i = 0; i < map.getMap().length; i++) {
+            for (int j = 0; j < map.getMap().length; j++) {
 
-                switch (level[i][j]) {
+                switch (map.getMap()[i][j]) {
                     case PATH -> {
                         add(getPath(), j + 1, i + 1);
                         if (4 == new Random().nextInt(5)) {
@@ -227,19 +224,16 @@ public class MapTemplate extends GridPane {
         collectible.setStyle("fx-background-color: transparent;");
         collectible.setGraphic(borderView);
         collectible.setOnMouseEntered(e -> collectibleEntered(e));
-        collectibles.add(collectible);
+        map.incrementCollectible();
         return collectible;
     }
 
     private void collectibleEntered(MouseEvent e) {
-        if (startButtonPressed) {
+        if (map.isGameStarted()) {
             AudioPlayer.playCollectibleSound();
-            for (Label label : collectibles) {
-                if (e.getSource() == label) {
-                    label.setVisible(false);
-                    collectiblesObtained++;
-                }
-            }
+            Label label = (Label) e.getSource();
+            label.setVisible(false);
+            map.incrementCollectiblesObtained();
         }
     }
 
@@ -257,9 +251,9 @@ public class MapTemplate extends GridPane {
         fade.setToValue(0.6);
         fade.play();
 
-        if (startButtonPressed) {
+        if (map.isGameStarted()) {
             AudioPlayer.playDeathSound();
-            startButtonPressed = false;
+            map.setGameStarted(false);
         }
     }
 
@@ -270,7 +264,7 @@ public class MapTemplate extends GridPane {
      * @throws InterruptedException
      */
     private void enteredGoal() throws FileNotFoundException, InterruptedException {
-        if (startButtonPressed && collectiblesObtained == collectibles.size()) {
+        if (map.isGameStarted() && map.allCollectiblesObtained()) {
             AudioPlayer.playGoalSound();
             generateNextLevel.generateNewMaze();
         }
@@ -280,10 +274,10 @@ public class MapTemplate extends GridPane {
      * Startar spelrundan och timern.
      */
     private void startLevel() {
-        if (!startButtonPressed) {
+        if (!map.isGameStarted()) {
             AudioPlayer.playStartSound();
         }
-        startButtonPressed = true;
+        map.setGameStarted(true);
     }
 
     /**

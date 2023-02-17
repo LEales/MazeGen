@@ -1,6 +1,7 @@
 package control;
 
 import javafx.scene.layout.BorderPane;
+import model.Maps.RandomizeMap;
 import model.Maps.Sprite;
 import view.Randomize.MapTemplate;
 
@@ -53,8 +54,20 @@ public class GenerateNextLevel {
             }
         }
         nextMaze[new Random().nextBoolean() ? 0 : nextMaze.length - 1][col] = Sprite.GOAL;
-        mainPane.setCenter(new MapTemplate(checkStartAndGoalNeighbors(nextMaze), this));
+        RandomizeMap map = new RandomizeMap(3, getSeconds(), dimension);
+        map.setMap(checkStartAndGoalNeighbors(nextMaze));
+        mainPane.setCenter(new MapTemplate(map, this));
         mazeGenerator = newMazegenerator;
+    }
+
+    public int getSeconds() {
+        return switch (dimension) {
+            case 10 -> 25;
+            case 14 -> 60;
+            case 18 -> 80;
+            case 28 -> 99;
+            default -> throw new IllegalStateException("Unexpected value: " + dimension);
+        };
     }
 
     /**
