@@ -82,11 +82,5 @@ public class TimeThreadtest {
         assertFalse(timeThread.isAlive());
     }
 
-    //skicka in 0 sekunder, sov och se om spelet avslutas efter det
-
-
-    //skicka in 1 sekunder och se om spelet körs fortfarande
-
-    //skicka in 15 sekunder och se om spelet körs fortfarande
 
 }
