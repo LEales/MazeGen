@@ -15,8 +15,4 @@ class MapTemplateTest {
 
     }
 
-    Image getSpecificLabel(String folder, String type, int squareSize) {
-            return new Image("file:files/" + folder + "/" + type + ".png", squareSize, squareSize, false, false);
-        }
-
 }
