@@ -2,7 +2,7 @@ package model.Time;
 
 import control.MainProgram;
 import javafx.application.Application;
-import model.time.TimeThread;
+import control.time.TimeThread;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import view.Menu.RightPanel;

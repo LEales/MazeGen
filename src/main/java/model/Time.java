@@ -1,8 +1,12 @@
-package model.time;
+package model;
 
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * @author Luke Eales, Teodor Wegestål
+ * Class that keeps track of played seconds
+ */
 public class Time implements Serializable {
 
     public static long serialVersionUID = 1948391084L;
