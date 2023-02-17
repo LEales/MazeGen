@@ -1,11 +1,17 @@
 package model.Maps;
 
+import model.World;
+
 /**
  * @author André Eklund, Sebastian Helin, Viktor Näslund, Filip Örnling
  * @edit Teodor Wegestål, Luke Eales - Changed int[][] to Sprite[][]
  */
 
-public class World1Maps {
+public class World1Maps extends Maps {
+
+    public World1Maps(int heartCrystals, int seconds, int nextLevel, World world) {
+        super(heartCrystals, seconds, nextLevel, world);
+    }
 
     private final Sprite[][] level11 = {{Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.GOAL},
             {Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH},
@@ -57,23 +63,15 @@ public class World1Maps {
      *
      * @return returnerar en array av siffror.
      */
-    public Sprite[][] getLevel11() {
-        return level11;
-    }
 
-    public Sprite[][] getLevel12() {
-        return level12;
-    }
-
-    public Sprite[][] getLevel13() {
-        return level13;
-    }
-
-    public Sprite[][] getLevel14() {
-        return level14;
-    }
-
-    public Sprite[][] getLevel15() {
-        return level15;
+    public Sprite[][] getMap() {
+        return switch (getNextLevel()) {
+            case 1 -> level11;
+            case 2 -> level12;
+            case 3 -> level13;
+            case 4 -> level14;
+            case 5 -> level15;
+            default -> throw new IllegalStateException("Unexpected value: " + getNextLevel());
+        };
     }
 }

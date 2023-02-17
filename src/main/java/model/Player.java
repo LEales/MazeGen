@@ -1,7 +1,5 @@
 package model;
 
-import model.time.Time;
-
 import java.io.Serializable;
 
 /**

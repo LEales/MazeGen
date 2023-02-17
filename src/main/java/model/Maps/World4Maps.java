@@ -1,10 +1,16 @@
 package model.Maps;
 
+import model.World;
+
 /**
  * @author André Eklund, Sebastian Helin, Viktor Näslund, Filip Örnling
  * @edit Teodor Wegestål, Luke Eales - Changed int[][] to Sprite[][]
  */
-public class World4Maps {
+public class World4Maps extends Maps {
+
+    public World4Maps(int heartCrystals, int seconds, int nextLevel, World world) {
+        super(heartCrystals, seconds, nextLevel, world);
+    }
 
     private final Sprite[][] level41 = {{Sprite.HEART, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.START},
             {Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH},
@@ -87,23 +93,14 @@ public class World4Maps {
      *
      * @return returnerar en array av siffror.
      */
-    public Sprite[][] getLevel41() {
-        return this.level41;
-    }
-
-    public Sprite[][] getLevel42() {
-        return this.level42;
-    }
-
-    public Sprite[][] getLevel43() {
-        return this.level43;
-    }
-
-    public Sprite[][] getLevel44() {
-        return this.level44;
-    }
-
-    public Sprite[][] getLevel45() {
-        return this.level45;
+    public Sprite[][] getMap() {
+        return switch (getNextLevel()) {
+            case 1 -> level41;
+            case 2 -> level42;
+            case 3 -> level43;
+            case 4 -> level44;
+            case 5 -> level45;
+            default -> throw new IllegalStateException("Unexpected value: " + getNextLevel());
+        };
     }
 }

@@ -1,14 +1,12 @@
 package view.Campaign;
 
-import control.MainProgram;
 import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
-import model.Maps.Sprite;
-import model.World;
+import model.Maps.Maps;
 import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;
@@ -19,13 +17,9 @@ import java.io.FileNotFoundException;
  */
 
 public class World6Template extends World1Template {
-    public World6Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world) throws FileNotFoundException {
-        super(level, currentLevel, heartCrystals, rightPanel, world, 99);
-        int squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
-        rightPanel.changeHeartCounter(heartCrystals);
-        rightPanel.resetTimerLabel();
-        initialize(currentLevel, squareSize);
-
+    public World6Template(Maps map, RightPanel rightPanel) throws FileNotFoundException {
+        super(map, rightPanel);
+        initialize(map.getNextLevel());
     }
 
     /**
@@ -104,7 +98,7 @@ public class World6Template extends World1Template {
      */
 
 
-    private void initialize(int currentLevel, int squareSize) {
+    private void initialize(int currentLevel) {
         Image ghost = new Image("file:files/space_mob3.png", squareSize, squareSize, false, false);
         switch (currentLevel) {
             case 2 -> {

@@ -4,6 +4,7 @@ import control.MainProgram;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polyline;
+import model.Maps.Maps;
 import model.Maps.Sprite;
 import model.World;
 import view.Menu.RightPanel;
@@ -18,11 +19,10 @@ import java.io.FileNotFoundException;
 
 public class World2Template extends World1Template {
 
-    public World2Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world) throws FileNotFoundException {
-        super(level, currentLevel, heartCrystals, rightPanel, world, 35);
-        int squareSize = (int) MainProgram.HEIGHT / (level.length + 2);
-        rightPanel.changeHeartCounter(heartCrystals);
-        if (6 == currentLevel) {
+    public World2Template(Maps map, RightPanel rightPanel) throws FileNotFoundException {
+        super(map, rightPanel);
+        int squareSize = (int) MainProgram.HEIGHT / (map.getMap().length + 2);
+        if (6 == map.getNextLevel()) {
             initialize(squareSize);
         }
         rightPanel.resetTimerLabel();
