@@ -16,10 +16,10 @@ import java.io.FileNotFoundException;
 
 public class Menu extends Pane {
     private final MainProgram mainProgram;
+
     /**
      * Konstruktor som tar emot mainProgram, audioPlayer och panel
      * Kör sedan metoder för att länka Image-objekten med png-filer
-     *
      */
     public Menu() {
         mainProgram = MainProgram.getMainProgram();
@@ -66,6 +66,7 @@ public class Menu extends Pane {
         }
         return true;
     }
+
     private ImageView createImageView(Image image, double translateX, double translateY) {
         validate(image, translateX, translateY);
         ImageView view = new ImageView(image);

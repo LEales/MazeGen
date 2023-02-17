@@ -10,10 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import model.Player;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-
 /**
  * @author Max Tideman, Linus Regander
  * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
@@ -82,17 +78,8 @@ public class VictoryScreen extends Pane {
 
     private void updateToScoreList() {
         String file = "files/ScoreList.dat";
-        Player playerToAdd = new Player(buildName(), totalTime, mainProgram.getLvlCleared());
-        ArrayList<Player> scoreList = new ArrayList<>();
-        Player player;
-        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-            while (null != (player = (Player) ois.readObject())) {
-                scoreList.add(player);
-            }
-        } catch (Exception ignored) {
-
-        }
-        addToScoreList(scoreList, playerToAdd, file);
+        Player player = new Player(buildName(), totalTime, mainProgram.getLvlCleared());
+        mainProgram.addPlayerToFile(player, file);
         mainProgram.showHighScoreList();
     }
 
@@ -100,27 +87,6 @@ public class VictoryScreen extends Pane {
         StringBuilder sb = new StringBuilder();
         sb.append(firstProperty.get()).append(secondProperty.get()).append(thirdProperty.get());
         return sb.toString();
-    }
-
-    private void addToScoreList(ArrayList<Player> scoreList, Player playerToAdd, String file) {
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-            if (10 == scoreList.size() && 0 < scoreList.get(9).compareTo(playerToAdd)) {
-                scoreList.set(9, playerToAdd);
-            } else if (10 > scoreList.size()){
-                scoreList.add(playerToAdd);
-            }
-            Collections.sort(scoreList);
-            for (Player current : scoreList) {
-                if (null != current) {
-                    oos.writeObject(current);
-                }
-            }
-            oos.flush();
-            oos.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public int setTime(int time) {

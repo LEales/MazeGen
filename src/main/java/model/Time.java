@@ -1,6 +1,5 @@
 package model;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -16,6 +15,7 @@ public class Time implements Serializable {
         checkTime(seconds);
         this.seconds = seconds;
     }
+
     public Time() {
         seconds = 0;
     }

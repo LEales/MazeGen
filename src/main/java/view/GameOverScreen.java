@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import model.Player;
 
 /**
  * @author André Eklund
@@ -16,10 +17,16 @@ public class GameOverScreen extends Pane {
     /**
      * Konstruktor som tar emot mainProgram
      * Kör sedan metoder för bild och animation
-     * @param mainProgram
      */
-    public GameOverScreen(MainProgram mainProgram) {
-        setOnMouseClicked(e -> mainProgram.showVictoryScene());
+    public GameOverScreen(Player player) {
+        setOnMouseClicked(e -> {
+            MainProgram mp = MainProgram.getMainProgram();
+            if (mp.isQualified(player)) {
+                mp.showVictoryScene();
+            } else {
+                mp.showHighScoreList();
+            }
+        });
         gameOverAnimation();
     }
 
@@ -35,7 +42,7 @@ public class GameOverScreen extends Pane {
             ft.setFromValue(0.0);
             ft.setToValue(1.0);
             ft.play();
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return false;
         }
         return true;

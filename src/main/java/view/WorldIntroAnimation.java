@@ -1,15 +1,14 @@
 package view;
 
-import control.MainProgram;
+
 import javafx.animation.FadeTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+
 import javafx.util.Duration;
 import model.World;
 
-import java.io.File;
 
 /**
  * @author André Eklund

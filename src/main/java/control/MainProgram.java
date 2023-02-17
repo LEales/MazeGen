@@ -24,10 +24,8 @@ import view.VictoryScreen;
 import view.WorldIntroAnimation;
 
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
+import java.util.Collections;
 import java.util.LinkedList;
 
 /**
@@ -42,7 +40,7 @@ public class MainProgram extends Application {
     public static final double HEIGHT = 600.0d;
     private Stage mainWindow;
     private BorderPane mainPaneRandomMaze, mainPaneCampaign;
-    private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene;;
+    private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene;
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
     private RightPanel rightPanel;
@@ -158,7 +156,7 @@ public class MainProgram extends Application {
     public void changeToRandomize(int dimension) throws FileNotFoundException {
         MazeGenerator mazeGenerator = new MazeGenerator(dimension, true);
         generateNextLevel = new GenerateNextLevel(mainPaneRandomMaze, mazeGenerator, dimension);
-        RandomizeMap map = new RandomizeMap(3, getSeconds(dimension), dimension);
+        RandomizeMap map = new RandomizeMap(3, getSeconds(dimension));
         map.setMap(mazeGenerator.getMaze());
         MapTemplate mapTemplate = new MapTemplate(map, generateNextLevel);
         mainPaneRandomMaze.setCenter(mapTemplate);
@@ -213,7 +211,8 @@ public class MainProgram extends Application {
      */
     public void gameOver() {
         victoryScreen.setTime(totTime.setGameOver(true));
-        GameOverScreen gameOverScreen = new GameOverScreen(this);
+        Player player = new Player("___", totTime.setGameOver(true), lvlCleared);
+        GameOverScreen gameOverScreen = new GameOverScreen(player);
         mainPaneCampaign.getChildren().add(gameOverScreen);
     }
 
@@ -524,16 +523,43 @@ public class MainProgram extends Application {
         return rightPanel.getMusicOn();
     }
 
-    public LinkedList<Player> getPlayerList() {
+    public LinkedList<Player> getPlayerList(String file) {
         LinkedList<Player> list = new LinkedList<>();
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("files/ScoreList.dat"))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             Player player;
             while (null != (player = (Player) ois.readObject())) {
                 list.add(player);
             }
-        } catch (IOException | ClassNotFoundException e) {}
+        } catch (IOException | ClassNotFoundException e) {
+        }
         return list;
     }
+
+    public void addPlayerToFile(Player player, String file) {
+        LinkedList<Player> scoreList = getPlayerList(file);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+            if (10 == scoreList.size() && 0 < scoreList.get(9).compareTo(player)) {
+                scoreList.set(9, player);
+            } else if (10 > scoreList.size()) {
+                scoreList.add(player);
+            }
+            Collections.sort(scoreList);
+            for (Player current : scoreList) {
+                if (null != current) {
+                    oos.writeObject(current);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isQualified(Player player) {
+        LinkedList<Player> scoreList = getPlayerList("files/scoreList.dat");
+        if (10 == scoreList.size() && 0 < scoreList.get(9).compareTo(player)) return true;
+        return 10 > scoreList.size();
+    }
+
 
     public HighscoreList getHighscoreList() {
         return highscoreList;

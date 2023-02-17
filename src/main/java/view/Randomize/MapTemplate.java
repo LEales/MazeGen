@@ -2,7 +2,6 @@ package view.Randomize;
 
 
 import model.Maps.Maps;
-import model.Maps.Sprite;
 import control.GenerateNextLevel;
 import control.MainProgram;
 import javafx.animation.FadeTransition;
@@ -17,9 +16,6 @@ import model.World;
 import control.AudioPlayer;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -33,6 +29,7 @@ public class MapTemplate extends GridPane {
     private final GenerateNextLevel generateNextLevel;
     private final int squareSize;
     private Image wall, path, border, goal, diamond, start;
+
     /**
      * Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
      */
