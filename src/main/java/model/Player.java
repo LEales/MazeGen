@@ -4,6 +4,11 @@ import model.time.Time;
 
 import java.io.Serializable;
 
+/**
+ * @author Max Tideman, Linus Regander
+ * @edit Luke Eales, Teodor Wegestål - Added error handling and compareTo
+ */
+
 public class Player implements Serializable, Comparable<Player> {
 
     public static final long serialVersionUID = 3482904832L;

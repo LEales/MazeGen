@@ -10,6 +10,10 @@ import model.Player;
 
 import java.io.*;
 
+/**
+ * @author Max Tideman, Linus Regander
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
+ */
 public class HighscoreList extends HBox {
     private final MainProgram mainProgram;
     private Label[] labelArr = new Label[10];

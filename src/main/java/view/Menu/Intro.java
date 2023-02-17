@@ -11,6 +11,7 @@ import control.AudioPlayer;
 
 /**
  * @author Viktor Näslund
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 
 public class Intro extends Pane {

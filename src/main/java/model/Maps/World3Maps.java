@@ -4,6 +4,7 @@ public class World3Maps {
 
     /**
      * @author André Eklund, Sebastian Helin, Viktor Näslund, Filip Örnling
+     * @edit Teodor Wegestål, Luke Eales - Changed int[][] to Sprite[][]
      */
 
     private final Sprite[][] level31 = {{Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.GOAL},

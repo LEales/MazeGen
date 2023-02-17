@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 /**
  * @author Filip Örnling
  * @edit Viktor Näslund, Sebastian Helin
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 
 public class RightPanel extends GridPane {

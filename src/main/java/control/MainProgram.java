@@ -27,6 +27,7 @@ import java.io.FileNotFoundException;
 
 /**
  * @author André Eklund
+ * @edit Teodor Wegestål, Luke Eales - Removed unnecessary variables, methods and dependencies. General code clean up.
  */
 
 public class MainProgram extends Application {

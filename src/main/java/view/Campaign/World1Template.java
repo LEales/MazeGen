@@ -26,6 +26,7 @@ import java.util.Collection;
 /**
  * @author André Eklund
  * @edit Filip Örnling, Sebastian Helin, Viktor Näslund
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 
 public class World1Template extends GridPane {

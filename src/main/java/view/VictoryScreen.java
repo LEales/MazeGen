@@ -14,6 +14,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * @author Max Tideman, Linus Regander
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
+ */
+
 public class VictoryScreen extends Pane {
     private final MainProgram mainProgram;
     private int totalTime, backSpaceCheck;

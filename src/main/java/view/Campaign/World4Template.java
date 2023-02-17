@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 
 /**
  * @author Filip Örnling
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 
 public class World4Template extends World1Template {

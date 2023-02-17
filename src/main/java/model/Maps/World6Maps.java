@@ -2,8 +2,7 @@ package model.Maps;
 
 /**
  * @author André Eklund, Sebastian Helin, Viktor Näslund, Filip Örnling
- * @edit 2023-02-13 Teodor Wegestål, Luke Eales
- * Changed all int[][] to Sprites
+ * @edit Teodor Wegestål, Luke Eales - Changed int[][] to Sprite[][]
  */
 public class World6Maps {
 

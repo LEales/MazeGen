@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 
 /**
  * @author Sebastian Helin & Filip Örnling
+ *@edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 
 

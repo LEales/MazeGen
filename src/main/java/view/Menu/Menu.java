@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 
 /**
  * @author Viktor Näslund
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 
 public class Menu extends Pane {

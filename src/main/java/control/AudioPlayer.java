@@ -11,6 +11,8 @@ import java.io.File;
 /**
  * @author André Eklund
  * @edit Viktor Näslund
+ * @edit Teodor Wegestål, Luke Eales - Refactored all variables to be static,
+ * for access from anywhere in the program. To minimize dependencies.
  */
 
 public class AudioPlayer {

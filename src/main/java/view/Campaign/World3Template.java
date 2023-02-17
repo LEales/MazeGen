@@ -10,6 +10,10 @@ import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;
 
+/**
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
+ */
+
 public class World3Template extends World1Template {
     public World3Template(Sprite[][] level, int currentLevel, int heartCrystals, RightPanel rightPanel, World world) throws FileNotFoundException {
         super(level, currentLevel, heartCrystals, rightPanel, world, 60);
