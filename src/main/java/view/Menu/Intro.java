@@ -17,6 +17,7 @@ import control.AudioPlayer;
 public class Intro extends Pane {
 
     private final MainProgram mainProgram;
+
     /**
      * Konstruktor som tar emot mainProgram och audioPlayer
      * Kör sedan metoder för bakgrundsbild, bilder i övrigt och listener

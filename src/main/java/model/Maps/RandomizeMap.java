@@ -2,19 +2,17 @@ package model.Maps;
 
 public class RandomizeMap extends Maps {
 
-    Sprite[][] map;
+    private Sprite[][] map;
 
-    int dimension;
-
-    public RandomizeMap(int heartCrystals, int seconds, int dimension) {
+    public RandomizeMap(int heartCrystals, int seconds) {
         super(heartCrystals, seconds);
-        this.dimension = dimension;
     }
 
     @Override
     public Sprite[][] getMap() {
         return map;
     }
+
     public void setMap(Sprite[][] map) {
         this.map = map;
     }

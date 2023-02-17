@@ -2,6 +2,7 @@ package model.Maps;
 
 import javafx.scene.control.Label;
 import model.World;
+
 import java.util.HashSet;
 
 public abstract class Maps {
@@ -17,6 +18,7 @@ public abstract class Maps {
         this.nextLevel = nextLevel;
         this.world = world;
     }
+
     public Maps(int heartCrystals, int seconds) {
         this.heartCrystals = heartCrystals;
         this.seconds = seconds;

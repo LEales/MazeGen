@@ -1,12 +1,9 @@
 package view.Campaign;
 
-import control.MainProgram;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import model.Maps.Maps;
-import model.Maps.Sprite;
-import model.World;
 import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;
@@ -48,7 +45,7 @@ public class World5Template extends World1Template {
                 ghost2V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 3 -> {
-                ImageView ghost1V = createImageView(ghost, 6,3);
+                ImageView ghost1V = createImageView(ghost, 6, 3);
                 ImageView ghost2V = createImageView(ghost, 20, 5);
 
                 Rectangle rectangle = createRectangle(270.0, 100.0, 50.0, -150.0);
@@ -62,7 +59,7 @@ public class World5Template extends World1Template {
             }
             case 4 -> {
                 ImageView ghost1V = createImageView(ghost, 13, 3);
-                ImageView ghost2V = createImageView(ghost,12, 10);
+                ImageView ghost2V = createImageView(ghost, 12, 10);
 
                 Rectangle rectangle = createRectangle(132.0, 100.0, 50.0, -150.0);
                 Rectangle rectangle1 = createRectangle(100.0, 100.0, 80.0, -150.0);
@@ -76,7 +73,7 @@ public class World5Template extends World1Template {
             case 5 -> {
                 ImageView ghost1V = createImageView(ghost, 12, 8);
                 ImageView ghost2V = createImageView(ghost, 14, 0);
-                ImageView ghost3V = createImageView(ghost,8, 12);
+                ImageView ghost3V = createImageView(ghost, 8, 12);
 
                 Rectangle rectangle = createRectangle(132.0, 200.0, 80.0, -150.0);
                 Rectangle rectangle1 = createRectangle(0.0, 135.0, 80.0, -150.0);

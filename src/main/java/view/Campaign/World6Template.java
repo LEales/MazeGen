@@ -24,12 +24,13 @@ public class World6Template extends World1Template {
 
     /**
      * Updates the ghost animation
-     * @param animation The animation to be updated
-     * @param duration The length in seconds of the animation
-     * @param cycleCount How many cycles the animation will run (-1 equals indefinitely)
+     *
+     * @param animation   The animation to be updated
+     * @param duration    The length in seconds of the animation
+     * @param cycleCount  How many cycles the animation will run (-1 equals indefinitely)
      * @param autoReverse If the animation returns to the starting point, following the same path
      */
-    private void ghostCycleEnded(PathTransition animation, double duration,  int cycleCount, boolean autoReverse) {
+    private void ghostCycleEnded(PathTransition animation, double duration, int cycleCount, boolean autoReverse) {
         validateDurationAndCycle(duration, cycleCount);
         animation.setCycleCount(cycleCount);
         animation.setDuration(Duration.seconds(duration));
@@ -39,14 +40,15 @@ public class World6Template extends World1Template {
 
     /**
      * Updates the ghost animation and prepares a second update
-     * @param animation The animation to be updated
-     * @param duration The length in seconds of the first animation
-     * @param nextDuration The length in seconds of the updated animation
-     * @param cycleCount How many cycles the animation will run (-1 equals indefinitely)
+     *
+     * @param animation      The animation to be updated
+     * @param duration       The length in seconds of the first animation
+     * @param nextDuration   The length in seconds of the updated animation
+     * @param cycleCount     How many cycles the animation will run (-1 equals indefinitely)
      * @param nextCycleCount How many cycles the next animation will run
-     * @param autoReverse If the animation returns to the starting point, following the same path
-     * @param path The path of the animation
-     * @param nextPath The path of the next animation
+     * @param autoReverse    If the animation returns to the starting point, following the same path
+     * @param path           The path of the animation
+     * @param nextPath       The path of the next animation
      */
     private void ghostCycleEnded(PathTransition animation, double duration, double nextDuration, int cycleCount, int nextCycleCount, boolean autoReverse, Shape path, Shape nextPath) {
         validateDurationAndCycle(duration, cycleCount);
@@ -57,13 +59,15 @@ public class World6Template extends World1Template {
         animation.play();
         animation.setOnFinished(e -> ghostCycleEnded(animation, nextDuration, nextCycleCount, autoReverse, path));
     }
+
     /**
      * Updates the ghost animation
-     * @param animation The animation to be updated
-     * @param duration The length in seconds of the animation
-     * @param cycleCount How many cycles the animation will run (-1 equals indefinitely)
+     *
+     * @param animation   The animation to be updated
+     * @param duration    The length in seconds of the animation
+     * @param cycleCount  How many cycles the animation will run (-1 equals indefinitely)
      * @param autoReverse If the animation returns to the starting point, following the same path
-     * @param path The path of the animation
+     * @param path        The path of the animation
      */
     private void ghostCycleEnded(PathTransition animation, double duration, int cycleCount, boolean autoReverse, Shape path) {
         validateDurationAndCycle(duration, cycleCount);
@@ -76,7 +80,8 @@ public class World6Template extends World1Template {
 
     /**
      * Validates that the duration and cycleCount are in bounds
-     * @param duration The duration of an animation
+     *
+     * @param duration   The duration of an animation
      * @param cycleCount How many cycles an animation will run
      * @return true or throws an exception
      */
@@ -102,11 +107,11 @@ public class World6Template extends World1Template {
         Image ghost = new Image("file:files/space_mob3.png", squareSize, squareSize, false, false);
         switch (currentLevel) {
             case 2 -> {
-                ImageView ghost1V = createImageView(ghost,5,10);
-                ImageView ghost2V = createImageView(ghost,4,5);
-                ImageView ghost3V = createImageView(ghost,9,4);
-                ImageView ghost4V = createImageView(ghost,10,13);
-                ImageView ghost5V = createImageView(ghost,16,4);
+                ImageView ghost1V = createImageView(ghost, 5, 10);
+                ImageView ghost2V = createImageView(ghost, 4, 5);
+                ImageView ghost3V = createImageView(ghost, 9, 4);
+                ImageView ghost4V = createImageView(ghost, 10, 13);
+                ImageView ghost5V = createImageView(ghost, 16, 4);
 
                 Rectangle rectangle = createRectangle(120.0, 93.0, 72.0, -45.0);
 
@@ -123,11 +128,11 @@ public class World6Template extends World1Template {
                 ghost5V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 3 -> {
-                ImageView ghost1V = createImageView(ghost, 5,10);
-                ImageView ghost2V = createImageView(ghost, 4,5);
+                ImageView ghost1V = createImageView(ghost, 5, 10);
+                ImageView ghost2V = createImageView(ghost, 4, 5);
                 ImageView ghost3V = createImageView(ghost, 9, 4);
-                ImageView ghost4V = createImageView(ghost,10, 13);
-                ImageView ghost5V = createImageView(ghost, 16,4);
+                ImageView ghost4V = createImageView(ghost, 10, 13);
+                ImageView ghost5V = createImageView(ghost, 16, 4);
 
 
                 Rectangle rectangle = createRectangle(120.0, 93.0, 72.0, -45.0);
@@ -219,9 +224,9 @@ public class World6Template extends World1Template {
                 ghost9V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 5 -> {
-                ImageView ghost1V = createImageView(ghost,12, 8);
-                ImageView ghost2V = createImageView(ghost, 14,0);
-                ImageView ghost3V = createImageView(ghost, 8,12);
+                ImageView ghost1V = createImageView(ghost, 12, 8);
+                ImageView ghost2V = createImageView(ghost, 14, 0);
+                ImageView ghost3V = createImageView(ghost, 8, 12);
 
                 Rectangle rectangle = createRectangle(132.0, 200.0, 80.0, -150.0);
                 Rectangle rectangle1 = createRectangle(0.0, 135.0, 80.0, -150.0);
@@ -236,8 +241,8 @@ public class World6Template extends World1Template {
                 ghost3V.setOnMouseEntered(e -> enteredGhost(e));
             }
             case 6 -> {
-                ImageView ghost1V = createImageView(ghost, 7,6);
-                ImageView ghost2V = createImageView(ghost,6,3);
+                ImageView ghost1V = createImageView(ghost, 7, 6);
+                ImageView ghost2V = createImageView(ghost, 6, 3);
                 ImageView ghost3V = createImageView(ghost, 16, 0);
                 ImageView ghost4V = createImageView(ghost, 17, 10);
 

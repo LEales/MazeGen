@@ -39,7 +39,8 @@ public class World1Template extends GridPane {
 
     /**
      * Instansierar objekten.
-     * @param rightPanel    Panelen som visar information så som liv, tid, nivå osv.
+     *
+     * @param rightPanel Panelen som visar information så som liv, tid, nivå osv.
      * @throws FileNotFoundException
      */
 
@@ -71,10 +72,11 @@ public class World1Template extends GridPane {
 
     /**
      * Creates a path transition for an animation
-     * @param node The node to be animation
-     * @param duration The duration in seconds of the animation
-     * @param cycleCount How many cycles the animation will run
-     * @param path The path of the animation
+     *
+     * @param node        The node to be animation
+     * @param duration    The duration in seconds of the animation
+     * @param cycleCount  How many cycles the animation will run
+     * @param path        The path of the animation
      * @param autoReverse If the animation returns to the starting point, following the same path
      * @return the path transition
      */
@@ -99,16 +101,17 @@ public class World1Template extends GridPane {
 
     /**
      * Creates an Image View and adds it to the grid pane
+     *
      * @param image The image to be added
-     * @param i The row index
-     * @param i1 The column index
+     * @param i     The row index
+     * @param i1    The column index
      * @return
      */
     ImageView createImageView(Image image, int i, int i1) {
         if (null == image) {
             throw new IllegalArgumentException("Image invalid");
         }
-        if (0 > i || 0 >i1) {
+        if (0 > i || 0 > i1) {
             throw new IllegalArgumentException("Negative numbers not allowed");
         }
         ImageView view = new ImageView(image);
@@ -118,10 +121,11 @@ public class World1Template extends GridPane {
 
     /**
      * Creates a path for a ghost in the shape of a rectangle
-     * @param v The width of the rectangle
+     *
+     * @param v  The width of the rectangle
      * @param v1 The height of the rectangle
-     * @param y The y-position of the rectangle
-     * @param x The x-position of the rectangle
+     * @param y  The y-position of the rectangle
+     * @param x  The x-position of the rectangle
      * @return the created rectangle
      */
     Rectangle createRectangle(double v, double v1, double y, double x) {
@@ -388,6 +392,7 @@ public class World1Template extends GridPane {
 
     /**
      * If the game is started, adds a pickaxe to the players inventory
+     *
      * @param e MouseEvent
      */
     private void pickAxeObtained(MouseEvent e) {

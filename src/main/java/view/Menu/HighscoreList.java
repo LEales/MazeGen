@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import model.Player;
 
-import java.io.*;
 import java.util.LinkedList;
 
 /**
@@ -56,7 +55,7 @@ public class HighscoreList extends HBox {
 
     public int setupHighscoreList() {
         setupVBoxes();
-        LinkedList<Player> scoreList = mainProgram.getPlayerList();
+        LinkedList<Player> scoreList = mainProgram.getPlayerList("files/ScoreList.dat");
         int index = 0;
         for (Player p : scoreList) {
             labelArr[index++] = new Label(p.getPlayer());

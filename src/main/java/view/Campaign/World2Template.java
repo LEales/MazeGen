@@ -5,15 +5,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polyline;
 import model.Maps.Maps;
-import model.Maps.Sprite;
-import model.World;
 import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;
 
 /**
  * @author Sebastian Helin & Filip Örnling
- *@edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
+ * @edit Luke Eales, Teodor Wegestål - Removed unnecessary variables methods and dependencies
  */
 
 

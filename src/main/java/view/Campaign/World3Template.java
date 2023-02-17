@@ -1,12 +1,9 @@
 package view.Campaign;
 
-import control.MainProgram;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import model.Maps.Maps;
-import model.Maps.Sprite;
-import model.World;
 import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;

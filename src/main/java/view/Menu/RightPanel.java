@@ -39,7 +39,8 @@ public class RightPanel extends GridPane {
 
     /**
      * Instansierar objekten och lägger till bilder och labels på scenen
-     * @param gameMode    Kollar ifall användaren valt randomized eller kampanjläge
+     *
+     * @param gameMode Kollar ifall användaren valt randomized eller kampanjläge
      * @throws FileNotFoundException
      */
     public RightPanel(String gameMode) throws FileNotFoundException { //TODO ska gameMode va string?

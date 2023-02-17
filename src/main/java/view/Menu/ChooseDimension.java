@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 
 public class ChooseDimension extends Pane {
     private final MainProgram mainProgram;
+
     /**
      * Konstruktor som tar emot mainProgram och audioPlayer och kör några metoder för att
      * sätta bilder och knappar
