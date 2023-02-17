@@ -1,10 +1,20 @@
 package view;
 
 import control.AudioPlayer;
+import control.MainProgram;
+import javafx.application.Application;
+import model.World;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.Assert.*;
+import java.io.File;
+
+import static org.junit.Assert.*;
 
 class AudioPlayerTest {
     AudioPlayer ap;
-/*
+
     @BeforeAll
     static void initJFXRuntime() {
         new Thread(() -> Application.launch(MainProgram.class)).start();
@@ -22,36 +32,47 @@ class AudioPlayerTest {
 
     @Test
     void playLevelMusicForest() {
+
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         File f = new File("files/music/forest.mp3");
-        assertEquals(f, ap.playLevelMusic("forest"));
+        assertEquals(f, ap.playLevelMusic(World.FOREST));
     }
 
     @Test
     void playLevelMusicDesert() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         File f = new File("files/music/lava.mp3");
-        assertEquals(f, ap.playLevelMusic("lava"));
+        assertEquals(f, ap.playLevelMusic(World.LAVA));
     }
 
     @Test
     void playLevelMusicHeaven() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         File f = new File("files/music/cloud.mp3");
-        assertEquals(f, ap.playLevelMusic("heaven"));
+        assertEquals(f, ap.playLevelMusic(World.CLOUD));
     }
 
     @Test
     void playLevelMusicEgypt() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         File f = new File("files/music/desert.mp3");
-        assertEquals(f, ap.playLevelMusic("egypt"));
-    }
-
-    @Test
-    void playLevelMusicUppercase() {
-        assertNull(ap.playLevelMusic("FOREST"));
-    }
-
-    @Test
-    void playLevelMusicSpecChar() {
-        assertNull(ap.playLevelMusic("#€%%%)((@£$∞"));
+        assertEquals(f, ap.playLevelMusic(World.DESERT));
     }
 
     @Test
@@ -148,6 +169,4 @@ class AudioPlayerTest {
     void stopClockSound() {
         assertTrue(ap.stopClockSound());
     }
-
- */
 }
