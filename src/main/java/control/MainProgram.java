@@ -187,6 +187,10 @@ public class MainProgram extends Application {
         introAnimation = new WorldIntroAnimation(World.FOREST);
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
+        try {
+            nextWorld3Level(1, 3);
+        } catch (Exception e) {
+        }
         startTotalTime();
     }
 
@@ -294,7 +298,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World2Template(new World2Maps(heartCrystals, 35, level, World.UNDERGROUND), rightPanel));
+        mainPaneCampaign.setCenter(new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel));
     }
 
     /**
@@ -340,7 +344,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World3Template(new World3Maps(heartCrystals, 60, level, World.LAVA), rightPanel));
+        mainPaneCampaign.setCenter(new World3Template(new World3Maps(heartCrystals, 60, level + 1, World.LAVA), rightPanel));
     }
 
     /**
@@ -385,7 +389,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World4Template(new World4Maps(heartCrystals, 80, level, World.CLOUD), rightPanel));
+        mainPaneCampaign.setCenter(new World4Template(new World4Maps(heartCrystals, 80, level + 1, World.CLOUD), rightPanel));
     }
 
     /**
@@ -430,7 +434,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World5Template(new World5Maps(heartCrystals, 90, level, World.DESERT), rightPanel));
+        mainPaneCampaign.setCenter(new World5Template(new World5Maps(heartCrystals, 90, level + 1, World.DESERT), rightPanel));
     }
 
     /**
@@ -475,7 +479,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World6Template(new World6Maps(heartCrystals, 99, level, World.SPACE), rightPanel));
+        mainPaneCampaign.setCenter(new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel));
     }
 
     /**
