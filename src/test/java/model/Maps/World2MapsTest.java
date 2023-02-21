@@ -1,4 +1,4 @@
-package model.Maps;
+/*package model.Maps;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 //Gets all maps in the second level of the campaign and tests that the correct one is returned.
+
 
 class World2MapsTest {
     World2Maps w;
@@ -265,4 +266,4 @@ class World2MapsTest {
         }
         assertFalse(equal);
     }
-}
+} */

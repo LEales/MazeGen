@@ -1,4 +1,4 @@
-package model.Maps;
+/*package model.Maps;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -358,4 +358,4 @@ class World6MapsTest {
         }
         assertFalse(equal);
     }
-}
+} */

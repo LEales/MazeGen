@@ -189,6 +189,11 @@ public class MainProgram extends Application {
         introAnimation = new WorldIntroAnimation(World.FOREST);
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
+       try {
+            nextWorld2Level(5, 3);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         startTotalTime();
     }
 

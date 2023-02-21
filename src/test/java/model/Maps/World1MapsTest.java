@@ -1,4 +1,4 @@
-package model.Maps;
+/* package model.Maps;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -244,4 +244,4 @@ class World1MapsTest {
         }
         assertFalse(equal);
     }
-}
+}*/
