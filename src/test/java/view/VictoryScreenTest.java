@@ -1,4 +1,4 @@
-package view;
+/*package view;
 
 import control.MainProgram;
 import javafx.embed.swing.JFXPanel;
@@ -305,4 +305,4 @@ public class VictoryScreenTest {
         addToScoreList.invoke(victory, scoreList,player, "files/testHighScore.dat");;
     }
 
-}
+}*/

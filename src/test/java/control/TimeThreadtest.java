@@ -1,4 +1,4 @@
-package model.Time;
+package control;
 
 import control.MainProgram;
 import javafx.application.Application;

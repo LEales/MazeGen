@@ -1,4 +1,4 @@
-package model.Time;
+package control;
 
 import control.time.TotalTime;
 import org.junit.jupiter.api.Test;
