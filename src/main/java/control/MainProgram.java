@@ -44,7 +44,7 @@ public class MainProgram extends Application {
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
     private RightPanel rightPanel;
-    private GenerateNextLevel generateNextLevel;
+    private MazeGenerator mazeGenerator;
 
     private WorldIntroAnimation introAnimation;
     private int lvlCleared;
@@ -71,6 +71,7 @@ public class MainProgram extends Application {
         Help help = new Help();
         highscoreList = new HighscoreList();
         victoryScreen = new VictoryScreen();
+        mazeGenerator = new MazeGenerator();
 
         ChooseDimension chooseDimension = new ChooseDimension();
         Scene introScene = new Scene(intro, WIDTH, HEIGHT);
@@ -154,23 +155,14 @@ public class MainProgram extends Application {
      * @throws FileNotFoundException
      */
     public void changeToRandomize(int dimension) throws FileNotFoundException {
-        MazeGenerator mazeGenerator = new MazeGenerator(dimension, true);
-        generateNextLevel = new GenerateNextLevel(mainPaneRandomMaze, mazeGenerator, dimension);
-        RandomizeMap map = new RandomizeMap(3, getSeconds(dimension));
-        map.setMap(mazeGenerator.getMaze());
-        MapTemplate mapTemplate = new MapTemplate(map, generateNextLevel);
+        mazeGenerator.generateNewMaze(dimension);
+        MapTemplate mapTemplate = new MapTemplate(mazeGenerator);
         mainPaneRandomMaze.setCenter(mapTemplate);
         mainWindow.setScene(randomScene);
     }
 
-    public int getSeconds(int dimension) {
-        return switch (dimension) {
-            case 10 -> 25;
-            case 14 -> 60;
-            case 18 -> 80;
-            case 28 -> 99;
-            default -> throw new IllegalStateException("Unexpected value: " + dimension);
-        };
+    public void changeRandomMapPane(MapTemplate mapTemplate) {
+        mainPaneRandomMaze.setCenter(mapTemplate);
     }
 
     /**
@@ -573,7 +565,7 @@ public class MainProgram extends Application {
         return victoryScreen;
     }
 
-    public GenerateNextLevel getGenerateNextLevel() {
-        return generateNextLevel;
+    public MazeGenerator getMazeGenerator() {
+        return mazeGenerator;
     }
 }
