@@ -8,11 +8,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 //Gets all maps in the fifth level of the campaign and tests that the correct one is returned.
 class World5MapsTest {
-    World5Maps w;
+    private World5Maps w;
+    private World world;
+    private int heartCrystals;
+    private int seconds;
+    private int nextLevel;
+
+
+    @BeforeEach
+    void init() {
+        world = World.DESERT;
+    }
+
+
 
     @Test
     void level51pos() {
-        w = new World5Maps(3, 25, 1, World.DESERT);
+        nextLevel = 1;
+        w = new World5Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level51 = {{Sprite.START, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.GOAL},
                 {Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH},
@@ -46,7 +59,10 @@ class World5MapsTest {
 
     @Test
     void level51neg() {
-        w = new World5Maps(3, 25, 1, World.DESERT);
+
+        nextLevel = 1;
+        w = new World5Maps(heartCrystals,seconds,nextLevel,world);
+
         Sprite[][] level51 = {{Sprite.START, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.GOAL},
                 {Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH},
                 {Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.BREAKABLE_WALL},
@@ -79,7 +95,10 @@ class World5MapsTest {
 
     @Test
     void level52pos() {
-        w = new World5Maps(3, 25, 2, World.DESERT);
+
+        nextLevel = 2;
+        w = new World5Maps(heartCrystals,seconds,nextLevel,world);
+
         Sprite[][] level52 = {{Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.START},
                 {Sprite.PATH, Sprite.AXE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.PATH},
                 {Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.PATH},
@@ -112,7 +131,10 @@ class World5MapsTest {
 
     @Test
     void level52neg() {
-        w = new World5Maps(3, 25, 2, World.DESERT);
+
+        nextLevel = 2;
+        w = new World5Maps(heartCrystals,seconds,nextLevel,world);
+
         Sprite[][] level52 = {{Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.START},
                 {Sprite.PATH, Sprite.AXE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.PATH},
                 {Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.PATH},
@@ -145,7 +167,10 @@ class World5MapsTest {
 
     @Test
     void level53pos() {
-        w = new World5Maps(3, 25, 3, World.DESERT);
+
+        nextLevel = 3;
+        w = new World5Maps(heartCrystals,seconds,nextLevel,world);
+
         Sprite[][] level53 = {{Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH},
                 {Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL},
                 {Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL},
@@ -178,7 +203,10 @@ class World5MapsTest {
 
     @Test
     void level53neg() {
-        w = new World5Maps(3, 25, 3, World.DESERT);
+
+        nextLevel = 3;
+        w = new World5Maps(heartCrystals,seconds,nextLevel,world);
+
         Sprite[][] level53 = {{Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH},
                 {Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL},
                 {Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL},
@@ -211,7 +239,10 @@ class World5MapsTest {
 
     @Test
     void level54pos() {
-        w = new World5Maps(3, 25, 4, World.DESERT);
+
+        nextLevel = 4;
+        w = new World5Maps(heartCrystals,seconds,nextLevel,world);
+
         Sprite[][] level54 = {{Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL},
                 {Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH},
                 {Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH},
@@ -244,7 +275,10 @@ class World5MapsTest {
 
     @Test
     void level54neg() {
-        w = new World5Maps(3, 25, 4, World.DESERT);
+
+        nextLevel = 4;
+        w = new World5Maps(heartCrystals,seconds,nextLevel,world);
+
         Sprite[][] level54 = {{Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL},
                 {Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH},
                 {Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH},
@@ -277,7 +311,10 @@ class World5MapsTest {
 
     @Test
     void level55pos() {
-        w = new World5Maps(3, 25, 5, World.DESERT);
+
+        nextLevel = 5;
+        w = new World5Maps(heartCrystals,seconds,nextLevel,world);
+
         Sprite[][] level55 = {{Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL},
                 {Sprite.COLLECTIBLE, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.HEART},
                 {Sprite.PATH, Sprite.HEART, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH},
@@ -310,7 +347,10 @@ class World5MapsTest {
 
     @Test
     void level55neg() {
-        w = new World5Maps(3, 25, 5, World.DESERT);
+
+        nextLevel = 5;
+        w = new World5Maps(heartCrystals,seconds,nextLevel,world);
+
         Sprite[][] level55 = {{Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL},
                 {Sprite.COLLECTIBLE, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.HEART},
                 {Sprite.PATH, Sprite.HEART, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH},
@@ -340,4 +380,64 @@ class World5MapsTest {
         }
         assertFalse(equal);
     }
+
+
+    @Test
+    public void HeartCrystalBoundaryHigh() {
+        heartCrystals = 3;
+        w = new World5Maps(heartCrystals, seconds, nextLevel, world);
+        assertEquals(3, w.getHeartCrystals());
+    }
+    @Test
+    public void HeartCrystalBoundaryLow() {
+        heartCrystals = 1;
+        w = new World5Maps(heartCrystals, seconds, nextLevel, world);
+        assertEquals(1, w.getHeartCrystals());
+    }
+
+    @Test
+    public void SecondsHighBoundary() {
+        seconds = 25;
+        w = new World5Maps(heartCrystals, seconds, nextLevel, world);
+        assertEquals(25, w.getSeconds());
+    }
+
+    @Test
+    public void SecondsMidBoundary() {
+        seconds = 15;
+        w = new World5Maps(heartCrystals, seconds, nextLevel, world);
+        assertEquals(15, w.getSeconds());
+    }
+
+    @Test
+    public void SecondsLowBoundary() {
+        seconds = 0;
+        w = new World5Maps(heartCrystals, seconds, nextLevel, world);
+        assertEquals(0, w.getSeconds());
+    }
+
+    @Test
+    public void SecondsInvalidBoundary() {
+        seconds = -1;
+        w = new World5Maps(heartCrystals, seconds, nextLevel, world);
+        assertEquals(-1, w.getSeconds());
+    }
+
+    @Test
+    public void NextLevelBoundaryHigh() {
+        nextLevel = 3;
+        w = new World5Maps(heartCrystals, seconds, nextLevel, world);
+        assertEquals(3, w.getNextLevel());
+    }
+    @Test
+
+    public void NextLevelBoundaryLow() {
+        nextLevel = 0;
+        w = new World5Maps(heartCrystals, seconds, nextLevel, world);
+        assertEquals(0, w.getNextLevel());
+    }
+
+
+
+
 }
