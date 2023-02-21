@@ -1,5 +1,3 @@
-package model.Time;
-
 import control.time.TotalTime;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +19,7 @@ public class TotalTimetest {
     void midTime() throws InterruptedException {
         TotalTime totalTime = new TotalTime(false);
         totalTime.start();
-        Thread.sleep(10000); // Wait for 2 seconds
+        Thread.sleep(10000);
         int elapsedSeconds = totalTime.setGameOver(true);
         System.out.println(elapsedSeconds);
         assertTrue(elapsedSeconds ==9);
@@ -31,7 +29,7 @@ public class TotalTimetest {
     void maximumTime() throws InterruptedException {
         TotalTime totalTime = new TotalTime(false);
         totalTime.start();
-        Thread.sleep(25000); // Wait for 2 seconds
+        Thread.sleep(25000);
         int elapsedSeconds = totalTime.setGameOver(true);
         assertTrue(elapsedSeconds == 24);
 
@@ -40,7 +38,6 @@ public class TotalTimetest {
     void neverStarted() throws InterruptedException {
         TotalTime totalTime = new TotalTime(true);
         totalTime.start();
-        Thread.sleep(25000); // Wait for 2 seconds
         int elapsedSeconds = totalTime.setGameOver(true);
         assertTrue(elapsedSeconds == 0);
 
@@ -49,7 +46,7 @@ public class TotalTimetest {
     void interruptedTime() throws InterruptedException {
         TotalTime totalTime = new TotalTime(false);
         totalTime.start();
-        Thread.sleep(5000); // Wait for 2 seconds
+        Thread.sleep(5000);
         totalTime.interrupt();
         int elapsedSeconds = totalTime.setGameOver(true);
         assertTrue(elapsedSeconds == 4);

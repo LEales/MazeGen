@@ -1,4 +1,4 @@
-package model.Time;
+package model.time;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
