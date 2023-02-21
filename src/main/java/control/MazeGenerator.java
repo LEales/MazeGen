@@ -63,8 +63,15 @@ public class MazeGenerator {
      * @param dimension dimension for the maze
      */
     public void generateNewMaze(int dimension) {
+        if (!validateDimension(dimension)) {
+            throw new RuntimeException("Invalid dimension");
+        }
         map = generateMaze(dimension);
         map = createStartAndGoal(map);
+    }
+
+    private boolean validateDimension(int dimension) {
+        return dimension == 10 || dimension == 14 || dimension == 18 || dimension == 28;
     }
 
     /**
@@ -88,6 +95,9 @@ public class MazeGenerator {
      * @return the randomized map
      */
     private RandomizeMap generateMaze(int dimension) {
+        if (!validateDimension(dimension)) {
+            throw new RuntimeException("Invalid dimension");
+        }
         RandomizeMap map = new RandomizeMap(3, getSeconds(dimension), dimension);
         stack.clear();
         map.fillArray();
@@ -104,6 +114,9 @@ public class MazeGenerator {
     }
 
     private boolean validNextNode(Node node, RandomizeMap map) {
+        if (null == node || null == map) {
+            throw new RuntimeException("Invalid parameters");
+        }
         int numNeighboringOnes = 0;
         for (int y = node.y - 1; y < node.y + 2; y++) {
             for (int x = node.x - 1; x < node.x + 2; x++) {
@@ -116,6 +129,9 @@ public class MazeGenerator {
     }
 
     private void randomlyAddNodesToStack(ArrayList<Node> nodes) {
+        if (null == nodes) {
+            throw new RuntimeException("Invalid ArrayList");
+        }
         Random rand = new Random();
         int targetIndex;
         while (!nodes.isEmpty()) {
@@ -125,6 +141,9 @@ public class MazeGenerator {
     }
 
     private ArrayList<Node> findNeighbors(Node node, RandomizeMap map) {
+        if (null == node || null == map) {
+            throw new RuntimeException("Invalid parameters");
+        }
         ArrayList<Node> neighbors = new ArrayList<>();
         for (int y = node.y - 1; y < node.y + 2; y++) {
             for (int x = node.x - 1; x < node.x + 2; x++) {
@@ -142,6 +161,9 @@ public class MazeGenerator {
      * @param map the map to add start and goal to
      */
     private RandomizeMap createStartAndGoal(RandomizeMap map) {
+        if (null == map) {
+            throw new RuntimeException("Invalid parameters");
+        }
         int y = randomIndex(map);
         int x = 0;
         map.setSprite(y, x, Sprite.START);
@@ -161,6 +183,9 @@ public class MazeGenerator {
      * @return updated map
      */
     private RandomizeMap checkStartAndGoalNeighbors(RandomizeMap map, Node node) {
+        if (null == node || null == map) {
+            throw new RuntimeException("Invalid parameters");
+        }
         if (validateIsPath(node.x - 1, node.y, map) ||
                 validateIsPath(node.x + 1, node.y, map) ||
                 validateIsPath(node.x, node.y - 1, map) ||
@@ -204,6 +229,9 @@ public class MazeGenerator {
      * @return the updated map
      */
     private RandomizeMap createPath(Direction direction, int x, int y, RandomizeMap map) {
+        if (null == direction || null == map) {
+            throw new RuntimeException("Invalid parameters");
+        }
         map.setSprite(x, y, Sprite.PATH);
         switch (direction) {
             case NORTH -> {
@@ -232,10 +260,16 @@ public class MazeGenerator {
     }
 
     private boolean validateIsPath(int x, int y, RandomizeMap map) {
+        if (null == map) {
+            throw new RuntimeException("Invalid parameters");
+        }
         return pointOnGrid(x, y, map) && map.spriteEquals(x, y, Sprite.PATH);
     }
 
     private int randomIndex(RandomizeMap map) {
+        if (null == map) {
+            throw new RuntimeException("Invalid parameters");
+        }
         return new Random().nextBoolean() ? 0 : map.dimension - 1;
     }
 
@@ -244,18 +278,30 @@ public class MazeGenerator {
     }
 
     private boolean pointOnGrid(int x, int y, RandomizeMap map) {
+        if (null == map) {
+            throw new RuntimeException("Invalid parameters");
+        }
         return 0 <= x && y >= 0 && x < map.dimension && y < map.dimension;
     }
 
     private boolean pointNotCorner(Node node, int x, int y) {
+        if (null == node) {
+            throw new RuntimeException("Invalid parameters");
+        }
         return (x == node.x || y == node.y);
     }
 
     private boolean pointNotNode(Node node, int x, int y) {
+        if (null == node) {
+            throw new RuntimeException("Invalid parameters");
+        }
         return !(x == node.x && y == node.y);
     }
 
     public void setWorld(World world) {
+        if (null == world) {
+            throw new RuntimeException("Invalid parameters");
+        }
         map.setWorld(world);
     }
 

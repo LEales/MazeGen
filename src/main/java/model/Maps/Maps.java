@@ -38,6 +38,7 @@ public abstract class Maps {
     }
 
     public boolean destroyWall(Label label) {
+        if (null == label) return false;
         if (pickAxeInInventory) {
             destroyedWalls.add(label);
             return true;
@@ -46,6 +47,7 @@ public abstract class Maps {
     }
 
     public boolean isWallDestroyed(Label label) {
+        if (null == label) return false;
         return destroyedWalls.contains(label);
     }
 
