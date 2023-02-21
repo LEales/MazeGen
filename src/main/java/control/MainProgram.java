@@ -44,7 +44,7 @@ public class MainProgram extends Application {
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
     private RightPanel rightPanel;
-    private GenerateNextLevel generateNextLevel;
+    private MazeGenerator mazeGenerator;
 
     private WorldIntroAnimation introAnimation;
     private int lvlCleared;
@@ -71,6 +71,7 @@ public class MainProgram extends Application {
         Help help = new Help();
         highscoreList = new HighscoreList();
         victoryScreen = new VictoryScreen();
+        mazeGenerator = new MazeGenerator();
 
         ChooseDimension chooseDimension = new ChooseDimension();
         Scene introScene = new Scene(intro, WIDTH, HEIGHT);
@@ -154,23 +155,14 @@ public class MainProgram extends Application {
      * @throws FileNotFoundException
      */
     public void changeToRandomize(int dimension) throws FileNotFoundException {
-        MazeGenerator mazeGenerator = new MazeGenerator(dimension, true);
-        generateNextLevel = new GenerateNextLevel(mainPaneRandomMaze, mazeGenerator, dimension);
-        RandomizeMap map = new RandomizeMap(3, getSeconds(dimension));
-        map.setMap(mazeGenerator.getMaze());
-        MapTemplate mapTemplate = new MapTemplate(map, generateNextLevel);
+        mazeGenerator.generateNewMaze(dimension);
+        MapTemplate mapTemplate = new MapTemplate(mazeGenerator);
         mainPaneRandomMaze.setCenter(mapTemplate);
         mainWindow.setScene(randomScene);
     }
 
-    public int getSeconds(int dimension) {
-        return switch (dimension) {
-            case 10 -> 25;
-            case 14 -> 60;
-            case 18 -> 80;
-            case 28 -> 99;
-            default -> throw new IllegalStateException("Unexpected value: " + dimension);
-        };
+    public void changeRandomMapPane(MapTemplate mapTemplate) {
+        mainPaneRandomMaze.setCenter(mapTemplate);
     }
 
     /**
@@ -187,6 +179,10 @@ public class MainProgram extends Application {
         introAnimation = new WorldIntroAnimation(World.FOREST);
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
+        try {
+            nextWorld3Level(1, 3);
+        } catch (Exception e) {
+        }
         startTotalTime();
     }
 
@@ -294,7 +290,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World2Template(new World2Maps(heartCrystals, 35, level, World.UNDERGROUND), rightPanel));
+        mainPaneCampaign.setCenter(new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel));
     }
 
     /**
@@ -340,7 +336,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World3Template(new World3Maps(heartCrystals, 60, level, World.LAVA), rightPanel));
+        mainPaneCampaign.setCenter(new World3Template(new World3Maps(heartCrystals, 60, level + 1, World.LAVA), rightPanel));
     }
 
     /**
@@ -385,7 +381,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World4Template(new World4Maps(heartCrystals, 80, level, World.CLOUD), rightPanel));
+        mainPaneCampaign.setCenter(new World4Template(new World4Maps(heartCrystals, 80, level + 1, World.CLOUD), rightPanel));
     }
 
     /**
@@ -430,7 +426,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World5Template(new World5Maps(heartCrystals, 90, level, World.DESERT), rightPanel));
+        mainPaneCampaign.setCenter(new World5Template(new World5Maps(heartCrystals, 90, level + 1, World.DESERT), rightPanel));
     }
 
     /**
@@ -475,7 +471,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World6Template(new World6Maps(heartCrystals, 99, level, World.SPACE), rightPanel));
+        mainPaneCampaign.setCenter(new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel));
     }
 
     /**
@@ -569,7 +565,7 @@ public class MainProgram extends Application {
         return victoryScreen;
     }
 
-    public GenerateNextLevel getGenerateNextLevel() {
-        return generateNextLevel;
+    public MazeGenerator getMazeGenerator() {
+        return mazeGenerator;
     }
 }
