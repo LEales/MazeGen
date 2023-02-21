@@ -15,11 +15,14 @@ public class TimeThread extends Thread {
     private RightPanel panel;
     private boolean gameOver;
 
+    private final boolean randomizeMode;
+
     /**
      * @param seconds Varje nivå skickar in en seconds variabel till tråden
      * @param panel
      */
-    public TimeThread(int seconds, RightPanel panel) {
+    public TimeThread(int seconds, RightPanel panel, boolean randomizeMode) {
+        this.randomizeMode = randomizeMode;
         time = new Time(seconds);
         this.panel = panel;
     }
@@ -37,7 +40,7 @@ public class TimeThread extends Thread {
                     panel.fiveSecLeft();
                 }
                 if (0 == time.getSeconds() && !gameOver) {
-                    panel.gameIsOver();
+                    panel.gameIsOver(randomizeMode);
                     gameOver = true;
                 }
 

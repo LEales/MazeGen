@@ -24,7 +24,7 @@ public class TimeThreadtest {
         assertThrows(IllegalArgumentException.class, () -> {
             TimeThread timeThread = null;
             RightPanel panel= new RightPanel("11");
-            timeThread = new TimeThread(-1,panel);
+            timeThread = new TimeThread(-1,panel,false);
             timeThread.start();
         });
     }
@@ -33,7 +33,7 @@ public class TimeThreadtest {
     void zeroSecondsLeft() throws FileNotFoundException, InterruptedException {
         TimeThread timeThread = null;
         RightPanel panel= new RightPanel("11");
-        timeThread = new TimeThread(0,panel);
+        timeThread = new TimeThread(0,panel,false);
         timeThread.start();
         //Thread.sleep(2000);
         while (timeThread.isAlive()!=true){
@@ -46,7 +46,7 @@ public class TimeThreadtest {
     void oneSecondsLeft() throws Exception {
         TimeThread timeThread = null;
         RightPanel panel= new RightPanel("11");
-        timeThread = new TimeThread(1,panel);
+        timeThread = new TimeThread(1,panel,false);
         timeThread.start();
         Thread.sleep(1000);
         System.out.println("is alive: " + timeThread.isAlive());
@@ -56,7 +56,7 @@ public class TimeThreadtest {
     void FiveSecondsLeft() throws Exception {
         TimeThread timeThread = null;
         RightPanel panel= new RightPanel("11");
-        timeThread = new TimeThread(5,panel);
+        timeThread = new TimeThread(5,panel,false);
         timeThread.start();
         Thread.sleep(5000);
         System.out.println("is alive: " + timeThread.isAlive());
@@ -66,7 +66,7 @@ public class TimeThreadtest {
     void sixSecondsLeft() throws InterruptedException, FileNotFoundException {
         TimeThread timeThread = null;
         RightPanel panel= new RightPanel("11");
-        timeThread = new TimeThread(6,panel);
+        timeThread = new TimeThread(6,panel,false);
         timeThread.start();
         Thread.sleep(6000);
         assertFalse(timeThread.isAlive());
@@ -75,7 +75,7 @@ public class TimeThreadtest {
     void fifteenSecondsLeft() throws InterruptedException, FileNotFoundException {
         TimeThread timeThread = null;
         RightPanel panel= new RightPanel("11");
-        timeThread = new TimeThread(15,panel);
+        timeThread = new TimeThread(15,panel,false);
         timeThread.start();
         Thread.sleep(15000);
         System.out.println("is alive: " + timeThread.isAlive());

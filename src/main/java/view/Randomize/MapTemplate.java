@@ -3,6 +3,7 @@ package view.Randomize;
 
 import control.MazeGenerator;
 import control.MainProgram;
+import control.time.TimeThread;
 import javafx.animation.FadeTransition;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
@@ -11,12 +12,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
-import model.Maps.Sprite;
+import model.Maps.RandomizeMap;
 import model.World;
 import control.AudioPlayer;
+import view.Menu.RightPanel;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -28,13 +29,20 @@ public class MapTemplate extends GridPane {
 
     private final MazeGenerator mazeGenerator;
     private final int squareSize;
+
+    private TimeThread time;
+
+    private final RightPanel rightPanel;
     private Image wall, path, border, goal, diamond, start;
 
     /**
      * Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
      */
-    public MapTemplate(MazeGenerator mazeGenerator) throws FileNotFoundException {
+    public MapTemplate(MazeGenerator mazeGenerator, RightPanel rightPanel) throws FileNotFoundException {
         this.mazeGenerator = mazeGenerator;
+        this.rightPanel = rightPanel;
+        time = new TimeThread(mazeGenerator.getMap().getSeconds(), rightPanel, false);
+        rightPanel.changeHeartCounter(3);
         squareSize = (int) MainProgram.HEIGHT / (mazeGenerator.getMap().dimension + 2);
         setBackground();
         World world = randomizeWorld();
@@ -251,7 +259,19 @@ public class MapTemplate extends GridPane {
         if (mazeGenerator.getMap().isGameStarted()) {
             AudioPlayer.playDeathSound();
             mazeGenerator.getMap().setGameStarted(false);
+            if (mazeGenerator.getMap().heartCrystalLost()) {
+                gameOver();
+            }
+            rightPanel.changeHeartCounter(mazeGenerator.getMap().getHeartCrystals());
         }
+    }
+    private void gameOver() {
+        AudioPlayer.playGameOverSound();
+        AudioPlayer.stopMusic();
+        MainProgram.getMainProgram().gameOverRandomize();
+        rightPanel.pauseClock();
+        time.setGameOver(true);
+        time = null;
     }
 
     /**
@@ -271,10 +291,17 @@ public class MapTemplate extends GridPane {
      * Startar spelrundan och timern.
      */
     private void startLevel() {
-        if (!mazeGenerator.getMap().isGameStarted()) {
+        RandomizeMap map = mazeGenerator.getMap();
+        if (!map.isTimeStarted()) {
+            map.setTimeStarted(true);
+            time.setGameOver(false);
+            rightPanel.resumeClock(map.getSeconds());
+            time.start();
+        }
+        if (!map.isGameStarted()) {
             AudioPlayer.playStartSound();
         }
-        mazeGenerator.getMap().setGameStarted(true);
+        map.setGameStarted(true);
     }
 
     /**

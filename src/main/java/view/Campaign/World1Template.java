@@ -501,7 +501,7 @@ public class World1Template extends GridPane {
     private void startLevel() {
         if (!map.isTimeStarted()) {
             map.setTimeStarted(true);
-            time = new TimeThread(map.getSeconds(), rightPanel);
+            time = new TimeThread(map.getSeconds(), rightPanel, false);
             time.setGameOver(false);
             rightPanel.resumeClock(map.getSeconds());
             time.start();

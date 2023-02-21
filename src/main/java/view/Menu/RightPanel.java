@@ -81,11 +81,11 @@ public class RightPanel extends GridPane {
 
         heartLabel = new Label();
         currentHeartView = new ImageView(heart);
-        if (!gameMode.equals("Random")) {
-            heart = new Image("file:files/hearts/3heart.png", 90, 30, false, false);
-            heartLabel.setGraphic(currentHeartView);
-            add(heartLabel, 0, 2);
-        }
+
+        heart = new Image("file:files/hearts/3heart.png", 90, 30, false, false);
+        heartLabel.setGraphic(currentHeartView);
+        add(heartLabel, 0, 2);
+
 
         timerLabel = new Label();
         timerLabel.textProperty().bind(timeSeconds.asString());
@@ -231,9 +231,13 @@ public class RightPanel extends GridPane {
      * Tasks run-metod som sätter den totala tiden det tog att spela
      * Pausar musik & visar Game Over texten
      */
-    public void gameIsOver() {
+    public void gameIsOver(boolean randomizeMode) {
         Platform.runLater(() -> {
-            mainProgram.gameOver();
+            if (randomizeMode) {
+                mainProgram.gameOverRandomize();
+            } else {
+                mainProgram.gameOver();
+            }
             AudioPlayer.playGameOverSound();
             AudioPlayer.stopMusic();
             removePickaxe();

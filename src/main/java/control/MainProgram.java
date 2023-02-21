@@ -1,16 +1,19 @@
 package control;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import javafx.util.Duration;
 import model.Maps.*;
 
 import model.Player;
@@ -43,7 +46,7 @@ public class MainProgram extends Application {
     private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene;
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
-    private RightPanel rightPanel;
+    private RightPanel rightPanel, rightPnlRndm;
     private MazeGenerator mazeGenerator;
 
     private WorldIntroAnimation introAnimation;
@@ -119,7 +122,7 @@ public class MainProgram extends Application {
         mainWindow.setOnCloseRequest(windowEvent -> System.exit(0));
         mainPaneCampaign.setRight(rightPanel);
 
-        RightPanel rightPnlRndm = new RightPanel("Random");
+        rightPnlRndm = new RightPanel("Random");
         rightPnlRndm.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         mainPaneRandomMaze.setRight(rightPnlRndm);
@@ -156,13 +159,17 @@ public class MainProgram extends Application {
      */
     public void changeToRandomize(int dimension) throws FileNotFoundException {
         mazeGenerator.generateNewMaze(dimension);
-        MapTemplate mapTemplate = new MapTemplate(mazeGenerator);
+        MapTemplate mapTemplate = new MapTemplate(mazeGenerator, rightPnlRndm);
         mainPaneRandomMaze.setCenter(mapTemplate);
         mainWindow.setScene(randomScene);
     }
 
-    public void changeRandomMapPane(MapTemplate mapTemplate) {
-        mainPaneRandomMaze.setCenter(mapTemplate);
+    public void changeRandomMapPane(MazeGenerator mazeGenerator) {
+        try {
+            mainPaneRandomMaze.setCenter(new MapTemplate(mazeGenerator, rightPnlRndm));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -179,10 +186,6 @@ public class MainProgram extends Application {
         introAnimation = new WorldIntroAnimation(World.FOREST);
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
-        try {
-            nextWorld3Level(1, 3);
-        } catch (Exception e) {
-        }
         startTotalTime();
     }
 
@@ -210,6 +213,20 @@ public class MainProgram extends Application {
         Player player = new Player("___", totTime.setGameOver(true), lvlCleared);
         GameOverScreen gameOverScreen = new GameOverScreen(player);
         mainPaneCampaign.getChildren().add(gameOverScreen);
+    }
+
+    public void gameOverRandomize() {
+        ImageView introView = new ImageView(new Image("file:files/texts/Gameover.png", 600, 600, false, false));
+        introView.setStyle("fx-background-color: transparent;");
+        FadeTransition ft = new FadeTransition(Duration.millis(4000.0), introView);
+        mainPaneRandomMaze.getChildren().add(introView);
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
+        mainPaneRandomMaze.setOnMouseClicked(e -> {
+            changeToMenu();
+            mainPaneRandomMaze.setOnMouseClicked(null);
+        });
     }
 
     /**
