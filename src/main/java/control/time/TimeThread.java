@@ -1,7 +1,7 @@
 package control.time;
 
 import model.Time;
-import view.Menu.RightPanel;
+import view.menu.RightPanel;
 
 /**
  * @author Sebastian Helin

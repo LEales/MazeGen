@@ -1,7 +1,7 @@
 package model.MazeGeneration;
 
 import control.MazeGenerator;
-import model.Maps.Sprite;
+import model.enums.Sprite;
 import model.Node;
 import org.junit.jupiter.api.Test;
 

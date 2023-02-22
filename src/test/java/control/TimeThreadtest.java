@@ -1,11 +1,10 @@
 package control;
 
-import control.MainProgram;
 import javafx.application.Application;
 import control.time.TimeThread;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import view.Menu.RightPanel;
+import view.menu.RightPanel;
 
 import java.io.FileNotFoundException;
 

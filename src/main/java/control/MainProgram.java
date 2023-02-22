@@ -14,15 +14,16 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javafx.util.Duration;
-import model.Maps.*;
+import model.enums.GameMode;
+import model.maps.*;
 
 import model.Player;
-import model.World;
+import model.enums.World;
 import control.time.TotalTime;
-import view.Campaign.*;
+import view.campaign.*;
 import view.GameOverScreen;
-import view.Randomize.MapTemplate;
-import view.Menu.*;
+import view.randomize.MapTemplate;
+import view.menu.*;
 import view.VictoryScreen;
 import view.WorldIntroAnimation;
 
@@ -53,6 +54,9 @@ public class MainProgram extends Application {
     private int lvlCleared;
     private TotalTime totTime;
 
+    private MapTemplate mapTemplate;
+    private World1Template worldTemplate;
+
 
     /**
      * En metod som startar programmet.
@@ -66,7 +70,7 @@ public class MainProgram extends Application {
     public void start(Stage primaryStage) throws FileNotFoundException {
         AudioPlayer.playIntroMusic();
 
-        rightPanel = new RightPanel("11");
+        rightPanel = new RightPanel(GameMode.CAMPAIGN);
         rightPanel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         Menu menu = new Menu();
@@ -122,7 +126,7 @@ public class MainProgram extends Application {
         mainWindow.setOnCloseRequest(windowEvent -> System.exit(0));
         mainPaneCampaign.setRight(rightPanel);
 
-        rightPnlRndm = new RightPanel("Random");
+        rightPnlRndm = new RightPanel(GameMode.RANDOMIZE);
         rightPnlRndm.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         mainPaneRandomMaze.setRight(rightPnlRndm);
@@ -159,14 +163,15 @@ public class MainProgram extends Application {
      */
     public void changeToRandomize(int dimension) throws FileNotFoundException {
         mazeGenerator.generateNewMaze(dimension);
-        MapTemplate mapTemplate = new MapTemplate(mazeGenerator, rightPnlRndm);
+        mapTemplate = new MapTemplate(mazeGenerator, rightPnlRndm);
         mainPaneRandomMaze.setCenter(mapTemplate);
         mainWindow.setScene(randomScene);
     }
 
     public void changeRandomMapPane(MazeGenerator mazeGenerator) {
         try {
-            mainPaneRandomMaze.setCenter(new MapTemplate(mazeGenerator, rightPnlRndm));
+            mapTemplate = new MapTemplate(mazeGenerator, rightPnlRndm);
+            mainPaneRandomMaze.setCenter(mapTemplate);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -179,13 +184,16 @@ public class MainProgram extends Application {
      */
     public void changeToCampaign() throws FileNotFoundException {
         lvlCleared = 0;
-        World1Template world1Template = new World1Template(new World1Maps(3, 25, 1, World.FOREST), rightPanel);
+        worldTemplate = new World1Template(new World1Maps(3, 25, 1, World.FOREST), rightPanel);
         rightPanel.changeLevelCounter("11");
-        mainPaneCampaign.setCenter(world1Template);
+        mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
         introAnimation = new WorldIntroAnimation(World.FOREST);
         mainPaneCampaign.getChildren().add(introAnimation);
         introAnimation.setDisable(true);
+        try {
+            nextWorld2Level(5,3);
+        } catch (Exception e) {}
         startTotalTime();
     }
 
@@ -262,7 +270,8 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World1Template(new World1Maps(heartCrystals, 25, level + 1, World.FOREST), rightPanel));
+        worldTemplate = new World1Template(new World1Maps(heartCrystals, 25, level + 1, World.FOREST), rightPanel);
+        mainPaneCampaign.setCenter(worldTemplate);
     }
 
     /**
@@ -307,7 +316,8 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel));
+        worldTemplate = new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel);
+        mainPaneCampaign.setCenter(worldTemplate);
     }
 
     /**
@@ -353,7 +363,8 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World3Template(new World3Maps(heartCrystals, 60, level + 1, World.LAVA), rightPanel));
+        worldTemplate = new World3Template(new World3Maps(heartCrystals, 45, level + 1, World.LAVA), rightPanel);
+        mainPaneCampaign.setCenter(worldTemplate);
     }
 
     /**
@@ -398,7 +409,8 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World4Template(new World4Maps(heartCrystals, 80, level + 1, World.CLOUD), rightPanel));
+        worldTemplate = new World4Template(new World4Maps(heartCrystals, 55, level + 1, World.CLOUD), rightPanel);
+        mainPaneCampaign.setCenter(worldTemplate);
     }
 
     /**
@@ -443,7 +455,8 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World5Template(new World5Maps(heartCrystals, 90, level + 1, World.DESERT), rightPanel));
+        worldTemplate = new World5Template(new World5Maps(heartCrystals, 65, level + 1, World.DESERT), rightPanel);
+        mainPaneCampaign.setCenter(worldTemplate);
     }
 
     /**
@@ -488,7 +501,17 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        mainPaneCampaign.setCenter(new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel));
+        worldTemplate = new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel);
+        mainPaneCampaign.setCenter(worldTemplate);
+    }
+
+    public void stopTime() {
+        if (worldTemplate != null) {
+            worldTemplate.stopTime();
+        }
+        if (mapTemplate != null) {
+            mapTemplate.stopTime();
+        }
     }
 
     /**

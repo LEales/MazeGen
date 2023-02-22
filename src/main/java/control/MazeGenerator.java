@@ -1,13 +1,11 @@
 package control;
 
-import model.Direction;
-import model.Maps.RandomizeMap;
-import model.Maps.Sprite;
+import model.enums.Direction;
+import model.maps.RandomizeMap;
+import model.enums.Sprite;
 import model.Node;
-import model.World;
-import view.Randomize.MapTemplate;
+import model.enums.World;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
