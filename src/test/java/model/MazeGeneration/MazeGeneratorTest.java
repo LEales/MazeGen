@@ -838,5 +838,94 @@ class MazeGeneratorTest {
         }
     }
 
+    //todo test för randomizemap men jag är för trött just nu
 
+    @Test
+    void validNextNodeNullNode() {
+        int dim = 10;
+        String expected = "Invalid parameters";
+        MazeGenerator mg = new MazeGenerator();
+        mg.generateNewMaze(dim);
+        mg.generateNextMaze();
+
+        RandomizeMap rm = mg.getMap();
+
+        Method method;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validNextNode", Node.class, RandomizeMap.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        method.setAccessible(true);
+
+        try {
+            boolean result = (boolean) method.invoke(mg, null, rm);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (RuntimeException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void validNextNodeRmNull() {
+        int dim = 10;
+        String expected = "Invalid parameters";
+        MazeGenerator mg = new MazeGenerator();
+        Node node = new Node(0,0);
+
+        Method method;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validNextNode", Node.class, RandomizeMap.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        method.setAccessible(true);
+
+        try {
+            boolean result = (boolean) method.invoke(mg, node, null);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (RuntimeException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void validNextNodePos() { //todo se över
+        int dim = 10;
+        String expected = "Invalid parameters";
+        MazeGenerator mg = new MazeGenerator();
+        mg.generateNewMaze(dim);
+        mg.generateNextMaze();
+        RandomizeMap rm = mg.getMap();
+        Node node = new Node(0, 0);
+
+        Method method;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validNextNode", Node.class, RandomizeMap.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        method.setAccessible(true);
+
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, node, rm);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException();
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException();
+        }
+
+        assertTrue(result);
+
+    }
 }
