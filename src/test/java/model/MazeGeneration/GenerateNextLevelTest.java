@@ -5,7 +5,7 @@ import control.MainProgram;
 import control.MazeGenerator;
 import javafx.application.Application;
 import javafx.application.Platform;
-import model.Maps.Sprite;
+import model.enums.Sprite;
 import model.Node;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

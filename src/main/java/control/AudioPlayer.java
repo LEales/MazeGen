@@ -3,7 +3,7 @@ package control;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import model.World;
+import model.enums.World;
 
 import java.io.File;
 
@@ -298,6 +298,15 @@ public class AudioPlayer {
         return true;
     }
 
+    public static boolean stopTimeLeftSound() {
+        try {
+            timeLeftMediaPlayer.stop();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Spelar ett ljud när spelaren kolliderar med en fiende.
      */
@@ -319,14 +328,5 @@ public class AudioPlayer {
     public static boolean muteMusic(boolean mute) {
         currentSongPlayer.setMute(mute);
         return currentSongPlayer.isMute();
-    }
-
-    /**
-     * Stänger av timerns ljud.
-     */
-
-    public static boolean stopClockSound() {
-        timeLeftMediaPlayer.stop();
-        return timeLeftMediaPlayer.currentCountProperty().intValue() == 0;
     }
 }

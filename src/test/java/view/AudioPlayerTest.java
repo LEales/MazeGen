@@ -3,7 +3,7 @@ package view;
 import control.AudioPlayer;
 import control.MainProgram;
 import javafx.application.Application;
-import model.World;
+import model.enums.World;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -166,6 +166,6 @@ class AudioPlayerTest {
 
     @Test
     void stopClockSound() {
-        assertTrue(ap.stopClockSound());
+        assertTrue(ap.stopTimeLeftSound());
     }
 }

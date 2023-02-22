@@ -1,16 +1,12 @@
 package control;
 
-import javafx.scene.layout.BorderPane;
-import model.Direction;
-import model.Maps.RandomizeMap;
-import model.Maps.Sprite;
+import model.enums.Direction;
+import model.maps.RandomizeMap;
+import model.enums.Sprite;
 import model.Node;
-import model.World;
-import view.Randomize.MapTemplate;
+import model.enums.World;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Stack;
 
@@ -51,15 +47,12 @@ public class MazeGenerator {
         nextMap = checkStartAndGoalNeighbors(nextMap, end);
         map = nextMap;
 
-        try {
-            MainProgram.getMainProgram().changeRandomMapPane(new MapTemplate(this));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        MainProgram.getMainProgram().changeRandomMapPane(this);
     }
 
     /**
      * Generates a new maze.
+     *
      * @param dimension dimension for the maze
      */
     public void generateNewMaze(int dimension) {
@@ -76,6 +69,7 @@ public class MazeGenerator {
 
     /**
      * Returns the appropriate time for a each dimension.
+     *
      * @param dimension dimension of the maze
      * @return the time in seconds
      */
@@ -91,6 +85,7 @@ public class MazeGenerator {
 
     /**
      * Randomizes a new maze
+     *
      * @param dimension the dimension for the map
      * @return the randomized map
      */
@@ -158,6 +153,7 @@ public class MazeGenerator {
 
     /**
      * Adds start and goal sprites to the map
+     *
      * @param map the map to add start and goal to
      */
     private RandomizeMap createStartAndGoal(RandomizeMap map) {
@@ -167,10 +163,10 @@ public class MazeGenerator {
         int y = randomIndex(map);
         int x = 0;
         map.setSprite(y, x, Sprite.START);
-        map = checkStartAndGoalNeighbors(map, new Node(y,x));
+        map = checkStartAndGoalNeighbors(map, new Node(y, x));
         y = randomIndex(map);
-        x = map.dimension-1;
-        map.setSprite(y,x, Sprite.GOAL);
+        x = map.dimension - 1;
+        map.setSprite(y, x, Sprite.GOAL);
         map = checkStartAndGoalNeighbors(map, new Node(y, x));
         return map;
     }
@@ -178,7 +174,8 @@ public class MazeGenerator {
     /**
      * Verifies that a node is not isolated by walls.
      * If the node is isolated, adds a path to the closest other path in a randomized direction
-     * @param map the current map
+     *
+     * @param map  the current map
      * @param node the node to be checked
      * @return updated map
      */
@@ -198,19 +195,19 @@ public class MazeGenerator {
             direction = randomizeDirection();
             switch (direction) {
                 case NORTH -> {
-                    x = node.x-1;
+                    x = node.x - 1;
                     y = node.y;
                 }
                 case WEST -> {
                     x = node.x;
-                    y = node.y-1;
+                    y = node.y - 1;
                 }
                 case EAST -> {
-                    x =node.x;
+                    x = node.x;
                     y = node.y + 1;
                 }
                 case SOUTH -> {
-                    x = node.x+1;
+                    x = node.x + 1;
                     y = node.y;
                 }
                 default -> throw new RuntimeException("No direction");
@@ -222,10 +219,11 @@ public class MazeGenerator {
 
     /**
      * Creates a path in a direction until it reaches another path
+     *
      * @param direction the direction
-     * @param x to node x-coordinate
-     * @param y the node-y coordinate
-     * @param map the current map
+     * @param x         to node x-coordinate
+     * @param y         the node-y coordinate
+     * @param map       the current map
      * @return the updated map
      */
     private RandomizeMap createPath(Direction direction, int x, int y, RandomizeMap map) {
@@ -235,16 +233,16 @@ public class MazeGenerator {
         map.setSprite(x, y, Sprite.PATH);
         switch (direction) {
             case NORTH -> {
-                if (map.spriteEquals(x-1, y, Sprite.WALL)) createPath(Direction.NORTH, x-1, y, map);
+                if (map.spriteEquals(x - 1, y, Sprite.WALL)) createPath(Direction.NORTH, x - 1, y, map);
             }
             case WEST -> {
-                if (map.spriteEquals(x, y-1, Sprite.WALL)) createPath(Direction.WEST, x, y-1, map);
+                if (map.spriteEquals(x, y - 1, Sprite.WALL)) createPath(Direction.WEST, x, y - 1, map);
             }
             case EAST -> {
-                if (map.spriteEquals(x, y+1, Sprite.WALL)) createPath(Direction.EAST, x, y+1, map);
+                if (map.spriteEquals(x, y + 1, Sprite.WALL)) createPath(Direction.EAST, x, y + 1, map);
             }
             case SOUTH -> {
-                if (map.spriteEquals(x+1, y, Sprite.WALL)) createPath(Direction.SOUTH, x+1, y, map);
+                if (map.spriteEquals(x + 1, y, Sprite.WALL)) createPath(Direction.SOUTH, x + 1, y, map);
             }
         }
         return map;
@@ -252,6 +250,7 @@ public class MazeGenerator {
 
     /**
      * Randomizes a direction
+     *
      * @return the randomized direction
      */
     private Direction randomizeDirection() {

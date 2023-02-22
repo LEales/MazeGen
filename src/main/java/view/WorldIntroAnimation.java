@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import javafx.util.Duration;
-import model.World;
+import model.enums.World;
 
 
 /**

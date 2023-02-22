@@ -76,12 +76,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package model;
 &nbsp;
-&nbsp;import view.Menu.RightPanel;
+&nbsp;import view.menu.RightPanel;
 &nbsp;
 &nbsp;/**
 &nbsp; * @author Sebastian Helin
-&nbsp; * En tråd som räknar ner den
-&nbsp; * totala tiden som skickas in från konstruktorn
+&nbsp; * En trï¿½d som rï¿½knar ner den
+&nbsp; * totala tiden som skickas in frï¿½n konstruktorn
 &nbsp; */
 &nbsp;
 &nbsp;public class TimeThread extends Thread {
@@ -91,7 +91,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;    private boolean gameOver = false;</b>
 &nbsp;
 &nbsp;    /**
-&nbsp;     * @param seconds Varje nivå skickar in en seconds variabel till tråden
+&nbsp;     * @param seconds Varje nivï¿½ skickar in en seconds variabel till trï¿½den
 &nbsp;     * @param panel
 &nbsp;     */
 <b class="nc">&nbsp;    public TimeThread(int seconds, RightPanel panel) {</b>
@@ -100,8 +100,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Körs tills det blir GameOver eller en bana blir avklarad
-&nbsp;     * Instansieras om och körs igen för varje nivå
+&nbsp;     * Kï¿½rs tills det blir GameOver eller en bana blir avklarad
+&nbsp;     * Instansieras om och kï¿½rs igen fï¿½r varje nivï¿½
 &nbsp;     */
 &nbsp;    public void run() {
 <b class="nc">&nbsp;        while (!gameOver) {</b>
@@ -125,7 +125,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * @param gameOver setter för trådens villkor
+&nbsp;     * @param gameOver setter fï¿½r trï¿½dens villkor
 &nbsp;     */
 &nbsp;    public void setGameOver(boolean gameOver) {
 <b class="nc">&nbsp;        this.gameOver = gameOver;</b>
