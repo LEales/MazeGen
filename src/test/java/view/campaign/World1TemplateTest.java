@@ -1,4 +1,4 @@
-package view.Campaign;
+package view.campaign;
 
 import control.MainProgram;
 import javafx.animation.PathTransition;
@@ -8,16 +8,12 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
-import model.Maps.*;
-import model.World;
 import model.enums.GameMode;
 import model.enums.World;
 import model.maps.World1Maps;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import view.Menu.RightPanel;
-import view.campaign.World1Template;
 import view.menu.RightPanel;
 
 import java.io.FileNotFoundException;

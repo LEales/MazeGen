@@ -1,10 +1,16 @@
 package model.MazeGeneration;
 
+import control.MainProgram;
 import control.MazeGenerator;
+import javafx.application.Application;
 import model.enums.Sprite;
 import model.Node;
+import model.maps.RandomizeMap;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,11 +24,28 @@ class MazeGeneratorTest {
 
     HashMap<Node, ArrayList<Node>> G = new HashMap<>();
 
+    @BeforeAll
+    static void initJFXRuntime() {
+        new Thread(() -> Application.launch(MainProgram.class)).start();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     void checkStartAndGoal(int dim) {
         for (int i = 0; i < 1000; i++) {
             G.clear();
-            MazeGenerator mg = new MazeGenerator(dim, true);
-            Sprite[][] maze = mg.getMaze();
+            MazeGenerator mg = new MazeGenerator();
+            mg.generateNewMaze(dim);
+            mg.generateNextMaze();
+
+
+            RandomizeMap rm = mg.getMap();
+
+            Sprite[][] maze = rm.getMap();
+
             Node start = start(maze);
             G.put(start, new ArrayList<>());
             if (start.equals(new Node(-1, -1))) {

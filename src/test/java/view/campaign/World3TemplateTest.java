@@ -1,4 +1,4 @@
-package view.Campaign;
+package view.campaign;
 
 
 import control.MainProgram;
@@ -7,13 +7,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
-import model.Maps.World2Maps;
-import model.Maps.World3Maps;
-import model.World;
+import model.enums.GameMode;
+import model.enums.World;
+import model.maps.World3Maps;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import view.Menu.RightPanel;
+import view.menu.RightPanel;
 
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
@@ -40,7 +40,7 @@ public class World3TemplateTest {
     void init() {
         w3m = new World3Maps(3, 25, 1, World.LAVA);
         try {
-            w3 = new World3Template(w3m, new RightPanel("31"));
+            w3 = new World3Template(w3m, new RightPanel(GameMode.CAMPAIGN));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -165,7 +165,23 @@ public class World3TemplateTest {
         double v2 = 2.0;
         double y = 2.0;
         double x = 2.0;
-        Rectangle actRec = w3.createRectangle(v1, v2, y, x);
+
+        Method method;
+
+        try {
+            method = World3Template.class.getDeclaredMethod("createRectangle", double.class, double.class, double.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        Rectangle actRec;
+
+        try {
+            actRec = (Rectangle) method.invoke(w3, v1, v2, y, x);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
 
         assertAll(
                 () -> assertEquals(v1, actRec.getWidth()),
@@ -187,7 +203,22 @@ public class World3TemplateTest {
         double yFalse = 3.0;
         double xFalse = 3.0;
 
-        Rectangle actRec = w3.createRectangle(v1, v2, y, x);
+        Method method;
+
+        try {
+            method = World3Template.class.getDeclaredMethod("createRectangle", double.class, double.class, double.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        Rectangle actRec;
+
+        try {
+            actRec = (Rectangle) method.invoke(w3, v1, v2, y, x);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
 
         assertAll(
                 () -> assertNotEquals(v1false, actRec.getWidth()),
@@ -239,7 +270,7 @@ public class World3TemplateTest {
         Method metod;
 
         try {
-            metod = World1Template.class.getDeclaredMethod("getWall");
+            metod = World3Template.class.getDeclaredMethod("getWall");
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
@@ -271,7 +302,7 @@ public class World3TemplateTest {
         Method metod;
 
         try {
-            metod = World1Template.class.getDeclaredMethod("getPath");
+            metod = World3Template.class.getDeclaredMethod("getPath");
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
