@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import model.Maps.World2Maps;
+import model.Maps.World3Maps;
 import model.World;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,9 +22,9 @@ import java.lang.reflect.Method;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class World2TemplateTest {
-    World2Maps w1m;
-    World2Template w2;
+public class World3TemplateTest {
+    World3Maps w3m;
+    World3Template w3;
 
     @BeforeAll
     static void initJFXRuntime() {
@@ -37,9 +38,9 @@ public class World2TemplateTest {
 
     @BeforeEach
     void init() {
-        w1m = new World2Maps(3, 25, 1, World.UNDERGROUND);
+        w3m = new World3Maps(3, 25, 1, World.LAVA);
         try {
-            w2 = new World2Template(w1m, new RightPanel("21"));
+            w3 = new World3Template(w3m, new RightPanel("31"));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -52,7 +53,7 @@ public class World2TemplateTest {
         int i = 13;
         int i1 = 12;
         ImageView imageView = new ImageView(image);
-        assertEquals(imageView.getImage(), w2.createImageView(image, i, i1).getImage());
+        assertEquals(imageView.getImage(), w3.createImageView(image, i, i1).getImage());
 
     }
 
@@ -63,7 +64,7 @@ public class World2TemplateTest {
         int i1 = 12;
         Image wrongImage = new Image("file:files/items/axe.png");
         ImageView imageView = new ImageView(image);
-        assertNotEquals(imageView.getImage(), w2.createImageView(wrongImage, i, i1).getImage());
+        assertNotEquals(imageView.getImage(), w3.createImageView(wrongImage, i, i1).getImage());
     }
 
     @Test
@@ -72,7 +73,7 @@ public class World2TemplateTest {
         int i = 13;
         int i1 = 12;
         try {
-            w2.createImageView(null, i, i1).getImage();
+            w3.createImageView(null, i, i1).getImage();
         } catch (IllegalArgumentException e) {
             assertEquals("Image invalid", e.getMessage());
         }
@@ -85,7 +86,7 @@ public class World2TemplateTest {
         int i1 = 12;
         boolean ok = true;
         try {
-            w2.createImageView(image, i, i1);
+            w3.createImageView(image, i, i1);
         } catch (IllegalArgumentException e) {
             ok = false;
         }
@@ -99,7 +100,7 @@ public class World2TemplateTest {
         int i1 = 12;
         boolean ok = true;
         try {
-            w2.createImageView(image, i, i1);
+            w3.createImageView(image, i, i1);
         } catch (IllegalArgumentException e) {
             ok = false;
         }
@@ -112,7 +113,7 @@ public class World2TemplateTest {
         int i = 0;
         int i1 = 12;
         try {
-            w2.createImageView(image, i, i1);
+            w3.createImageView(image, i, i1);
         } catch (IllegalArgumentException e) {
             assertEquals("Negative numbers not allowed", e.getMessage());
         }
@@ -125,7 +126,7 @@ public class World2TemplateTest {
         int i1 = 2;
         boolean ok = true;
         try {
-            w2.createImageView(image, i, i1);
+            w3.createImageView(image, i, i1);
         } catch (IllegalArgumentException e) {
             ok = false;
         }
@@ -139,7 +140,7 @@ public class World2TemplateTest {
         int i1 = 1;
         boolean ok = true;
         try {
-            w2.createImageView(image, i, i1);
+            w3.createImageView(image, i, i1);
         } catch (IllegalArgumentException e) {
             ok = false;
         }
@@ -152,7 +153,7 @@ public class World2TemplateTest {
         int i = 1;
         int i1 = 12;
         try {
-            w2.createImageView(image, i, i1);
+            w3.createImageView(image, i, i1);
         } catch (IllegalArgumentException e) {
             assertEquals("Negative numbers not allowed", e.getMessage());
         }
@@ -164,7 +165,7 @@ public class World2TemplateTest {
         double v2 = 2.0;
         double y = 2.0;
         double x = 2.0;
-        Rectangle actRec = w2.createRectangle(v1, v2, y, x);
+        Rectangle actRec = w3.createRectangle(v1, v2, y, x);
 
         assertAll(
                 () -> assertEquals(v1, actRec.getWidth()),
@@ -186,7 +187,7 @@ public class World2TemplateTest {
         double yFalse = 3.0;
         double xFalse = 3.0;
 
-        Rectangle actRec = w2.createRectangle(v1, v2, y, x);
+        Rectangle actRec = w3.createRectangle(v1, v2, y, x);
 
         assertAll(
                 () -> assertNotEquals(v1false, actRec.getWidth()),
@@ -198,7 +199,7 @@ public class World2TemplateTest {
 
     @Test
     void getWallPos() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2);
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2);
         Image image = new Image("file:files/forest/wall.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -214,7 +215,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);  //TODO här är du
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -229,7 +230,7 @@ public class World2TemplateTest {
 
     @Test
     void getWallNeg() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2) - 1;
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2) - 1;
         Image image = new Image("file:files/forest/goal.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -245,7 +246,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -261,7 +262,7 @@ public class World2TemplateTest {
 
     @Test
     void getPathPos() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2);
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2);
         Image image = new Image("file:files/forest/path.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -277,7 +278,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -292,7 +293,7 @@ public class World2TemplateTest {
 
     @Test
     void getPathNeg() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2) - 1;
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2) - 1;
         Image image = new Image("file:files/forest/goal.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -308,7 +309,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -323,7 +324,7 @@ public class World2TemplateTest {
 
     @Test
     void getBordersPos() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2);
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2);
         Image image = new Image("file:files/forest/border.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -339,7 +340,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -354,7 +355,7 @@ public class World2TemplateTest {
 
     @Test
     void getBordersNeg() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2) - 1;
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2) - 1;
         Image image = new Image("file:files/forest/path.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -370,7 +371,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -385,7 +386,7 @@ public class World2TemplateTest {
 
     @Test
     void getBreakableWallPos() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2);
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2);
         Image image = new Image("file:files/breakablewall.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -401,7 +402,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -416,7 +417,7 @@ public class World2TemplateTest {
 
     @Test
     void getBreakableWallNeg() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2) - 1;
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2) - 1;
         Image image = new Image("file:files/forest/path.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -432,7 +433,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -447,7 +448,7 @@ public class World2TemplateTest {
 
     @Test
     void getGoalPos() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2);
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2);
         Image image = new Image("file:files/forest/goal.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -463,7 +464,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -478,7 +479,7 @@ public class World2TemplateTest {
 
     @Test
     void getGoalNeg() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2) - 1;
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2) - 1;
         Image image = new Image("file:files/forest/path.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -494,7 +495,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -509,7 +510,7 @@ public class World2TemplateTest {
 
     @Test
     void getStartPos() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2);
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2);
         Image image = new Image("file:files/forest/start.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -525,7 +526,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -540,7 +541,7 @@ public class World2TemplateTest {
 
     @Test
     void getStartNeg() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2) - 1;
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2) - 1;
         Image image = new Image("file:files/forest/path.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -556,7 +557,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -571,7 +572,7 @@ public class World2TemplateTest {
 
     @Test
     void addCollectiblePos() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2);
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2);
         Image image = new Image("file:files/forest/collectible.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -587,7 +588,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -602,7 +603,7 @@ public class World2TemplateTest {
 
     @Test
     void addCollectibleNeg() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2) - 1;
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2) - 1;
         Image image = new Image("file:files/forest/path.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -618,7 +619,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -633,7 +634,7 @@ public class World2TemplateTest {
 
     @Test
     void addHeartCrystalPos() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2);
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2);
         Image image = new Image("file:files/items/heart.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -649,7 +650,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -664,7 +665,7 @@ public class World2TemplateTest {
 
     @Test
     void addHeartCrystalNeg() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2) - 1;
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2) - 1;
         Image image = new Image("file:files/items/pickaxe.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -680,7 +681,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -696,7 +697,7 @@ public class World2TemplateTest {
 
     @Test
     void addPickAxePos() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2);
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2);
         Image image = new Image("file:files/items/pickaxe.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -712,7 +713,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -727,7 +728,7 @@ public class World2TemplateTest {
 
     @Test
     void addPickaxeNeg() {
-        int squaresize = (int) MainProgram.HEIGHT / (w1m.getMap().length + 2) - 1;
+        int squaresize = (int) MainProgram.HEIGHT / (w3m.getMap().length + 2) - 1;
         Image image = new Image("file:files/items/heart.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(squaresize);
@@ -743,7 +744,7 @@ public class World2TemplateTest {
         metod.setAccessible(true);
         Label actLabel;
         try {
-            actLabel = (Label) metod.invoke(w2);
+            actLabel = (Label) metod.invoke(w3);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
