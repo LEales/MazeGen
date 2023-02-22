@@ -20,6 +20,7 @@ import model.maps.*;
 import model.Player;
 import model.enums.World;
 import control.time.TotalTime;
+import view.TutorialScreen;
 import view.campaign.*;
 import view.GameOverScreen;
 import view.randomize.MapTemplate;
@@ -56,6 +57,8 @@ public class MainProgram extends Application {
 
     private MapTemplate mapTemplate;
     private World1Template worldTemplate;
+
+    private TutorialScreen tutorialScreen = new TutorialScreen();
 
 
     /**
@@ -189,10 +192,11 @@ public class MainProgram extends Application {
         mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
         introAnimation = new WorldIntroAnimation(World.FOREST);
-        mainPaneCampaign.getChildren().add(introAnimation);
+        mainPaneCampaign.getChildren().add(tutorialScreen);
         introAnimation.setDisable(true);
         startTotalTime();
     }
+
 
     /**
      * Byter scen till den del av menyn där användaren får välja dimension på labyrinten.
