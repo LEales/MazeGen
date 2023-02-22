@@ -77,9 +77,9 @@ public class TutorialScreen extends Pane {
     }
 
     private void setMessageLabelPosition(double x, double y, double rotation) {
-        messageLabel.setLayoutX(x);
-        messageLabel.setLayoutY(y);
-        messageLabel.setRotate(rotation);
+        arrow.setLayoutX(x);
+        arrow.setLayoutY(y);
+        arrow.setRotate(rotation);
     }
 
     private void setupScene() {
