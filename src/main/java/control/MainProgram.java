@@ -193,6 +193,7 @@ public class MainProgram extends Application {
         mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
         tutorialScreen = new TutorialScreen();
+        tutorialScreen.setupFirstScene();
         mainPaneCampaign.getChildren().add(tutorialScreen);
         startTotalTime();
     }
@@ -262,8 +263,6 @@ public class MainProgram extends Application {
                 rightPanel.changeLevelCounter("14");
             }
             case 4 -> {
-                tutorialScreen = new TutorialScreen();
-                mainPaneCampaign.getChildren().add(tutorialScreen);
                 lvlCleared = 14;
                 rightPanel.changeLevelCounter("15");
             }
@@ -275,6 +274,11 @@ public class MainProgram extends Application {
         }
         worldTemplate = new World1Template(new World1Maps(heartCrystals, 25, level + 1, World.FOREST), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
+        if (4 == level) {
+            tutorialScreen = new TutorialScreen();
+            tutorialScreen.setupSecondScene();
+            mainPaneCampaign.getChildren().add(tutorialScreen);
+        }
     }
 
     /**
@@ -321,6 +325,11 @@ public class MainProgram extends Application {
         }
         worldTemplate = new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
+        if (5 == level) {
+            tutorialScreen = new TutorialScreen();
+            tutorialScreen.setupThirdScene();
+            mainPaneCampaign.getChildren().add(tutorialScreen);
+        }
     }
 
     /**
@@ -608,6 +617,7 @@ public class MainProgram extends Application {
 
     public void removeImageViewFromTutorial() {
         mainPaneCampaign.getChildren().remove(tutorialScreen);
+        tutorialScreen = null;
     }
 
     public void playWorldIntroAnimation(World world) {

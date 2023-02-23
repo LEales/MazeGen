@@ -1,8 +1,7 @@
 package view;
 
 import control.MainProgram;
-import javafx.animation.AnimationTimer;
-import javafx.animation.FadeTransition;
+import javafx.animation.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,11 +19,21 @@ public class TutorialScreen extends Pane {
 
     public TutorialScreen() {
         arrow = new ImageView(new Image("file:files/arrow.png", 80, 80, false, false));
-        setupScene();
+        introView = new ImageView(new Image("file:files/sven.png", 500, 500, false, false));
+        introView.setStyle("fx-background-color: transparent;");
+        setLayoutX(150);
+        setLayoutY(150);
+        messageLabel.setLayoutX(85);
+        messageLabel.setLayoutY(100);
+        messageLabel.setMaxSize(300, 200);
+        messageLabel.setStyle("-fx-text-fill: black;");
+        messageLabel.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 20));
+        messageLabel.setWrapText(true);
+        getChildren().add(messageLabel);
     }
 
 
-    private String nextMessage(String message) {
+    private String nextMessageFirst(String message) {
         return switch (message) {
             case "HAHAHAHA WELCOME TO MY WORLD..." -> "I AM THE GREAT AND POWERFUL SVEN...";
             case "I AM THE GREAT AND POWERFUL SVEN..." -> "I WILL TEACH YOU HOW TO PLAY THIS GAME...";
@@ -47,8 +56,28 @@ public class TutorialScreen extends Pane {
         };
     }
 
-    private void onMouseClick(String message) {
-        String next = nextMessage(message);
+    private String nextMessageSecond(String message) {
+        return switch (message) {
+            case "LOOKS LIKE YOU MADE IT THIS FAR..." -> "I AM PROUD OF YOU...";
+            case "I AM PROUD OF YOU..." -> "BUT YOU ARE NOT DONE YET...";
+            case "BUT YOU ARE NOT DONE YET..." -> "NOW THERE IS BREAKABLE WALLS...";
+            case "NOW THERE IS BREAKABLE WALLS..." -> "YOU CAN BREAK THEM BY PICKING UP THE AXE...";
+            case "YOU CAN BREAK THEM BY PICKING UP THE AXE..." -> "AND IF YOU GOT HIT ON THE HEAD...";
+            case "AND IF YOU GOT HIT ON THE HEAD..." -> "I'VE ADDED A HEART JUST FOR YOU...";
+            default -> null;
+        };
+    }
+    private String nextMessageThird(String message) {
+        return switch (message) {
+            case "WOW LOOK AT YOU..." -> "YOU ARE REALLY GOOD AT THIS...";
+            case "YOU ARE REALLY GOOD AT THIS..." -> "SO I ADDED GHOSTS...";
+            case "SO I ADDED GHOSTS..." -> "BWAHAHAHAH...";
+            default -> null;
+        };
+    }
+
+    private void onMouseClickFirst(String message) {
+        String next = nextMessageFirst(message);
         if (null == next) {
             FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
             ft.setFromValue(1.0);
@@ -62,9 +91,6 @@ public class TutorialScreen extends Pane {
             setOnMouseClicked(null);
             return;
         }
-        setOnMouseClicked(e -> onMouseClick(next));
-        messageLabel.setText(next);
-
         switch (next) {
             case "CLICK ON THE LADDER TO START THE GAME..." -> {
                 setMessageLabelPosition(-100.0, 270.0, 0.0);
@@ -81,6 +107,54 @@ public class TutorialScreen extends Pane {
                 animationTimer.stop();
             }
         }
+        showMessage(next);
+        setOnMouseClicked(e -> onMouseClickFirst(next));
+    }
+
+    private void onMouseClickSecond(String message) {
+        setOnMouseClicked(null);
+        String next = nextMessageSecond(message);
+        if (null == next) {
+            FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
+            ft.setFromValue(1.0);
+            ft.setToValue(0.0);
+            ft.play();
+            getChildren().remove(messageLabel);
+            ft.setOnFinished(e -> getChildren().remove(introView));
+            setOnMouseClicked(null);
+            return;
+        }
+        switch (next) {
+            case "NOW THERE IS BREAKABLE WALLS..." -> {
+                setMessageLabelPosition(-39.0, 120.0, 0.0);
+                animationUpDown();
+                getChildren().add(arrow);
+            }
+            case "YOU CAN BREAK THEM BY PICKING UP THE AXE..." -> setMessageLabelPosition(87.0, -115.0, 0.0);
+            case "I'VE ADDED A HEART JUST FOR YOU..." -> {
+                setMessageLabelPosition(-39.0, 188.0, 0.0);
+                getChildren().remove(arrow);
+            }
+        }
+        showMessage(message);
+        setOnMouseClicked(e -> onMouseClickSecond(next));
+    }
+
+    private void onMouseClickThird(String message) {
+        setOnMouseClicked(null);
+        String next = nextMessageThird(message);
+        if (null == next) {
+            FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
+            ft.setFromValue(1.0);
+            ft.setToValue(0.0);
+            ft.play();
+            getChildren().remove(messageLabel);
+            ft.setOnFinished(e -> getChildren().remove(introView));
+            setOnMouseClicked(null);
+            return;
+        }
+        showMessage(next);
+        setOnMouseClicked(e -> onMouseClickThird(next));
     }
 
     private void setMessageLabelPosition(double x, double y, double rotation) {
@@ -89,11 +163,7 @@ public class TutorialScreen extends Pane {
         arrow.setRotate(rotation);
     }
 
-    private void setupScene() {
-        introView = new ImageView(new Image("file:files/sven.png", 500, 500, false, false));
-        introView.setStyle("fx-background-color: transparent;");
-        setLayoutX(150);
-        setLayoutY(150);
+    public void setupFirstScene() {
         String first = "HAHAHAHA WELCOME TO MY WORLD...";
         FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
         getChildren().add(introView);
@@ -101,17 +171,48 @@ public class TutorialScreen extends Pane {
         ft.setToValue(1.0);
         ft.play();
         ft.setOnFinished(e -> {
-            messageLabel.setText(first);
-            setOnMouseClicked(ex -> onMouseClick(first));
+            showMessage(first);
+            messageLabel.toFront();
+            setOnMouseClicked(ex -> onMouseClickFirst(first));
         });
-        messageLabel.setLayoutX(85);
-        messageLabel.setLayoutY(100);
-        messageLabel.setMaxSize(300, 200);
-        messageLabel.setStyle("-fx-text-fill: black;");
-        messageLabel.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 20));
-        messageLabel.setWrapText(true);
-        getChildren().add(messageLabel);
+    }
 
+    public void setupSecondScene() {
+        String first = "LOOKS LIKE YOU MADE IT THIS FAR...";
+        FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
+        getChildren().add(introView);
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
+        ft.setOnFinished(e -> {
+            showMessage(first);
+            messageLabel.toFront();
+            setOnMouseClicked(ex -> onMouseClickSecond(first));
+        });
+    }
+    public void setupThirdScene() {
+        String first = "WOW LOOK AT YOU...";
+        FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
+        getChildren().add(introView);
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
+        ft.setOnFinished(e -> {
+            showMessage(first);
+            messageLabel.toFront();
+            setOnMouseClicked(ex -> onMouseClickThird(first));
+        });
+    }
+
+    private void showMessage(String message) {
+        Timeline timeline = new Timeline();
+        for (int i = 0; i < message.length(); i++) {
+            int duration = i * 50;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(duration),
+                    new KeyValue(messageLabel.textProperty(), message.substring(0, i + 1)));
+            timeline.getKeyFrames().add(keyFrame);
+        }
+        timeline.play();
     }
 
     private void animationUpDown() {
