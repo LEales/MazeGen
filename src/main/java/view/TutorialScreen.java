@@ -1,5 +1,6 @@
 package view;
 
+import control.MainProgram;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.scene.control.Label;
@@ -8,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import model.enums.World;
 
 public class TutorialScreen extends Pane {
 
@@ -24,7 +26,6 @@ public class TutorialScreen extends Pane {
 
     private String nextMessage(String message) {
         return switch (message) {
-            case "first" -> "HAHAHAHA WELCOME TO MY WORLD...";
             case "HAHAHAHA WELCOME TO MY WORLD..." -> "I AM THE GREAT AND POWERFUL SVEN...";
             case "I AM THE GREAT AND POWERFUL SVEN..." -> "I WILL TEACH YOU HOW TO PLAY THIS GAME...";
             case "I WILL TEACH YOU HOW TO PLAY THIS GAME..." ->
@@ -54,6 +55,11 @@ public class TutorialScreen extends Pane {
             ft.setToValue(0.0);
             ft.play();
             getChildren().remove(messageLabel);
+            ft.setOnFinished(e -> {
+                getChildren().removeAll(arrow, introView);
+                MainProgram.getMainProgram().playWorldIntroAnimation(World.FOREST);
+            });
+            setOnMouseClicked(null);
             return;
         }
         setOnMouseClicked(e -> onMouseClick(next));
@@ -61,15 +67,16 @@ public class TutorialScreen extends Pane {
 
         switch (next) {
             case "CLICK ON THE LADDER TO START THE GAME..." -> {
-                setMessageLabelPosition(-100.0, -270.0, 0.0);
+                setMessageLabelPosition(-100.0, 270.0, 0.0);
                 animationUpDown();
                 getChildren().add(arrow);
             }
-            case "COLLECT ALL THE CRYSTALS..." -> setMessageLabelPosition(200.0, -37.0, 0.0);
+            case "COLLECT ALL THE CRYSTALS..." -> setMessageLabelPosition(-37.0, 200.0, 0.0);
             case "WATCH OUT FOR THE WALLS..." -> setMessageLabelPosition(82.0, 270.0, 0.0);
             case "IF YOU HIT A WALL YOU WILL DIE... OR LOSE A LIFE..." -> setMessageLabelPosition(563.0, -80.0, 180.0);
-            case "AND PRESS THE START LADDER AGAIN..." -> setMessageLabelPosition(318.0, -70.0, 180.0);
-            case "NOW GO ON FINISH THE MAZE..." -> {
+            case "AND PRESS THE START LADDER AGAIN..." -> setMessageLabelPosition(-100.0, 270.0, 0.0);
+            case "NOW GO ON FINISH THE MAZE..." -> setMessageLabelPosition(318.0, -70.0, 180.0);
+            case "OR WHATEVER..." -> {
                 getChildren().remove(arrow);
                 animationTimer.stop();
             }
@@ -87,11 +94,16 @@ public class TutorialScreen extends Pane {
         introView.setStyle("fx-background-color: transparent;");
         setLayoutX(150);
         setLayoutY(150);
-        FadeTransition ft = new FadeTransition(Duration.millis(8000.0), introView);
+        String first = "HAHAHAHA WELCOME TO MY WORLD...";
+        FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
         getChildren().add(introView);
         ft.setFromValue(0.0);
         ft.setToValue(1.0);
         ft.play();
+        ft.setOnFinished(e -> {
+            messageLabel.setText(first);
+            setOnMouseClicked(ex -> onMouseClick(first));
+        });
         messageLabel.setLayoutX(85);
         messageLabel.setLayoutY(100);
         messageLabel.setMaxSize(300, 200);
@@ -99,7 +111,7 @@ public class TutorialScreen extends Pane {
         messageLabel.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 20));
         messageLabel.setWrapText(true);
         getChildren().add(messageLabel);
-        setOnMouseClicked(e -> onMouseClick("first"));
+
     }
 
     private void animationUpDown() {
