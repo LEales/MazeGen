@@ -2,14 +2,19 @@ package view;
 
 import javafx.application.Platform;
 import javafx.scene.image.Image;
+import model.enums.World;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class WorldIntroAnimationTest {
     WorldIntroAnimation wia;
+    Method setupImages;
 
     @BeforeAll
     static void initJFXRuntime() {
@@ -18,14 +23,17 @@ class WorldIntroAnimationTest {
     }
 
     @BeforeEach
-    void init() {
+    void init() throws NoSuchMethodException {
         wia = new WorldIntroAnimation();
+        setupImages = wia.getClass().getDeclaredMethod("setupImages", World.class);
+        setupImages.setAccessible(true);
     }
-/*
+
     @Test
-    void setupImageWorld1() {
+    void setupImageWorld1() throws InvocationTargetException, IllegalAccessException {
         Image expected = new Image("file:files/worlds/Worldforest.png", 600, 600, false, false);
-        Image received = wia.setupImages("1");
+        Image received = (Image) setupImages.invoke(wia,World.FOREST);
+
         assertAll(() -> assertEquals(expected.getUrl(), received.getUrl()),
                 () -> assertEquals(expected.getWidth(), received.getWidth()),
                 () -> assertEquals(expected.getHeight(), received.getHeight()),
@@ -37,9 +45,9 @@ class WorldIntroAnimationTest {
 
 
     @Test
-    void setupImageWorld2() {
+    void setupImageWorld2() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Image expected = new Image("file:files/worlds/Worldunderground.png", 600, 600, false, false);
-        Image received = wia.setupImages("2");
+        Image received = (Image) setupImages.invoke(wia,World.UNDERGROUND);
         assertAll(() -> assertEquals(expected.getUrl(), received.getUrl()),
                 () -> assertEquals(expected.getWidth(), received.getWidth()),
                 () -> assertEquals(expected.getHeight(), received.getHeight()),
@@ -49,9 +57,9 @@ class WorldIntroAnimationTest {
     }
 
     @Test
-    void setupImageWorld3() {
+    void setupImageWorld3() throws InvocationTargetException, IllegalAccessException {
         Image expected = new Image("file:files/worlds/Worldlava.png", 600, 600, false, false);
-        Image received = wia.setupImages("3");
+        Image received = (Image) setupImages.invoke(wia,World.LAVA);
         assertAll(() -> assertEquals(expected.getUrl(), received.getUrl()),
                 () -> assertEquals(expected.getWidth(), received.getWidth()),
                 () -> assertEquals(expected.getHeight(), received.getHeight()),
@@ -61,9 +69,9 @@ class WorldIntroAnimationTest {
     }
 
     @Test
-    void setupImageWorld4() {
+    void setupImageWorld4() throws InvocationTargetException, IllegalAccessException {
         Image expected = new Image("file:files/worlds/Worldcloud.png", 600, 600, false, false);
-        Image received = wia.setupImages("4");
+        Image received = (Image) setupImages.invoke(wia,World.CLOUD);
         assertAll(() -> assertEquals(expected.getUrl(), received.getUrl()),
                 () -> assertEquals(expected.getWidth(), received.getWidth()),
                 () -> assertEquals(expected.getHeight(), received.getHeight()),
@@ -73,9 +81,9 @@ class WorldIntroAnimationTest {
     }
 
     @Test
-    void setupImageWorld5() {
+    void setupImageWorld5() throws InvocationTargetException, IllegalAccessException {
         Image expected = new Image("file:files/worlds/Worlddesert.png", 600, 600, false, false);
-        Image received = wia.setupImages("5");
+        Image received = (Image) setupImages.invoke(wia,World.DESERT);
         assertAll(() -> assertEquals(expected.getUrl(), received.getUrl()),
                 () -> assertEquals(expected.getWidth(), received.getWidth()),
                 () -> assertEquals(expected.getHeight(), received.getHeight()),
@@ -85,9 +93,9 @@ class WorldIntroAnimationTest {
     }
 
     @Test
-    void setupImageWorld6() {
+    void setupImageWorld6() throws InvocationTargetException, IllegalAccessException {
         Image expected = new Image("file:files/worlds/Worldspace.png", 600, 600, false, false);
-        Image received = wia.setupImages("6");
+        Image received = (Image) setupImages.invoke(wia,World.SPACE);
         assertAll(() -> assertEquals(expected.getUrl(), received.getUrl()),
                 () -> assertEquals(expected.getWidth(), received.getWidth()),
                 () -> assertEquals(expected.getHeight(), received.getHeight()),
@@ -96,50 +104,49 @@ class WorldIntroAnimationTest {
         );
     }
 
+
     @Test
-    void setupImageNull() {
-        assertNull(wia.setupImages(null));
+    void introAnimation() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        Method introAnimation = wia.getClass().getDeclaredMethod("introAnimation",Image.class);
+        introAnimation.setAccessible(true);
+        assertTrue((Boolean) introAnimation.invoke(wia,new Image("file:files/worlds/Worldspace.png", 600, 600, false, false)));
     }
 
     @Test
-    void setupImageBadString() {
-        assertNull(wia.setupImages("Jjadfjasd"));
+    void introAnimationBadWidth() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException{
+        Method introAnimation = wia.getClass().getDeclaredMethod("introAnimation",Image.class);
+        introAnimation.setAccessible(true);
+        assertFalse((Boolean) introAnimation.invoke(wia,new Image("file:files/worlds/Worldspace.png", 599, 600, false, false)));
     }
 
     @Test
-    void introAnimation() {
-        assertTrue(wia.introAnimation(new Image("file:files/worlds/Worldspace.png", 600, 600, false, false)));
+    void introAnimationBadHeight() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException{
+        Method introAnimation = wia.getClass().getDeclaredMethod("introAnimation",Image.class);
+        introAnimation.setAccessible(true);
+        assertFalse((Boolean) introAnimation.invoke(wia,new Image("file:files/worlds/Worldspace.png", 600, 601, false, false)));
     }
 
     @Test
-    void introAnimationBadWidth() {
-        assertFalse(wia.introAnimation(new Image("file:files/worlds/Worldspace.png", 599, 600, false, false)));
+    void introAnimationBadSmooth() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException{
+        Method introAnimation = wia.getClass().getDeclaredMethod("introAnimation",Image.class);
+        introAnimation.setAccessible(true);
+        assertFalse((Boolean) introAnimation.invoke(wia,new Image("file:files/worlds/Worldspace.png", 600, 600, false, true)));
     }
 
     @Test
-    void introAnimationBadHeight() {
-        assertFalse(wia.introAnimation(new Image("file:files/worlds/Worldspace.png", 600, 601, false, false)));
+    void introAnimationBadPreserveRatio() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException{
+        Method introAnimation = wia.getClass().getDeclaredMethod("introAnimation",Image.class);
+        introAnimation.setAccessible(true);
+        assertFalse((Boolean) introAnimation.invoke(wia,new Image("file:files/worlds/Worldspace.png", 599, 600, true, false)));
     }
 
     @Test
-    void introAnimationBadSmooth() {
-        assertFalse(wia.introAnimation(new Image("file:files/worlds/Worldspace.png", 600, 600, false, true)));
+    void introAnimationBadURL() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException{
+        Method introAnimation = wia.getClass().getDeclaredMethod("introAnimation",Image.class);
+        introAnimation.setAccessible(true);
+        assertFalse((Boolean) introAnimation.invoke(wia,new Image("file:files/worlds/vaaaaaaaad.png", 599, 600, false, false)));
     }
 
-    @Test
-    void introAnimationBadPreserveRatio() {
-        assertFalse(wia.introAnimation(new Image("file:files/worlds/Worldspace.png", 599, 600, true, false)));
-    }
+ 
 
-    @Test
-    void introAnimationBadURL() {
-        assertFalse(wia.introAnimation(new Image("file:files/worlds/vaaaaaaaad.png", 599, 600, false, false)));
-    }
-
-    @Test
-    void introAnimationNull() {
-        assertFalse(wia.introAnimation(null));
-    }
-
- */
 }
