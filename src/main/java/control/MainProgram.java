@@ -194,11 +194,6 @@ public class MainProgram extends Application {
         mainWindow.setScene(campaignScene);
         tutorialScreen = new TutorialScreen();
         mainPaneCampaign.getChildren().add(tutorialScreen);
-        try {
-            nextWorld1Level(4, 3);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         startTotalTime();
     }
 
