@@ -20,6 +20,7 @@ import model.maps.*;
 import model.Player;
 import model.enums.World;
 import control.time.TotalTime;
+import view.TutorialScreen;
 import view.campaign.*;
 import view.GameOverScreen;
 import view.randomize.MapTemplate;
@@ -56,6 +57,8 @@ public class MainProgram extends Application {
 
     private MapTemplate mapTemplate;
     private World1Template worldTemplate;
+
+    private TutorialScreen tutorialScreen;
 
 
     /**
@@ -152,6 +155,7 @@ public class MainProgram extends Application {
      * Byter scen till huvudmenyn.
      */
     public void changeToMenu() {
+        removeImageViewFromTutorial();
         mainWindow.setScene(menuScene);
     }
 
@@ -188,11 +192,11 @@ public class MainProgram extends Application {
         rightPanel.changeLevelCounter("11");
         mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
-        introAnimation = new WorldIntroAnimation(World.FOREST);
-        mainPaneCampaign.getChildren().add(introAnimation);
-        introAnimation.setDisable(true);
+        tutorialScreen = new TutorialScreen();
+        mainPaneCampaign.getChildren().add(tutorialScreen);
         startTotalTime();
     }
+
 
     /**
      * Byter scen till den del av menyn där användaren får välja dimension på labyrinten.
@@ -258,6 +262,8 @@ public class MainProgram extends Application {
                 rightPanel.changeLevelCounter("14");
             }
             case 4 -> {
+                tutorialScreen = new TutorialScreen();
+                mainPaneCampaign.getChildren().add(tutorialScreen);
                 lvlCleared = 14;
                 rightPanel.changeLevelCounter("15");
             }
@@ -286,10 +292,10 @@ public class MainProgram extends Application {
             case 1 -> {
                 lvlCleared = 15;
                 rightPanel.changeLevelCounter("21");
-                introAnimation = new WorldIntroAnimation(World.UNDERGROUND);
-                mainPaneCampaign.getChildren().add(introAnimation);
-                introAnimation.setDisable(true);
+                playWorldIntroAnimation(World.UNDERGROUND);
                 AudioPlayer.playWorldIntroSound();
+                AudioPlayer.stopMusic();
+                AudioPlayer.playLevelMusic(World.UNDERGROUND);
             }
             case 2 -> {
                 lvlCleared = 21;
@@ -331,9 +337,7 @@ public class MainProgram extends Application {
             case 1 -> {
                 lvlCleared = 25;
                 rightPanel.changeLevelCounter("31");
-                introAnimation = new WorldIntroAnimation(World.LAVA);
-                mainPaneCampaign.getChildren().add(introAnimation);
-                introAnimation.setDisable(true);
+                playWorldIntroAnimation(World.LAVA);
                 AudioPlayer.playWorldIntroSound();
                 AudioPlayer.stopMusic();
                 AudioPlayer.playLevelMusic(World.LAVA);
@@ -377,9 +381,7 @@ public class MainProgram extends Application {
             case 1 -> {
                 lvlCleared = 35;
                 rightPanel.changeLevelCounter("41");
-                introAnimation = new WorldIntroAnimation(World.CLOUD);
-                mainPaneCampaign.getChildren().add(introAnimation);
-                introAnimation.setDisable(true);
+                playWorldIntroAnimation(World.CLOUD);
                 AudioPlayer.playWorldIntroSound();
                 AudioPlayer.stopMusic();
                 AudioPlayer.playLevelMusic(World.CLOUD);
@@ -423,9 +425,7 @@ public class MainProgram extends Application {
             case 1 -> {
                 lvlCleared = 45;
                 rightPanel.changeLevelCounter("51");
-                introAnimation = new WorldIntroAnimation(World.DESERT);
-                mainPaneCampaign.getChildren().add(introAnimation);
-                introAnimation.setDisable(true);
+                playWorldIntroAnimation(World.DESERT);
                 AudioPlayer.playWorldIntroSound();
                 AudioPlayer.stopMusic();
                 AudioPlayer.playLevelMusic(World.DESERT);
@@ -469,10 +469,10 @@ public class MainProgram extends Application {
             case 1 -> {
                 lvlCleared = 55;
                 rightPanel.changeLevelCounter("61");
-                introAnimation = new WorldIntroAnimation(World.SPACE);
-                mainPaneCampaign.getChildren().add(introAnimation);
-                introAnimation.setDisable(true);
+                playWorldIntroAnimation(World.SPACE);
                 AudioPlayer.playWorldIntroSound();
+                AudioPlayer.stopMusic();
+                AudioPlayer.playLevelMusic(World.SPACE);
             }
             case 2 -> {
                 lvlCleared = 61;
@@ -503,10 +503,10 @@ public class MainProgram extends Application {
     }
 
     public void stopTime() {
-        if (worldTemplate != null) {
+        if (null != worldTemplate) {
             worldTemplate.stopTime();
         }
-        if (mapTemplate != null) {
+        if (null != mapTemplate) {
             mapTemplate.stopTime();
         }
     }
@@ -604,5 +604,17 @@ public class MainProgram extends Application {
 
     public MazeGenerator getMazeGenerator() {
         return mazeGenerator;
+    }
+
+    public void removeImageViewFromTutorial() {
+        mainPaneCampaign.getChildren().remove(tutorialScreen);
+    }
+
+    public void playWorldIntroAnimation(World world) {
+        if (null != world) {
+            introAnimation = new WorldIntroAnimation(world);
+            mainPaneCampaign.getChildren().add(introAnimation);
+            introAnimation.setDisable(true);
+        }
     }
 }
