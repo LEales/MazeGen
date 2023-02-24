@@ -5,6 +5,8 @@ import javafx.animation.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -30,8 +32,24 @@ public class TutorialScreen extends Pane {
         messageLabel.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 20));
         messageLabel.setWrapText(true);
         getChildren().add(messageLabel);
+        setOnKeyPressed(e -> keyPressed(e));
     }
 
+    private void keyPressed(KeyEvent e) {
+        if (null != e) {
+            if (KeyCode.SPACE == e.getCode()) {
+                FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
+                ft.setFromValue(1.0);
+                ft.setToValue(0.0);
+                ft.play();
+                getChildren().remove(messageLabel);
+                ft.setOnFinished(ex -> {
+                    getChildren().removeAll(arrow, introView);
+                    
+                });
+            }
+        }
+    }
 
     private String nextMessageFirst(String message) {
         return switch (message) {
