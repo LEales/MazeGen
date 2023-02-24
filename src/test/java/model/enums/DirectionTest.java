@@ -1,5 +1,6 @@
-package model;
+package model.enums;
 
+import model.enums.Direction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -2,6 +2,7 @@ package model.maps;
 
 import model.enums.Sprite;
 import model.enums.World;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
