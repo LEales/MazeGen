@@ -1,4 +1,4 @@
-package view.Campaign;
+package view.campaign;
 
 
 import control.MainProgram;
@@ -7,12 +7,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
-import model.Maps.World2Maps;
-import model.World;
+import model.enums.GameMode;
+import model.enums.World;
+import model.maps.World2Maps;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import view.Menu.RightPanel;
+import view.menu.RightPanel;
 
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
@@ -37,9 +38,9 @@ public class World2TemplateTest {
 
     @BeforeEach
     void init() {
-        w1m = new World2Maps(3, 25, 1, World.UNDERGROUND);
+        w1m = new World2Maps(3, 25, 2, World.UNDERGROUND);
         try {
-            w2 = new World2Template(w1m, new RightPanel("21"));
+            w2 = new World2Template(w1m, new RightPanel(GameMode.CAMPAIGN));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

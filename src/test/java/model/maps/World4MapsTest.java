@@ -27,7 +27,7 @@ class World4MapsTest {
 
     @Test
     void level41pos() {
-        nextLevel = 1;
+        nextLevel = 2;
         w = new World4Maps(heartCrystals,seconds,nextLevel,world);
         Sprite[][] level = {{Sprite.HEART, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.START},
                 {Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH},
@@ -60,7 +60,7 @@ class World4MapsTest {
     @Test
     void level41neg() {
 
-        nextLevel = 1;
+        nextLevel = 2;
         w = new World4Maps(heartCrystals,seconds,nextLevel,world);
         Sprite[][] level = new Sprite[][]{{Sprite.HEART, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.START},
                {Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH},
@@ -93,7 +93,7 @@ class World4MapsTest {
     @Test
     void level42pos() {
 
-        nextLevel = 2;
+        nextLevel = 3;
         w = new World4Maps(heartCrystals,seconds,nextLevel,world);
 
 
@@ -132,7 +132,7 @@ class World4MapsTest {
     @Test
     void level42neg() {
 
-        nextLevel = 2;
+        nextLevel = 3;
         w = new World4Maps(heartCrystals,seconds,nextLevel,world);
         Sprite[][] level = {{Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.HEART, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.PATH},
                 {Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.PATH},
@@ -166,7 +166,7 @@ class World4MapsTest {
     @Test
     void level43pos() {
 
-        nextLevel = 3;
+        nextLevel = 4;
         w = new World4Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level = {{Sprite.GOAL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.BREAKABLE_WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.COLLECTIBLE},
@@ -200,7 +200,7 @@ class World4MapsTest {
     @Test
     void level43neg() {
 
-        nextLevel = 3;
+        nextLevel = 4;
         w = new World4Maps(heartCrystals,seconds,nextLevel,world);
         Sprite[][] level = new Sprite[][]{{Sprite.HEART, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.BREAKABLE_WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.COLLECTIBLE},
  {Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH},
@@ -233,7 +233,7 @@ class World4MapsTest {
     @Test
     void level44pos() {
 
-        nextLevel = 4;
+        nextLevel = 5;
         w = new World4Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level = {{Sprite.START, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH},
@@ -267,7 +267,7 @@ class World4MapsTest {
     @Test
     void level44neg() {
 
-        nextLevel = 4;
+        nextLevel = 5;
         w = new World4Maps(heartCrystals,seconds,nextLevel,world);
         Sprite[][] level ={{Sprite.START, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH},
                 {Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.PATH},
@@ -300,7 +300,7 @@ class World4MapsTest {
     @Test
     void level45pos() {
 
-        nextLevel = 5;
+        nextLevel = 6;
         w = new World4Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level = {{Sprite.GOAL, Sprite.PATH, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.COLLECTIBLE},
@@ -334,7 +334,7 @@ class World4MapsTest {
     @Test
     void level45neg() {
 
-        nextLevel = 5;
+        nextLevel = 6;
         w = new World4Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level = {{Sprite.GOAL, Sprite.PATH, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.COLLECTIBLE},

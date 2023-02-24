@@ -23,7 +23,7 @@ class World6MapsTest {
 
     @Test
     void level61pos() {
-        nextLevel = 1;
+        nextLevel = 2;
         w = new World6Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level61 = {{Sprite.GOAL, Sprite.HEART, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH},
@@ -61,7 +61,7 @@ class World6MapsTest {
     @Test
     void level61neg() {
 
-        nextLevel = 1;
+        nextLevel = 2;
         w = new World6Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level61 = {{Sprite.GOAL, Sprite.HEART, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH},
@@ -99,7 +99,7 @@ class World6MapsTest {
     @Test
     void level62pos() {
 
-        nextLevel = 2;
+        nextLevel = 3;
         w = new World6Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level62 = {{Sprite.START, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.HEART},
@@ -136,7 +136,7 @@ class World6MapsTest {
     @Test
     void level62neg() {
 
-        nextLevel = 2;
+        nextLevel = 3;
         w = new World6Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level62 = {{Sprite.START, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.HEART},
@@ -173,7 +173,7 @@ class World6MapsTest {
     @Test
     void level63pos() {
 
-        nextLevel = 3;
+        nextLevel = 4;
         w = new World6Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level63 = {{Sprite.GOAL, Sprite.HEART, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL},
@@ -212,7 +212,7 @@ class World6MapsTest {
     @Test
     void level63neg() {
 
-        nextLevel = 3;
+        nextLevel = 4;
         w = new World6Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level63 = {{Sprite.GOAL, Sprite.HEART, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL},
@@ -251,7 +251,7 @@ class World6MapsTest {
     @Test
     void level64pos() {
 
-        nextLevel = 4;
+        nextLevel = 5;
         w = new World6Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level64 = {{Sprite.START, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.PATH, Sprite.GOAL},
@@ -290,7 +290,7 @@ class World6MapsTest {
     @Test
     void level64neg() {
 
-        nextLevel = 4;
+        nextLevel = 5;
         w = new World6Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level64 = {{Sprite.START, Sprite.WALL, Sprite.PATH, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.COLLECTIBLE, Sprite.WALL, Sprite.PATH, Sprite.GOAL},
@@ -329,7 +329,7 @@ class World6MapsTest {
     @Test
     void level65pos() {
 
-        nextLevel = 5;
+        nextLevel = 6;
         w = new World6Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level65 = {{Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.START},
@@ -368,7 +368,7 @@ class World6MapsTest {
     @Test
     void level65neg() {
 
-        nextLevel = 5;
+        nextLevel = 6;
         w = new World6Maps(heartCrystals,seconds,nextLevel,world);
 
         Sprite[][] level65 = {{Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.COLLECTIBLE, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.PATH, Sprite.PATH, Sprite.WALL, Sprite.PATH, Sprite.START},

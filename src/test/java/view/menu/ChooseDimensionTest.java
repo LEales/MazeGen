@@ -58,7 +58,7 @@ public class ChooseDimensionTest {
     }
 
     @Test
-    void createImageViewNoEqualImage() {
+    void createImageViewNotEqual() {
         double x = 6.0;
         double y = 7.0;
         double z = 5.0;

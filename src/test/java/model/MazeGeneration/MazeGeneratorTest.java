@@ -1,10 +1,16 @@
 package model.MazeGeneration;
 
+import control.MainProgram;
 import control.MazeGenerator;
+import javafx.application.Application;
 import model.enums.Sprite;
 import model.Node;
+import model.maps.RandomizeMap;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,11 +24,28 @@ class MazeGeneratorTest {
 
     HashMap<Node, ArrayList<Node>> G = new HashMap<>();
 
+    @BeforeAll
+    static void initJFXRuntime() {
+        new Thread(() -> Application.launch(MainProgram.class)).start();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     void checkStartAndGoal(int dim) {
         for (int i = 0; i < 1000; i++) {
             G.clear();
-            MazeGenerator mg = new MazeGenerator(dim, true);
-            Sprite[][] maze = mg.getMaze();
+            MazeGenerator mg = new MazeGenerator();
+            mg.generateNewMaze(dim);
+            //mg.generateNextMaze();
+
+
+            RandomizeMap rm = mg.getMap();
+
+            Sprite[][] maze = rm.getMap();
+
             Node start = start(maze);
             G.put(start, new ArrayList<>());
             if (start.equals(new Node(-1, -1))) {
@@ -178,4 +201,760 @@ class MazeGeneratorTest {
         }
         return new Node(-1, -1);
     }
+
+    @Test
+    void validateDimension10onBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 10);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertTrue(result);
+    }
+
+    @Test
+    void validateDimension10overBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 11);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertFalse(result);
+    }
+
+    @Test
+    void validateDimension10underBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 9);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertFalse(result);
+    }
+
+    @Test
+    void validateDimension14onBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 14);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertTrue(result);
+    }
+
+    @Test
+    void validateDimension14overBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 15);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertFalse(result);
+    }
+
+    @Test
+    void validateDimension14underBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 13);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertFalse(result);
+    }
+
+    @Test
+    void validateDimension18onBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 18);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertTrue(result);
+    }
+
+    @Test
+    void validateDimension18overBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 19);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertFalse(result);
+    }
+
+    @Test
+    void validateDimension18underBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 17);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertFalse(result);
+    }
+
+    @Test
+    void validateDimension28onBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 28);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertTrue(result);
+    }
+
+    @Test
+    void validateDimension28overBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 29);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertFalse(result);
+    }
+
+    @Test
+    void validateDimension28underBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validateDimension", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, 27);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertFalse(result);
+    }
+
+    @Test
+    void getSeconds10() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 10;
+        int expected = 25;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        int result;
+        try {
+            result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void getSeconds14() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 14;
+        int expected = 60;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        int result;
+        try {
+            result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void getSeconds18() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 18;
+        int expected = 80;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        int result;
+        try {
+            result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void getSeconds28() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 28;
+        int expected = 99;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+        int result;
+        try {
+            result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void getSeconds10underBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 9;
+        String expected = "Unexpected value: " + dim;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+
+        try {
+            int result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (IllegalStateException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void getSeconds10overBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 11;
+        String expected = "Unexpected value: " + dim;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+
+        try {
+            int result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (IllegalStateException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void getSeconds14overBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 15;
+        String expected = "Unexpected value: " + dim;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+
+        try {
+            int result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (IllegalStateException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void getSeconds14underBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 13;
+        String expected = "Unexpected value: " + dim;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+
+        try {
+            int result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (IllegalStateException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void getSeconds18overBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 19;
+        String expected = "Unexpected value: " + dim;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+
+        try {
+            int result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (IllegalStateException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void getSeconds18underBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 17;
+        String expected = "Unexpected value: " + dim;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+
+        try {
+            int result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (IllegalStateException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void getSeconds28overBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 29;
+        String expected = "Unexpected value: " + dim;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+
+        try {
+            int result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (IllegalStateException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void getSeconds28underBorder() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 29;
+        String expected = "Unexpected value: " + dim;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+
+        try {
+            int result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (IllegalStateException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void getSecondsZero() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = 0;
+        String expected = "Unexpected value: " + dim;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+
+        try {
+            int result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (IllegalStateException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void getSecondsIntMaxValue() {
+        Method method;
+        MazeGenerator mg = new MazeGenerator();
+        int dim = Integer.MAX_VALUE;
+        String expected = "Unexpected value: " + dim;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("getSeconds", int.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        method.setAccessible(true);
+
+        try {
+            int result = (int) method.invoke(mg, dim);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (IllegalStateException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    //todo test för randomizemap men jag är för trött just nu
+
+    @Test
+    void validNextNodeNullNode() {
+        int dim = 10;
+        String expected = "Invalid parameters";
+        MazeGenerator mg = new MazeGenerator();
+        mg.generateNewMaze(dim);
+
+        RandomizeMap rm = mg.getMap();
+
+        Method method;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validNextNode", Node.class, RandomizeMap.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        method.setAccessible(true);
+
+        try {
+            boolean result = (boolean) method.invoke(mg, null, rm);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (RuntimeException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    @Test
+    void validNextNodeRmNull() {
+        int dim = 10;
+        String expected = "Invalid parameters";
+        MazeGenerator mg = new MazeGenerator();
+        Node node = new Node(0,0);
+
+        Method method;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validNextNode", Node.class, RandomizeMap.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        method.setAccessible(true);
+
+        try {
+            boolean result = (boolean) method.invoke(mg, node, null);
+        } catch (IllegalAccessException e) {
+
+        } catch (InvocationTargetException e) {
+
+        } catch (RuntimeException e) {
+            assertEquals(expected, e.getMessage());
+        }
+    }
+
+    /*
+    @Test
+    void validNextNodePos() { // TODO detta testet funkar inte
+        int dim = 10;
+        String expected = "Invalid parameters";
+        MazeGenerator mg = new MazeGenerator();
+        mg.generateNewMaze(dim);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        RandomizeMap rm = mg.getMap();
+        Sprite[][] spriteMap = rm.getMap();
+        int x = spriteMap.length / 2;
+        Node node = new Node(x,x);
+
+        ArrayList<Node> neighbors = new ArrayList<>();
+        Method methodFN;
+        try {
+            methodFN = MazeGenerator.class.getDeclaredMethod("findNeighbors", Node.class, RandomizeMap.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        methodFN.setAccessible(true);
+
+        while(!(3 > neighbors.size()) && rm.spriteEquals(node.x, node.y, Sprite.PATH)) {
+            mg.generateNewMaze(dim);
+            rm = mg.getMap();
+
+        try {
+            neighbors = (ArrayList<Node>) methodFN.invoke(mg, node, rm);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        }
+
+        Method method;
+
+        try {
+            method = MazeGenerator.class.getDeclaredMethod("validNextNode", Node.class, RandomizeMap.class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        method.setAccessible(true);
+
+        boolean result;
+        try {
+            result = (boolean) method.invoke(mg, node, rm);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException();
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException();
+        }
+
+        assertTrue(result);
+
+    } */
 }
