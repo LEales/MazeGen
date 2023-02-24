@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -155,7 +156,7 @@ public class MainProgram extends Application {
      * Byter scen till huvudmenyn.
      */
     public void changeToMenu() {
-        removeImageViewFromTutorial();
+        removeTutorialScreen();
         mainWindow.setScene(menuScene);
     }
 
@@ -192,10 +193,18 @@ public class MainProgram extends Application {
         rightPanel.changeLevelCounter("11");
         mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
+        campaignScene.setOnKeyPressed(e -> keyPressed(e));
         tutorialScreen = new TutorialScreen();
         tutorialScreen.setupFirstScene();
         mainPaneCampaign.getChildren().add(tutorialScreen);
         startTotalTime();
+    }
+    private void keyPressed(KeyEvent e) {
+        if (null != e) {
+            if (KeyCode.SPACE == e.getCode()) {
+                removeTutorialScreen();
+            }
+        }
     }
 
 
@@ -615,7 +624,7 @@ public class MainProgram extends Application {
         return mazeGenerator;
     }
 
-    public void removeImageViewFromTutorial() {
+    public void removeTutorialScreen() {
         mainPaneCampaign.getChildren().remove(tutorialScreen);
         tutorialScreen = null;
     }

@@ -518,7 +518,7 @@ public class World1Template extends GridPane {
         if (!map.isGameStarted()) {
             AudioPlayer.playStartSound();
         }
-        mainProgram.removeImageViewFromTutorial();
+        mainProgram.removeTutorialScreen();
         map.setGameStarted(true);
     }
 
