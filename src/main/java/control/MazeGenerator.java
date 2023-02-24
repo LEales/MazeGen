@@ -64,7 +64,7 @@ public class MazeGenerator {
     }
 
     private boolean validateDimension(int dimension) {
-        return dimension == 10 || dimension == 14 || dimension == 18 || dimension == 28;
+        return 10 == dimension || 14 == dimension || 18 == dimension || 28 == dimension;
     }
 
     /**

@@ -28,6 +28,7 @@ import view.randomize.MapTemplate;
 import view.menu.*;
 import view.VictoryScreen;
 import view.WorldIntroAnimation;
+import view.sandbox.SandboxScreen;
 
 
 import java.io.*;
@@ -167,10 +168,16 @@ public class MainProgram extends Application {
      * @throws FileNotFoundException
      */
     public void changeToRandomize(int dimension) throws FileNotFoundException {
+        /*
         mazeGenerator.generateNewMaze(dimension);
         mapTemplate = new MapTemplate(mazeGenerator, rightPnlRndm);
         mainPaneRandomMaze.setCenter(mapTemplate);
         mainWindow.setScene(randomScene);
+
+         */
+        Scene scene = new Scene(new SandboxScreen(10), WIDTH, HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        mainWindow.setScene(scene);
     }
 
     public void changeRandomMapPane(MazeGenerator mazeGenerator) {
@@ -197,6 +204,9 @@ public class MainProgram extends Application {
         tutorialScreen = new TutorialScreen();
         tutorialScreen.setupFirstScene();
         mainPaneCampaign.getChildren().add(tutorialScreen);
+        try {
+            nextWorld2Level(2,2);
+        } catch (Exception e) {}
         startTotalTime();
     }
     private void keyPressed(KeyEvent e) {

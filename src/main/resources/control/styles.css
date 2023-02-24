@@ -1,0 +1,59 @@
+.pixel-art-spinner {
+    -fx-background-color: transparent;
+    -fx-border-color: #000;
+}
+
+.pixel-art-spinner .increment-arrow-button,
+.pixel-art-spinner .decrement-arrow-button {
+    -fx-background-color: #000;
+}
+
+.pixel-art-spinner .increment-arrow,
+.pixel-art-spinner .decrement-arrow {
+    -fx-background-color: #fff;
+    -fx-border-color: #000;
+    -fx-fill: #fff;
+}
+
+.pixel-art-spinner .increment-arrow:hover,
+.pixel-art-spinner .decrement-arrow:hover {
+    -fx-background-color: #ccc;
+}
+
+.combo-box {
+  -fx-background-color: #3d3d3d;
+  -fx-text-fill: #fff;
+  -fx-border-color: #000;
+  -fx-border-width: 2px;
+  -fx-padding: 4px;
+  -fx-font-family: "PixelFont";
+}
+
+.combo-box .list-cell {
+  -fx-background-color: #3d3d3d;
+  -fx-text-fill: #fff;
+  -fx-border-color: #000;
+  -fx-border-width: 2px;
+  -fx-padding: 4px;
+}
+
+.combo-box .list-cell:filled:selected {
+  -fx-background-color: #fff;
+  -fx-text-fill: #000;
+}
+
+.combo-box .arrow {
+  -fx-background-color: #3d3d3d;
+  -fx-border-color: #000;
+  -fx-border-width: 2px;
+  -fx-padding: 4px;
+}
+
+.combo-box .arrow-button .arrow {
+  -fx-shape: "M 0 0 L 5 5 L 0 10 L 10 5 z";
+  -fx-background-color: #000;
+  -fx-border-color: #000;
+  -fx-border-width: 2px;
+  -fx-padding: 4px;
+}
+
