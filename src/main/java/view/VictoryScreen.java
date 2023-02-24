@@ -1,6 +1,7 @@
 package view;
 
 import control.MainProgram;
+import javafx.animation.AnimationTimer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Label;
@@ -19,9 +20,10 @@ public class VictoryScreen extends Pane {
     private final MainProgram mainProgram;
     private int totalTime, backSpaceCheck;
     private Label errorLabel;
-    StringProperty firstProperty = new SimpleStringProperty("_");
-    StringProperty secondProperty = new SimpleStringProperty("_");
-    StringProperty thirdProperty = new SimpleStringProperty("_");
+    private Label highScoreLabel;
+    private StringProperty firstProperty = new SimpleStringProperty("_");
+    private StringProperty secondProperty = new SimpleStringProperty("_");
+    private StringProperty thirdProperty = new SimpleStringProperty("_");
     private String current;
 
 
@@ -35,13 +37,48 @@ public class VictoryScreen extends Pane {
 
     private void setupScene() {
         errorLabel = new Label("Not A Valid Input");
-        errorLabel.setTranslateY(100);
+        errorLabel.setTranslateY(500);
         errorLabel.setTranslateX(240);
         errorLabel.setFont(getFont(20));
         errorLabel.setVisible(false);
         errorLabel.setTextFill(Color.web("#FF0004"));
         this.getChildren().add(errorLabel);
+
+        highScoreLabel = new Label();
+        highScoreLabel.setFont(getFont(36));
+        highScoreLabel.setText("NEW HIGHSCORE");
+        highScoreLabel.setTranslateX(170);
+        highScoreLabel.setTranslateY(100);
+        getChildren().add(highScoreLabel);
+
+        AnimationTimer timer = new AnimationTimer() {
+            private int hue = 0;
+            private boolean visible = true;
+            private long lastUpdate = 0;
+
+            @Override
+            public void handle(long now) {
+                if (now - lastUpdate >= 100_000_000) { // change hue every half second
+                    hue = (hue + 10) % 360;
+                    Color color = Color.hsb(hue, 1, 1);
+                    String css = "-fx-text-fill: " + toWebColor(color) + ";";
+                    highScoreLabel.setStyle(css);
+                    visible = !visible;
+                    highScoreLabel.setVisible(visible);
+                    lastUpdate = now;
+                }
+            }
+        };
+        timer.start();
     }
+
+    private String toWebColor(Color color) {
+        int r = (int) (color.getRed() * 255);
+        int g = (int) (color.getGreen() * 255);
+        int b = (int) (color.getBlue() * 255);
+        return String.format("#%02x%02x%02x", r, g, b);
+    }
+
 
     private void setupTextLabels() {
         Label first = setupTextArea(315.0, 200.0);
