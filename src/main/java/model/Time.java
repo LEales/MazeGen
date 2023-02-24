@@ -1,5 +1,8 @@
 package model;
 
+import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.io.Serializable;
 
 /**
@@ -9,15 +12,15 @@ import java.io.Serializable;
 public class Time implements Serializable {
 
     public static long serialVersionUID = 1948391084L;
-    private int seconds;
+    private SerializableIntegerProperty seconds;
 
     public Time(int seconds) {
         checkTime(seconds);
-        this.seconds = seconds;
+        this.seconds = new SerializableIntegerProperty(seconds);
     }
 
     public Time() {
-        seconds = 0;
+        seconds = new SerializableIntegerProperty(0);
     }
 
     private void checkTime(int seconds) {
@@ -26,21 +29,27 @@ public class Time implements Serializable {
         }
     }
 
-    public synchronized int increment() {
-        return ++seconds;
+    public int increment() {
+        Platform.runLater(() -> seconds.set(seconds.get() + 1));
+        return seconds.get();
     }
 
-    public synchronized int decrement() {
-        return --seconds;
+    public int decrement() {
+        Platform.runLater(() -> seconds.set(seconds.get() - 1));
+        return seconds.get();
     }
 
     public int setTime(int seconds) {
         checkTime(seconds);
-        this.seconds = seconds;
+        this.seconds = new SerializableIntegerProperty(seconds);
         return seconds;
     }
 
     public int getSeconds() {
+        return seconds.get();
+    }
+
+    public SimpleIntegerProperty secondsProperty() {
         return seconds;
     }
 }

@@ -33,8 +33,7 @@ public class RightPanel extends GridPane {
     private final ImageView currentLevelView, currentHeartView, pickaxeView, soundView, musicView, emptyView;
     private final Label levelLabel, heartLabel, pickaxeLabel, soundLabel, musicLabel, timerLabel;
     private boolean soundOn, musicOn;
-    private final IntegerProperty timeSeconds = new SimpleIntegerProperty(15);
-    private Timeline timeline = new Timeline();
+   // private Timeline timeline;
 
 
     /**
@@ -88,7 +87,6 @@ public class RightPanel extends GridPane {
 
 
         timerLabel = new Label();
-        timerLabel.textProperty().bind(timeSeconds.asString());
         timerLabel.setTextFill(Color.WHITE);
         Font font = Font.loadFont("file:files/fonts/PressStart2P.ttf", 35);
         timerLabel.setFont(font);
@@ -196,38 +194,10 @@ public class RightPanel extends GridPane {
      */
     private void mainMenuClicked() {
         mainProgram.changeToMenu();
-        pauseClock();
         mainProgram.stopTime();
         AudioPlayer.playButtonSound();
         AudioPlayer.stopTimeLeftSound();
         AudioPlayer.stopMusic();
-    }
-
-    /**
-     * Pausar klockan vid avancemang till ny nivå
-     */
-    public boolean pauseClock() {
-        timeline.stop();
-        return timeline.getStatus().equals(Animation.Status.STOPPED);
-    }
-
-    /**
-     * Sätter tiden som visuella klockan ska visa
-     *
-     * @param time
-     */
-    public void setTheTime(int time) {
-        timeSeconds.set(time);
-    }
-
-    /**
-     * Kör igång klockan när spelaren trycker på startknappen
-     */
-    public boolean resumeClock(int startTime) {
-        timeSeconds.set(startTime);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(startTime), new KeyValue(timeSeconds, 0)));
-        timeline.playFromStart();
-        return timeline.getStatus().equals(Animation.Status.RUNNING);
     }
 
     /**
@@ -261,5 +231,9 @@ public class RightPanel extends GridPane {
     public void resetTimerLabel() {
         timerLabel.setStyle("-fx-text-fill: white;");
         AudioPlayer.stopTimeLeftSound();
+    }
+
+    public void bindSeconds(SimpleIntegerProperty secondsProperty) {
+        timerLabel.textProperty().bind(secondsProperty.asString());
     }
 }

@@ -25,6 +25,7 @@ public class TimeThread extends Thread {
         this.randomizeMode = randomizeMode;
         time = new Time(seconds);
         this.panel = panel;
+        panel.bindSeconds(time.secondsProperty());
     }
 
     /**
@@ -36,14 +37,13 @@ public class TimeThread extends Thread {
             try {
                 Thread.sleep(1000);
                 time.decrement();
-                if (5 == time.getSeconds()) {
+                if (6 == time.getSeconds()) {
                     panel.fiveSecLeft();
                 }
-                if (0 == time.getSeconds() && !gameOver) {
+                if (1 == time.getSeconds() && !gameOver) {
                     panel.gameIsOver(randomizeMode);
                     gameOver = true;
                 }
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

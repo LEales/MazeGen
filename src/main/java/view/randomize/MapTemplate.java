@@ -42,6 +42,7 @@ public class MapTemplate extends GridPane {
         this.mazeGenerator = mazeGenerator;
         this.rightPanel = rightPanel;
         rightPanel.changeHeartCounter(3);
+        time = new TimeThread(mazeGenerator.getMap().getSeconds(), rightPanel, true);
         squareSize = (int) MainProgram.HEIGHT / (mazeGenerator.getMap().dimension + 2);
         setBackground();
         World world = randomizeWorld();
@@ -50,7 +51,7 @@ public class MapTemplate extends GridPane {
         setupBorders();
         setupLevel();
         rightPanel.resetTimerLabel();
-        rightPanel.setTheTime(mazeGenerator.getMap().getSeconds());
+
     }
 
     /**
@@ -271,7 +272,6 @@ public class MapTemplate extends GridPane {
         AudioPlayer.stopMusic();
         AudioPlayer.stopTimeLeftSound();
         MainProgram.getMainProgram().gameOverRandomize();
-        rightPanel.pauseClock();
         time.setGameOver(true);
         time = null;
     }
@@ -298,8 +298,6 @@ public class MapTemplate extends GridPane {
         RandomizeMap map = mazeGenerator.getMap();
         if (!map.isTimeStarted()) {
             map.setTimeStarted(true);
-            rightPanel.resumeClock(map.getSeconds());
-            time = new TimeThread(mazeGenerator.getMap().getSeconds(), rightPanel, true);
             time.start();
         }
         if (!map.isGameStarted()) {
@@ -324,13 +322,9 @@ public class MapTemplate extends GridPane {
     }
 
     public void stopTime() {
-        rightPanel.pauseClock();
         if (time != null) {
             time.setGameOver(true);
             time = null;
         }
     }
-    /**
-     * En listener som körs när spelaren plockar upp en collectible.
-     */
 }

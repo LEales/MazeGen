@@ -49,6 +49,7 @@ public class World1Template extends GridPane {
         this.mainProgram = MainProgram.getMainProgram();
         this.map = map;
         rightPanel.changeHeartCounter(map.getHeartCrystals());
+        time = new TimeThread(map.getSeconds(), rightPanel, false);
         this.rightPanel = rightPanel;
         squareSize = (int) MainProgram.HEIGHT / (map.getMap().length + 2);
         setBackground();
@@ -56,8 +57,6 @@ public class World1Template extends GridPane {
         setupBorders();
         setupLevel();
         rightPanel.resetTimerLabel();
-        rightPanel.setTheTime(map.getSeconds());
-        rightPanel.pauseClock();
     }
 
     /**
@@ -457,7 +456,6 @@ public class World1Template extends GridPane {
         AudioPlayer.stopTimeLeftSound();
         AudioPlayer.stopMusic();
         mainProgram.gameOver();
-        rightPanel.pauseClock();
         time.setGameOver(true);
         time = null;
         rightPanel.removePickaxe();
@@ -478,7 +476,6 @@ public class World1Template extends GridPane {
      */
     private void enteredGoal() throws FileNotFoundException, InterruptedException {
         if (map.isGameStarted() && map.allCollectiblesObtained()) {
-            rightPanel.pauseClock();
             AudioPlayer.stopTimeLeftSound();
             AudioPlayer.playGoalSound();
             time.setGameOver(true);
@@ -510,9 +507,6 @@ public class World1Template extends GridPane {
     private void startLevel() {
         if (!map.isTimeStarted()) {
             map.setTimeStarted(true);
-            time = new TimeThread(map.getSeconds(), rightPanel, false);
-            time.setGameOver(false);
-            rightPanel.resumeClock(map.getSeconds());
             time.start();
         }
         if (!map.isGameStarted()) {
