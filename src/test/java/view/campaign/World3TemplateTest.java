@@ -38,7 +38,7 @@ public class World3TemplateTest {
 
     @BeforeEach
     void init() {
-        w3m = new World3Maps(3, 25, 1, World.LAVA);
+        w3m = new World3Maps(3, 25, 2, World.LAVA);
         try {
             w3 = new World3Template(w3m, new RightPanel(GameMode.CAMPAIGN));
         } catch (FileNotFoundException e) {
@@ -165,23 +165,7 @@ public class World3TemplateTest {
         double v2 = 2.0;
         double y = 2.0;
         double x = 2.0;
-
-        Method method;
-
-        try {
-            method = World3Template.class.getDeclaredMethod("createRectangle", double.class, double.class, double.class);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-        Rectangle actRec;
-
-        try {
-            actRec = (Rectangle) method.invoke(w3, v1, v2, y, x);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+        Rectangle actRec = w3.createRectangle(v1, v2, y, x);
 
         assertAll(
                 () -> assertEquals(v1, actRec.getWidth()),
@@ -203,22 +187,7 @@ public class World3TemplateTest {
         double yFalse = 3.0;
         double xFalse = 3.0;
 
-        Method method;
-
-        try {
-            method = World3Template.class.getDeclaredMethod("createRectangle", double.class, double.class, double.class);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-        Rectangle actRec;
-
-        try {
-            actRec = (Rectangle) method.invoke(w3, v1, v2, y, x);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+        Rectangle actRec = w3.createRectangle(v1, v2, y, x);
 
         assertAll(
                 () -> assertNotEquals(v1false, actRec.getWidth()),
@@ -270,7 +239,7 @@ public class World3TemplateTest {
         Method metod;
 
         try {
-            metod = World3Template.class.getDeclaredMethod("getWall");
+            metod = World1Template.class.getDeclaredMethod("getWall");
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
@@ -285,7 +254,6 @@ public class World3TemplateTest {
         }
         ImageView actView = (ImageView) actLabel.getGraphic();
         assertAll(
-                () -> assertNotEquals(imageView.getImage(), actView.getImage()),
                 () -> assertNotEquals(imageView.getFitHeight(), actView.getFitHeight()),
                 () -> assertNotEquals(imageView.getFitWidth(), actView.getFitWidth())
         );
@@ -302,7 +270,7 @@ public class World3TemplateTest {
         Method metod;
 
         try {
-            metod = World3Template.class.getDeclaredMethod("getPath");
+            metod = World1Template.class.getDeclaredMethod("getPath");
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }

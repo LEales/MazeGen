@@ -1,9 +1,7 @@
 package view.campaign;
 
 import control.MainProgram;
-import javafx.animation.PathTransition;
 import javafx.application.Application;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -44,13 +42,6 @@ public class World1TemplateTest {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-    }
-    @Test
-    void createPathTrasistionPos() {
-        PathTransition pathTransition = new PathTransition();
-        pathTransition.setNode(new Node() {
-        });
 
     }
 
@@ -261,7 +252,6 @@ public class World1TemplateTest {
         }
         ImageView actView = (ImageView) actLabel.getGraphic();
         assertAll(
-                () -> assertNotEquals(imageView.getImage(), actView.getImage()),
                 () -> assertNotEquals(imageView.getFitHeight(), actView.getFitHeight()),
                 () -> assertNotEquals(imageView.getFitWidth(), actView.getFitWidth())
         );

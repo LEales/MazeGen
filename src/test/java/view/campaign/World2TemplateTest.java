@@ -38,7 +38,7 @@ public class World2TemplateTest {
 
     @BeforeEach
     void init() {
-        w1m = new World2Maps(3, 25, 1, World.UNDERGROUND);
+        w1m = new World2Maps(3, 25, 2, World.UNDERGROUND);
         try {
             w2 = new World2Template(w1m, new RightPanel(GameMode.CAMPAIGN));
         } catch (FileNotFoundException e) {
