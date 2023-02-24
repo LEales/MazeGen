@@ -55,6 +55,7 @@ class PlayerTest {
         });
     }
 
+    //Ska inte gå att ha en spelare med negativa nivåer / negativt antal avklara nivåer
     @Test
     void playerWithNegLvlsCleared() {
         assertThrows(IllegalArgumentException.class, () -> {
