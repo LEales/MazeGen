@@ -75,6 +75,28 @@ class AudioPlayerTest {
     }
 
     @Test
+    void playLevelMusicSpace() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        File f = new File("files/music/space.mp3");
+        assertEquals(f, ap.playLevelMusic(World.SPACE));
+    }
+
+    @Test
+    void playLevelMusicUnderground() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        File f = new File("files/music/underground.mp3");
+        assertEquals(f, ap.playLevelMusic(World.UNDERGROUND));
+    }
+
+    @Test
     void playCollectibleSound() {
         assertTrue(ap.playCollectibleSound());
     }
