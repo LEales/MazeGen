@@ -201,9 +201,6 @@ public class MainProgram extends Application {
         tutorialScreen = new TutorialScreen();
         tutorialScreen.setupFirstScene();
         mainPaneCampaign.getChildren().add(tutorialScreen);
-        try {
-            nextWorld2Level(2,2);
-        } catch (Exception e) {}
         startTotalTime();
     }
     private void keyPressed(KeyEvent e) {
