@@ -17,16 +17,19 @@ import model.enums.Sprite;
 import model.enums.World;
 import model.maps.CreatedMap;
 import model.maps.Maps;
-import model.maps.RandomizeMap;
+
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SandboxScreen extends BorderPane {
 
     private final GridPane sandBoxMap;
     private Label path, wall, heart, breakableWall, axe, collectible, delete;
     private ComboBox<World> worldComboBox = new ComboBox<>();
+
+    private final MainProgram mainProgram = MainProgram.getMainProgram();
 
 
     private final ArrayList<Label> labels;
@@ -182,12 +185,29 @@ public class SandboxScreen extends BorderPane {
             dialog.setContentText("Name:");
 
             Optional<String> result = dialog.showAndWait();
-            String name = "";
-            if (result.isPresent()){
+            String name;
+            if (result.isPresent()) {
                 name = result.get();
-
+            } else {
+                return;
             }
-            MainProgram.getMainProgram().saveMap(getMap(name));
+            AtomicBoolean toMenu = new AtomicBoolean(true);
+            if (mainProgram.checkMap(name)) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "A world with this name already exists. Do you want to overwrite it?", ButtonType.YES, ButtonType.NO);
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.YES) {
+                        mainProgram.saveMap(getMap(name), true);
+                    } else {
+                        toMenu.set(false);
+                    }
+                });
+            } else {
+                mainProgram.saveMap(getMap(name), false);
+            }
+            if (toMenu.get()) {
+                mainProgram.changeToMenu();
+            }
+
         });
 
         Button back = new Button("RETURN");
@@ -197,7 +217,7 @@ public class SandboxScreen extends BorderPane {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to return to the menu? All unsaved changes will be lost.", ButtonType.YES, ButtonType.NO);
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES) {
-                    MainProgram.getMainProgram().changeToMenu();
+                    mainProgram.changeToMenu();
                 }
             });
         });
@@ -233,6 +253,7 @@ public class SandboxScreen extends BorderPane {
         for (int i = 0; i < dimension * dimension; i++) {
             Sprite sprite;
             String image = ((ImageView) labels.get(i).getGraphic()).getImage().getUrl();
+            System.out.println(image);
             if (image.endsWith("path.png")) {
                 sprite = Sprite.PATH;
             } else if (image.endsWith("wall.png")) {
@@ -261,7 +282,7 @@ public class SandboxScreen extends BorderPane {
         world = map.getWorld();
         worldComboBox.setValue(world);
         Sprite[][] mapArray = map.getMap();
-        for (int i = 0; i < dimension*dimension; i++) {
+        for (int i = 0; i < dimension * dimension; i++) {
             labels.get(i).setGraphic(new ImageView(new Image("file:files/" + world.toString().toLowerCase() + "/" + mapArray[i % dimension][i / dimension].toString().toLowerCase() + ".png", squareSize, squareSize, false, false)));
         }
     }
@@ -368,8 +389,8 @@ public class SandboxScreen extends BorderPane {
                             sourceImage.setImage(targetImage.getImage());
                             targetImage.setImage(temp);
                         } else {
-                            ImageView targetImage = new ImageView(db.getImage());
-                            ((Label) target).setGraphic(targetImage);
+                            ImageView targetImage = (ImageView) ((Label) target).getGraphic();
+                            targetImage.setImage(db.getImage());
                         }
                     }
                 }

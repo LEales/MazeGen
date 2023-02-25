@@ -33,7 +33,7 @@ public class SandboxLoadNew extends Pane {
     private Label getLoad() {
          Label load = createLabel(300, 300, "Load Maze");
          load.setOnMouseClicked(e -> {
-             //TODO FIXA EN LOAD MED KARTOR
+            mainProgram.changeToSandBoxLoader();
          });
          return load;
     }

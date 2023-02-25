@@ -31,6 +31,7 @@ import view.VictoryScreen;
 import view.WorldIntroAnimation;
 import view.sandbox.SandboxDimension;
 import view.sandbox.SandboxLoadNew;
+import view.sandbox.SandboxLoader;
 import view.sandbox.SandboxScreen;
 
 import java.awt.*;
@@ -49,7 +50,7 @@ public class MainProgram extends Application {
     public static final double HEIGHT = 600.0d;
     private Stage mainWindow;
     private BorderPane mainPaneRandomMaze, mainPaneCampaign;
-    private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene, sandboxScene;
+    private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene, sandboxLoader, sandboxScene;
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
     private RightPanel rightPanel, rightPnlRndm;
@@ -678,12 +679,24 @@ public class MainProgram extends Application {
         }
     }
 
-    public boolean saveMap(CreatedMap map) {
-        if (createdMaps.contains(map)) {
+    public boolean saveMap(CreatedMap map, boolean overwrite) {
+        if (createdMaps.contains(map) && !overwrite) {
             return false;
+        } else if (createdMaps.contains(map) && overwrite) {
+            createdMaps.set(createdMaps.indexOf(map), map);
+        } else {
+            createdMaps.add(map);
         }
-        createdMaps.add(map);
         return true;
+    }
+
+    public boolean checkMap(String id) {
+        for (CreatedMap map : createdMaps) {
+            if (map.getName().equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void saveMapsToDat() {
@@ -700,5 +713,16 @@ public class MainProgram extends Application {
         if (index < createdMaps.size() && 0 <= index) {
             //// TODO: 2023-02-25 new mapTemplate class for sandbox...
         }
+    }
+
+    public void playMap(int id) {
+    }
+
+    public void deleteMap(int id) {
+    }
+
+    public void changeToSandBoxLoader() {
+        sandboxLoader = new Scene(new SandboxLoader(createdMaps), WIDTH, HEIGHT);
+        mainWindow.setScene(sandboxLoader);
     }
 }
