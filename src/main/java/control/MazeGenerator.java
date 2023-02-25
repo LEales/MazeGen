@@ -68,7 +68,7 @@ public class MazeGenerator {
     }
 
     /**
-     * Returns the appropriate time for a each dimension.
+     * Returns the appropriate time for each dimension.
      *
      * @param dimension dimension of the maze
      * @return the time in seconds

@@ -1,12 +1,14 @@
 package view.menu;
 
 import control.MainProgram;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import model.enums.World;
 import control.AudioPlayer;
-
 import java.io.FileNotFoundException;
 
 /**
@@ -24,7 +26,7 @@ public class Menu extends Pane {
     public Menu() {
         mainProgram = MainProgram.getMainProgram();
         setBackground(new Background(setBackground()));
-        getChildren().addAll(getCampaignView(), getRandomizeView(), getHelpView(), getMazeGenView(), getHighscoreView());
+        getChildren().addAll(getCampaignView(), getRandomizeView(), getHelpView(), getMazeGenView(), getHighscoreView(), getSandBoxView());
     }
 
 
@@ -131,5 +133,17 @@ public class Menu extends Pane {
             AudioPlayer.playButtonSound();
         });
         return highscoreView;
+    }
+    //TODO Inte färdigt, ska vi göra på samma sätt som med övriga komponenter och göra det till en Image istället?
+    private Label getSandBoxView() {
+        Label sandboxLabel = new Label("Sandbox");
+        sandboxLabel.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 24));
+        sandboxLabel.setTextFill(Color.web("#0000D6"));
+        sandboxLabel.setTranslateX(320.0);
+        sandboxLabel.setTranslateY(400.0);
+        sandboxLabel.setOnMouseClicked(e -> mainProgram.changeToSandBox());
+        sandboxLabel.setOnMouseEntered(e -> sandboxLabel.setTextFill(Color.ORANGERED));
+        sandboxLabel.setOnMouseExited(e -> sandboxLabel.setTextFill(Color.web("#0000D6")));
+        return sandboxLabel;
     }
 }

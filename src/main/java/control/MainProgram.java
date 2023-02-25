@@ -2,6 +2,7 @@ package control;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -24,13 +25,14 @@ import control.time.TotalTime;
 import view.TutorialScreen;
 import view.campaign.*;
 import view.GameOverScreen;
+import view.menu.Menu;
 import view.randomize.MapTemplate;
 import view.menu.*;
 import view.VictoryScreen;
 import view.WorldIntroAnimation;
 import view.sandbox.SandboxScreen;
 
-
+import java.awt.*;
 import java.io.*;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -116,6 +118,7 @@ public class MainProgram extends Application {
             }
         });
 
+        setTaskBar();
 
         chooseDimensionScene = new Scene(chooseDimension, WIDTH, HEIGHT);
 
@@ -168,16 +171,10 @@ public class MainProgram extends Application {
      * @throws FileNotFoundException
      */
     public void changeToRandomize(int dimension) throws FileNotFoundException {
-        /*
         mazeGenerator.generateNewMaze(dimension);
         mapTemplate = new MapTemplate(mazeGenerator, rightPnlRndm);
         mainPaneRandomMaze.setCenter(mapTemplate);
         mainWindow.setScene(randomScene);
-
-         */
-        Scene scene = new Scene(new SandboxScreen(10), WIDTH, HEIGHT);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        mainWindow.setScene(scene);
     }
 
     public void changeRandomMapPane(MazeGenerator mazeGenerator) {
@@ -644,6 +641,28 @@ public class MainProgram extends Application {
             introAnimation = new WorldIntroAnimation(world);
             mainPaneCampaign.getChildren().add(introAnimation);
             introAnimation.setDisable(true);
+        }
+    }
+
+    /**
+     * Changes scene to sandbox mode
+     */
+    public void changeToSandBox() {
+        Scene scene = new Scene(new SandboxScreen(10), WIDTH, HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        mainWindow.setScene(scene);
+    }
+
+    /**
+     * Sets the taskbar icon
+     */
+    private void setTaskBar() {
+        if (Taskbar.isTaskbarSupported()) {
+            Taskbar taskbar = Taskbar.getTaskbar();
+            if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE)) {
+                Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+                taskbar.setIconImage(defaultToolkit.getImage(getClass().getResource("/images/ghost.png")));
+            }
         }
     }
 }
