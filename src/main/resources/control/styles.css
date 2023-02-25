@@ -1,3 +1,9 @@
+@font-face {
+    font-family: pixelFont;
+    src: url('/PressStart2P.ttf');
+}
+
+
 .pixel-art-spinner {
     -fx-background-color: transparent;
     -fx-border-color: #000;
@@ -26,7 +32,7 @@
   -fx-border-color: #000;
   -fx-border-width: 2px;
   -fx-padding: 4px;
-  -fx-font-family: "PixelFont";
+  -fx-font-family: 'pixelFont';
 }
 
 .combo-box .list-cell {

@@ -1,6 +1,8 @@
 package view.sandbox;
 
 import control.MainProgram;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 public class SandboxScreen extends BorderPane {
 
     private final GridPane sandBoxMap;
+    private Label path, wall, heart, breakableWall, axe, collectible, delete;
 
     private final ArrayList<Label> labels;
 
@@ -41,17 +44,39 @@ public class SandboxScreen extends BorderPane {
         world.setTextFill(javafx.scene.paint.Color.WHITE);
 
         ComboBox<World> worldComboBox = new ComboBox<>();
-        //worldComboBox.getEditor().setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 10));
         worldComboBox.getItems().addAll(World.values());
         worldComboBox.setValue(World.FOREST);
+        worldComboBox.valueProperty().addListener((observableValue, world1, newValue) -> changeImages(newValue));
 
-        Label path = new Label();
-        Label wall = new Label();
-        Label heart = new Label();
-        Label breakableWall = new Label();
-        Label axe = new Label();
-        Label collectible = new Label();
-        Label delete = new Label();
+        path = new Label();
+        wall = new Label();
+        heart = new Label();
+        breakableWall = new Label();
+        axe = new Label();
+        collectible = new Label();
+        delete = new Label();
+        path.setId("path");
+        wall.setId("wall");
+        heart.setId("heart");
+        breakableWall.setId("breakableWall");
+        axe.setId("axe");
+        collectible.setId("collectible");
+        delete.setId("delete");
+        addListenerToLabel(path);
+        addListenerToLabel(wall);
+        addListenerToLabel(heart);
+        addListenerToLabel(breakableWall);
+        addListenerToLabel(axe);
+        addListenerToLabel(collectible);
+        labels.add(delete);
+        delete.setOnDragDetected(e -> {
+            Dragboard db = delete.startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
+            content.putImage(new Image("file:files/emptySprite.png"));
+            content.putString(delete.getId());
+            db.setContent(content);
+        });
+
 
         Image pathImage = new Image("file:files/forest/path.png", squareSize, squareSize, false, false);
         Image wallImage = new Image("file:files/forest/wall.png", squareSize, squareSize, false, false);
@@ -68,7 +93,6 @@ public class SandboxScreen extends BorderPane {
         ImageView axeImageView = new ImageView(axeImage);
         ImageView collectibleImageView = new ImageView(collectibleImage);
         ImageView deleteImageView = new ImageView(deleteImage);
-        deleteImageView.setStyle("-fx-color: transparent;");
 
         pathImageView.setFitWidth(squareSize);
         pathImageView.setFitHeight(squareSize);
@@ -103,7 +127,7 @@ public class SandboxScreen extends BorderPane {
         secondBox.setPadding(new Insets(10, 10, 10, 10));
         secondBox.setSpacing(10);
         HBox thirdBox = new HBox();
-        thirdBox.getChildren().addAll(collectible, heartImageView);
+        thirdBox.getChildren().addAll(collectible, heart);
         thirdBox.setPadding(new Insets(10, 10, 10, 10));
         thirdBox.setSpacing(10);
         HBox fourthBox = new HBox();
@@ -155,11 +179,30 @@ public class SandboxScreen extends BorderPane {
         heartsBox.setPadding(new Insets(20));
 
         VBox panel = new VBox();
-        panel.setPadding(new Insets(10, 10, 10, 10));
+       // panel.setPadding(new Insets(10, 10, 10, 10));
         panel.getChildren().addAll(world, worldComboBox, firstBox, secondBox, thirdBox, fourthBox, seconds, spinner, hearts, heartsBox);
         setRight(panel);
 
 
+    }
+
+    private void changeImages(World newValue) {
+        path.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/path.png", squareSize, squareSize, false, false)));
+        if (newValue != World.SPACE) {
+            wall.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/wall.png", squareSize, squareSize, false, false)));
+        }
+        collectible.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/collectible.png", squareSize, squareSize, false, false)));
+    }
+
+    private void addListenerToLabel(Label label) {
+        labels.add(label);
+        label.setOnDragDetected(e -> {
+            Dragboard db = label.startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
+            content.putImage(((ImageView) label.getGraphic()).getImage());
+            content.putString(label.getId());
+            db.setContent(content);
+        });
     }
 
 
@@ -212,7 +255,6 @@ public class SandboxScreen extends BorderPane {
                 content.putImage(((ImageView) label.getGraphic()).getImage()); //lägger bilden i minnet
                 content.putString(label.getId()); //lägger id i minnet
                 db.setContent(content); //lägger innehållet i dragboard
-                e.consume();
             });
 
             label.setOnDragDropped(e -> {
@@ -221,22 +263,34 @@ public class SandboxScreen extends BorderPane {
                     Node target = e.getPickResult().getIntersectedNode(); //hämtar noden som vi drar labeln till
                     if (target != null && target instanceof Label) {
                         String sourceId = db.getString(); //hämtar id från dragboard
-                        ImageView sourceImage = (ImageView) findLabelById(sourceId).getGraphic(); //hämtar bilden från labeln som vi drar
-                        ImageView targetImage = (ImageView) ((Label) target).getGraphic(); //hämtar bilden från labeln som vi droppar på
-                        javafx.scene.image.Image temp = sourceImage.getImage(); //byter plats på bilderna
-                        sourceImage.setImage(targetImage.getImage());
-                        targetImage.setImage(temp);
+                        if (isNumeric(sourceId)) {
+                            ImageView sourceImage = (ImageView) findLabelById(sourceId).getGraphic(); //hämtar bilden från labeln som vi drar
+                            ImageView targetImage = (ImageView) ((Label) target).getGraphic(); //hämtar bilden från labeln som vi droppar på
+                            Image temp = sourceImage.getImage(); //byter plats på bilderna
+                            sourceImage.setImage(targetImage.getImage());
+                            targetImage.setImage(temp);
+                        } else {
+                            ImageView targetImage = new ImageView(db.getImage());
+                            ((Label) target).setGraphic(targetImage);
+                        }
                     }
                 }
-                e.consume();
             });
 
             label.setOnDragOver(e -> {
                 if (e.getGestureSource() != label && e.getDragboard().hasImage() && e.getDragboard().hasString()) {
                     e.acceptTransferModes(TransferMode.MOVE);
                 }
-                e.consume();
             });
+        }
+    }
+
+    private boolean isNumeric(String sourceId) {
+        try {
+            Integer.parseInt(sourceId);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
