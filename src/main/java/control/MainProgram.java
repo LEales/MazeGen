@@ -30,6 +30,7 @@ import view.menu.*;
 import view.VictoryScreen;
 import view.WorldIntroAnimation;
 import view.sandbox.SandboxDimension;
+import view.sandbox.SandboxLoadNew;
 import view.sandbox.SandboxScreen;
 
 import java.awt.*;
@@ -656,6 +657,11 @@ public class MainProgram extends Application {
     public void changeToSandBoxDimension() {
         Scene scene = new Scene(new SandboxDimension(), WIDTH, HEIGHT);
         //scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        mainWindow.setScene(scene);
+    }
+
+    public void changeToSandBoxNewLoad() {
+        Scene scene = new Scene(new SandboxLoadNew(), WIDTH, HEIGHT);
         mainWindow.setScene(scene);
     }
 
