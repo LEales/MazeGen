@@ -40,8 +40,8 @@ public class SandboxDimension extends Pane {
         slider.setMajorTickUnit(1);
         slider.setMinorTickCount(0);
         slider.setSnapToTicks(true);
-        slider.setShowTickLabels(true);
-        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(false);
+        slider.setShowTickMarks(false);
         slider.setTranslateX(310.0);
         slider.setTranslateY(300);
         slider.setValue(10);
