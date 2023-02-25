@@ -42,9 +42,10 @@ public class SandboxDimension extends Pane {
         slider.setSnapToTicks(true);
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);
-        slider.setTranslateX(300.0);
+        slider.setTranslateX(310.0);
         slider.setTranslateY(300);
         slider.setValue(10);
+        slider.setId("dimensionSlider");
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             updateSliderLabel(String.format("%.0f", newValue));
         });
@@ -52,6 +53,10 @@ public class SandboxDimension extends Pane {
     }
 
     private void updateSliderLabel(String format) {
+        if (Integer.parseInt(format) < 10) {
+            sliderLabel.setText(" " + format + "x" + format);
+            return;
+        }
         sliderLabel.setText(format + "x" + format);
     }
 
@@ -65,10 +70,15 @@ public class SandboxDimension extends Pane {
     }
 
     private Label getOk() {
-        Label ok = createLabel(330.0, 350, "OK");
+        Label ok = createLabel(360.0, 380, "OK");
         ok.setOnMouseClicked(e -> {
             String s = sliderLabel.getText();
-            int dim = Integer.parseInt(s.substring(0, s.indexOf('x')));
+            int dim = 10;
+            if (s.charAt(0) == ' ') {
+                dim = Integer.parseInt(s.substring(1, 2));
+            } else {
+                dim = Integer.parseInt(s.substring(0, 2));
+            }
             AudioPlayer.playButtonSound();
             mainProgram.changeToSandBox(dim);
         });
@@ -76,7 +86,11 @@ public class SandboxDimension extends Pane {
     }
 
     private Label getSliderLabel() {
-        sliderLabel = createLabel(300, 250, "10x10");
+        sliderLabel = new Label("10x10"); //createLabel(300, 250, "10x10");
+        sliderLabel.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 32));
+        sliderLabel.setTextFill(Color.web("#0000D6"));
+        sliderLabel.setTranslateX(300.0);
+        sliderLabel.setTranslateY(200.0);
         return sliderLabel;
     }
 
