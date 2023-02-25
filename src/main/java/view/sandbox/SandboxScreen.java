@@ -1,7 +1,6 @@
 package view.sandbox;
 
 import control.MainProgram;
-import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -17,7 +16,6 @@ import javafx.scene.text.Font;
 import model.enums.World;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SandboxScreen extends BorderPane {
 
