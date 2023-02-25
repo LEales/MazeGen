@@ -58,3 +58,18 @@
   -fx-padding: 4px;
 }
 
+.slider {
+    -fx-pref-width: 300px;
+}
+
+.slider .track {
+    -fx-background-color: linear-gradient(to left, cyan, magenta);
+    -fx-pref-height: 20px;
+    -fx-background-radius : 0;
+}
+
+.slider .thumb {
+    -fx-pref-width: 10px;
+    -fx-pref-height: 30px;
+    -fx-background-color : #0000D6;
+}

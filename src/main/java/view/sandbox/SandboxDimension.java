@@ -42,10 +42,9 @@ public class SandboxDimension extends Pane {
         slider.setSnapToTicks(true);
         slider.setShowTickLabels(false);
         slider.setShowTickMarks(false);
-        slider.setTranslateX(310.0);
+        slider.setTranslateX(240.0);
         slider.setTranslateY(300);
         slider.setValue(10);
-        slider.setId("dimensionSlider");
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             updateSliderLabel(String.format("%.0f", newValue));
         });
