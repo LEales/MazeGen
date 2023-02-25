@@ -15,10 +15,12 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import model.enums.Sprite;
 import model.enums.World;
+import model.maps.CreatedMap;
 import model.maps.Maps;
 import model.maps.RandomizeMap;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class SandboxScreen extends BorderPane {
 
@@ -173,7 +175,20 @@ public class SandboxScreen extends BorderPane {
         Button save = new Button("SAVE");
         save.setPadding(new Insets(5, 5, 5, 5));
         save.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 18));
-        save.setOnMouseClicked(e -> MainProgram.getMainProgram().saveMap(getMap()));
+        save.setOnMouseClicked(e -> {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Name");
+            dialog.setHeaderText("Enter the name of your world:");
+            dialog.setContentText("Name:");
+
+            Optional<String> result = dialog.showAndWait();
+            String name = "";
+            if (result.isPresent()){
+                name = result.get();
+
+            }
+            MainProgram.getMainProgram().saveMap(getMap(name));
+        });
 
         Button back = new Button("RETURN");
         back.setPadding(new Insets(5, 5, 5, 5));
@@ -213,8 +228,8 @@ public class SandboxScreen extends BorderPane {
         }
     }
 
-    private Maps getMap() {
-        RandomizeMap map = new RandomizeMap(hearts, spinner.getValue(), dimension);
+    private CreatedMap getMap(String name) {
+        CreatedMap map = new CreatedMap(hearts, spinner.getValue(), dimension, name);
         for (int i = 0; i < dimension * dimension; i++) {
             Sprite sprite;
             String image = ((ImageView) labels.get(i).getGraphic()).getImage().getUrl();

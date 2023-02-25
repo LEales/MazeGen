@@ -2,7 +2,6 @@ package control;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -35,9 +34,7 @@ import view.sandbox.SandboxScreen;
 
 import java.awt.*;
 import java.io.*;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * @author André Eklund
@@ -51,7 +48,7 @@ public class MainProgram extends Application {
     public static final double HEIGHT = 600.0d;
     private Stage mainWindow;
     private BorderPane mainPaneRandomMaze, mainPaneCampaign;
-    private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene;
+    private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene, sandboxScene;
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
     private RightPanel rightPanel, rightPnlRndm;
@@ -66,6 +63,8 @@ public class MainProgram extends Application {
 
     private TutorialScreen tutorialScreen;
 
+    private ArrayList<CreatedMap> createdMaps;
+
 
     /**
      * En metod som startar programmet.
@@ -78,6 +77,8 @@ public class MainProgram extends Application {
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         AudioPlayer.playIntroMusic();
+
+        createdMaps = new ArrayList<>();
 
         rightPanel = new RightPanel(GameMode.CAMPAIGN);
         rightPanel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -647,9 +648,9 @@ public class MainProgram extends Application {
      * Changes scene to sandbox mode
      */
     public void changeToSandBox(int dimension) {
-        Scene scene = new Scene(new SandboxScreen(dimension), WIDTH, HEIGHT);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        mainWindow.setScene(scene);
+        sandboxScene = new Scene(new SandboxScreen(dimension), WIDTH, HEIGHT);
+        sandboxScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        mainWindow.setScene(sandboxScene);
     }
 
     public void changeToSandBoxDimension() {
@@ -671,11 +672,27 @@ public class MainProgram extends Application {
         }
     }
 
-    public void saveMap(Maps map) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("files/map.dat"))) {
-            oos.writeObject(map);
+    public boolean saveMap(CreatedMap map) {
+        if (createdMaps.contains(map)) {
+            return false;
+        }
+        createdMaps.add(map);
+        return true;
+    }
+
+    public void saveMapsToDat() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("files/maps.dat"))) {
+            for (CreatedMap map : createdMaps) {
+                oos.writeObject(map);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void loadMap(int index) {
+        if (index < createdMaps.size() && 0 <= index) {
+            //// TODO: 2023-02-25 new mapTemplate class for sandbox...
         }
     }
 }
