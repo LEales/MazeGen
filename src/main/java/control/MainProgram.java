@@ -657,7 +657,7 @@ public class MainProgram extends Application {
 
     public void changeToSandBoxDimension() {
         Scene scene = new Scene(new SandboxDimension(), WIDTH, HEIGHT);
-        //scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         mainWindow.setScene(scene);
     }
 
