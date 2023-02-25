@@ -1,8 +1,6 @@
 package view.sandbox;
 
 import control.MainProgram;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,7 +13,10 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import model.enums.Sprite;
 import model.enums.World;
+import model.maps.Maps;
+import model.maps.RandomizeMap;
 
 import java.util.ArrayList;
 
@@ -23,10 +24,18 @@ public class SandboxScreen extends BorderPane {
 
     private final GridPane sandBoxMap;
     private Label path, wall, heart, breakableWall, axe, collectible, delete;
+    private ComboBox<World> worldComboBox = new ComboBox<>();
+
 
     private final ArrayList<Label> labels;
 
     private final int squareSize, dimension;
+    private Image redHeart = new Image("file:files/items/heart.png", 20, 20, false, false);
+    private Image greyHeart = new Image("file:files/hearts/greyheart.png", 20, 20, false, false);
+    private ImageView firstHeart = new ImageView(redHeart), secondHeart = new ImageView(redHeart), thirdHeart = new ImageView(redHeart);
+    private Spinner<Integer> spinner = new Spinner<>();
+    private World world;
+    private int hearts;
 
     public SandboxScreen(int dimension) {
         this.dimension = dimension;
@@ -40,10 +49,9 @@ public class SandboxScreen extends BorderPane {
 
     private void setUpPanel() {
         Label world = new Label("World");
-        world.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 24));
+        world.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 18));
         world.setTextFill(javafx.scene.paint.Color.WHITE);
 
-        ComboBox<World> worldComboBox = new ComboBox<>();
         worldComboBox.getItems().addAll(World.values());
         worldComboBox.setValue(World.FOREST);
         worldComboBox.valueProperty().addListener((observableValue, world1, newValue) -> changeImages(newValue));
@@ -55,6 +63,7 @@ public class SandboxScreen extends BorderPane {
         axe = new Label();
         collectible = new Label();
         delete = new Label();
+
         path.setId("path");
         wall.setId("wall");
         heart.setId("heart");
@@ -62,6 +71,7 @@ public class SandboxScreen extends BorderPane {
         axe.setId("axe");
         collectible.setId("collectible");
         delete.setId("delete");
+
         addListenerToLabel(path);
         addListenerToLabel(wall);
         addListenerToLabel(heart);
@@ -120,80 +130,152 @@ public class SandboxScreen extends BorderPane {
 
         HBox firstBox = new HBox();
         firstBox.getChildren().addAll(path, wall);
-        firstBox.setPadding(new Insets(10, 10, 10, 10));
-        firstBox.setSpacing(10);
+        firstBox.setPadding(new Insets(5, 5, 5, 5));
+        firstBox.setSpacing(5);
         HBox secondBox = new HBox();
         secondBox.getChildren().addAll(breakableWall, axe);
-        secondBox.setPadding(new Insets(10, 10, 10, 10));
-        secondBox.setSpacing(10);
+        secondBox.setPadding(new Insets(5, 5, 5, 5));
+        secondBox.setSpacing(5);
         HBox thirdBox = new HBox();
         thirdBox.getChildren().addAll(collectible, heart);
-        thirdBox.setPadding(new Insets(10, 10, 10, 10));
-        thirdBox.setSpacing(10);
+        thirdBox.setPadding(new Insets(5, 5, 5, 5));
+        thirdBox.setSpacing(5);
         HBox fourthBox = new HBox();
         fourthBox.getChildren().addAll(delete);
-        fourthBox.setPadding(new Insets(10, 10, 10, 10));
-        fourthBox.setSpacing(10);
+        fourthBox.setPadding(new Insets(5, 5, 5, 5));
+        fourthBox.setSpacing(5);
 
         Label seconds = new Label("SECONDS");
-        seconds.setPadding(new Insets(10, 10, 10, 10));
-        seconds.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 24));
+        seconds.setPadding(new Insets(5, 5, 5, 5));
+        seconds.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 18));
         seconds.setTextFill(javafx.scene.paint.Color.WHITE);
+
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(15, 1000, 1);
-        Spinner<Integer> spinner = new Spinner<>();
         spinner.setValueFactory(valueFactory);
         spinner.setEditable(true);
-        spinner.setPadding(new Insets(10, 10, 10, 10));
+        spinner.setPadding(new Insets(5, 5, 5, 5));
         spinner.getEditor().setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 10));
         spinner.getStyleClass().add("pixel-art-spinner");
 
         Label hearts = new Label("HEARTS");
-        hearts.setPadding(new Insets(10, 10, 10, 10));
-        hearts.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 24));
+        hearts.setPadding(new Insets(5, 5, 5, 5));
+        hearts.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 18));
         hearts.setTextFill(javafx.scene.paint.Color.WHITE);
 
-        Image redHeart = new Image("file:files/items/heart.png", 20, 20, false, false);
-        ImageView firstHeart = new ImageView(redHeart);
-        ImageView secondHeart = new ImageView(redHeart);
-        ImageView thirdHeart = new ImageView(redHeart);
-        Image greyHeart = new Image("file:files/hearts/greyheart.png", 20, 20, false, false);
-        firstHeart.setOnMouseClicked(event -> {
-            firstHeart.setImage(redHeart);
-            secondHeart.setImage(greyHeart);
-            thirdHeart.setImage(greyHeart);
-        });
+        firstHeart.setOnMouseClicked(event -> firstHeartClicked());
+        secondHeart.setOnMouseClicked(event -> secondHeartClicked());
+        thirdHeart.setOnMouseClicked(event -> thirdHeartClicked());
 
-        secondHeart.setOnMouseClicked(event -> {
-            firstHeart.setImage(redHeart);
-            secondHeart.setImage(redHeart);
-            thirdHeart.setImage(greyHeart);
-        });
+        HBox heartsBox = new HBox(firstHeart, secondHeart, thirdHeart);
+        heartsBox.setAlignment(Pos.TOP_LEFT);
+        heartsBox.setPadding(new Insets(5));
 
-        thirdHeart.setOnMouseClicked(event -> {
-            firstHeart.setImage(redHeart);
-            secondHeart.setImage(redHeart);
-            thirdHeart.setImage(redHeart);
+        Button save = new Button("SAVE");
+        save.setPadding(new Insets(5, 5, 5, 5));
+        save.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 18));
+        save.setOnMouseClicked(e -> MainProgram.getMainProgram().saveMap(getMap()));
+
+        Button back = new Button("RETURN");
+        back.setPadding(new Insets(5, 5, 5, 5));
+        back.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 18));
+        back.setOnMouseClicked(e -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to return to the menu? All unsaved changes will be lost.", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.YES) {
+                    MainProgram.getMainProgram().changeToMenu();
+                }
+            });
         });
-        HBox heartsBox = new HBox(10, firstHeart, secondHeart, thirdHeart);
-        heartsBox.setAlignment(Pos.CENTER);
-        heartsBox.setPadding(new Insets(20));
 
         VBox panel = new VBox();
-       // panel.setPadding(new Insets(10, 10, 10, 10));
-        panel.getChildren().addAll(world, worldComboBox, firstBox, secondBox, thirdBox, fourthBox, seconds, spinner, hearts, heartsBox);
+        panel.getChildren().addAll(world, worldComboBox, firstBox, secondBox, thirdBox, fourthBox, seconds, spinner, hearts, heartsBox, save, back);
         setRight(panel);
 
 
     }
 
+    //byter ut images när världen byts i comboboxen
     private void changeImages(World newValue) {
+        world = newValue;
         path.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/path.png", squareSize, squareSize, false, false)));
         if (newValue != World.SPACE) {
             wall.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/wall.png", squareSize, squareSize, false, false)));
         }
         collectible.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/collectible.png", squareSize, squareSize, false, false)));
+        for (Label label : labels) {
+            String image = ((ImageView) label.getGraphic()).getImage().getUrl();
+            if (image == null) continue;
+            if (image.endsWith("start.png")) {
+                label.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/start.png", squareSize, squareSize, false, false)));
+            } else if (image.endsWith("goal.png")) {
+                label.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/goal.png", squareSize, squareSize, false, false)));
+            }
+        }
     }
 
+    private Maps getMap() {
+        RandomizeMap map = new RandomizeMap(hearts, spinner.getValue(), dimension);
+        for (int i = 0; i < dimension * dimension; i++) {
+            Sprite sprite;
+            String image = ((ImageView) labels.get(i).getGraphic()).getImage().getUrl();
+            if (image.endsWith("path.png")) {
+                sprite = Sprite.PATH;
+            } else if (image.endsWith("wall.png")) {
+                sprite = Sprite.WALL;
+            } else if (image.endsWith("breakablewall.png")) {
+                sprite = Sprite.BREAKABLE_WALL;
+            } else if (image.endsWith("axe.png")) {
+                sprite = Sprite.AXE;
+            } else if (image.endsWith("collectible.png")) {
+                sprite = Sprite.COLLECTIBLE;
+            } else if (image.endsWith("start.png")) {
+                sprite = Sprite.START;
+            } else if (image.endsWith("goal.png")) {
+                sprite = Sprite.GOAL;
+            } else if (image.endsWith("heart.png")) {
+                sprite = Sprite.HEART;
+            } else {
+                sprite = Sprite.WALL;
+            }
+            map.setSprite(i % dimension, i / dimension, sprite);
+        }
+        return map;
+    }
+
+    public void loadMap(Maps map) {
+        world = map.getWorld();
+        worldComboBox.setValue(world);
+        Sprite[][] mapArray = map.getMap();
+        for (int i = 0; i < dimension*dimension; i++) {
+            labels.get(i).setGraphic(new ImageView(new Image("file:files/" + world.toString().toLowerCase() + "/" + mapArray[i % dimension][i / dimension].toString().toLowerCase() + ".png", squareSize, squareSize, false, false)));
+        }
+    }
+
+    //uppdaterar antalet hjärtan som banan ska ha, och tillhörande grafiska element
+    private void firstHeartClicked() {
+        hearts = 1;
+        firstHeart.setImage(redHeart);
+        secondHeart.setImage(greyHeart);
+        thirdHeart.setImage(greyHeart);
+    }
+
+    //uppdaterar antalet hjärtan som banan ska ha, och tillhörande grafiska element
+    private void secondHeartClicked() {
+        hearts = 2;
+        firstHeart.setImage(redHeart);
+        secondHeart.setImage(redHeart);
+        thirdHeart.setImage(greyHeart);
+    }
+
+    //uppdaterar antalet hjärtan som banan ska ha, och tillhörande grafiska element
+    private void thirdHeartClicked() {
+        hearts = 3;
+        firstHeart.setImage(redHeart);
+        secondHeart.setImage(redHeart);
+        thirdHeart.setImage(redHeart);
+    }
+
+    //Lägger till listners för labels i högra menyn
     private void addListenerToLabel(Label label) {
         labels.add(label);
         label.setOnDragDetected(e -> {
@@ -205,7 +287,7 @@ public class SandboxScreen extends BorderPane {
         });
     }
 
-
+    //Metoder som kallas på för att sätta upp själva kartan
     private void setUpSandboxMap() {
         setBackground();
         sandBoxMap.setGridLinesVisible(true);
@@ -222,7 +304,7 @@ public class SandboxScreen extends BorderPane {
         this.setBackground(new Background(menuBackground));
     }
 
-
+    //initierar kartan med två stegar som start och mål
     private void setupLabels() {
         int id = 0;
         for (int i = 0; i < dimension; i++) {
@@ -247,6 +329,7 @@ public class SandboxScreen extends BorderPane {
         }
     }
 
+    //listeners för att hantera drag and drop funktionalitet
     private void setupListeners() {
         for (Label label : labels) {
             label.setOnDragDetected(e -> {
@@ -279,7 +362,14 @@ public class SandboxScreen extends BorderPane {
 
             label.setOnDragOver(e -> {
                 if (e.getGestureSource() != label && e.getDragboard().hasImage() && e.getDragboard().hasString()) {
-                    e.acceptTransferModes(TransferMode.MOVE);
+                    String image = ((ImageView) label.getGraphic()).getImage().getUrl();
+                    if (image == null) {
+                        e.acceptTransferModes(TransferMode.MOVE);
+                    } else if (image.endsWith("start.png") || image.endsWith("goal.png") && !isNumeric(e.getDragboard().getString())) {
+                        e.consume();
+                    } else {
+                        e.acceptTransferModes(TransferMode.MOVE);
+                    }
                 }
             });
         }

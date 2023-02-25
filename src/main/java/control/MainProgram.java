@@ -648,9 +648,12 @@ public class MainProgram extends Application {
      * Changes scene to sandbox mode
      */
     public void changeToSandBox() {
-        Scene scene = new Scene(new SandboxScreen(10), WIDTH, HEIGHT);
+        SandboxScreen sandboxScreen = new SandboxScreen(8);
+        sandboxScreen.loadMap(new World1Maps(3, 25, 1, World.FOREST));
+        Scene scene = new Scene(sandboxScreen, WIDTH, HEIGHT);
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         mainWindow.setScene(scene);
+
     }
 
     /**
@@ -663,6 +666,14 @@ public class MainProgram extends Application {
                 Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
                 taskbar.setIconImage(defaultToolkit.getImage(getClass().getResource("/images/ghost.png")));
             }
+        }
+    }
+
+    public void saveMap(Maps map) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("files/map.dat"))) {
+            oos.writeObject(map);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
