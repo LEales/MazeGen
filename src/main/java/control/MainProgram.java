@@ -30,12 +30,14 @@ import view.randomize.MapTemplate;
 import view.menu.*;
 import view.VictoryScreen;
 import view.WorldIntroAnimation;
+import view.sandbox.SandboxDimension;
 import view.sandbox.SandboxScreen;
 
 import java.awt.*;
 import java.io.*;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * @author André Eklund
@@ -201,9 +203,6 @@ public class MainProgram extends Application {
         tutorialScreen = new TutorialScreen();
         tutorialScreen.setupFirstScene();
         mainPaneCampaign.getChildren().add(tutorialScreen);
-        try {
-            nextWorld2Level(2,2);
-        } catch (Exception e) {}
         startTotalTime();
     }
     private void keyPressed(KeyEvent e) {
@@ -647,13 +646,16 @@ public class MainProgram extends Application {
     /**
      * Changes scene to sandbox mode
      */
-    public void changeToSandBox() {
-        SandboxScreen sandboxScreen = new SandboxScreen(8);
-        sandboxScreen.loadMap(new World1Maps(3, 25, 1, World.FOREST));
-        Scene scene = new Scene(sandboxScreen, WIDTH, HEIGHT);
+    public void changeToSandBox(int dimension) {
+        Scene scene = new Scene(new SandboxScreen(dimension), WIDTH, HEIGHT);
         scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         mainWindow.setScene(scene);
+    }
 
+    public void changeToSandBoxDimension() {
+        Scene scene = new Scene(new SandboxDimension(), WIDTH, HEIGHT);
+        //scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        mainWindow.setScene(scene);
     }
 
     /**

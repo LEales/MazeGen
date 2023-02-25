@@ -1,10 +1,13 @@
 package view.menu;
 
 import control.MainProgram;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import control.AudioPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.io.FileNotFoundException;
 
@@ -23,7 +26,68 @@ public class ChooseDimension extends Pane {
     public ChooseDimension() {
         mainProgram = MainProgram.getMainProgram();
         setBackground();
-        addButtons();
+        getChildren().addAll(getDimensionView(), get10x10(), get14x14(), get18x18(), getPain(), getReturn());
+    }
+
+    private ImageView getDimensionView() {
+        Image chooseDimension = new Image("file:files/texts/ChooseDimension.png", 800, 600, false, false);
+        ImageView dimensionView = new ImageView(chooseDimension);
+        dimensionView.setStyle("fx-background-color: transparent;");
+        return dimensionView;
+    }
+
+    private Label get10x10() {
+        Label tenByTen = createLabel(320, 200.0, "10x10");
+        tenByTen.setOnMouseClicked(e -> {
+            AudioPlayer.playButtonSound();
+            onClick(10);
+        });
+        return tenByTen;
+    }
+
+    private Label get14x14() {
+        Label fourteen = createLabel(320, 250, "14x14");
+        fourteen.setOnMouseClicked(e -> {
+            AudioPlayer.playButtonSound();
+            onClick(14);
+        });
+        return fourteen;
+    }
+
+    private Label get18x18() {
+        Label eighteen = createLabel(320, 300, "18x18");
+        eighteen.setOnMouseClicked(e -> {
+            AudioPlayer.playButtonSound();
+            onClick(18);
+        });
+        return eighteen;
+    }
+    private Label getPain() {
+        Label pain = createLabel(335, 350, "Pain");
+        pain.setOnMouseClicked(e -> {
+            AudioPlayer.playButtonSound();
+            onClick(28);
+        });
+        return pain;
+    }
+    private Label getReturn() {
+        Label aReturn = createLabel(320, 450, "Return");
+        aReturn.setOnMouseClicked(e ->{
+            AudioPlayer.playButtonSound();
+            mainProgram.changeToMenu();
+        });
+        return aReturn;
+    }
+
+    private Label createLabel(double x, double y, String text) {
+        Label label = new Label(text);
+        label.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 24));
+        label.setTextFill(Color.web("#0000D6"));
+        label.setTranslateX(x);
+        label.setTranslateY(y);
+        label.setOnMouseEntered(e -> label.setTextFill(Color.ORANGERED));
+        label.setOnMouseExited(e -> label.setTextFill(Color.web("#0000D6")));
+        return label;
     }
 
     /**
@@ -69,10 +133,7 @@ public class ChooseDimension extends Pane {
         view.setTranslateX(translateX);
     }
 
-    private void onClick(ImageView view, int dim) {
-        if (null == view) {
-            throw new IllegalArgumentException("Invalid Imageview");
-        }
+    private void onClick(int dim) {
         if (dim != 10 && dim != 14 && dim != 18 && dim != 28) {
             throw new IllegalArgumentException("Invalid dimension");
         }
@@ -103,26 +164,25 @@ public class ChooseDimension extends Pane {
 
         ImageView dimensionView = new ImageView(chooseDimension);
         dimensionView.setStyle("fx-background-color: transparent;");
-
         ImageView tenByTenView = createImageView(tenByTen, 275.0, 200.0);
         tenByTenView.setOnMouseEntered(e -> onEnterAndExit(tenByTenView, tenByTenResize, 273.0, 198.0));
         tenByTenView.setOnMouseExited(e -> onEnterAndExit(tenByTenView, tenByTen, 275.0, 200.0));
-        tenByTenView.setOnMouseClicked(e -> onClick(tenByTenView, 10));
+        tenByTenView.setOnMouseClicked(e -> onClick(10));
 
         ImageView fourteenView = createImageView(fourteen, 275.0, 250.0);
         fourteenView.setOnMouseEntered(e -> onEnterAndExit(fourteenView, fourteenResize, 273.0, 248.0));
         fourteenView.setOnMouseExited(e -> onEnterAndExit(fourteenView, fourteen, 275.0, 250.0));
-        fourteenView.setOnMouseClicked(e -> onClick(fourteenView, 14));
+        fourteenView.setOnMouseClicked(e -> onClick(14));
 
         ImageView eighteenView = createImageView(eighteen, 275.0, 300.0);
         eighteenView.setOnMouseEntered(e -> onEnterAndExit(eighteenView, eighteenResize, 273.0, 298.0));
         eighteenView.setOnMouseExited(e -> onEnterAndExit(eighteenView, eighteen, 275.0, 300.0));
-        eighteenView.setOnMouseClicked(e -> onClick(eighteenView, 18));
+        eighteenView.setOnMouseClicked(e -> onClick(18));
 
         ImageView painView = createImageView(pain, 275.0, 350.0);
         painView.setOnMouseEntered(e -> onEnterAndExit(painView, painResize, 273.0, 348.0));
         painView.setOnMouseExited(e -> onEnterAndExit(painView, pain, 275.0, 350.0));
-        painView.setOnMouseClicked(e -> onClick(painView, 28));
+        painView.setOnMouseClicked(e -> onClick(28));
 
         ImageView returnView = createImageView(returnImage, 300.0, 450.0);
         returnView.setOnMouseEntered(e -> onEnterAndExit(returnView, returnResize, 298.0, 448.0));
