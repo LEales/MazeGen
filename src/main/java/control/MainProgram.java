@@ -558,6 +558,7 @@ public class MainProgram extends Application {
 
     public void showVictoryScene() {
         mainWindow.setScene(victoryScene);
+        victoryScreen.startLabelTimer();
     }
 
     @Override

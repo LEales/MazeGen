@@ -2,6 +2,9 @@ package view;
 
 import control.MainProgram;
 import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Label;
@@ -9,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import model.Player;
 
 /**
@@ -20,6 +24,8 @@ public class VictoryScreen extends Pane {
     private final MainProgram mainProgram;
     private int totalTime, backSpaceCheck;
     private Label errorLabel;
+
+    private Label enterLabel;
     private Label highScoreLabel;
     private StringProperty firstProperty = new SimpleStringProperty("_");
     private StringProperty secondProperty = new SimpleStringProperty("_");
@@ -32,7 +38,7 @@ public class VictoryScreen extends Pane {
         this.setBackground(new Background(setBackground()));
         setupTextLabels();
         setupScene();
-        this.setOnMouseClicked(e -> mainProgram.showHighScoreList());
+
     }
 
     private void setupScene() {
@@ -58,7 +64,7 @@ public class VictoryScreen extends Pane {
 
             @Override
             public void handle(long now) {
-                if (now - lastUpdate >= 100_000_000) { // change hue every half second
+                if (now - lastUpdate >= 100_000_000) {
                     hue = (hue + 10) % 360;
                     Color color = Color.hsb(hue, 1, 1);
                     String css = "-fx-text-fill: " + toWebColor(color) + ";";
@@ -186,5 +192,15 @@ public class VictoryScreen extends Pane {
                 current = "first";
             }
         }
+    }
+
+    public void startLabelTimer() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+            enterLabel = new Label("Press Enter To Continue");
+            enterLabel.setFont(getFont(20));
+            enterLabel.setTextFill(Color.web("#ffffff"));
+            getChildren().add(enterLabel);
+        }));
+        timeline.play();
     }
 }
