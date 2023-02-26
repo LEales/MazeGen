@@ -169,6 +169,7 @@ public class MainProgram extends Application {
         randomScene.setCursor(new ImageCursor(cursorImage));
         highscoreScene.setCursor(new ImageCursor(cursorImage));
         victoryScene.setCursor(new ImageCursor(cursorImage));
+        sandboxPlayScene.setCursor(new ImageCursor(cursorImage));
     }
 
     /**
