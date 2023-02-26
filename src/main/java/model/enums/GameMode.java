@@ -1,7 +1,7 @@
 package model.enums;
 
 public enum GameMode {
-    CAMPAIGN("11"), RANDOMIZE("Random");
+    CAMPAIGN("11"), RANDOMIZE("Random"), CUSTOM("Custom");
 
     private final String mode;
     GameMode(String mode) {

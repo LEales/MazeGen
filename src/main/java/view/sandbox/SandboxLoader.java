@@ -49,7 +49,7 @@ public class SandboxLoader extends Pane {
     }
 
     private VBox addMap(CreatedMap map) {
-        int id = this.id;
+        CreatedMap finalMap = map;
         VBox template = new VBox();
         template.setSpacing(10);
         Label name = new Label("World: " + map.getName());
@@ -60,25 +60,21 @@ public class SandboxLoader extends Pane {
         load.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 14));
         load.setBackground(new Background(new BackgroundFill(Color.web("#FFFFFF"), null, null)));
         load.setOnMouseClicked(e -> {
-            mainProgram.loadMap(id);
+            mainProgram.loadMap(finalMap);
         });
         Button play = new Button("Play");
         play.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 14));
         play.setOnMouseClicked(e -> {
-            mainProgram.playMap(id);
+            mainProgram.playMap(finalMap);
         });
         Button delete = new Button("Delete");
         delete.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 14));
         delete.setOnMouseClicked(e -> {
-            String remove = "vbox" + id;
-            System.out.println("Hello");
-            mainProgram.deleteMap(id);
+            mainProgram.deleteMap(finalMap);
             content.getChildren().remove(template);
         });
         buttons.getChildren().addAll(load, play, delete);
         template.getChildren().addAll(name, buttons);
-        template.setId("vbox" + id);
-        this.id++;
         return template;
     }
 }

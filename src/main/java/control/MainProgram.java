@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import javafx.util.Duration;
 import model.enums.GameMode;
+import model.enums.Sprite;
 import model.maps.*;
 
 import model.Player;
@@ -29,10 +30,7 @@ import view.randomize.MapTemplate;
 import view.menu.*;
 import view.VictoryScreen;
 import view.WorldIntroAnimation;
-import view.sandbox.SandboxDimension;
-import view.sandbox.SandboxLoadNew;
-import view.sandbox.SandboxLoader;
-import view.sandbox.SandboxScreen;
+import view.sandbox.*;
 
 import java.awt.*;
 import java.io.*;
@@ -49,11 +47,11 @@ public class MainProgram extends Application {
     public static final double WIDTH = 800.0d;
     public static final double HEIGHT = 600.0d;
     private Stage mainWindow;
-    private BorderPane mainPaneRandomMaze, mainPaneCampaign;
-    private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene, sandboxLoader, sandboxScene;
+    private BorderPane mainPaneRandomMaze, mainPaneCampaign, mainPaneSandbox;
+    private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene, sandboxLoader, sandboxScene, sandboxPlayScene;
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
-    private RightPanel rightPanel, rightPnlRndm;
+    private RightPanel rightPanel, rightPnlRndm, rightPanelSandbox;
     private MazeGenerator mazeGenerator;
 
     private WorldIntroAnimation introAnimation;
@@ -81,9 +79,13 @@ public class MainProgram extends Application {
         AudioPlayer.playIntroMusic();
 
         createdMaps = new ArrayList<>();
+        addMapsFromDat();
 
         rightPanel = new RightPanel(GameMode.CAMPAIGN);
         rightPanel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        rightPanelSandbox = new RightPanel(GameMode.CUSTOM);
+        rightPanelSandbox.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         Menu menu = new Menu();
         Intro intro = new Intro();
@@ -129,6 +131,7 @@ public class MainProgram extends Application {
 
         mainPaneRandomMaze = new BorderPane();
         mainPaneCampaign = new BorderPane();
+        mainPaneSandbox = new BorderPane();
         introAnimation = new WorldIntroAnimation();
 
         mainWindow = primaryStage;
@@ -136,8 +139,12 @@ public class MainProgram extends Application {
 
         mainWindow.setTitle("Mazegen");
         mainWindow.setResizable(false);
-        mainWindow.setOnCloseRequest(windowEvent -> System.exit(0));
+        mainWindow.setOnCloseRequest(windowEvent -> {
+            saveMapsToDat();
+            System.exit(0);
+        });
         mainPaneCampaign.setRight(rightPanel);
+        mainPaneSandbox.setRight(rightPanelSandbox);
 
         rightPnlRndm = new RightPanel(GameMode.RANDOMIZE);
         rightPnlRndm.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -147,6 +154,7 @@ public class MainProgram extends Application {
         campaignScene = new Scene(mainPaneCampaign, WIDTH, HEIGHT);
         randomScene = new Scene(mainPaneRandomMaze, WIDTH, HEIGHT);
         menuScene = new Scene(menu, WIDTH, HEIGHT);
+        sandboxPlayScene = new Scene(mainPaneSandbox, WIDTH, HEIGHT);
 
         mainWindow.setScene(introScene);
         mainWindow.show();
@@ -167,6 +175,7 @@ public class MainProgram extends Application {
     public void changeToMenu() {
         removeTutorialScreen();
         mainWindow.setScene(menuScene);
+        sandboxScene = null;
     }
 
     /**
@@ -208,6 +217,7 @@ public class MainProgram extends Application {
         mainPaneCampaign.getChildren().add(tutorialScreen);
         startTotalTime();
     }
+
     private void keyPressed(KeyEvent e) {
         if (null != e) {
             if (KeyCode.SPACE == e.getCode()) {
@@ -254,6 +264,19 @@ public class MainProgram extends Application {
         mainPaneRandomMaze.setOnMouseClicked(e -> {
             changeToMenu();
             mainPaneRandomMaze.setOnMouseClicked(null);
+        });
+    }
+    public void gameOverSandbox() {
+        ImageView introView = new ImageView(new Image("file:files/texts/Gameover.png", 600, 600, false, false));
+        introView.setStyle("fx-background-color: transparent;");
+        FadeTransition ft = new FadeTransition(Duration.millis(4000.0), introView);
+        mainPaneSandbox.getChildren().add(introView);
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
+        mainPaneSandbox.setOnMouseClicked(e -> {
+            changeToMenu();
+            mainPaneSandbox.setOnMouseClicked(null);
         });
     }
 
@@ -681,12 +704,13 @@ public class MainProgram extends Application {
     }
 
     public boolean saveMap(CreatedMap map, boolean overwrite) {
-        if (createdMaps.contains(map) && !overwrite) {
+        CreatedMap clone = cloneMap(map);
+        if (createdMaps.contains(clone) && !overwrite) {
             return false;
-        } else if (createdMaps.contains(map) && overwrite) {
-            createdMaps.set(createdMaps.indexOf(map), map);
+        } else if (createdMaps.contains(clone) && overwrite) {
+            createdMaps.set(createdMaps.indexOf(clone), clone);
         } else {
-            createdMaps.add(map);
+            createdMaps.add(clone);
         }
         return true;
     }
@@ -700,26 +724,65 @@ public class MainProgram extends Application {
         return false;
     }
 
-    public void saveMapsToDat() {
+    private void saveMapsToDat() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("files/maps.dat"))) {
             for (CreatedMap map : createdMaps) {
-                oos.writeObject(map);
+                CreatedMap clone = cloneMap(map);
+                oos.writeObject(clone);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void loadMap(int index) {
-        if (index < createdMaps.size() && 0 <= index) {
-            //// TODO: 2023-02-25 new mapTemplate class for sandbox...
+    private void addMapsFromDat() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("files/maps.dat"))) {
+            CreatedMap map;
+            while (null != (map = (CreatedMap) ois.readObject())) {
+                CreatedMap clone = cloneMap(map);
+                createdMaps.add(clone);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("no maps.dat found \n" + e.getClass());
         }
     }
 
-    public void playMap(int id) {
+    public void loadMap(CreatedMap map) {
+        CreatedMap clone = cloneMap(map);
+        SandboxScreen sandboxScreen = new SandboxScreen(map.dimension);
+        sandboxScreen.loadMap(clone);
+        sandboxScene = new Scene(sandboxScreen, WIDTH, HEIGHT);
+        mainWindow.setScene(sandboxScene);
     }
 
-    public void deleteMap(int id) {
+    public void playMap(CreatedMap map) {
+        CreatedMap clone = cloneMap(map);
+        SandboxTemplate sandboxTemplate = new SandboxTemplate(clone, rightPanelSandbox);
+        mainPaneSandbox.setCenter(sandboxTemplate);
+        mainWindow.setScene(sandboxPlayScene);
+    }
+
+    private CreatedMap cloneMap(CreatedMap map) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(map);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        byte[] bytes = baos.toByteArray();
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        CreatedMap copy = null;
+        try (ObjectInputStream ois = new ObjectInputStream(bais)) {
+            copy = (CreatedMap) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return copy;
+    }
+
+    public void deleteMap(CreatedMap map) {
+        CreatedMap clone = cloneMap(map);
+        createdMaps.remove(clone);
     }
 
     public void changeToSandBoxLoader() {

@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -34,19 +35,38 @@ public class SandboxScreen extends BorderPane {
 
     private final ArrayList<Label> labels;
 
-    private final int squareSize, dimension;
+    private final int squareSizeMap, squareSizeMenu, dimension;
     private Image redHeart = new Image("file:files/items/heart.png", 20, 20, false, false);
     private Image greyHeart = new Image("file:files/hearts/greyheart.png", 20, 20, false, false);
     private ImageView firstHeart = new ImageView(redHeart), secondHeart = new ImageView(redHeart), thirdHeart = new ImageView(redHeart);
     private Spinner<Integer> spinner = new Spinner<>();
     private World world;
-    private int hearts;
+    private int hearts = 3;
+    private Image pathImage, wallImage, heartImage, breakableWallImage, axeImage, collectibleImage, deleteImage, startImage, goalImage;
+    private Image pathImageMenu, wallImageMenu, heartImageMenu, breakableWallImageMenu, axeImageMenu, collectibleImageMenu, deleteImageMenu;
 
     public SandboxScreen(int dimension) {
+        this.squareSizeMenu = 60;
         this.dimension = dimension;
-        this.squareSize = (int) MainProgram.HEIGHT / dimension;
+        this.squareSizeMap = (int) MainProgram.HEIGHT / dimension;
         labels = new ArrayList<>();
         sandBoxMap = new GridPane();
+        pathImage = new Image("file:files/forest/path.png", squareSizeMap, squareSizeMap, false, false);
+        wallImage = new Image("file:files/forest/wall.png", squareSizeMap, squareSizeMap, false, false);
+        heartImage = new Image("file:files/items/heart.png", squareSizeMap, squareSizeMap, false, false);
+        breakableWallImage = new Image("file:files/breakablewall.png", squareSizeMap, squareSizeMap, false, false);
+        axeImage = new Image("file:files/items/pickaxe.png", squareSizeMap, squareSizeMap, false, false);
+        collectibleImage = new Image("file:files/forest/collectible.png", squareSizeMap, squareSizeMap, false, false);
+        deleteImage = new Image("file:files/emptySprite.png", squareSizeMap, squareSizeMap, false, false);
+        startImage = new Image("file:files/forest/start.png", squareSizeMap, squareSizeMap, false, false);
+        goalImage = new Image("file:files/forest/goal.png", squareSizeMap, squareSizeMap, false, false);
+        pathImageMenu = new Image("file:files/forest/path.png", squareSizeMenu, squareSizeMenu, false, false);
+        wallImageMenu = new Image("file:files/forest/wall.png", squareSizeMenu, squareSizeMenu, false, false);
+        heartImageMenu = new Image("file:files/items/heart.png", squareSizeMenu, squareSizeMenu, false, false);
+        breakableWallImageMenu = new Image("file:files/breakablewall.png", squareSizeMenu, squareSizeMenu, false, false);
+        axeImageMenu = new Image("file:files/items/pickaxe.png", squareSizeMenu, squareSizeMenu, false, false);
+        collectibleImageMenu = new Image("file:files/forest/collectible.png", squareSizeMenu, squareSizeMenu, false, false);
+        deleteImageMenu = new Image("file:files/garbage.png", squareSizeMenu, squareSizeMenu, false, false);
         setUpSandboxMap();
         setUpPanel();
         setCenter(sandBoxMap);
@@ -77,6 +97,39 @@ public class SandboxScreen extends BorderPane {
         collectible.setId("collectible");
         delete.setId("delete");
 
+
+        ImageView pathImageView = new ImageView(pathImageMenu);
+        ImageView wallImageView = new ImageView(wallImageMenu);
+        ImageView heartImageView = new ImageView(heartImageMenu);
+        ImageView breakableWallImageView = new ImageView(breakableWallImageMenu);
+        ImageView axeImageView = new ImageView(axeImageMenu);
+        ImageView collectibleImageView = new ImageView(collectibleImageMenu);
+        ImageView deleteImageView = new ImageView(deleteImageMenu);
+
+        pathImageView.setFitWidth(squareSizeMenu);
+        pathImageView.setFitHeight(squareSizeMenu);
+        wallImageView.setFitWidth(squareSizeMenu);
+        wallImageView.setFitHeight(squareSizeMenu);
+        heartImageView.setFitWidth(squareSizeMenu);
+        heartImageView.setFitHeight(squareSizeMenu);
+        breakableWallImageView.setFitWidth(squareSizeMenu); //this block can be deleted i think?
+        breakableWallImageView.setFitHeight(squareSizeMenu);
+        axeImageView.setFitWidth(squareSizeMenu);
+        axeImageView.setFitHeight(squareSizeMenu);
+        collectibleImageView.setFitWidth(squareSizeMenu);
+        collectibleImageView.setFitHeight(squareSizeMenu);
+        deleteImageView.setFitWidth(squareSizeMenu);
+        deleteImageView.setFitHeight(squareSizeMenu);
+
+
+        path.setGraphic(pathImageView);
+        wall.setGraphic(wallImageView);
+        heart.setGraphic(heartImageView);
+        breakableWall.setGraphic(breakableWallImageView);
+        axe.setGraphic(axeImageView);
+        collectible.setGraphic(collectibleImageView);
+        delete.setGraphic(deleteImageView);
+
         addListenerToLabel(path);
         addListenerToLabel(wall);
         addListenerToLabel(heart);
@@ -87,51 +140,10 @@ public class SandboxScreen extends BorderPane {
         delete.setOnDragDetected(e -> {
             Dragboard db = delete.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
-            content.putImage(new Image("file:files/emptySprite.png"));
+            content.putImage(deleteImage);
             content.putString(delete.getId());
             db.setContent(content);
         });
-
-
-        Image pathImage = new Image("file:files/forest/path.png", squareSize, squareSize, false, false);
-        Image wallImage = new Image("file:files/forest/wall.png", squareSize, squareSize, false, false);
-        Image heartImage = new Image("file:files/items/heart.png", squareSize, squareSize, false, false);
-        Image breakableWallImage = new Image("file:files/breakablewall.png", squareSize, squareSize, false, false);
-        Image axeImage = new Image("file:files/items/pickaxe.png", squareSize, squareSize, false, false);
-        Image collectibleImage = new Image("file:files/forest/collectible.png", squareSize, squareSize, false, false);
-        Image deleteImage = new Image("file:files/garbage.png", squareSize, squareSize, false, false);
-
-        ImageView pathImageView = new ImageView(pathImage);
-        ImageView wallImageView = new ImageView(wallImage);
-        ImageView heartImageView = new ImageView(heartImage);
-        ImageView breakableWallImageView = new ImageView(breakableWallImage);
-        ImageView axeImageView = new ImageView(axeImage);
-        ImageView collectibleImageView = new ImageView(collectibleImage);
-        ImageView deleteImageView = new ImageView(deleteImage);
-
-        pathImageView.setFitWidth(squareSize);
-        pathImageView.setFitHeight(squareSize);
-        wallImageView.setFitWidth(squareSize);
-        wallImageView.setFitHeight(squareSize);
-        heartImageView.setFitWidth(squareSize);
-        heartImageView.setFitHeight(squareSize);
-        breakableWallImageView.setFitWidth(squareSize);
-        breakableWallImageView.setFitHeight(squareSize);
-        axeImageView.setFitWidth(squareSize);
-        axeImageView.setFitHeight(squareSize);
-        collectibleImageView.setFitWidth(squareSize);
-        collectibleImageView.setFitHeight(squareSize);
-        deleteImageView.setFitWidth(squareSize);
-        deleteImageView.setFitHeight(squareSize);
-
-
-        path.setGraphic(pathImageView);
-        wall.setGraphic(wallImageView);
-        heart.setGraphic(heartImageView);
-        breakableWall.setGraphic(breakableWallImageView);
-        axe.setGraphic(axeImageView);
-        collectible.setGraphic(collectibleImageView);
-        delete.setGraphic(deleteImageView);
 
         HBox firstBox = new HBox();
         firstBox.getChildren().addAll(path, wall);
@@ -231,44 +243,59 @@ public class SandboxScreen extends BorderPane {
 
     //byter ut images när världen byts i comboboxen
     private void changeImages(World newValue) {
+        if (null == newValue) return;
         world = newValue;
-        path.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/path.png", squareSize, squareSize, false, false)));
-        if (newValue != World.SPACE) {
-            wall.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/wall.png", squareSize, squareSize, false, false)));
-        }
-        collectible.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/collectible.png", squareSize, squareSize, false, false)));
+        pathImageMenu = new Image("file:files/" + newValue.toString().toLowerCase() + "/path.png", squareSizeMenu, squareSizeMenu, false, false);
+        wallImageMenu = new Image("file:files/" + newValue.toString().toLowerCase() + "/wall.png", squareSizeMenu, squareSizeMenu, false, false);
+        collectibleImageMenu = new Image("file:files/" + newValue.toString().toLowerCase() + "/collectible.png", squareSizeMenu, squareSizeMenu, false, false);
+        path.setGraphic(new ImageView(pathImageMenu));
+        wall.setGraphic(new ImageView(wallImageMenu));
+        collectible.setGraphic(new ImageView(collectibleImageMenu));
+
+        Image tempPath = pathImage;
+        Image tempWall = wallImage;
+        Image tempCollectible = collectibleImage;
+        pathImage = new Image("file:files/" + newValue.toString().toLowerCase() + "/path.png", squareSizeMap, squareSizeMap, false, false);
+        wallImage = new Image("file:files/" + newValue.toString().toLowerCase() + "/wall.png", squareSizeMap, squareSizeMap, false, false);
+        collectibleImage = new Image("file:files/" + newValue.toString().toLowerCase() + "/collectible.png", squareSizeMap, squareSizeMap, false, false);
         for (Label label : labels) {
-            String image = ((ImageView) label.getGraphic()).getImage().getUrl();
-            if (image == null) continue;
-            if (image.endsWith("start.png")) {
-                label.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/start.png", squareSize, squareSize, false, false)));
-            } else if (image.endsWith("goal.png")) {
-                label.setGraphic(new ImageView(new Image("file:files/" + newValue.toString().toLowerCase() + "/goal.png", squareSize, squareSize, false, false)));
+            Image image = ((ImageView) label.getGraphic()).getImage();
+            if (compareImages(image, tempPath)) {
+                label.setGraphic(new ImageView(pathImage));
+            } else if (compareImages(image, tempWall)) {
+                label.setGraphic(new ImageView(wallImage));
+            } else if (compareImages(image, tempCollectible)) {
+                label.setGraphic(new ImageView(collectibleImage));
+            } else if (compareImages(image, startImage)) {
+                startImage = new Image("file:files/" + newValue.toString().toLowerCase() + "/start.png", squareSizeMap, squareSizeMap, false, false);
+                label.setGraphic(new ImageView(startImage));
+            } else if (compareImages(image, goalImage)) {
+                goalImage = new Image("file:files/" + newValue.toString().toLowerCase() + "/goal.png", squareSizeMap, squareSizeMap, false, false);
+                label.setGraphic(new ImageView(goalImage));
             }
         }
     }
 
     private CreatedMap getMap(String name) {
-        CreatedMap map = new CreatedMap(hearts, spinner.getValue(), dimension, name);
+        CreatedMap map = new CreatedMap(hearts, spinner.getValue(), dimension, name, worldComboBox.getValue());
         for (int i = 0; i < dimension * dimension; i++) {
             Sprite sprite;
-            String image = ((ImageView) labels.get(i).getGraphic()).getImage().getUrl();
-            System.out.println(image);
-            if (image.endsWith("path.png")) {
+            Image image = ((ImageView) labels.get(i).getGraphic()).getImage();
+            if (compareImages(image, pathImage)) {
                 sprite = Sprite.PATH;
-            } else if (image.endsWith("wall.png")) {
+            } else if (compareImages(image, wallImage)) {
                 sprite = Sprite.WALL;
-            } else if (image.endsWith("breakablewall.png")) {
+            } else if (compareImages(image, breakableWallImage)) {
                 sprite = Sprite.BREAKABLE_WALL;
-            } else if (image.endsWith("axe.png")) {
+            } else if (compareImages(image, axeImage)) {
                 sprite = Sprite.AXE;
-            } else if (image.endsWith("collectible.png")) {
+            } else if (compareImages(image, collectibleImage)) {
                 sprite = Sprite.COLLECTIBLE;
-            } else if (image.endsWith("start.png")) {
+            } else if (compareImages(image, startImage)) {
                 sprite = Sprite.START;
-            } else if (image.endsWith("goal.png")) {
+            } else if (compareImages(image, goalImage)) {
                 sprite = Sprite.GOAL;
-            } else if (image.endsWith("heart.png")) {
+            } else if (compareImages(image, heartImage)) {
                 sprite = Sprite.HEART;
             } else {
                 sprite = Sprite.WALL;
@@ -278,12 +305,23 @@ public class SandboxScreen extends BorderPane {
         return map;
     }
 
-    public void loadMap(Maps map) {
+    public void loadMap(CreatedMap map) {
         world = map.getWorld();
         worldComboBox.setValue(world);
         Sprite[][] mapArray = map.getMap();
         for (int i = 0; i < dimension * dimension; i++) {
-            labels.get(i).setGraphic(new ImageView(new Image("file:files/" + world.toString().toLowerCase() + "/" + mapArray[i % dimension][i / dimension].toString().toLowerCase() + ".png", squareSize, squareSize, false, false)));
+            switch (mapArray[i % dimension][i / dimension]) {
+                case PATH -> labels.get(i).setGraphic(new ImageView(pathImage));
+                case WALL -> labels.get(i).setGraphic(new ImageView(wallImage));
+                case BREAKABLE_WALL -> labels.get(i).setGraphic(new ImageView(breakableWallImage));
+                case AXE -> labels.get(i).setGraphic(new ImageView(axeImage));
+                case COLLECTIBLE -> labels.get(i).setGraphic(new ImageView(collectibleImage));
+                case START -> labels.get(i).setGraphic(new ImageView(startImage));
+                case GOAL -> labels.get(i).setGraphic(new ImageView(goalImage));
+                case HEART -> labels.get(i).setGraphic(new ImageView(heartImage));
+            }
+            //set global images
+            // labels.get(i).setGraphic(new ImageView(new Image("file:files/" + world.toString().toLowerCase() + "/" + mapArray[i % dimension][i / dimension].toString().toLowerCase() + ".png", squareSizeMap, squareSizeMap, false, false)));
         }
     }
 
@@ -314,10 +352,27 @@ public class SandboxScreen extends BorderPane {
     //Lägger till listners för labels i högra menyn
     private void addListenerToLabel(Label label) {
         labels.add(label);
+
         label.setOnDragDetected(e -> {
+            Image image;
+            if (label.getId().equals("path")) {
+                image = pathImage;
+            } else if (label.getId().equals("wall")) {
+                image = wallImage;
+            } else if (label.getId().equals("breakableWall")) {
+                image = breakableWallImage;
+            } else if (label.getId().equals("axe")) {
+                image = axeImage;
+            } else if (label.getId().equals("collectible")) {
+                image = collectibleImage;
+            } else if (label.getId().equals("heart")) {
+                image = heartImage;
+            } else {
+                image = pathImage;
+            }
             Dragboard db = label.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
-            content.putImage(((ImageView) label.getGraphic()).getImage());
+            content.putImage(image);
             content.putString(label.getId());
             db.setContent(content);
         });
@@ -333,7 +388,7 @@ public class SandboxScreen extends BorderPane {
     }
 
     private void setBackground() {
-        BackgroundImage menuBackground = new BackgroundImage(new javafx.scene.image.Image("file:files/MenuBackground.jpg",
+        BackgroundImage menuBackground = new BackgroundImage(new Image("file:files/MenuBackground.jpg",
                 MainProgram.WIDTH, MainProgram.HEIGHT, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
@@ -431,29 +486,45 @@ public class SandboxScreen extends BorderPane {
 
     private Label getGoal() {
         Label label = new Label();
-        ImageView goalView = new ImageView(new javafx.scene.image.Image("file:files/forest/goal.png"));
-        goalView.setFitHeight(squareSize);
-        goalView.setFitWidth(squareSize);
+        ImageView goalView = new ImageView(goalImage);
+        goalView.setFitHeight(squareSizeMap);
+        goalView.setFitWidth(squareSizeMap);
         label.setGraphic(goalView);
         return label;
     }
 
     private Label getStart() {
         Label label = new Label();
-        ImageView startView = new ImageView(new javafx.scene.image.Image("file:files/forest/start.png"));
-        startView.setFitHeight(squareSize);
-        startView.setFitWidth(squareSize);
+        ImageView startView = new ImageView(startImage);
+        startView.setFitHeight(squareSizeMap);
+        startView.setFitWidth(squareSizeMap);
         label.setGraphic(startView);
         return label;
     }
 
     private Label getEmpty() {
         Label label = new Label();
-        ImageView emptyView = new ImageView(new Image("file:files/emptySprite.png"));
-        emptyView.setFitHeight(squareSize);
-        emptyView.setFitWidth(squareSize);
+        ImageView emptyView = new ImageView(deleteImage);
+        emptyView.setFitHeight(squareSizeMap);
+        emptyView.setFitWidth(squareSizeMap);
         label.setGraphic(emptyView);
         return label;
     }
+    private boolean compareImages(Image image1, Image image2) {
+        if (image1.getWidth() != image2.getWidth() || image1.getHeight() != image2.getHeight()) {
+            return false;
+        }
+        PixelReader reader1 = image1.getPixelReader();
+        PixelReader reader2 = image2.getPixelReader();
+        for (int y = 0; y < image1.getHeight(); y++) {
+            for (int x = 0; x < image1.getWidth(); x++) {
+                if (reader1.getArgb(x, y) != reader2.getArgb(x, y)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }
 
