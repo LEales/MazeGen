@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import javafx.util.Duration;
 import model.enums.GameMode;
+import model.enums.Sprite;
 import model.maps.*;
 
 import model.Player;
@@ -24,15 +25,16 @@ import control.time.TotalTime;
 import view.TutorialScreen;
 import view.campaign.*;
 import view.GameOverScreen;
+import view.menu.Menu;
 import view.randomize.MapTemplate;
 import view.menu.*;
 import view.VictoryScreen;
 import view.WorldIntroAnimation;
+import view.sandbox.*;
 
-
+import java.awt.*;
 import java.io.*;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * @author André Eklund
@@ -45,11 +47,11 @@ public class MainProgram extends Application {
     public static final double WIDTH = 800.0d;
     public static final double HEIGHT = 600.0d;
     private Stage mainWindow;
-    private BorderPane mainPaneRandomMaze, mainPaneCampaign;
-    private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene;
+    private BorderPane mainPaneRandomMaze, mainPaneCampaign, mainPaneSandbox;
+    private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene, sandboxLoader, sandboxScene, sandboxPlayScene;
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
-    private RightPanel rightPanel, rightPnlRndm;
+    private RightPanel rightPanel, rightPnlRndm, rightPanelSandbox;
     private MazeGenerator mazeGenerator;
 
     private WorldIntroAnimation introAnimation;
@@ -60,6 +62,8 @@ public class MainProgram extends Application {
     private World1Template worldTemplate;
 
     private TutorialScreen tutorialScreen;
+
+    private ArrayList<CreatedMap> createdMaps;
 
 
     /**
@@ -74,8 +78,14 @@ public class MainProgram extends Application {
     public void start(Stage primaryStage) throws FileNotFoundException {
         AudioPlayer.playIntroMusic();
 
+        createdMaps = new ArrayList<>();
+        addMapsFromDat();
+
         rightPanel = new RightPanel(GameMode.CAMPAIGN);
         rightPanel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        rightPanelSandbox = new RightPanel(GameMode.CUSTOM);
+        rightPanelSandbox.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         Menu menu = new Menu();
         Intro intro = new Intro();
@@ -115,11 +125,13 @@ public class MainProgram extends Application {
             }
         });
 
+        setTaskBar();
 
         chooseDimensionScene = new Scene(chooseDimension, WIDTH, HEIGHT);
 
         mainPaneRandomMaze = new BorderPane();
         mainPaneCampaign = new BorderPane();
+        mainPaneSandbox = new BorderPane();
         introAnimation = new WorldIntroAnimation();
 
         mainWindow = primaryStage;
@@ -127,8 +139,12 @@ public class MainProgram extends Application {
 
         mainWindow.setTitle("Mazegen");
         mainWindow.setResizable(false);
-        mainWindow.setOnCloseRequest(windowEvent -> System.exit(0));
+        mainWindow.setOnCloseRequest(windowEvent -> {
+            saveMapsToDat();
+            System.exit(0);
+        });
         mainPaneCampaign.setRight(rightPanel);
+        mainPaneSandbox.setRight(rightPanelSandbox);
 
         rightPnlRndm = new RightPanel(GameMode.RANDOMIZE);
         rightPnlRndm.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -138,6 +154,7 @@ public class MainProgram extends Application {
         campaignScene = new Scene(mainPaneCampaign, WIDTH, HEIGHT);
         randomScene = new Scene(mainPaneRandomMaze, WIDTH, HEIGHT);
         menuScene = new Scene(menu, WIDTH, HEIGHT);
+        sandboxPlayScene = new Scene(mainPaneSandbox, WIDTH, HEIGHT);
 
         mainWindow.setScene(introScene);
         mainWindow.show();
@@ -158,6 +175,7 @@ public class MainProgram extends Application {
     public void changeToMenu() {
         removeTutorialScreen();
         mainWindow.setScene(menuScene);
+        sandboxScene = null;
     }
 
     /**
@@ -199,6 +217,7 @@ public class MainProgram extends Application {
         mainPaneCampaign.getChildren().add(tutorialScreen);
         startTotalTime();
     }
+
     private void keyPressed(KeyEvent e) {
         if (null != e) {
             if (KeyCode.SPACE == e.getCode()) {
@@ -245,6 +264,19 @@ public class MainProgram extends Application {
         mainPaneRandomMaze.setOnMouseClicked(e -> {
             changeToMenu();
             mainPaneRandomMaze.setOnMouseClicked(null);
+        });
+    }
+    public void gameOverSandbox() {
+        ImageView introView = new ImageView(new Image("file:files/texts/Gameover.png", 600, 600, false, false));
+        introView.setStyle("fx-background-color: transparent;");
+        FadeTransition ft = new FadeTransition(Duration.millis(4000.0), introView);
+        mainPaneSandbox.getChildren().add(introView);
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
+        mainPaneSandbox.setOnMouseClicked(e -> {
+            changeToMenu();
+            mainPaneSandbox.setOnMouseClicked(null);
         });
     }
 
@@ -549,6 +581,7 @@ public class MainProgram extends Application {
 
     public void showVictoryScene() {
         mainWindow.setScene(victoryScene);
+        victoryScreen.startLabelTimer();
     }
 
     @Override
@@ -635,5 +668,125 @@ public class MainProgram extends Application {
             mainPaneCampaign.getChildren().add(introAnimation);
             introAnimation.setDisable(true);
         }
+    }
+
+    /**
+     * Changes scene to sandbox mode
+     */
+    public void changeToSandBox(int dimension) {
+        sandboxScene = new Scene(new SandboxScreen(dimension), WIDTH, HEIGHT);
+        sandboxScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        mainWindow.setScene(sandboxScene);
+    }
+
+    public void changeToSandBoxDimension() {
+        Scene scene = new Scene(new SandboxDimension(), WIDTH, HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        mainWindow.setScene(scene);
+    }
+
+    public void changeToSandBoxNewLoad() {
+        Scene scene = new Scene(new SandboxLoadNew(), WIDTH, HEIGHT);
+        mainWindow.setScene(scene);
+    }
+
+    /**
+     * Sets the taskbar icon
+     */
+    private void setTaskBar() {
+        if (Taskbar.isTaskbarSupported()) {
+            Taskbar taskbar = Taskbar.getTaskbar();
+            if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE)) {
+                Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+                taskbar.setIconImage(defaultToolkit.getImage(getClass().getResource("/images/ghost.png")));
+            }
+        }
+    }
+
+    public boolean saveMap(CreatedMap map, boolean overwrite) {
+        CreatedMap clone = cloneMap(map);
+        if (createdMaps.contains(clone) && !overwrite) {
+            return false;
+        } else if (createdMaps.contains(clone) && overwrite) {
+            createdMaps.set(createdMaps.indexOf(clone), clone);
+        } else {
+            createdMaps.add(clone);
+        }
+        return true;
+    }
+
+    public boolean checkMap(String id) {
+        for (CreatedMap map : createdMaps) {
+            if (map.getName().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void saveMapsToDat() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("files/maps.dat"))) {
+            for (CreatedMap map : createdMaps) {
+                CreatedMap clone = cloneMap(map);
+                oos.writeObject(clone);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void addMapsFromDat() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("files/maps.dat"))) {
+            CreatedMap map;
+            while (null != (map = (CreatedMap) ois.readObject())) {
+                CreatedMap clone = cloneMap(map);
+                createdMaps.add(clone);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("no maps.dat found \n" + e.getClass());
+        }
+    }
+
+    public void loadMap(CreatedMap map) {
+        CreatedMap clone = cloneMap(map);
+        SandboxScreen sandboxScreen = new SandboxScreen(map.dimension);
+        sandboxScreen.loadMap(clone);
+        sandboxScene = new Scene(sandboxScreen, WIDTH, HEIGHT);
+        mainWindow.setScene(sandboxScene);
+    }
+
+    public void playMap(CreatedMap map) {
+        CreatedMap clone = cloneMap(map);
+        SandboxTemplate sandboxTemplate = new SandboxTemplate(clone, rightPanelSandbox);
+        mainPaneSandbox.setCenter(sandboxTemplate);
+        mainWindow.setScene(sandboxPlayScene);
+    }
+
+    private CreatedMap cloneMap(CreatedMap map) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(map);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        byte[] bytes = baos.toByteArray();
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        CreatedMap copy = null;
+        try (ObjectInputStream ois = new ObjectInputStream(bais)) {
+            copy = (CreatedMap) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return copy;
+    }
+
+    public void deleteMap(CreatedMap map) {
+        CreatedMap clone = cloneMap(map);
+        createdMaps.remove(clone);
+    }
+
+    public void changeToSandBoxLoader() {
+        sandboxLoader = new Scene(new SandboxLoader(createdMaps), WIDTH, HEIGHT);
+        mainWindow.setScene(sandboxLoader);
     }
 }

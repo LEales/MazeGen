@@ -64,11 +64,11 @@ public class MazeGenerator {
     }
 
     private boolean validateDimension(int dimension) {
-        return dimension == 10 || dimension == 14 || dimension == 18 || dimension == 28;
+        return 10 == dimension || 14 == dimension || 18 == dimension || 28 == dimension;
     }
 
     /**
-     * Returns the appropriate time for a each dimension.
+     * Returns the appropriate time for each dimension.
      *
      * @param dimension dimension of the maze
      * @return the time in seconds
