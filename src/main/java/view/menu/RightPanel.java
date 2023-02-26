@@ -1,12 +1,7 @@
 package view.menu;
 
 import control.MainProgram;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -14,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
 import control.AudioPlayer;
 import model.enums.GameMode;
 
@@ -204,12 +198,12 @@ public class RightPanel extends GridPane {
      * Tasks run-metod som sätter den totala tiden det tog att spela
      * Pausar musik & visar Game Over texten
      */
-    public void gameIsOver(boolean randomizeMode) {
+    public void gameIsOver(GameMode gameMode) {
         Platform.runLater(() -> {
-            if (randomizeMode) {
-                mainProgram.gameOverRandomize();
-            } else {
-                mainProgram.gameOver();
+            switch (gameMode) {
+                case CAMPAIGN -> mainProgram.gameOver();
+                case RANDOMIZE -> mainProgram.gameOverRandomize();
+                case CUSTOM -> mainProgram.gameOverSandbox();
             }
             AudioPlayer.playGameOverSound();
             AudioPlayer.stopMusic();

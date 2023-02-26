@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
+import model.enums.GameMode;
 import model.maps.RandomizeMap;
 import model.enums.World;
 import control.AudioPlayer;
@@ -42,7 +43,7 @@ public class MapTemplate extends GridPane {
         this.mazeGenerator = mazeGenerator;
         this.rightPanel = rightPanel;
         rightPanel.changeHeartCounter(3);
-        time = new TimeThread(mazeGenerator.getMap().getSeconds(), rightPanel, true);
+        time = new TimeThread(mazeGenerator.getMap().getSeconds(), rightPanel, GameMode.RANDOMIZE);
         squareSize = (int) MainProgram.HEIGHT / (mazeGenerator.getMap().dimension + 2);
         setBackground();
         World world = randomizeWorld();

@@ -1,6 +1,7 @@
 package control.time;
 
 import model.Time;
+import model.enums.GameMode;
 import view.menu.RightPanel;
 
 /**
@@ -15,14 +16,14 @@ public class TimeThread extends Thread {
     private RightPanel panel;
     private boolean gameOver;
 
-    private final boolean randomizeMode;
+    private final GameMode gameMode;
 
     /**
      * @param seconds Varje nivå skickar in en seconds variabel till tråden
      * @param panel
      */
-    public TimeThread(int seconds, RightPanel panel, boolean randomizeMode) {
-        this.randomizeMode = randomizeMode;
+    public TimeThread(int seconds, RightPanel panel, GameMode gameMode) {
+        this.gameMode = gameMode;
         time = new Time(seconds);
         this.panel = panel;
         panel.bindSeconds(time.secondsProperty());
@@ -41,7 +42,7 @@ public class TimeThread extends Thread {
                     panel.fiveSecLeft();
                 }
                 if (1 == time.getSeconds() && !gameOver) {
-                    panel.gameIsOver(randomizeMode);
+                    panel.gameIsOver(gameMode);
                     gameOver = true;
                 }
             } catch (InterruptedException e) {

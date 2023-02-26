@@ -59,6 +59,7 @@ public class MainProgram extends Application {
     private TotalTime totTime;
 
     private MapTemplate mapTemplate;
+    private SandboxTemplate sandboxTemplate;
     private World1Template worldTemplate;
 
     private TutorialScreen tutorialScreen;
@@ -144,6 +145,7 @@ public class MainProgram extends Application {
             System.exit(0);
         });
         mainPaneCampaign.setRight(rightPanel);
+        mainPaneSandbox.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         mainPaneSandbox.setRight(rightPanelSandbox);
 
         rightPnlRndm = new RightPanel(GameMode.RANDOMIZE);
@@ -266,6 +268,7 @@ public class MainProgram extends Application {
             mainPaneRandomMaze.setOnMouseClicked(null);
         });
     }
+
     public void gameOverSandbox() {
         ImageView introView = new ImageView(new Image("file:files/texts/Gameover.png", 600, 600, false, false));
         introView.setStyle("fx-background-color: transparent;");
@@ -559,6 +562,9 @@ public class MainProgram extends Application {
         if (null != mapTemplate) {
             mapTemplate.stopTime();
         }
+        if (null != sandboxTemplate) {
+            sandboxTemplate.stopTime();
+        }
     }
 
     /**
@@ -757,7 +763,7 @@ public class MainProgram extends Application {
 
     public void playMap(CreatedMap map) {
         CreatedMap clone = cloneMap(map);
-        SandboxTemplate sandboxTemplate = new SandboxTemplate(clone, rightPanelSandbox);
+        sandboxTemplate = new SandboxTemplate(clone, rightPanelSandbox);
         mainPaneSandbox.setCenter(sandboxTemplate);
         mainWindow.setScene(sandboxPlayScene);
     }

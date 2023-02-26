@@ -15,12 +15,12 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
+import model.enums.GameMode;
 import model.enums.World;
 import model.maps.CreatedMap;
 import view.menu.RightPanel;
 
 import java.io.FileNotFoundException;
-import java.util.Random;
 
 public class SandboxTemplate extends GridPane {
 
@@ -41,13 +41,13 @@ public class SandboxTemplate extends GridPane {
         this.map = map;
         this.rightPanel = rightPanel;
         rightPanel.changeHeartCounter(map.getHeartCrystals());
+        time = new TimeThread(map.getSeconds(), rightPanel, GameMode.CUSTOM);
         squareSize = (int) MainProgram.HEIGHT / (map.dimension + 2);
         setBackground();
         setupImages(map.getWorld());
         setupBorders();
         setupLevel();
         rightPanel.resetTimerLabel();
-        rightPanel.setTheTime(map.getSeconds());
     }
 
     /**
@@ -447,7 +447,6 @@ public class SandboxTemplate extends GridPane {
         AudioPlayer.stopTimeLeftSound();
         AudioPlayer.stopMusic();
         mainProgram.gameOverSandbox();
-        rightPanel.pauseClock();
         time.setGameOver(true);
         time = null;
         rightPanel.removePickaxe();
@@ -468,7 +467,6 @@ public class SandboxTemplate extends GridPane {
      */
     private void enteredGoal() throws FileNotFoundException, InterruptedException {
         if (map.isGameStarted() && map.allCollectiblesObtained()) {
-            rightPanel.pauseClock();
             AudioPlayer.stopTimeLeftSound();
             AudioPlayer.playGoalSound();
             time.setGameOver(true);
@@ -484,9 +482,6 @@ public class SandboxTemplate extends GridPane {
     private void startLevel() {
         if (!map.isTimeStarted()) {
             map.setTimeStarted(true);
-            time = new TimeThread(map.getSeconds(), rightPanel, false);
-            time.setGameOver(false);
-            rightPanel.resumeClock(map.getSeconds());
             time.start();
         }
         if (!map.isGameStarted()) {

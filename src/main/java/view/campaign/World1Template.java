@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
+import model.enums.GameMode;
 import model.maps.Maps;
 import model.enums.World;
 import control.time.TimeThread;
@@ -49,7 +50,7 @@ public class World1Template extends GridPane {
         this.mainProgram = MainProgram.getMainProgram();
         this.map = map;
         rightPanel.changeHeartCounter(map.getHeartCrystals());
-        time = new TimeThread(map.getSeconds(), rightPanel, false);
+        time = new TimeThread(map.getSeconds(), rightPanel, GameMode.CAMPAIGN);
         this.rightPanel = rightPanel;
         squareSize = (int) MainProgram.HEIGHT / (map.getMap().length + 2);
         setBackground();

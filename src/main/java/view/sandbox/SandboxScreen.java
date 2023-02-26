@@ -45,6 +45,8 @@ public class SandboxScreen extends BorderPane {
     private Image pathImage, wallImage, heartImage, breakableWallImage, axeImage, collectibleImage, deleteImage, startImage, goalImage;
     private Image pathImageMenu, wallImageMenu, heartImageMenu, breakableWallImageMenu, axeImageMenu, collectibleImageMenu, deleteImageMenu;
 
+    private String name;
+
     public SandboxScreen(int dimension) {
         this.squareSizeMenu = 60;
         this.dimension = dimension;
@@ -195,7 +197,9 @@ public class SandboxScreen extends BorderPane {
             dialog.setTitle("Name");
             dialog.setHeaderText("Enter the name of your world:");
             dialog.setContentText("Name:");
-
+            if (this.name != null) {
+                dialog.getEditor().setText(this.name);
+            }
             Optional<String> result = dialog.showAndWait();
             String name;
             if (result.isPresent()) {
@@ -308,6 +312,13 @@ public class SandboxScreen extends BorderPane {
     public void loadMap(CreatedMap map) {
         world = map.getWorld();
         worldComboBox.setValue(world);
+        spinner.getValueFactory().setValue(map.getSeconds());
+        name = map.getName();
+        switch (map.getHeartCrystals()) {
+            case 1 -> firstHeartClicked();
+            case 2 -> secondHeartClicked();
+            case 3 -> thirdHeartClicked();
+        }
         Sprite[][] mapArray = map.getMap();
         for (int i = 0; i < dimension * dimension; i++) {
             switch (mapArray[i % dimension][i / dimension]) {

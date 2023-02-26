@@ -1,9 +1,7 @@
 package view.sandbox;
 
 import control.MainProgram;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -70,8 +68,13 @@ public class SandboxLoader extends Pane {
         Button delete = new Button("Delete");
         delete.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 14));
         delete.setOnMouseClicked(e -> {
-            mainProgram.deleteMap(finalMap);
-            content.getChildren().remove(template);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this map?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.YES) {
+                    mainProgram.deleteMap(finalMap);
+                    content.getChildren().remove(template);
+                }
+            });
         });
         buttons.getChildren().addAll(load, play, delete);
         template.getChildren().addAll(name, buttons);
