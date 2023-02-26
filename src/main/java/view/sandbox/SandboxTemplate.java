@@ -22,6 +22,7 @@ import view.menu.RightPanel;
 
 import java.io.FileNotFoundException;
 
+//Denna class fungerar i stort sett exakt som world1template
 public class SandboxTemplate extends GridPane {
 
     private final CreatedMap map;

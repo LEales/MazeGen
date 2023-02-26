@@ -45,7 +45,7 @@ public class SandboxLoader extends Pane {
                 BackgroundSize.DEFAULT);
         setBackground(new Background(menuBackground));
     }
-
+    //lägger till funktioner för sparade kartor i en vbox.
     private VBox addMap(CreatedMap map) {
         CreatedMap finalMap = map;
         VBox template = new VBox();

@@ -17,7 +17,6 @@ import javafx.scene.text.Font;
 import model.enums.Sprite;
 import model.enums.World;
 import model.maps.CreatedMap;
-import model.maps.Maps;
 
 
 import java.util.ArrayList;
@@ -74,6 +73,7 @@ public class SandboxScreen extends BorderPane {
         setCenter(sandBoxMap);
     }
 
+    //alldeles för lång setup metod som borde brytas upp i mindre metoder. Sätter upp alla grafiska element
     private void setUpPanel() {
         Label world = new Label("World");
         world.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 18));
@@ -82,6 +82,9 @@ public class SandboxScreen extends BorderPane {
         worldComboBox.getItems().addAll(World.values());
         worldComboBox.setValue(World.FOREST);
         worldComboBox.valueProperty().addListener((observableValue, world1, newValue) -> changeImages(newValue));
+        Font font = Font.loadFont(MainProgram.class.getResourceAsStream("PressStart2P.ttf"), 10);
+        worldComboBox.setStyle("-fx-font-family: '" + font.getName() + "';");
+
 
         path = new Label();
         wall = new Label();
@@ -280,6 +283,7 @@ public class SandboxScreen extends BorderPane {
         }
     }
 
+    //kallas på när en karta ska sparas ner
     private CreatedMap getMap(String name) {
         CreatedMap map = new CreatedMap(hearts, spinner.getValue(), dimension, name, worldComboBox.getValue());
         for (int i = 0; i < dimension * dimension; i++) {
@@ -309,6 +313,7 @@ public class SandboxScreen extends BorderPane {
         return map;
     }
 
+    //laddar in en karta från en CreatedMap
     public void loadMap(CreatedMap map) {
         world = map.getWorld();
         worldComboBox.setValue(world);
@@ -331,8 +336,6 @@ public class SandboxScreen extends BorderPane {
                 case GOAL -> labels.get(i).setGraphic(new ImageView(goalImage));
                 case HEART -> labels.get(i).setGraphic(new ImageView(heartImage));
             }
-            //set global images
-            // labels.get(i).setGraphic(new ImageView(new Image("file:files/" + world.toString().toLowerCase() + "/" + mapArray[i % dimension][i / dimension].toString().toLowerCase() + ".png", squareSizeMap, squareSizeMap, false, false)));
         }
     }
 
@@ -411,12 +414,12 @@ public class SandboxScreen extends BorderPane {
         int id = 0;
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
-                if (0 == i && j == dimension - 1) {
+                if (i == dimension - 1 && 0 == j) {
                     Label label = getStart();
                     label.setId(String.valueOf(id++));
                     sandBoxMap.add(label, i, j);
                     labels.add(label);
-                } else if (i == dimension - 1 && 0 == j) {
+                } else if (0 == i && j == dimension - 1) {
                     Label label = getGoal();
                     label.setId(String.valueOf(id++));
                     sandBoxMap.add(label, i, j);
@@ -521,6 +524,8 @@ public class SandboxScreen extends BorderPane {
         label.setGraphic(emptyView);
         return label;
     }
+
+    //jämför ifall två bilder är samma
     private boolean compareImages(Image image1, Image image2) {
         if (image1.getWidth() != image2.getWidth() || image1.getHeight() != image2.getHeight()) {
             return false;

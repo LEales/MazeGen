@@ -749,8 +749,8 @@ public class MainProgram extends Application {
                 CreatedMap clone = cloneMap(map);
                 createdMaps.add(clone);
             }
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("no maps.dat found \n" + e.getClass());
+        } catch (IOException | ClassNotFoundException ignored) {
+
         }
     }
 
@@ -759,6 +759,7 @@ public class MainProgram extends Application {
         SandboxScreen sandboxScreen = new SandboxScreen(map.dimension);
         sandboxScreen.loadMap(clone);
         sandboxScene = new Scene(sandboxScreen, WIDTH, HEIGHT);
+        sandboxScreen.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         mainWindow.setScene(sandboxScene);
     }
 
@@ -769,6 +770,7 @@ public class MainProgram extends Application {
         mainWindow.setScene(sandboxPlayScene);
     }
 
+    //Metod som gör en kopia av ett objekt så att orginalet inte förändras. No pass by value in java :(
     private CreatedMap cloneMap(CreatedMap map) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {

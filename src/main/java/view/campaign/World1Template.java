@@ -108,7 +108,7 @@ public class World1Template extends GridPane {
      * @param i1    The column index
      * @return
      */
-    public ImageView createImageView(Image image, int i, int i1) {
+    ImageView createImageView(Image image, int i, int i1) {
         if (null == image) {
             throw new IllegalArgumentException("Image invalid");
         }
