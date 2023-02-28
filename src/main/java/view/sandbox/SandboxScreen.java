@@ -82,9 +82,7 @@ public class SandboxScreen extends BorderPane {
         worldComboBox.getItems().addAll(World.values());
         worldComboBox.setValue(World.FOREST);
         worldComboBox.valueProperty().addListener((observableValue, world1, newValue) -> changeImages(newValue));
-        Font font = Font.loadFont(MainProgram.class.getResourceAsStream("PressStart2P.ttf"), 10);
-        worldComboBox.setStyle("-fx-font-family: '" + font.getName() + "';");
-
+        worldComboBox.setStyle("-fx-font-family: 'Press Start 2P'; -fx-font-size: 10px;");
 
         path = new Label();
         wall = new Label();
