@@ -1,10 +1,12 @@
 package view.sandbox;
 
 import control.MainProgram;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import model.maps.CreatedMap;
 
@@ -24,19 +26,27 @@ public class SandboxLoader extends Pane {
         content.setPrefSize(600, 400);
         content.setTranslateX(100);
         content.setTranslateY(100);
+        content.setBackground(Background.EMPTY);
+        content.setStyle("-fx-background-color: transparent !important;");
         scrollPane = new ScrollPane(content);
         scrollPane.setPrefSize(600, 400);
         scrollPane.setTranslateX(100);
         scrollPane.setTranslateY(100);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        getChildren().add(scrollPane);
+        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0; -fx-background-insets: 0;");
+        scrollPane.setBackground(Background.EMPTY);
 
+
+
+        getChildren().add(scrollPane);
     }
     public SandboxLoader(ArrayList<CreatedMap> maps) {
         this();
         for (CreatedMap map : maps) {
             content.getChildren().add(addMap(map));
         }
+
+       // scrollPane.lookup(".viewport").setStyle("-fx-background-color: transparent;");
     }
 
     private void setBackground() {
