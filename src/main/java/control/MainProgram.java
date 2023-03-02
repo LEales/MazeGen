@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,10 +13,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javafx.util.Duration;
 import model.enums.GameMode;
+import model.enums.LifeLostCause;
 import model.enums.Sprite;
 import model.maps.*;
 
@@ -275,6 +278,20 @@ public class MainProgram extends Application {
         introView.setStyle("fx-background-color: transparent;");
         FadeTransition ft = new FadeTransition(Duration.millis(4000.0), introView);
         mainPaneSandbox.getChildren().add(introView);
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
+        mainPaneSandbox.setOnMouseClicked(e -> {
+            changeToMenu();
+            mainPaneSandbox.setOnMouseClicked(null);
+        });
+    }
+
+    public void lostLife(LifeLostCause cause) {
+        Label label = new Label(cause.toString());
+        label.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 24));
+        FadeTransition ft = new FadeTransition(Duration.millis(250.0), label);
+        mainPaneCampaign.getChildren().add(label);
         ft.setFromValue(0.0);
         ft.setToValue(1.0);
         ft.play();

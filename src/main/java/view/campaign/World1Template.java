@@ -14,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import model.enums.GameMode;
+import model.enums.LifeLostCause;
 import model.maps.Maps;
 import model.enums.World;
 import control.time.TimeThread;
@@ -417,6 +418,7 @@ public class World1Template extends GridPane {
     private void enteredWall(MouseEvent e) {
         Label label = (Label) e.getSource();
         createFadeTransition(label, 0.3, 10.0, 0.6).play();
+        mainProgram.lostLife(LifeLostCause.FORESTWALL);
         if (map.isGameStarted()) {
             if (map.heartCrystalLost()) {
                 gameOver();
