@@ -35,10 +35,24 @@ public class SandboxLoader extends Pane {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0; -fx-background-insets: 0;");
         scrollPane.setBackground(Background.EMPTY);
-
-
-
         getChildren().add(scrollPane);
+
+        Label createdMazes = new Label("CREATED MAZES");
+        createdMazes.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 27));
+        createdMazes.setTextFill(Color.web("#0000D6"));
+        createdMazes.setTranslateX(220);
+        createdMazes.setTranslateY(50);
+        getChildren().add(createdMazes);
+
+
+
+        Label back = new Label("Return");
+        back.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 27));
+        back.setTextFill(Color.web("#0000D6"));
+        back.setTranslateX(320);
+        back.setTranslateY(530);
+
+        getChildren().add(back);
     }
     public SandboxLoader(ArrayList<CreatedMap> maps) {
         this();
@@ -90,4 +104,6 @@ public class SandboxLoader extends Pane {
         template.getChildren().addAll(name, buttons);
         return template;
     }
+
+
 }
