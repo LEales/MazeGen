@@ -1,5 +1,6 @@
 package view.sandbox;
 
+import control.AudioPlayer;
 import control.MainProgram;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -46,14 +47,33 @@ public class SandboxLoader extends Pane {
         getChildren().add(createdMazes);
 
 
+        Label createNm = new Label("Create New Maze");
+        createNm.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 27));
+        createNm.setTextFill(Color.web("#0000D6"));
+        createNm.setTranslateX(65);
+        createNm.setTranslateY(530);
+        getChildren().add(createNm);
+        createNm.setOnMouseEntered(e -> createNm.setTextFill(Color.ORANGERED));
+        createNm.setOnMouseExited(e -> createNm.setTextFill(Color.web("#0000D6")));
+        createNm.setOnMouseClicked(e ->{
+            AudioPlayer.playButtonSound();
+            mainProgram.changeToSandBoxDimension();
+        });
+
 
         Label back = new Label("Return");
         back.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 27));
         back.setTextFill(Color.web("#0000D6"));
-        back.setTranslateX(320);
+        back.setTranslateX(550);
         back.setTranslateY(530);
-
         getChildren().add(back);
+        back.setOnMouseEntered(e -> back.setTextFill(Color.ORANGERED));
+        back.setOnMouseExited(e -> back.setTextFill(Color.web("#0000D6")));
+        back.setOnMouseClicked(e ->{
+            AudioPlayer.playButtonSound();
+            mainProgram.changeToMenu();
+
+        });
     }
     public SandboxLoader(ArrayList<CreatedMap> maps) {
         this();
