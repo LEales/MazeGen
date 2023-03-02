@@ -24,9 +24,10 @@ public class SandboxLoader extends Pane {
         setBackground();
         content = new VBox();
         content.setPrefSize(600, 400);
-        content.setTranslateX(100);
-        content.setTranslateY(100);
+        content.setTranslateX(0);
+        content.setTranslateY(0);
         content.setBackground(Background.EMPTY);
+        content.setSpacing(20.0);
         content.setStyle("-fx-background-color: transparent !important;");
         scrollPane = new ScrollPane(content);
         scrollPane.setPrefSize(600, 400);
@@ -74,23 +75,31 @@ public class SandboxLoader extends Pane {
         CreatedMap finalMap = map;
         VBox template = new VBox();
         template.setSpacing(10);
+
+        HBox buttons = new HBox();
+        buttons.setSpacing(40);
+
         Label name = new Label("World: " + map.getName());
         name.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 18));
-        HBox buttons = new HBox();
-        buttons.setSpacing(10);
-        Button load = new Button("Load");
+        Label load = new Label("Edit");
         load.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 14));
-        load.setBackground(new Background(new BackgroundFill(Color.web("#FFFFFF"), null, null)));
+        load.setOnMouseEntered(e -> load.setTextFill(Color.ORANGERED));
+        load.setOnMouseExited(e -> load.setTextFill(Color.web("#FFFFFF")));
         load.setOnMouseClicked(e -> {
             mainProgram.loadMap(finalMap);
         });
-        Button play = new Button("Play");
+        Label play = new Label("Play");
+        play.setOnMouseEntered(e -> play.setTextFill(Color.ORANGERED));
+        play.setOnMouseExited(e -> play.setTextFill(Color.web("#FFFFFF")));
         play.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 14));
         play.setOnMouseClicked(e -> {
             mainProgram.playMap(finalMap);
         });
-        Button delete = new Button("Delete");
+
+        Label delete = new Label("Delete");
         delete.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 14));
+        delete.setOnMouseEntered(e -> delete.setTextFill(Color.ORANGERED));
+        delete.setOnMouseExited(e -> delete.setTextFill(Color.web("#FFFFFF")));
         delete.setOnMouseClicked(e -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this map?", ButtonType.YES, ButtonType.NO);
             alert.showAndWait().ifPresent(response -> {
