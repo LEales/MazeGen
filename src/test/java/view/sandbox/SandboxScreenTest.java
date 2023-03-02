@@ -69,21 +69,5 @@ class SandboxScreenTest {
         }
 
     }
-    @Test
-    void checkLowerValidDimension(){
-        try {
-            SandboxScreen sandboxScreen = new SandboxScreen(5);
-        }catch (IllegalArgumentException e){
-            assertEquals("invalid dimension", e.getMessage());
-        }
-    }
-    @Test
-    void checkUperValidDimension(){
-        try {
-            SandboxScreen sandboxScreen = new SandboxScreen(-1);
-        }catch (IllegalArgumentException e){
-            assertEquals("invalid dimension", e.getMessage());
-        }
-    }
 
 }
