@@ -2,12 +2,10 @@ package view.sandbox;
 
 import control.AudioPlayer;
 import control.MainProgram;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import model.maps.CreatedMap;
 
@@ -15,7 +13,6 @@ import java.util.ArrayList;
 
 public class SandboxLoader extends Pane {
     private final ScrollPane scrollPane;
-    private int id = 0;
     private final VBox content;
     
     private final MainProgram mainProgram;
@@ -37,7 +34,10 @@ public class SandboxLoader extends Pane {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0; -fx-background-insets: 0;");
         scrollPane.setBackground(Background.EMPTY);
+
+
         getChildren().add(scrollPane);
+        scrollPane.getStylesheets().add(MainProgram.class.getResource("styles.css").toExternalForm());
 
         Label createdMazes = new Label("CREATED MAZES");
         createdMazes.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 27));
