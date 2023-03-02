@@ -1,9 +1,13 @@
 package view.campaign;
 
+import control.AudioPlayer;
 import control.MainProgram;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polyline;
+import model.enums.LifeLostCause;
 import model.maps.Maps;
 import view.menu.RightPanel;
 
@@ -17,8 +21,8 @@ import java.io.FileNotFoundException;
 
 public class World2Template extends World1Template {
 
-    public World2Template(Maps map, RightPanel rightPanel) throws FileNotFoundException {
-        super(map, rightPanel);
+    public World2Template(Maps map, RightPanel rightPanel, LifeLostCause worldCause) throws FileNotFoundException {
+        super(map, rightPanel, worldCause);
         int squareSize = (int) MainProgram.HEIGHT / (map.getMap().length + 2);
         if (6 == map.getNextLevel()) {
             initialize(squareSize);
@@ -65,4 +69,6 @@ public class World2Template extends World1Template {
         ghost5V.setOnMouseEntered(e -> enteredGhost(e));
         ghost6V.setOnMouseEntered(e -> enteredGhost(e));
     }
+
+
 }

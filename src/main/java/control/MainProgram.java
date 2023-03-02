@@ -213,7 +213,7 @@ public class MainProgram extends Application {
      */
     public void changeToCampaign() throws FileNotFoundException {
         lvlCleared = 0;
-        worldTemplate = new World1Template(new World1Maps(3, 25, 1, World.FOREST), rightPanel);
+        worldTemplate = new World1Template(new World1Maps(3, 25, 1, World.FOREST), rightPanel, LifeLostCause.FORESTWALL);
         rightPanel.changeLevelCounter("11");
         mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
@@ -222,6 +222,11 @@ public class MainProgram extends Application {
         tutorialScreen.setupFirstScene();
         mainPaneCampaign.getChildren().add(tutorialScreen);
         startTotalTime();
+        try { //todo ta bort
+            nextWorld4Level(1, 3);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void keyPressed(KeyEvent e) {
@@ -287,18 +292,31 @@ public class MainProgram extends Application {
         });
     }
 
+    /**
+     * Tar in vad som spelaren träffades av och skapar en fade transition av motsvarande textbild
+     * @author Anna Håkansson
+     * @param cause the cause of hurt
+     */
     public void lostLife(LifeLostCause cause) {
-        Label label = new Label(cause.toString());
-        label.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 24));
-        FadeTransition ft = new FadeTransition(Duration.millis(250.0), label);
-        mainPaneCampaign.getChildren().add(label);
-        ft.setFromValue(0.0);
-        ft.setToValue(1.0);
-        ft.play();
-        mainPaneSandbox.setOnMouseClicked(e -> {
-            changeToMenu();
-            mainPaneSandbox.setOnMouseClicked(null);
-        });
+        ImageView lostLifeView = new ImageView(new Image("file:files/lostLifeCause/" + cause + ".png", 600, 600, false, false));
+        lostLifeView.setStyle("fx-background-color: transparent;");
+        lostLifeView.setFitWidth(600);
+        lostLifeView.setFitHeight(100);
+        lostLifeView.setLayoutX((mainPaneCampaign.getWidth() / 2) - 400);
+        lostLifeView.setLayoutY((mainPaneCampaign.getHeight() - lostLifeView.getFitHeight()) / 2);
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(700), lostLifeView);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(700), lostLifeView);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        fadeIn.setOnFinished(event -> fadeOut.play());
+        fadeOut.setOnFinished(event -> mainPaneCampaign.getChildren().remove(lostLifeView));
+
+        mainPaneCampaign.getChildren().add(lostLifeView);
+        fadeIn.play();
     }
 
     /**
@@ -334,7 +352,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate = new World1Template(new World1Maps(heartCrystals, 25, level + 1, World.FOREST), rightPanel);
+        worldTemplate = new World1Template(new World1Maps(heartCrystals, 25, level + 1, World.FOREST), rightPanel, LifeLostCause.FORESTWALL);
         mainPaneCampaign.setCenter(worldTemplate);
         if (4 == level) {
             tutorialScreen = new TutorialScreen();
@@ -385,7 +403,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate = new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel);
+        worldTemplate = new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel, LifeLostCause.UNDERGROUNDWALL);
         mainPaneCampaign.setCenter(worldTemplate);
         if (5 == level) {
             tutorialScreen = new TutorialScreen();
@@ -435,7 +453,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate = new World3Template(new World3Maps(heartCrystals, 45, level + 1, World.LAVA), rightPanel);
+        worldTemplate = new World3Template(new World3Maps(heartCrystals, 45, level + 1, World.LAVA), rightPanel, LifeLostCause.LAVAWALL);
         mainPaneCampaign.setCenter(worldTemplate);
     }
 
@@ -479,7 +497,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate = new World4Template(new World4Maps(heartCrystals, 55, level + 1, World.CLOUD), rightPanel);
+        worldTemplate = new World4Template(new World4Maps(heartCrystals, 55, level + 1, World.CLOUD), rightPanel, LifeLostCause.CLOUDWALL);
         mainPaneCampaign.setCenter(worldTemplate);
     }
 
@@ -523,7 +541,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate = new World5Template(new World5Maps(heartCrystals, 65, level + 1, World.DESERT), rightPanel);
+        worldTemplate = new World5Template(new World5Maps(heartCrystals, 65, level + 1, World.DESERT), rightPanel, LifeLostCause.DESERTWALL);
         mainPaneCampaign.setCenter(worldTemplate);
     }
 
@@ -569,7 +587,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate = new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel);
+        worldTemplate = new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel, LifeLostCause.SPACEWALL);
         mainPaneCampaign.setCenter(worldTemplate);
     }
 

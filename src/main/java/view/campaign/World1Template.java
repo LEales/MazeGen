@@ -39,6 +39,8 @@ public class World1Template extends GridPane {
     private final RightPanel rightPanel;
     private TimeThread time;
 
+    private LifeLostCause worldCause;
+
     /**
      * Instansierar objekten.
      *
@@ -47,12 +49,13 @@ public class World1Template extends GridPane {
      */
 
     //Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
-    public World1Template(Maps map, RightPanel rightPanel) throws FileNotFoundException {
+    public World1Template(Maps map, RightPanel rightPanel, LifeLostCause worldCause) throws FileNotFoundException {
         this.mainProgram = MainProgram.getMainProgram();
         this.map = map;
         rightPanel.changeHeartCounter(map.getHeartCrystals());
         time = new TimeThread(map.getSeconds(), rightPanel, GameMode.CAMPAIGN);
         this.rightPanel = rightPanel;
+        this.worldCause = worldCause;
         squareSize = (int) MainProgram.HEIGHT / (map.getMap().length + 2);
         setBackground();
         setupImages(map.getWorld());
@@ -418,8 +421,9 @@ public class World1Template extends GridPane {
     private void enteredWall(MouseEvent e) {
         Label label = (Label) e.getSource();
         createFadeTransition(label, 0.3, 10.0, 0.6).play();
-        mainProgram.lostLife(LifeLostCause.FORESTWALL);
+
         if (map.isGameStarted()) {
+            mainProgram.lostLife(worldCause);
             if (map.heartCrystalLost()) {
                 gameOver();
             }
@@ -442,6 +446,7 @@ public class World1Template extends GridPane {
             createFadeTransition(view, 0.2, 10, 0.6).play();
             AudioPlayer.playMobSound();
             AudioPlayer.playDeathSound();
+            mainProgram.lostLife(LifeLostCause.GHOST);
             if (map.heartCrystalLost()) {
                 gameOver();
             }

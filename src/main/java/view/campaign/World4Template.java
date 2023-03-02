@@ -3,6 +3,7 @@ package view.campaign;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+import model.enums.LifeLostCause;
 import model.maps.Maps;
 import view.menu.RightPanel;
 
@@ -15,8 +16,8 @@ import java.io.FileNotFoundException;
 
 public class World4Template extends World1Template {
 
-    public World4Template(Maps map, RightPanel rightPanel) throws FileNotFoundException {
-        super(map, rightPanel);
+    public World4Template(Maps map, RightPanel rightPanel, LifeLostCause worldCause) throws FileNotFoundException {
+        super(map, rightPanel, worldCause);
         initialize(map.getNextLevel());
     }
 
