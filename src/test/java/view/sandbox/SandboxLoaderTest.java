@@ -129,11 +129,9 @@ class SandboxLoaderTest {
         CreatedMap testMap = new CreatedMap();
         SandboxLoader sandboxLoader = new SandboxLoader();
 
-        // Get the addMap method using reflection
         Method addMapMethod = SandboxLoader.class.getDeclaredMethod("addMap", CreatedMap.class);
         addMapMethod.setAccessible(true);
 
-        // Call the addMap method and get the returned VBox object
         VBox vbox = null;
         try {
             vbox = (VBox) addMapMethod.invoke(sandboxLoader, testMap);
@@ -143,7 +141,6 @@ class SandboxLoaderTest {
             e.printStackTrace();
         }
 
-        // Check if the Play label exists in the VBox object
         boolean playExists = false;
         for (Node node : vbox.getChildren()) {
             if (node instanceof HBox) {
@@ -168,11 +165,9 @@ class SandboxLoaderTest {
         CreatedMap testMap = new CreatedMap();
         SandboxLoader sandboxLoader = new SandboxLoader();
 
-        // Get the addMap method using reflection
         Method addMapMethod = SandboxLoader.class.getDeclaredMethod("addMap", CreatedMap.class);
         addMapMethod.setAccessible(true);
 
-        // Call the addMap method and get the returned VBox object
         VBox vbox = null;
         try {
             vbox = (VBox) addMapMethod.invoke(sandboxLoader, testMap);
@@ -181,8 +176,7 @@ class SandboxLoaderTest {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-
-        // Check if the Play label exists in the VBox object
+        
         boolean playExists = false;
         for (Node node : vbox.getChildren()) {
             if (node instanceof HBox) {
