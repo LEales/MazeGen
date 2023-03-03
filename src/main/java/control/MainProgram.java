@@ -210,22 +210,22 @@ public class MainProgram extends Application {
      */
     public void changeToCampaign() throws FileNotFoundException {
         lvlCleared = 0;
-        worldTemplate = new World1Template(new World1Maps(3, 25, 1, World.FOREST), rightPanel);
+        worldTemplate = new World3Template(new World3Maps(3, 25, 2, World.LAVA), rightPanel);
         rightPanel.changeLevelCounter("11");
         mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
         tutorialScreen = new TutorialScreen();
-        campaignScene.setOnKeyPressed(e -> keyPressed(e));
         tutorialScreen.setupFirstScene();
+        campaignScene.setOnKeyPressed(e -> keyPressed(e));
         mainPaneCampaign.getChildren().add(tutorialScreen);
         startTotalTime();
     }
 
     private void keyPressed(KeyEvent e) {
         if (null != e) {
-            if (KeyCode.SPACE == e.getCode() && tutorialScreen.getIsRunning()) {
+            if (KeyCode.SPACE == e.getCode() && !(tutorialScreen.isDisable())) {
                 removeTutorialScreen();
-                worldTemplate.startLadderAnimation();
+                worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
             }
         }
     }
@@ -320,7 +320,7 @@ public class MainProgram extends Application {
         }
         worldTemplate = new World1Template(new World1Maps(heartCrystals, 25, level + 1, World.FOREST), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
-        worldTemplate.startLadderAnimation();
+        worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
         if (4 == level) {
             tutorialScreen = new TutorialScreen();
             tutorialScreen.setupSecondScene();
@@ -370,7 +370,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate.startLadderAnimation();
+        worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
         worldTemplate = new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
         if (5 == level) {
@@ -420,8 +420,10 @@ public class MainProgram extends Application {
                 nextWorld4Level(1, heartCrystals);
                 return;
             }
+
         }
         worldTemplate = new World3Template(new World3Maps(heartCrystals, 45, level + 1, World.LAVA), rightPanel);
+        worldTemplate.startLadderAnimation((World.LAVA));
         mainPaneCampaign.setCenter(worldTemplate);
     }
 
@@ -465,7 +467,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate.startLadderAnimation();
+        worldTemplate.startLadderAnimation(World.CLOUD);
         worldTemplate = new World4Template(new World4Maps(heartCrystals, 55, level + 1, World.CLOUD), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
     }
@@ -510,6 +512,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
+        worldTemplate.startLadderAnimation(World.DESERT);
         worldTemplate = new World5Template(new World5Maps(heartCrystals, 65, level + 1, World.DESERT), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
     }
@@ -535,22 +538,22 @@ public class MainProgram extends Application {
             case 2 -> {
                 lvlCleared = 61;
                 rightPanel.changeLevelCounter("62");
-                worldTemplate.startLadderAnimation();
+                worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
             }
             case 3 -> {
                 lvlCleared = 62;
                 rightPanel.changeLevelCounter("63");
-                worldTemplate.startLadderAnimation();
+                worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
             }
             case 4 -> {
                 lvlCleared = 63;
                 rightPanel.changeLevelCounter("64");
-                worldTemplate.startLadderAnimation();
+                worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
             }
             case 5 -> {
                 lvlCleared = 64;
                 rightPanel.changeLevelCounter("65");
-                worldTemplate.startLadderAnimation();
+                worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
             }
             case 6 -> {
                 lvlCleared = 65;
@@ -560,7 +563,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-
+        worldTemplate.startLadderAnimation(World.SPACE);
         worldTemplate = new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
     }
@@ -683,7 +686,7 @@ public class MainProgram extends Application {
             introAnimation = new WorldIntroAnimation(world);
             mainPaneCampaign.getChildren().add(introAnimation);
             introAnimation.setDisable(true);
-            worldTemplate.startLadderAnimation();
+            worldTemplate.startLadderAnimation(world);
 
         }
     }
@@ -779,6 +782,7 @@ public class MainProgram extends Application {
         sandboxTemplate = new SandboxTemplate(clone, rightPanelSandbox);
         mainPaneSandbox.setCenter(sandboxTemplate);
         mainWindow.setScene(sandboxPlayScene);
+        sandboxTemplate.startLadderAnimation(clone.getWorld());
     }
 
     //Metod som gör en kopia av ett objekt så att orginalet inte förändras. No pass by value in java :(

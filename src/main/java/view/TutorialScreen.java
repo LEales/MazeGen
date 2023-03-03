@@ -19,7 +19,7 @@ public class TutorialScreen extends Pane {
     private ImageView arrow;
     private AnimationTimer animationTimer;
     private ImageView introView;
-    private boolean isRunning;
+    private boolean isRunning = true;
 
     public TutorialScreen() {
         arrow = new ImageView(new Image("file:files/arrow.png", 80, 80, false, false));
@@ -35,7 +35,7 @@ public class TutorialScreen extends Pane {
         messageLabel.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 20));
         messageLabel.setWrapText(true);
         getChildren().add(messageLabel);
-        isRunning = true;
+
     }
 
     private String nextMessageFirst(String message) {

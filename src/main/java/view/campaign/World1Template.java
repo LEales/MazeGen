@@ -428,7 +428,7 @@ public class World1Template extends GridPane {
                 gameOver();
             }
             else{
-                startLadderAnimation();
+                startLadderAnimation(map.getWorld());
             }
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             AudioPlayer.playDeathSound();
@@ -456,6 +456,7 @@ public class World1Template extends GridPane {
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             map.setGameStarted(false);
             createFadeTransition(view, 1.5, 0.6, 10).play();
+            startLadderAnimation(map.getWorld());
         }
     }
 
@@ -569,10 +570,10 @@ public class World1Template extends GridPane {
         }
     }
 
-    public void startLadderAnimation() {
+    public void startLadderAnimation(World world) {
         ladderClicked = false;
         Thread imageThread = new Thread(() -> {
-            Label yellowLadder = getYellowStart(World.FOREST);
+            Label yellowLadder = getYellowStart(world);
             Label normal = (Label) lookup("#start");
             int row = getRowIndex(normal);
             int column = getColumnIndex(normal);
@@ -612,7 +613,7 @@ public class World1Template extends GridPane {
 
 
     public Label getYellowStart(World world) {
-        start = new Image("file:files/" + world + "/startBlinking.png", squareSize, squareSize, false, false);
+        start = new Image("file:files/" + world + "/brightLadder.png", squareSize, squareSize, false, false);
         Label label = new Label();
         ImageView borderView = new ImageView(start);
         borderView.setFitHeight(squareSize);
@@ -625,6 +626,10 @@ public class World1Template extends GridPane {
     public void stopLadderAnimation() {
         ladderClicked = true;
         startLevel();
+    }
+
+    public Maps getMap(){
+        return map;
     }
 
 
