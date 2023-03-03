@@ -1,23 +1,24 @@
 package view.campaign;
 
+import control.AudioPlayer;
 import control.MainProgram;
+import control.time.TimeThread;
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
+import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import model.enums.GameMode;
-import model.maps.Maps;
 import model.enums.World;
-import control.time.TimeThread;
-import control.AudioPlayer;
+import model.maps.Maps;
 import view.menu.RightPanel;
 
 import java.io.FileNotFoundException;
@@ -31,12 +32,16 @@ import java.io.FileNotFoundException;
 public class World1Template extends GridPane {
 
 
+
     private final MainProgram mainProgram;
     private final Maps map;
-    private Image wall, path, border, goal, diamond, start, heart, breakableWall, pickAxeImage;
-    final int squareSize;
     private final RightPanel rightPanel;
+    private Image wall, path, border, goal, diamond, start, heart, breakableWall, pickAxeImage;
     private TimeThread time;
+    private boolean ladderClicked = false;
+    private int ladderRow;
+    private int ladderColumn;
+    final int squareSize;
 
     /**
      * Instansierar objekten.
@@ -278,6 +283,7 @@ public class World1Template extends GridPane {
      */
     private Label getGoal() {
         Label label = new Label();
+        label.setId("goal");
         ImageView borderView = new ImageView(goal);
         borderView.setFitHeight(squareSize);
         borderView.setFitWidth(squareSize);
@@ -303,7 +309,7 @@ public class World1Template extends GridPane {
         borderView.setFitHeight(squareSize);
         borderView.setFitWidth(squareSize);
         label.setGraphic(borderView);
-        label.setOnMouseClicked(e -> startLevel());
+        label.setId("start");
         return label;
     }
 
@@ -421,9 +427,13 @@ public class World1Template extends GridPane {
             if (map.heartCrystalLost()) {
                 gameOver();
             }
+            else{
+                startLadderAnimation();
+            }
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             AudioPlayer.playDeathSound();
             map.setGameStarted(false);
+
         }
     }
 
@@ -558,4 +568,65 @@ public class World1Template extends GridPane {
             }
         }
     }
+
+    public void startLadderAnimation() {
+        ladderClicked = false;
+        Thread imageThread = new Thread(() -> {
+            Label yellowLadder = getYellowStart(World.FOREST);
+            Label normal = (Label) lookup("#start");
+            int row = getRowIndex(normal);
+            int column = getColumnIndex(normal);
+
+            normal.setOnMouseClicked(e -> stopLadderAnimation());
+            yellowLadder.setOnMouseClicked(e -> {
+                stopLadderAnimation();
+
+            });
+
+            while (!ladderClicked) {
+                Platform.runLater(() -> {
+                    getChildren().remove(normal);
+                    add(yellowLadder, column, row);
+                });
+                sleepFor(1000);
+                Platform.runLater(() -> {
+                    getChildren().remove(yellowLadder);
+                    add(normal, column, row);
+                });
+                sleepFor(1000);
+                if (ladderClicked) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
+        imageThread.start();
+    }
+
+    private void sleepFor(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+
+    public Label getYellowStart(World world) {
+        start = new Image("file:files/" + world + "/startBlinking.png", squareSize, squareSize, false, false);
+        Label label = new Label();
+        ImageView borderView = new ImageView(start);
+        borderView.setFitHeight(squareSize);
+        borderView.setFitWidth(squareSize);
+        label.setGraphic(borderView);
+        return label;
+    }
+
+
+    public void stopLadderAnimation() {
+        ladderClicked = true;
+        startLevel();
+    }
+
+
 }
+

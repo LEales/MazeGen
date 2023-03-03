@@ -214,8 +214,8 @@ public class MainProgram extends Application {
         rightPanel.changeLevelCounter("11");
         mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
-        campaignScene.setOnKeyPressed(e -> keyPressed(e));
         tutorialScreen = new TutorialScreen();
+        campaignScene.setOnKeyPressed(e -> keyPressed(e));
         tutorialScreen.setupFirstScene();
         mainPaneCampaign.getChildren().add(tutorialScreen);
         startTotalTime();
@@ -223,8 +223,9 @@ public class MainProgram extends Application {
 
     private void keyPressed(KeyEvent e) {
         if (null != e) {
-            if (KeyCode.SPACE == e.getCode()) {
+            if (KeyCode.SPACE == e.getCode() && tutorialScreen.getIsRunning()) {
                 removeTutorialScreen();
+                worldTemplate.startLadderAnimation();
             }
         }
     }
@@ -319,6 +320,7 @@ public class MainProgram extends Application {
         }
         worldTemplate = new World1Template(new World1Maps(heartCrystals, 25, level + 1, World.FOREST), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
+        worldTemplate.startLadderAnimation();
         if (4 == level) {
             tutorialScreen = new TutorialScreen();
             tutorialScreen.setupSecondScene();
@@ -368,6 +370,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
+        worldTemplate.startLadderAnimation();
         worldTemplate = new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
         if (5 == level) {
@@ -462,6 +465,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
+        worldTemplate.startLadderAnimation();
         worldTemplate = new World4Template(new World4Maps(heartCrystals, 55, level + 1, World.CLOUD), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
     }
@@ -531,18 +535,22 @@ public class MainProgram extends Application {
             case 2 -> {
                 lvlCleared = 61;
                 rightPanel.changeLevelCounter("62");
+                worldTemplate.startLadderAnimation();
             }
             case 3 -> {
                 lvlCleared = 62;
                 rightPanel.changeLevelCounter("63");
+                worldTemplate.startLadderAnimation();
             }
             case 4 -> {
                 lvlCleared = 63;
                 rightPanel.changeLevelCounter("64");
+                worldTemplate.startLadderAnimation();
             }
             case 5 -> {
                 lvlCleared = 64;
                 rightPanel.changeLevelCounter("65");
+                worldTemplate.startLadderAnimation();
             }
             case 6 -> {
                 lvlCleared = 65;
@@ -552,6 +560,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
+
         worldTemplate = new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
     }
@@ -674,6 +683,8 @@ public class MainProgram extends Application {
             introAnimation = new WorldIntroAnimation(world);
             mainPaneCampaign.getChildren().add(introAnimation);
             introAnimation.setDisable(true);
+            worldTemplate.startLadderAnimation();
+
         }
     }
 
@@ -798,4 +809,6 @@ public class MainProgram extends Application {
         sandboxLoader = new Scene(new SandboxLoader(createdMaps), WIDTH, HEIGHT);
         mainWindow.setScene(sandboxLoader);
     }
+
 }
+
