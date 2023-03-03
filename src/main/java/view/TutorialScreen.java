@@ -19,7 +19,6 @@ public class TutorialScreen extends Pane {
     private ImageView arrow;
     private AnimationTimer animationTimer;
     private ImageView introView;
-    private boolean isRunning;
 
     public TutorialScreen() {
         arrow = new ImageView(new Image("file:files/arrow.png", 80, 80, false, false));
@@ -35,7 +34,6 @@ public class TutorialScreen extends Pane {
         messageLabel.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 20));
         messageLabel.setWrapText(true);
         getChildren().add(messageLabel);
-        isRunning = false;
     }
 
     private String nextMessageFirst(String message) {
@@ -203,7 +201,6 @@ public class TutorialScreen extends Pane {
         skipLabel.setLayoutY(380.0);
         skipLabel.setWrapText(true);
         skipLabel.setMaxSize(80, 80);
-        skipLabel.setId("#skipLabel");
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), skipLabel);
         translateTransition.setFromY(0);
         translateTransition.setToY(-30);
@@ -232,7 +229,6 @@ public class TutorialScreen extends Pane {
         ft.setToValue(0.0);
         getChildren().removeAll(messageLabel, skipLabel);
         setOnMouseClicked(null);
-        isRunning = false;
         return ft;
     }
 
@@ -263,9 +259,5 @@ public class TutorialScreen extends Pane {
             }
         };
         animationTimer.start();
-    }
-
-    public boolean getIsRunning(){
-        return isRunning;
     }
 }
