@@ -1,5 +1,6 @@
 package view.sandbox;
 
+import com.sun.tools.javac.Main;
 import control.MainProgram;
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -12,8 +13,10 @@ import model.maps.CreatedMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -111,18 +114,65 @@ class SandboxLoaderTest {
 
     @Test
     void scrollPainContentCheck (){
-        SandboxLoader sandboxLoader = new SandboxLoader();
+        ArrayList<CreatedMap> createdMaps = new ArrayList<>();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("files/maps.dat"))) {
+            CreatedMap map;
+            while (null != (map = (CreatedMap) ois.readObject())) {
+                createdMaps.add(cloneMap(map));
+            }
+        } catch (IOException | ClassNotFoundException ignored) {
+
+        }
+
+        SandboxLoader sandboxLoader = new SandboxLoader(createdMaps);
         ScrollPane scrollPane = null;
         for (int i = 0; i < sandboxLoader.getChildren().size(); i++) {
             try {
                 scrollPane = (ScrollPane) sandboxLoader.getChildren().get(i);
             } catch (ClassCastException e) {
-                System.out.println(e.getMessage());
+
             }
         }
         VBox vBox = (VBox) scrollPane.getContent();
-        System.out.println(vBox.getChildren().size());
 
+        for (int i = 0; i < vBox.getChildren().size(); i++) {
+            VBox vBox2 = (VBox) vBox.getChildren().get(i);
+            assertTrue(vBox2.getChildren().get(0)!=null);
+            HBox hBox = (HBox) vBox2.getChildren().get(1);
+
+            for (int j = 0; j < 3; j++) {
+                Label label = (Label) hBox.getChildren().get(j);
+                if (j==0){
+                    assertTrue(label != null);
+                    assertEquals("Edit", label.getText());
+                }
+                if (j==1){
+                    assertTrue(label != null);
+                    assertEquals("Play", label.getText());
+                }
+                if (j==2){
+                    assertTrue(label != null);
+                    assertEquals("Delete", label.getText());
+                }
+            }
+        }
+    }
+    private CreatedMap cloneMap(CreatedMap map) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(map);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        byte[] bytes = baos.toByteArray();
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        CreatedMap copy = null;
+        try (ObjectInputStream ois = new ObjectInputStream(bais)) {
+            copy = (CreatedMap) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return copy;
     }
 
     @Test
