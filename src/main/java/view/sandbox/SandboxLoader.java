@@ -133,6 +133,4 @@ public class SandboxLoader extends Pane {
         template.getChildren().addAll(name, buttons);
         return template;
     }
-
-
 }

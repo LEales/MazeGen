@@ -3,13 +3,18 @@ package view.sandbox;
 import com.sun.tools.javac.Main;
 import control.MainProgram;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import model.maps.CreatedMap;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +23,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -180,6 +187,42 @@ class SandboxLoaderTest {
     }
 
     @Test
+    void editButtonExists () throws NoSuchMethodException {
+        CreatedMap testMap = new CreatedMap();
+        SandboxLoader sandboxLoader = new SandboxLoader();
+
+        Method addMapMethod = SandboxLoader.class.getDeclaredMethod("addMap", CreatedMap.class);
+        addMapMethod.setAccessible(true);
+
+        VBox vbox = null;
+        try {
+            vbox = (VBox) addMapMethod.invoke(sandboxLoader, testMap);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        boolean editExists = false;
+        for (Node node : vbox.getChildren()) {
+            if (node instanceof HBox) {
+                HBox buttons = (HBox) node;
+                for (Node buttonNode : buttons.getChildren()) {
+                    if (buttonNode instanceof Label) {
+                        Label buttonLabel = (Label) buttonNode;
+                        if (buttonLabel.getText().equals("Edit")) {
+                            editExists = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        assertTrue(editExists);
+    }
+
+    @Test
     void playButtonExists () throws NoSuchMethodException {
         CreatedMap testMap = new CreatedMap();
         SandboxLoader sandboxLoader = new SandboxLoader();
@@ -288,5 +331,33 @@ class SandboxLoaderTest {
         Font deleteFont = deleteLabel.getFont();
         assertEquals("Press Start 2P", deleteFont.getFamily());
         assertEquals(14.0, deleteFont.getSize());
+    }
+
+    @Test
+    public void testScrollPaneIncludesAllMaps() throws NoSuchMethodException {
+        CreatedMap testMap = new CreatedMap();
+        CreatedMap testMap2 = new CreatedMap();
+        CreatedMap testMap3 = new CreatedMap();
+        SandboxLoader sandboxLoader = new SandboxLoader();
+
+        Method addMapMethod = SandboxLoader.class.getDeclaredMethod("addMap", CreatedMap.class);
+        addMapMethod.setAccessible(true);
+
+        ScrollPane scrollPane = new ScrollPane();
+        VBox container = new VBox();
+        scrollPane.setContent(container);
+
+        try {
+            container.getChildren().add((VBox) addMapMethod.invoke(sandboxLoader, testMap));
+            container.getChildren().add((VBox) addMapMethod.invoke(sandboxLoader, testMap2));
+            container.getChildren().add((VBox) addMapMethod.invoke(sandboxLoader, testMap3));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        assertNotNull(container, "Returned VBox should not be null");
+        assertEquals(container.getChildren().size(), 3);
     }
 }
