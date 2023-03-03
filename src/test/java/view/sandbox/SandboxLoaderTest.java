@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import model.maps.CreatedMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -176,7 +177,7 @@ class SandboxLoaderTest {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        
+
         boolean playExists = false;
         for (Node node : vbox.getChildren()) {
             if (node instanceof HBox) {
@@ -194,5 +195,44 @@ class SandboxLoaderTest {
         }
 
         assertTrue(playExists);
+    }
+
+    @Test
+    public void testLabelFonts() throws NoSuchMethodException {
+        CreatedMap testMap = new CreatedMap();
+        SandboxLoader sandboxLoader = new SandboxLoader();
+
+        Method addMapMethod = SandboxLoader.class.getDeclaredMethod("addMap", CreatedMap.class);
+        addMapMethod.setAccessible(true);
+
+        VBox vbox = null;
+        try {
+            vbox = (VBox) addMapMethod.invoke(sandboxLoader, testMap);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        Label nameLabel = (Label) vbox.getChildren().get(0);
+        Font nameFont = nameLabel.getFont();
+        assertEquals("Press Start 2P", nameFont.getFamily());
+        assertEquals(18.0, nameFont.getSize());
+
+        HBox buttons = (HBox) vbox.getChildren().get(1);
+        Label loadLabel = (Label) buttons.getChildren().get(0);
+        Font loadFont = loadLabel.getFont();
+        assertEquals("Press Start 2P", loadFont.getFamily());
+        assertEquals(14.0, loadFont.getSize());
+
+        Label playLabel = (Label) buttons.getChildren().get(1);
+        Font playFont = playLabel.getFont();
+        assertEquals("Press Start 2P", playFont.getFamily());
+        assertEquals(14.0, playFont.getSize());
+
+        Label deleteLabel = (Label) buttons.getChildren().get(2);
+        Font deleteFont = deleteLabel.getFont();
+        assertEquals("Press Start 2P", deleteFont.getFamily());
+        assertEquals(14.0, deleteFont.getSize());
     }
 }
