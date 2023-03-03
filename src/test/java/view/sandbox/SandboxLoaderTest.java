@@ -112,6 +112,9 @@ class SandboxLoaderTest {
         }
     }
 
+    /**
+     * Kontrollerar att varje karta i scrollpanen har Texten plus knapparna
+     */
     @Test
     void scrollPainContentCheck (){
         ArrayList<CreatedMap> createdMaps = new ArrayList<>();
