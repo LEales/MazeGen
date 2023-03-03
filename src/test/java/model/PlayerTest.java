@@ -59,7 +59,7 @@ class PlayerTest {
     @Test
     void playerWithNegLvlsCleared() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new Player("BAB", new Time(12), -1);
+            new Player("BAB", new Time(-1), -1);
         });
         assertThrows(IllegalArgumentException.class, () -> {
             new Player("BAB", 12, -1);

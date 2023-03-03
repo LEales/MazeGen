@@ -3,17 +3,11 @@ package model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import javafx.application.Platform;
 import model.Time;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class TimeTest {
 
-    @BeforeAll
-    static void initializeJavaFX() {
-        Platform.startup(() ->  {});
-    }
 
     @Test
     public void validInt() {
@@ -41,17 +35,13 @@ public class TimeTest {
     @Test
     public void increment() {
         Time time = new Time(0);
-        Platform.runLater(() -> {
-            assertEquals(1, time.increment());
-        });
+        assertEquals(1, time.increment());
     }
 
     @Test
     public void decrement() {
         Time time = new Time(1);
-        Platform.runLater(() -> {
-                    assertEquals(0, time.decrement());
-        });
+        assertEquals(0, time.decrement());
     }
 
     @Test

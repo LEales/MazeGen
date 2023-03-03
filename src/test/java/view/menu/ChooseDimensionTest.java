@@ -456,16 +456,18 @@ public class ChooseDimensionTest {
     void onClickNullView() {
         int dim = 3;
 
+        ImageView view = null;
+
         Method onClick;
         try {
-            onClick = ChooseDimension.class.getDeclaredMethod("onClick", int.class);
+            onClick = ChooseDimension.class.getDeclaredMethod("onClick", ImageView.class, int.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
         onClick.setAccessible(true);
 
         try {
-            onClick.invoke(chooseDimension, dim);
+            onClick.invoke(chooseDimension, view, dim);
         } catch (IllegalAccessException e) {
 
         } catch (InvocationTargetException e) {
@@ -480,17 +482,18 @@ public class ChooseDimensionTest {
     void onClickdimForbidden10() {
         int dim = 10;
 
+        ImageView view = null;
 
         Method onClick;
         try {
-            onClick = ChooseDimension.class.getDeclaredMethod("onClick", int.class);
+            onClick = ChooseDimension.class.getDeclaredMethod("onClick", ImageView.class, int.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
         onClick.setAccessible(true);
 
         try {
-            onClick.invoke(chooseDimension, dim);
+            onClick.invoke(chooseDimension, view, dim);
         } catch (IllegalAccessException e) {
 
         } catch (InvocationTargetException e) {
@@ -504,16 +507,18 @@ public class ChooseDimensionTest {
     void onClickForbidden14() {
         int dim = 14;
 
+        ImageView view = null;
+
         Method onClick;
         try {
-            onClick = ChooseDimension.class.getDeclaredMethod("onClick", int.class);
+            onClick = ChooseDimension.class.getDeclaredMethod("onClick", ImageView.class, int.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
         onClick.setAccessible(true);
 
         try {
-            onClick.invoke(chooseDimension, dim);
+            onClick.invoke(chooseDimension, view, dim);
         } catch (IllegalAccessException e) {
 
         } catch (InvocationTargetException e) {
@@ -527,16 +532,18 @@ public class ChooseDimensionTest {
     void onClickForbidden18() {
         int dim = 18;
 
+        ImageView view = null;
+
         Method onClick;
         try {
-            onClick = ChooseDimension.class.getDeclaredMethod("onClick", int.class);
+            onClick = ChooseDimension.class.getDeclaredMethod("onClick", ImageView.class, int.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
         onClick.setAccessible(true);
 
         try {
-            onClick.invoke(chooseDimension, dim);
+            onClick.invoke(chooseDimension, view, dim);
         } catch (IllegalAccessException e) {
 
         } catch (InvocationTargetException e) {
@@ -550,16 +557,18 @@ public class ChooseDimensionTest {
     void onClickForbidden28() {
         int dim = 28;
 
+        ImageView view = null;
+
         Method onClick;
         try {
-            onClick = ChooseDimension.class.getDeclaredMethod("onClick", int.class);
+            onClick = ChooseDimension.class.getDeclaredMethod("onClick", ImageView.class, int.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
         onClick.setAccessible(true);
 
         try {
-            onClick.invoke(chooseDimension, dim);
+            onClick.invoke(chooseDimension, view, dim);
         } catch (IllegalAccessException e) {
 
         } catch (InvocationTargetException e) {

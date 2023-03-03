@@ -96,7 +96,7 @@ public class MapsTest {
     public void SetWorld(){
         map = new TestMaps(1,1,1,World.LAVA);
         map.setWorld(World.FOREST);
-        assertEquals(World.FOREST,map.getWorld());
+        assertEquals(map.getWorld(),World.FOREST);
     }
     //Maps är en abstract-klass
     private static class TestMaps extends Maps {
