@@ -132,6 +132,7 @@ class SandboxLoaderTest {
         for (int i = 0; i < sandboxLoader.getChildren().size(); i++) {
             try {
                 scrollPane = (ScrollPane) sandboxLoader.getChildren().get(i);
+                assertTrue(scrollPane != null);
             } catch (ClassCastException e) {
 
             }
