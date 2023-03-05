@@ -1,11 +1,10 @@
 package control;
 
-import javafx.animation.FadeTransition;
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,13 +12,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javafx.util.Duration;
 import model.enums.GameMode;
 import model.enums.LifeLostCause;
-import model.enums.Sprite;
 import model.maps.*;
 
 import model.Player;
@@ -52,6 +49,7 @@ public class MainProgram extends Application {
     private Stage mainWindow;
     private BorderPane mainPaneRandomMaze, mainPaneCampaign, mainPaneSandbox;
     private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene, sandboxLoader, sandboxScene, sandboxPlayScene;
+    private ImageView lostLifeView;
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
     private RightPanel rightPanel, rightPnlRndm, rightPanelSandbox;
@@ -59,6 +57,8 @@ public class MainProgram extends Application {
 
     private WorldIntroAnimation introAnimation;
     private int lvlCleared;
+
+    private boolean playerHurt = false;
     private TotalTime totTime;
 
     private MapTemplate mapTemplate;
@@ -222,11 +222,7 @@ public class MainProgram extends Application {
         tutorialScreen.setupFirstScene();
         mainPaneCampaign.getChildren().add(tutorialScreen);
         startTotalTime();
-        try { //todo ta bort
-            nextWorld4Level(1, 3);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     private void keyPressed(KeyEvent e) {
@@ -293,30 +289,85 @@ public class MainProgram extends Application {
     }
 
     /**
-     * Tar in vad som spelaren träffades av och skapar en fade transition av motsvarande textbild
-     * @author Anna Håkansson
+     * Tar in vad som spelaren träffades av samt antalet heartcrystals innan kollision
      * @param cause the cause of hurt
      */
-    public void lostLife(LifeLostCause cause) {
-        ImageView lostLifeView = new ImageView(new Image("file:files/lostLifeCause/" + cause + ".png", 600, 600, false, false));
+    public void lostLife(LifeLostCause cause, int heartCrystals) {
+        playerHurt = true;
+
+        showLostLifeText(cause);
+        lostHeartAnimation(heartCrystals);
+    }
+
+    /**
+     * Skapar en transition för att visa texten för hur spelaren dog.
+     * @param cause anledningen till kollision
+     */
+    private void showLostLifeText(LifeLostCause cause) {
+        playerHurt = true;
+
+        lostLifeView = new ImageView(new Image("file:files/lostLifeCause/" + cause + ".png", 600, 600, false, false));
         lostLifeView.setStyle("fx-background-color: transparent;");
         lostLifeView.setFitWidth(600);
         lostLifeView.setFitHeight(100);
         lostLifeView.setLayoutX((mainPaneCampaign.getWidth() / 2) - 400);
         lostLifeView.setLayoutY((mainPaneCampaign.getHeight() - lostLifeView.getFitHeight()) / 2);
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(700), lostLifeView);
-        fadeIn.setFromValue(0.0);
-        fadeIn.setToValue(1.0);
-
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(700), lostLifeView);
-        fadeOut.setFromValue(1.0);
-        fadeOut.setToValue(0.0);
-
-        fadeIn.setOnFinished(event -> fadeOut.play());
-        fadeOut.setOnFinished(event -> mainPaneCampaign.getChildren().remove(lostLifeView));
+        FadeTransition lostLifeTransition = new FadeTransition(Duration.millis(700), lostLifeView);
+        lostLifeTransition.setFromValue(0.0);
+        lostLifeTransition.setToValue(1.0);
 
         mainPaneCampaign.getChildren().add(lostLifeView);
-        fadeIn.play();
+        lostLifeTransition.play();
+    }
+
+    /**
+     * Skapar en animation genom TimeLine som visar antal hjärtan innan kollision och sedan antal
+     * efter kollision
+     * @param heartCrystals antal heartcrystals innan kollision
+     */
+    private void lostHeartAnimation(int heartCrystals) {
+        Image image1 = new Image("file:files/hearts/" + heartCrystals + "heart.png");
+        Image image2 = new Image("file:files/hearts/" + --heartCrystals + "heart.png");
+        ImageView heartView = new ImageView(image1);
+        heartView.setStyle("fx-background-color: transparent;");
+        heartView.setFitWidth(150);
+        heartView.setFitHeight(50);
+        heartView.setLayoutX((mainPaneCampaign.getWidth() / 2) - (heartView.getFitWidth() + heartView.getFitWidth()/6));
+        heartView.setLayoutY((mainPaneCampaign.getHeight() / 2)  + (heartView.getFitHeight()/2));
+
+        KeyFrame keyFrame1On = new KeyFrame(Duration.seconds(0.5), new KeyValue(heartView.imageProperty(), image1, Interpolator.EASE_OUT));
+        KeyFrame keyFrame2On = new KeyFrame(Duration.seconds(1.0), new KeyValue(heartView.imageProperty(), image2, Interpolator.EASE_OUT));
+        Timeline timelineOn = new Timeline(keyFrame1On, keyFrame2On);
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
+        delay.setOnFinished(event -> mainPaneCampaign.getChildren().remove(heartView));
+
+        mainPaneCampaign.getChildren().add(heartView);
+        timelineOn.play();
+        delay.play();
+
+
+    }
+
+    /**
+     * tar bort texten för hur man skadades (kallas på när spelaren klickar på startstegen igen)
+     */
+    public void removeLostLifeText() {
+        if(lostLifeView != null) {
+            mainPaneCampaign.getChildren().remove(lostLifeView);
+            playerHurt = false;
+        }
+        else {
+            throw new IllegalArgumentException("Invalid imageView");
+        }
+    }
+
+    /**
+     * @return används i World1Template.startLevel() för att kunna ta bort texten om
+     * spelaren precis kolliderat
+     */
+    public boolean isPlayerHurt() {
+        return this.playerHurt;
     }
 
     /**

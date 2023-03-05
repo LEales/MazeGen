@@ -423,7 +423,7 @@ public class World1Template extends GridPane {
         createFadeTransition(label, 0.3, 10.0, 0.6).play();
 
         if (map.isGameStarted()) {
-            mainProgram.lostLife(worldCause);
+            mainProgram.lostLife(worldCause, map.getHeartCrystals());
             if (map.heartCrystalLost()) {
                 gameOver();
             }
@@ -446,7 +446,7 @@ public class World1Template extends GridPane {
             createFadeTransition(view, 0.2, 10, 0.6).play();
             AudioPlayer.playMobSound();
             AudioPlayer.playDeathSound();
-            mainProgram.lostLife(LifeLostCause.GHOST);
+            mainProgram.lostLife(LifeLostCause.GHOST, map.getHeartCrystals());
             if (map.heartCrystalLost()) {
                 gameOver();
             }
@@ -455,6 +455,8 @@ public class World1Template extends GridPane {
             createFadeTransition(view, 1.5, 0.6, 10).play();
         }
     }
+
+
 
     /**
      * Avslutar spelrundan och kör metoden gameOver i mainProgram.
@@ -519,6 +521,9 @@ public class World1Template extends GridPane {
         }
         if (!map.isGameStarted()) {
             AudioPlayer.playStartSound();
+        }
+        if(mainProgram.isPlayerHurt()) {
+            mainProgram.removeLostLifeText();
         }
         mainProgram.removeTutorialScreen();
         map.setGameStarted(true);
