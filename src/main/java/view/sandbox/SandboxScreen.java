@@ -47,6 +47,9 @@ public class SandboxScreen extends BorderPane {
     private String name;
 
     public SandboxScreen(int dimension) {
+        if(5 > dimension) {
+            throw new IllegalArgumentException("Invalid dimension");
+        }
         this.squareSizeMenu = 60;
         this.dimension = dimension;
         this.squareSizeMap = (int) MainProgram.HEIGHT / dimension;
@@ -315,6 +318,9 @@ public class SandboxScreen extends BorderPane {
 
     //laddar in en karta från en CreatedMap
     public void loadMap(CreatedMap map) {
+        if(null == map || null == map.getMap()) {
+            throw new IllegalArgumentException("Invalid map");
+        }
         world = map.getWorld();
         worldComboBox.setValue(world);
         spinner.getValueFactory().setValue(map.getSeconds());
