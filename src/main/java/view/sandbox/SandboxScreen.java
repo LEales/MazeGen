@@ -54,10 +54,10 @@ public class SandboxScreen extends BorderPane {
         sandBoxMap = new GridPane();
         pathImage = new Image("file:files/forest/path.png", squareSizeMap, squareSizeMap, false, false);
         wallImage = new Image("file:files/forest/wall.png", squareSizeMap, squareSizeMap, false, false);
-        heartImage = new Image("file:files/items/heart.png", squareSizeMap, squareSizeMap, false, false);
+        heartImage = new Image("file:files/sandboxCollectibles/forestheart.png", squareSizeMap, squareSizeMap, false, false);
         breakableWallImage = new Image("file:files/breakablewall.png", squareSizeMap, squareSizeMap, false, false);
-        axeImage = new Image("file:files/items/pickaxe.png", squareSizeMap, squareSizeMap, false, false);
-        collectibleImage = new Image("file:files/forest/collectible.png", squareSizeMap, squareSizeMap, false, false);
+        axeImage = new Image("file:files/sandboxCollectibles/forestpickaxe.png", squareSizeMap, squareSizeMap, false, false);
+        collectibleImage = new Image("file:files/sandboxCollectibles/forestcollectible.png", squareSizeMap, squareSizeMap, false, false);
         deleteImage = new Image("file:files/emptySprite.png", squareSizeMap, squareSizeMap, false, false);
         startImage = new Image("file:files/forest/start.png", squareSizeMap, squareSizeMap, false, false);
         goalImage = new Image("file:files/forest/goal.png", squareSizeMap, squareSizeMap, false, false);
@@ -262,9 +262,14 @@ public class SandboxScreen extends BorderPane {
         Image tempPath = pathImage;
         Image tempWall = wallImage;
         Image tempCollectible = collectibleImage;
+        Image tempHeart = heartImage;
+        Image tempAxe = axeImage;
         pathImage = new Image("file:files/" + newValue.toString().toLowerCase() + "/path.png", squareSizeMap, squareSizeMap, false, false);
         wallImage = new Image("file:files/" + newValue.toString().toLowerCase() + "/wall.png", squareSizeMap, squareSizeMap, false, false);
-        collectibleImage = new Image("file:files/" + newValue.toString().toLowerCase() + "/collectible.png", squareSizeMap, squareSizeMap, false, false);
+        collectibleImage = new Image("file:files/sandboxCollectibles/" + newValue.toString().toLowerCase() + "collectible.png", squareSizeMap, squareSizeMap, false, false);
+        heartImage = new Image("file:files/sandboxCollectibles/" + newValue.toString().toLowerCase() + "heart.png", squareSizeMap, squareSizeMap, false, false);
+        axeImage = new Image("file:files/sandboxCollectibles/" + newValue.toString().toLowerCase() + "pickaxe.png", squareSizeMap, squareSizeMap, false, false);
+        System.out.println(newValue.toString().toLowerCase());
         for (Label label : labels) {
             Image image = ((ImageView) label.getGraphic()).getImage();
             if (compareImages(image, tempPath)) {
@@ -273,7 +278,11 @@ public class SandboxScreen extends BorderPane {
                 label.setGraphic(new ImageView(wallImage));
             } else if (compareImages(image, tempCollectible)) {
                 label.setGraphic(new ImageView(collectibleImage));
-            } else if (compareImages(image, startImage)) {
+            } else if (compareImages(image, tempAxe)) {
+                label.setGraphic(new ImageView(axeImage));
+            } else if(compareImages(image, tempHeart)) {
+                label.setGraphic(new ImageView(heartImage));
+            }else if (compareImages(image, startImage)) {
                 startImage = new Image("file:files/" + newValue.toString().toLowerCase() + "/start.png", squareSizeMap, squareSizeMap, false, false);
                 label.setGraphic(new ImageView(startImage));
             } else if (compareImages(image, goalImage)) {
