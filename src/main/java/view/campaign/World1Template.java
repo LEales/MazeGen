@@ -578,7 +578,6 @@ public class World1Template extends GridPane {
     public boolean hasLadderInitialized(World world){
         Label normal = (Label) lookup("#start");
         if (normal != null && normal.hasProperties()) {
-            row = getRowIndex(normal);
             return true;
         }
         return false;
@@ -602,15 +601,19 @@ public class World1Template extends GridPane {
 
                 while (!ladderClicked) {
                     Platform.runLater(() -> {
-                        getChildren().remove(normal);
-                        add(brightLadder, column, row);
-                        brightLadder.toBack();
+                        if (!getChildren().contains(brightLadder)) {
+                            getChildren().remove(normal);
+                            add(brightLadder, column, row);
+                            brightLadder.toBack();
+                        }
                     });
                     sleepFor(1000);
                     Platform.runLater(() -> {
-                        getChildren().remove(brightLadder);
-                        add(normal, column, row);
-                        normal.toBack();
+                        if (!getChildren().contains(normal)) {
+                            getChildren().remove(brightLadder);
+                            add(normal, column, row);
+                            normal.toBack();
+                        }
                     });
                     sleepFor(1000);
                     if (ladderClicked) {
