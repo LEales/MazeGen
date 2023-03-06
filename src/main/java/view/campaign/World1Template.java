@@ -42,6 +42,8 @@ public class World1Template extends GridPane {
     private int ladderRow;
     private int ladderColumn;
     final int squareSize;
+    private int column;
+    private int row;
 
     /**
      * Instansierar objekten.
@@ -453,10 +455,13 @@ public class World1Template extends GridPane {
             if (map.heartCrystalLost()) {
                 gameOver();
             }
+            else{
+                startLadderAnimation(map.getWorld());
+            }
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             map.setGameStarted(false);
             createFadeTransition(view, 1.5, 0.6, 10).play();
-            startLadderAnimation(map.getWorld());
+
         }
     }
 
@@ -570,37 +575,53 @@ public class World1Template extends GridPane {
         }
     }
 
+    public boolean hasLadderInitialized(World world){
+        Label normal = (Label) lookup("#start");
+        if (normal != null && normal.hasProperties()) {
+            row = getRowIndex(normal);
+            return true;
+        }
+        return false;
+    }
+
     public void startLadderAnimation(World world) {
         ladderClicked = false;
-        Thread imageThread = new Thread(() -> {
-            Label yellowLadder = getYellowStart(world);
-            Label normal = (Label) lookup("#start");
-            int row = getRowIndex(normal);
-            int column = getColumnIndex(normal);
+        if(hasLadderInitialized(world)){
+            Thread imageThread = new Thread(() -> {
+                Label brightLadder = getBrightStart(world);
+                Label normal = (Label) lookup("#start");
+                if (normal != null && normal.hasProperties()) {
+                    row = getRowIndex(normal);
+                    column = getColumnIndex(normal);
+                    normal.setOnMouseClicked(e -> stopLadderAnimation());
+                    brightLadder.setOnMouseClicked(e -> {
+                        stopLadderAnimation();
 
-            normal.setOnMouseClicked(e -> stopLadderAnimation());
-            yellowLadder.setOnMouseClicked(e -> {
-                stopLadderAnimation();
-
-            });
-
-            while (!ladderClicked) {
-                Platform.runLater(() -> {
-                    getChildren().remove(normal);
-                    add(yellowLadder, column, row);
-                });
-                sleepFor(1000);
-                Platform.runLater(() -> {
-                    getChildren().remove(yellowLadder);
-                    add(normal, column, row);
-                });
-                sleepFor(1000);
-                if (ladderClicked) {
-                    Thread.currentThread().interrupt();
+                    });
                 }
-            }
-        });
-        imageThread.start();
+
+                while (!ladderClicked) {
+                    Platform.runLater(() -> {
+                        getChildren().remove(normal);
+                        add(brightLadder, column, row);
+                        brightLadder.toBack();
+                    });
+                    sleepFor(1000);
+                    Platform.runLater(() -> {
+                        getChildren().remove(brightLadder);
+                        add(normal, column, row);
+                        normal.toBack();
+                    });
+                    sleepFor(1000);
+                    if (ladderClicked) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            });
+            imageThread.start();
+        };
+
+
     }
 
     private void sleepFor(long milliseconds) {
@@ -612,7 +633,7 @@ public class World1Template extends GridPane {
     }
 
 
-    public Label getYellowStart(World world) {
+    public Label getBrightStart(World world) {
         start = new Image("file:files/" + world + "/brightLadder.png", squareSize, squareSize, false, false);
         Label label = new Label();
         ImageView borderView = new ImageView(start);

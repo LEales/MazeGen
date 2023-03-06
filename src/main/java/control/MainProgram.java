@@ -210,7 +210,7 @@ public class MainProgram extends Application {
      */
     public void changeToCampaign() throws FileNotFoundException {
         lvlCleared = 0;
-        worldTemplate = new World3Template(new World3Maps(3, 25, 2, World.LAVA), rightPanel);
+        worldTemplate = new World6Template(new World6Maps(3, 25, 3, World.SPACE), rightPanel);
         rightPanel.changeLevelCounter("11");
         mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
@@ -219,13 +219,16 @@ public class MainProgram extends Application {
         campaignScene.setOnKeyPressed(e -> keyPressed(e));
         mainPaneCampaign.getChildren().add(tutorialScreen);
         startTotalTime();
+
     }
 
     private void keyPressed(KeyEvent e) {
         if (null != e) {
-            if (KeyCode.SPACE == e.getCode() && !(tutorialScreen.isDisable())) {
+            if (KeyCode.SPACE == e.getCode() && tutorialScreen !=null && !(tutorialScreen.isDisable())) {
+
                 removeTutorialScreen();
                 worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
+
             }
         }
     }
