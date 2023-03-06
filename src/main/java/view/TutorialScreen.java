@@ -5,8 +5,6 @@ import javafx.animation.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -15,7 +13,6 @@ import model.enums.World;
 public class TutorialScreen extends Pane {
 
     private Label messageLabel;
-    private Label skipLabel;
     private ImageView arrow;
     private AnimationTimer animationTimer;
     private ImageView introView;
@@ -194,21 +191,21 @@ public class TutorialScreen extends Pane {
     }
 
     private void createSkipLabel() {
-        skipLabel = new Label("Press space to skip");
-        skipLabel.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 10));
-        skipLabel.setStyle("-fx-text-fill: white;");
-        skipLabel.setLayoutX(490.0);
-        skipLabel.setLayoutY(380.0);
-        skipLabel.setWrapText(true);
-        skipLabel.setMaxSize(80, 80);
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), skipLabel);
+        Image image = new Image("file:files/skip_tutorial.png");
+        ImageView imageView = new ImageView(image);
+        imageView.setStyle("-fx-background-color: transparent;");
+        imageView.setLayoutX(457.0);
+        imageView.setLayoutY(380.0);
+        imageView.setFitHeight(80);
+        imageView.setFitWidth(130);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), imageView);
         translateTransition.setFromY(0);
         translateTransition.setToY(-30);
         translateTransition.setCycleCount(TranslateTransition.INDEFINITE);
         translateTransition.setAutoReverse(true);
         translateTransition.setInterpolator(Interpolator.EASE_BOTH);
         translateTransition.play();
-        getChildren().add(skipLabel);
+        getChildren().add(imageView);
     }
 
     private void showMessage(String message) {
@@ -227,7 +224,7 @@ public class TutorialScreen extends Pane {
         FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
-        getChildren().removeAll(messageLabel, skipLabel);
+        getChildren().removeAll();
         setOnMouseClicked(null);
         return ft;
     }
