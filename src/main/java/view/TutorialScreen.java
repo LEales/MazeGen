@@ -17,11 +17,13 @@ public class TutorialScreen extends Pane {
     private Label messageLabel;
     private Label skipLabel;
     private ImageView arrow;
+    private ImageView moreTextArrow;
     private AnimationTimer animationTimer;
     private ImageView introView;
 
     public TutorialScreen() {
         arrow = new ImageView(new Image("file:files/arrow.png", 80, 80, false, false));
+        moreTextArrow = new ImageView(new Image("file:files/tutarrow.png", 80, 80, false, false));
         messageLabel = new Label();
         introView = new ImageView(new Image("file:files/sven.png", 500, 500, false, false));
         introView.setStyle("fx-background-color: transparent;");
@@ -57,6 +59,9 @@ public class TutorialScreen extends Pane {
             case "NOW GO ON FINISH THE MAZE..." -> "OR WHATEVER...";
             default -> null;
         };
+
+
+
     }
 
     private String nextMessageSecond(String message) {
@@ -220,6 +225,7 @@ public class TutorialScreen extends Pane {
                     new KeyValue(messageLabel.textProperty(), message.substring(0, i + 1)));
             timeline.getKeyFrames().add(keyFrame);
         }
+        startmoreTextArrow();
         timeline.play();
     }
 
@@ -260,4 +266,31 @@ public class TutorialScreen extends Pane {
         };
         animationTimer.start();
     }
+
+    public void startmoreTextArrow() {
+        getChildren().add(moreTextArrow);
+        moreTextArrow.setX(arrow.getTranslateX() + 250);
+        moreTextArrow.setY(arrow.getTranslateY() + 160);
+        animationTimer = new AnimationTimer() {
+            private boolean visible = true;
+            @Override
+            public void handle(long l) {
+                if (visible) {
+                    moreTextArrow.setVisible(false);
+                    visible = false;
+                } else {
+                    moreTextArrow.setVisible(true);
+                    visible = true;
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        animationTimer.start();
+    }
+
+
 }
