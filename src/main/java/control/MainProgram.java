@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 
 import javafx.util.Duration;
 import model.enums.GameMode;
-import model.enums.Sprite;
 import model.maps.*;
 
 import model.Player;
@@ -293,7 +292,7 @@ public class MainProgram extends Application {
      * @throws InterruptedException
      */
     public void nextWorld1Level(int level, int heartCrystals) throws FileNotFoundException, InterruptedException {
-
+        rightPanel.removePickaxe();
         switch (level) {
             case 1 -> {
                 lvlCleared = 11;
@@ -336,7 +335,7 @@ public class MainProgram extends Application {
      */
 
     public void nextWorld2Level(int level, int heartCrystals) throws FileNotFoundException, InterruptedException {
-
+        rightPanel.removePickaxe();
         switch (level) {
             case 1 -> {
                 lvlCleared = 15;
@@ -386,7 +385,7 @@ public class MainProgram extends Application {
      * @throws InterruptedException
      */
     public void nextWorld3Level(int level, int heartCrystals) throws FileNotFoundException, InterruptedException {
-
+        rightPanel.removePickaxe();
         switch (level) {
             case 1 -> {
                 lvlCleared = 25;
@@ -431,6 +430,7 @@ public class MainProgram extends Application {
      * @throws InterruptedException
      */
     public void nextWorld4Level(int level, int heartCrystals) throws FileNotFoundException, InterruptedException {
+        rightPanel.removePickaxe();
         switch (level) {
             case 1 -> {
                 lvlCleared = 35;
@@ -475,6 +475,7 @@ public class MainProgram extends Application {
      * @throws InterruptedException
      */
     public void nextWorld5Level(int level, int heartCrystals) throws FileNotFoundException, InterruptedException {
+        rightPanel.removePickaxe();
         switch (level) {
             case 1 -> {
                 lvlCleared = 45;
@@ -519,6 +520,7 @@ public class MainProgram extends Application {
      * @throws InterruptedException
      */
     public void nextWorld6Level(int level, int heartCrystals) throws FileNotFoundException, InterruptedException {
+        rightPanel.removePickaxe();
         switch (level) {
             case 1 -> {
                 lvlCleared = 55;
