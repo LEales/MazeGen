@@ -5,6 +5,8 @@ import javafx.application.Application;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SandboxScreenTest {
@@ -18,4 +20,10 @@ class SandboxScreenTest {
         }
     }
 
+    @Test
+    void TestRightMenuLables() throws NoSuchFieldException {
+        SandboxScreen sandboxScreen = new SandboxScreen(20);
+        Field privateField = SandboxScreen.class.getDeclaredField("path");
+
+    }
 }
