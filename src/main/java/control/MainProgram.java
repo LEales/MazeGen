@@ -49,7 +49,7 @@ public class MainProgram extends Application {
     private Stage mainWindow;
     private BorderPane mainPaneRandomMaze, mainPaneCampaign, mainPaneSandbox;
     private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene, sandboxLoader, sandboxScene, sandboxPlayScene;
-    private ImageView lostLifeView;
+    private ImageView lostLifeView, heartView;
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
     private RightPanel rightPanel, rightPnlRndm, rightPanelSandbox;
@@ -328,7 +328,7 @@ public class MainProgram extends Application {
     private void lostHeartAnimation(int heartCrystals) {
         Image image1 = new Image("file:files/hearts/" + heartCrystals + "heart.png");
         Image image2 = new Image("file:files/hearts/" + --heartCrystals + "heart.png");
-        ImageView heartView = new ImageView(image1);
+        heartView = new ImageView(image1);
         heartView.setStyle("fx-background-color: transparent;");
         heartView.setFitWidth(150);
         heartView.setFitHeight(50);
@@ -340,7 +340,6 @@ public class MainProgram extends Application {
         Timeline timelineOn = new Timeline(keyFrame1On, keyFrame2On);
 
         PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
-        delay.setOnFinished(event -> mainPaneCampaign.getChildren().remove(heartView));
 
         mainPaneCampaign.getChildren().add(heartView);
         timelineOn.play();
@@ -353,12 +352,13 @@ public class MainProgram extends Application {
      * tar bort texten för hur man skadades (kallas på när spelaren klickar på startstegen igen)
      */
     public void removeLostLifeText() {
-        if(lostLifeView != null) {
+        if(lostLifeView != null || heartView != null) {
             mainPaneCampaign.getChildren().remove(lostLifeView);
+            mainPaneCampaign.getChildren().remove(heartView);
             playerHurt = false;
         }
         else {
-            throw new IllegalArgumentException("Invalid imageView");
+            throw new IllegalArgumentException("Invalid view");
         }
     }
 
