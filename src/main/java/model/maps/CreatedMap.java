@@ -19,6 +19,15 @@ public class CreatedMap implements Serializable {
     private boolean pickAxeInInventory, gameStarted, timeStarted;
     public static final long serialVersionUID = 329832084320L;
     public CreatedMap(int heartCrystals, int seconds, int dimension, String name, World world) {
+        if(0 > heartCrystals) {
+            throw new IllegalArgumentException("Invalid input: Negative amount of heartcrystals");
+        }
+        if(0 > seconds) {
+            throw new IllegalArgumentException("Invalid input: Negative amout of seconds");
+        }
+        if( 0 > dimension) {
+            throw new IllegalArgumentException("Invalid input: Negative dimension");
+        }
         this.heartCrystals = heartCrystals;
         this.seconds = seconds;
         this.dimension = dimension;
