@@ -210,7 +210,7 @@ public class MainProgram extends Application {
      */
     public void changeToCampaign() throws FileNotFoundException {
         lvlCleared = 0;
-        worldTemplate = new World6Template(new World6Maps(3, 25, 3, World.SPACE), rightPanel);
+        worldTemplate = new World1Template(new World1Maps(3, 25, 1, World.FOREST), rightPanel);
         rightPanel.changeLevelCounter("11");
         mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
