@@ -2,10 +2,9 @@ package view.sandbox;
 
 import control.MainProgram;
 import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.text.Font;
 import model.enums.World;
 import org.junit.jupiter.api.BeforeAll;
