@@ -203,6 +203,10 @@ public class MainProgram extends Application {
         }
     }
 
+    public void playRandomizeMusic(World world) {
+        AudioPlayer.playLevelMusic(world);
+    }
+
     /**
      * Byter scen till kampanjläget.
      *
@@ -265,6 +269,7 @@ public class MainProgram extends Application {
         ft.setToValue(1.0);
         ft.play();
         mainPaneRandomMaze.setOnMouseClicked(e -> {
+            AudioPlayer.stopMusic();
             changeToMenu();
             mainPaneRandomMaze.setOnMouseClicked(null);
         });

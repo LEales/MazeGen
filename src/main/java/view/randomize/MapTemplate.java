@@ -30,6 +30,7 @@ public class MapTemplate extends GridPane {
 
     private final MazeGenerator mazeGenerator;
     private final int squareSize;
+    private final MainProgram mainProgram;
 
     private TimeThread time;
 
@@ -42,6 +43,7 @@ public class MapTemplate extends GridPane {
     public MapTemplate(MazeGenerator mazeGenerator, RightPanel rightPanel) throws FileNotFoundException {
         this.mazeGenerator = mazeGenerator;
         this.rightPanel = rightPanel;
+        mainProgram = MainProgram.getMainProgram();
         rightPanel.changeHeartCounter(3);
         time = new TimeThread(mazeGenerator.getMap().getSeconds(), rightPanel, GameMode.RANDOMIZE);
         squareSize = (int) MainProgram.HEIGHT / (mazeGenerator.getMap().dimension + 2);
@@ -51,6 +53,8 @@ public class MapTemplate extends GridPane {
         setupImages(world);
         setupBorders();
         setupLevel();
+        mainProgram.playRandomizeMusic(world);
+
         rightPanel.resetTimerLabel();
 
     }
