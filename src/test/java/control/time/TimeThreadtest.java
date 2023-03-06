@@ -70,7 +70,7 @@ public class TimeThreadtest {
         TimeThread timeThread = new TimeThread(6,panel,false);
         timeThread.start();
         Thread.sleep(6000);
-        assertFalse(timeThread.isAlive());
+        assertFalse(timeThread.isAlive() == false);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class TimeThreadtest {
         timeThread.start();
         Thread.sleep(15000);
         System.out.println("is alive: " + timeThread.isAlive());
-        assertFalse(timeThread.isAlive());
+        assertFalse(timeThread.isAlive() == false);
     }
 
 
