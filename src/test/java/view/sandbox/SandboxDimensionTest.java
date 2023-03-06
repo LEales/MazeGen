@@ -81,4 +81,25 @@ class SandboxDimensionTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    void checkNegativeDimension() throws NoSuchMethodException {
+        SandboxDimension sandboxDimension = new SandboxDimension();
+
+        Method methodGetSlider = SandboxDimension.class.getDeclaredMethod("getSlider");
+        methodGetSlider.setAccessible(true);
+        Slider slider = null;
+        try {
+            slider = (Slider) methodGetSlider.invoke(sandboxDimension);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        slider.setValue(-1);
+        int actual = (int) slider.getValue();
+
+        assertEquals(5, actual);
+    }
 }

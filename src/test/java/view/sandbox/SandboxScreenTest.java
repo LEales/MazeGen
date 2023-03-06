@@ -2,11 +2,18 @@ package view.sandbox;
 
 import control.MainProgram;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.text.Font;
+import model.enums.World;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -134,5 +141,44 @@ class SandboxScreenTest {
         privateField.setAccessible(true);
         Label label = (Label) privateField.get(sandboxScreen);
         assertEquals(null,label);
+    }
+
+    @Test
+    void testChangeWorld() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException {
+        SandboxScreen sandboxScreen = new SandboxScreen(20);
+        ComboBox<World> worldComboBox = new ComboBox<>();
+        Label world = new Label("World");
+        world.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 18));
+        world.setTextFill(javafx.scene.paint.Color.WHITE);
+
+        worldComboBox.getItems().addAll(World.values());
+        worldComboBox.setValue(World.FOREST);
+        worldComboBox.valueProperty().addListener((observableValue, world1, newValue) -> {
+            try {
+                Field worldField = SandboxScreen.class.getDeclaredField("world");
+                worldField.setAccessible(true);
+                worldField.set(sandboxScreen, newValue);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+        Font font = Font.loadFont(MainProgram.class.getResourceAsStream("PressStart2P.ttf"), 10);
+        worldComboBox.setStyle("-fx-font-family: '" + font.getName() + "';");
+
+        Method setup = SandboxScreen.class.getDeclaredMethod("setUpPanel");
+        setup.setAccessible(true);
+        try {
+            setup = (Method) setup.invoke(sandboxScreen);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        worldComboBox.setValue(World.CLOUD);
+
+        Field worldField = SandboxScreen.class.getDeclaredField("world");
+        worldField.setAccessible(true);
+        World currentWorld = (World) worldField.get(sandboxScreen);
+
+        assertEquals(World.CLOUD, currentWorld);
     }
 }
