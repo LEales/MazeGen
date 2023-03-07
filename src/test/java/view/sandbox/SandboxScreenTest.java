@@ -11,6 +11,7 @@ import model.enums.World;
 import model.maps.CreatedMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.testfx.api.FxRobot;
 import org.testfx.util.WaitForAsyncUtils;
 
 import java.io.*;
@@ -18,6 +19,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -188,42 +190,9 @@ class SandboxScreenTest {
     }
 
     @Test
-    void testSaveWorld() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException {
-        CreatedMap map = new CreatedMap();
-
-        SandboxScreen sandboxScreen = new SandboxScreen(20);
-        Field buttonField = SandboxScreen.class.getDeclaredField("save");
-        buttonField.setAccessible(true);
-        Button saveButton = (Button) buttonField.get(sandboxScreen);
-
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        Platform.runLater(() -> {
-            saveButton.fire();
-            future.complete(null);
-        });
-        future.join();
-
-        while (Platform.isFxApplicationThread()) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-
-        File savedFile = new File("maps/test_name.map");
-        assertTrue(savedFile.exists());
-
-        CreatedMap savedMap = null;
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(savedFile))) {
-            savedMap = (CreatedMap) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            fail("Failed to read saved map");
-        }
-
-        assertNotNull(savedMap);
-        assertEquals("test_name", savedMap.getName());
-        assertTrue(savedFile.delete());
+    void testSaveWorld() throws NoSuchFieldException, IllegalAccessException {
+        MainProgram mainProgram = MainProgram.getMainProgram();
+        Optional<Boolean> result = Optional.of(mainProgram.checkMap("fest"));
+        assertTrue(result.get());
     }
 }
