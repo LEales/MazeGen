@@ -43,7 +43,7 @@ public class SandboxScreen extends BorderPane {
     private int hearts = 3;
     private Image pathImage, wallImage, heartImage, breakableWallImage, axeImage, collectibleImage, deleteImage, startImage, goalImage;
     private Image pathImageMenu, wallImageMenu, heartImageMenu, breakableWallImageMenu, axeImageMenu, collectibleImageMenu, deleteImageMenu;
-
+    private Button save;
     private String name;
 
     public SandboxScreen(int dimension) {
@@ -192,7 +192,7 @@ public class SandboxScreen extends BorderPane {
         heartsBox.setAlignment(Pos.TOP_LEFT);
         heartsBox.setPadding(new Insets(5));
 
-        Button save = new Button("SAVE");
+        save = new Button("SAVE");
         save.setPadding(new Insets(5, 5, 5, 5));
         save.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 18));
         save.setOnMouseClicked(e -> {
