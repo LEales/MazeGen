@@ -1,11 +1,11 @@
 package view.menu;
 
 import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.enums.GameMode;
 import model.enums.World;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import view.sandbox.SandboxScreen;
 
@@ -16,10 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RightPanelTest {
 
+    @BeforeAll
+    static void IntizializeJavaFX() {
+        Platform.startup(() -> {});
+    }
     @Test
     public void testRemovePickaxe() throws FileNotFoundException, NoSuchFieldException, IllegalAccessException {
-        new JFXPanel();
-
         Platform.runLater(() -> {
             try {
                 RightPanel rightPanel = new RightPanel(GameMode.CAMPAIGN);
@@ -34,5 +36,11 @@ public class RightPanelTest {
                 e.printStackTrace();
             }
         });
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -2,17 +2,23 @@ package view.sandbox;
 
 import control.MainProgram;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import model.enums.World;
+import model.maps.CreatedMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.testfx.util.WaitForAsyncUtils;
 
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -179,5 +185,45 @@ class SandboxScreenTest {
         World currentWorld = (World) worldField.get(sandboxScreen);
 
         assertEquals(World.CLOUD, currentWorld);
+    }
+
+    @Test
+    void testSaveWorld() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException {
+        CreatedMap map = new CreatedMap();
+
+        SandboxScreen sandboxScreen = new SandboxScreen(20);
+        Field buttonField = sandboxScreen.getClass().getDeclaredField("SAVE");
+        buttonField.setAccessible(true);
+        Button saveButton = (Button) buttonField.get(sandboxScreen);
+
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        Platform.runLater(() -> {
+            saveButton.fire();
+            future.complete(null);
+        });
+        future.join();
+
+        while (Platform.isFxApplicationThread()) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        File savedFile = new File("maps/test_name.map");
+        assertTrue(savedFile.exists());
+
+        CreatedMap savedMap = null;
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(savedFile))) {
+            savedMap = (CreatedMap) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            fail("Failed to read saved map");
+        }
+
+        assertNotNull(savedMap);
+        assertEquals("test_name", savedMap.getName());
+        assertTrue(savedFile.delete());
     }
 }
