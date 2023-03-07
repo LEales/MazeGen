@@ -19,6 +19,7 @@ public class TutorialScreen extends Pane {
     private ImageView arrow;
     private ImageView moreTextArrow;
     private AnimationTimer animationTimer;
+    private Timeline moreTextTimer;
     private ImageView introView;
 
     public TutorialScreen() {
@@ -89,6 +90,7 @@ public class TutorialScreen extends Pane {
 
     private void onMouseClickFirst(String message) {
         String next = nextMessageFirst(message);
+
         if (null == next) {
             FadeTransition ft = removeTutorial();
             ft.play();
@@ -115,6 +117,7 @@ public class TutorialScreen extends Pane {
             }
         }
         showMessage(next);
+
         setOnMouseClicked(e -> onMouseClickFirst(next));
     }
 
@@ -163,6 +166,7 @@ public class TutorialScreen extends Pane {
     }
 
     public void setupFirstScene() {
+
         String first = "HAHAHAHA WELCOME TO MY WORLD...";
         FadeTransition ft = addTutorial();
         ft.play();
@@ -170,8 +174,12 @@ public class TutorialScreen extends Pane {
             createSkipLabel();
             showMessage(first);
             messageLabel.toFront();
+            addMoreTextArrow();
             setOnMouseClicked(ex -> onMouseClickFirst(first));
+
         });
+
+
     }
 
     public void setupSecondScene() {
@@ -181,6 +189,7 @@ public class TutorialScreen extends Pane {
         ft.setOnFinished(e -> {
             createSkipLabel();
             showMessage(first);
+            addMoreTextArrow();
             messageLabel.toFront();
             setOnMouseClicked(ex -> onMouseClickSecond(first));
         });
@@ -193,6 +202,7 @@ public class TutorialScreen extends Pane {
         ft.setOnFinished(e -> {
             createSkipLabel();
             showMessage(first);
+            addMoreTextArrow();
             messageLabel.toFront();
             setOnMouseClicked(ex -> onMouseClickThird(first));
         });
@@ -225,7 +235,6 @@ public class TutorialScreen extends Pane {
                     new KeyValue(messageLabel.textProperty(), message.substring(0, i + 1)));
             timeline.getKeyFrames().add(keyFrame);
         }
-        startmoreTextArrow();
         timeline.play();
     }
 
@@ -233,7 +242,7 @@ public class TutorialScreen extends Pane {
         FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
-        getChildren().removeAll(messageLabel, skipLabel);
+        getChildren().removeAll(messageLabel, skipLabel,moreTextArrow);
         setOnMouseClicked(null);
         return ft;
     }
@@ -267,30 +276,19 @@ public class TutorialScreen extends Pane {
         animationTimer.start();
     }
 
-    public void startmoreTextArrow() {
+    public void addMoreTextArrow() {
         getChildren().add(moreTextArrow);
-        moreTextArrow.setX(arrow.getTranslateX() + 250);
-        moreTextArrow.setY(arrow.getTranslateY() + 160);
-        animationTimer = new AnimationTimer() {
-            private boolean visible = true;
-            @Override
-            public void handle(long l) {
-                if (visible) {
-                    moreTextArrow.setVisible(false);
-                    visible = false;
-                } else {
-                    moreTextArrow.setVisible(true);
-                    visible = true;
-                }
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        animationTimer.start();
-    }
+        moreTextArrow.toFront();
+        moreTextArrow.setX(arrow.getTranslateX() + 280);
+        moreTextArrow.setY(arrow.getTranslateY() + 190);
 
+        Timeline moreTextTimer = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(moreTextArrow.visibleProperty(), true)),
+                new KeyFrame(Duration.seconds(0.5), new KeyValue(moreTextArrow.visibleProperty(), false)),
+                new KeyFrame(Duration.seconds(1.0), new KeyValue(moreTextArrow.visibleProperty(), true))
+        );
+        moreTextTimer.setCycleCount(Timeline.INDEFINITE);
+        moreTextTimer.play();
+    }
 
 }
