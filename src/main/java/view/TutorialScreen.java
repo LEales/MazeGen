@@ -190,7 +190,7 @@ public class TutorialScreen extends Pane {
         });
     }
 
-    private void createSkipLabel() {
+    private Image createSkipLabel() {
         Image image = new Image("file:files/skip_tutorial.png");
         ImageView imageView = new ImageView(image);
         imageView.setStyle("-fx-background-color: transparent;");
@@ -206,6 +206,7 @@ public class TutorialScreen extends Pane {
         translateTransition.setInterpolator(Interpolator.EASE_BOTH);
         translateTransition.play();
         getChildren().add(imageView);
+        return image;
     }
 
     private void showMessage(String message) {
