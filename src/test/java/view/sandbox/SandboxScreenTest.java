@@ -192,7 +192,7 @@ class SandboxScreenTest {
         CreatedMap map = new CreatedMap();
 
         SandboxScreen sandboxScreen = new SandboxScreen(20);
-        Field buttonField = sandboxScreen.getClass().getDeclaredField("SAVE");
+        Field buttonField = SandboxScreen.class.getDeclaredField("save");
         buttonField.setAccessible(true);
         Button saveButton = (Button) buttonField.get(sandboxScreen);
 
