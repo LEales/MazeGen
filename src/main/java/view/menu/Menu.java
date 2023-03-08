@@ -176,7 +176,7 @@ public class Menu extends Pane {
     private Label getSandBoxView() {
         Label sandboxLabel = createLabel("Sandbox", 320.0, 400.0);
         sandboxLabel.setOnMouseClicked(e -> {
-            mainProgram.changeToSandBoxNewLoad();
+            mainProgram.changeToSandBoxLoader();
             AudioPlayer.playButtonSound();
         });
         return sandboxLabel;
