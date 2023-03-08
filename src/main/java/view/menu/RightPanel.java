@@ -230,4 +230,8 @@ public class RightPanel extends GridPane {
     public void bindSeconds(SimpleIntegerProperty secondsProperty) {
         timerLabel.textProperty().bind(secondsProperty.asString());
     }
+
+    public boolean getFirstLevel() {
+        return levelNumber.getUrl().endsWith("11.png");
+    }
 }

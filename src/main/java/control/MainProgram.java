@@ -225,6 +225,9 @@ public class MainProgram extends Application {
         if (null != e) {
             if (KeyCode.SPACE == e.getCode()) {
                 removeTutorialScreen();
+                if (rightPanel.getFirstLevel()) {
+                    playWorldIntroAnimation(World.FOREST);
+                }
             }
         }
     }
