@@ -1,12 +1,16 @@
-/*package view;
+package view;
 
 import control.MainProgram;
+import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import model.Player;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -19,18 +23,61 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.concurrent.CountDownLatch;
 
+import static java.util.Locale.lookup;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class VictoryScreenTest {
+    private AnimationTimer timer;
+    private Label label;
+    private Label currCharLabel;
 
     @BeforeClass
     public static void setUpClass() {
         new JFXPanel();
     }
 
+    @Test
+    public void testCreateCharAnimation() throws NoSuchMethodException, NoSuchFieldException, InvocationTargetException, IllegalAccessException {
+        VictoryScreen vs = new VictoryScreen();
+        Method createCharAnimation = VictoryScreen.class.getDeclaredMethod("createCharAnimation", Label.class);
+        createCharAnimation.setAccessible(true);
+
+        label = new Label("A");
+        createCharAnimation.invoke(vs, label);
+
+        Field timerField = VictoryScreen.class.getDeclaredField("timer");
+        timerField.setAccessible(true);
+        timer = (AnimationTimer) timerField.get(vs);
+
+        assertNotNull(timer);
+        assertNull(currCharLabel);
+
+        boolean isLabelVisible = label.isVisible();
+        for (int i = 0; i < 10; i++) {
+            try {
+                Thread.sleep(550);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (isLabelVisible == label.isVisible()) {
+                fail("Label's visibility was not updated");
+            }
+            isLabelVisible = label.isVisible();
+        }
+
+        timer.stop();
+        assertNull(currCharLabel);
+    }
+}
+
+    /*
     @After
     public void deleteTheFile() throws Exception {
         File scoreListFile = new File("files/testHighScore.dat");
@@ -305,4 +352,5 @@ public class VictoryScreenTest {
         addToScoreList.invoke(victory, scoreList,player, "files/testHighScore.dat");;
     }
 
-}*/
+}
+*/
