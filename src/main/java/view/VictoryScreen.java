@@ -23,15 +23,13 @@ import model.Player;
 public class VictoryScreen extends Pane {
     private final MainProgram mainProgram;
     private int totalTime, backSpaceCheck;
-    private Label errorLabel;
-
-    private Label enterLabel;
-    private Label highScoreLabel;
+    private Label errorLabel, enterLabel, highScoreLabel, currCharLabel;
     private StringProperty firstProperty = new SimpleStringProperty("_");
     private StringProperty secondProperty = new SimpleStringProperty("_");
     private StringProperty thirdProperty = new SimpleStringProperty("_");
     private String current;
 
+    private AnimationTimer timer;
 
     public VictoryScreen() {
         this.mainProgram = MainProgram.getMainProgram();
@@ -93,10 +91,38 @@ public class VictoryScreen extends Pane {
         first.textProperty().bind(firstProperty);
         second.textProperty().bind(secondProperty);
         third.textProperty().bind(thirdProperty);
+
         this.getChildren().add(0, first);
         this.getChildren().add(1, second);
         this.getChildren().add(2, third);
+
         current = "first";
+        createCharAnimation(first);
+
+    }
+
+    private void createCharAnimation(Label label) {
+        if( 2 == backSpaceCheck) {
+            return;
+        }
+        if(currCharLabel != null) {
+            currCharLabel.setVisible(true);
+        }
+        currCharLabel = label;
+        timer = new AnimationTimer() {
+            private long lastUpdate;
+            private boolean isLabelVisible;
+            @Override
+            public void handle(long now) {
+                // Only update the visibility of the label once every 500 million nanoseconds (0.5 seconds)
+                if (now - lastUpdate >= 500_000_000) {
+                    isLabelVisible = !isLabelVisible;
+                    label.setVisible(isLabelVisible);
+                    lastUpdate = now;
+                }
+            }
+        };
+        timer.start();
     }
 
     public BackgroundImage setBackground() {
@@ -137,6 +163,19 @@ public class VictoryScreen extends Pane {
         return totalTime;
     }
 
+    private void changeCharAnimation() {
+        timer.stop();
+        int index = -1;
+
+        switch (current) {
+            case "first" -> index = 0;
+            case "second" -> index = 1;
+            case "third" -> index = 2;
+
+        }
+        createCharAnimation((Label) this.getChildren().get(index));
+    }
+
     public void setTextCurrent(String code) {
         String temp = "";
         errorLabel.setVisible(false);
@@ -158,17 +197,21 @@ public class VictoryScreen extends Pane {
                 firstProperty.set(code);
                 current = "second";
                 backSpaceCheck++;
+                timer.stop();
             }
             case "second" -> {
                 secondProperty.set(code);
                 current = "third";
                 backSpaceCheck++;
+
+                timer.stop();
             }
             case "third" -> {
                 thirdProperty.set(code);
                 if (2 > backSpaceCheck) {
                     backSpaceCheck++;
                 }
+                timer.stop();
             }
             case "BACK_SPACE" -> {
                 if (2 == backSpaceCheck) {
@@ -192,6 +235,7 @@ public class VictoryScreen extends Pane {
                 current = "first";
             }
         }
+        changeCharAnimation();
     }
 
     public void startLabelTimer() {
