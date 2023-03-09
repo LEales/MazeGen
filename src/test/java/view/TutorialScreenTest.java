@@ -31,7 +31,6 @@ public class TutorialScreenTest {
         skipLabel.setAccessible(true);
 
         Image expectedImage = new Image("file:files/skip_tutorial.png");
-        System.out.println(expectedImage.getHeight());
         Image received = (Image) skipLabel.invoke(ts);
         assertAll(
                 () -> assertEquals(expectedImage.getUrl(), received.getUrl()),
