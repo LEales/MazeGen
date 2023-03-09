@@ -113,7 +113,9 @@ public class TutorialScreen extends Pane {
             }
         }
         showMessage(next);
-        setOnMouseClicked(e -> onMouseClickFirst(next));
+        if (getParent() != null){
+            getParent().setOnMouseClicked(e -> onMouseClickFirst(next));
+        }
     }
 
     private void onMouseClickSecond(String message) {
@@ -138,7 +140,9 @@ public class TutorialScreen extends Pane {
             }
         }
         showMessage(next);
-        setOnMouseClicked(e -> onMouseClickSecond(next));
+        if (getParent() != null) {
+            getParent().setOnMouseClicked(e -> onMouseClickSecond(next));
+        }
     }
 
     private void onMouseClickThird(String message) {
@@ -151,7 +155,9 @@ public class TutorialScreen extends Pane {
             return;
         }
         showMessage(next);
-        setOnMouseClicked(e -> onMouseClickThird(next));
+        if (getParent() != null) {
+            getParent().setOnMouseClicked(e -> onMouseClickThird(next));
+        }
     }
 
     private void setMessageLabelPosition(double x, double y, double rotation) {
@@ -169,7 +175,9 @@ public class TutorialScreen extends Pane {
             showMessage(first);
             messageLabel.toFront();
             addMoreTextArrow();
-            setOnMouseClicked(ex -> onMouseClickFirst(first));
+            if (getParent() != null) {
+                getParent().setOnMouseClicked(ex -> onMouseClickFirst(first));
+            }
         });
     }
 
@@ -182,7 +190,7 @@ public class TutorialScreen extends Pane {
             showMessage(first);
             addMoreTextArrow();
             messageLabel.toFront();
-            setOnMouseClicked(ex -> onMouseClickSecond(first));
+            getParent().setOnMouseClicked(ex -> onMouseClickSecond(first));
         });
     }
 
@@ -195,7 +203,9 @@ public class TutorialScreen extends Pane {
             showMessage(first);
             addMoreTextArrow();
             messageLabel.toFront();
-            setOnMouseClicked(ex -> onMouseClickThird(first));
+            if (getParent() != null){
+                getParent().setOnMouseClicked(ex -> onMouseClickThird(first));
+            }
         });
     }
 
