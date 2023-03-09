@@ -113,4 +113,15 @@ class PlayerTest {
         player2 = new Player("ABC", new Time(12), 3);
         assertTrue(player1.compareTo(player2) > 0);
     }
+
+    @Test
+    void testInvalidLevel() {
+        String playerName = "Sven";
+        Time playerTime = new Time(0);
+        int playerLevel = -1;
+
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class, () -> new Player(playerName, playerTime, playerLevel),
+                "Invalid level input");
+    }
 }
