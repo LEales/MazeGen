@@ -244,9 +244,12 @@ public class MainProgram extends Application {
     /**
      * Vid gameOver körs denna metod.
      * Kör en enkel animation med texten "Game Over".
-     * @param cause
+     * @param cause anledningen till död
      */
     public void gameOver(String cause) {
+        if(null == cause || wrongCauseInput(cause)) {
+            throw new IllegalArgumentException("Invalid input: Cause");
+        }
         victoryScreen.setTime(totTime.setGameOver(true));
         Player player = new Player("___", totTime.setGameOver(true), lvlCleared);
         GameOverScreen gameOverScreen = new GameOverScreen(player, cause);
@@ -254,11 +257,17 @@ public class MainProgram extends Application {
     }
 
     public void gameOverRandomize(String cause) {
+        if(null == cause || wrongCauseInput(cause)) {
+            throw new IllegalArgumentException("Invalid input: Cause");
+        }
         GameOverScreen gameOverScreen = new GameOverScreen(cause);
         mainPaneRandomMaze.getChildren().add(gameOverScreen);
     }
 
     public void gameOverSandbox(String cause) {
+        if(null == cause || wrongCauseInput(cause)) {
+            throw new IllegalArgumentException("Invalid input: Cause");
+        }
         GameOverScreen gameOverScreen = new GameOverScreen(cause);
         mainPaneSandbox.getChildren().add(gameOverScreen);
     }
@@ -776,5 +785,9 @@ public class MainProgram extends Application {
     public void changeToSandBoxLoader() {
         sandboxLoader = new Scene(new SandboxLoader(createdMaps), WIDTH, HEIGHT);
         mainWindow.setScene(sandboxLoader);
+    }
+
+    public static boolean wrongCauseInput(String cause) {
+        return !cause.equals("died") || !cause.equals("time");
     }
 }

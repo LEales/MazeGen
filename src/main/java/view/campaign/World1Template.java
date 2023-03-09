@@ -328,7 +328,7 @@ public class World1Template extends GridPane {
     }
 
     private void collectibleObtained(MouseEvent e) {
-        if (map.isGameStarted() && !time.isGameOver()) {
+        if (map.isGameStarted() && !timeIsNullOrOver()) {
             AudioPlayer.playCollectibleSound();
             Label label = (Label) e.getSource();
             label.setVisible(false);
@@ -365,7 +365,7 @@ public class World1Template extends GridPane {
 
     private void heartCrystalObtained(MouseEvent e) {
         Label label = (Label) e.getSource();
-        if (map.isGameStarted() && !time.isGameOver()) {
+        if (map.isGameStarted() && !timeIsNullOrOver()) {
             AudioPlayer.playHeartSound();
             label.setVisible(false);
             map.heartCrystalCollected();
@@ -398,7 +398,7 @@ public class World1Template extends GridPane {
      * @param e MouseEvent
      */
     private void pickAxeObtained(MouseEvent e) {
-        if (map.isGameStarted() && !map.isPickAxeInInventory() && !time.isGameOver()) {
+        if (map.isGameStarted() && !map.isPickAxeInInventory() && !timeIsNullOrOver()) {
             AudioPlayer.playPickAxeSound();
             Label label = (Label) e.getSource();
             label.setVisible(false);
@@ -415,7 +415,7 @@ public class World1Template extends GridPane {
      * @param e Används för att hitta rätt label.
      */
     private void enteredWall(MouseEvent e) {
-        if (!time.isGameOver()) {
+        if (!timeIsNullOrOver()) {
             Label label = (Label) e.getSource();
             createFadeTransition(label, 0.3, 10.0, 0.6).play();
             if (map.isGameStarted()) {
@@ -437,7 +437,7 @@ public class World1Template extends GridPane {
      * @param e
      */
     void enteredGhost(MouseEvent e) {
-        if (map.isGameStarted() && !time.isGameOver()) {
+        if (map.isGameStarted() && !timeIsNullOrOver()) {
             ImageView view = (ImageView) e.getSource();
             createFadeTransition(view, 0.2, 10, 0.6).play();
             AudioPlayer.playMobSound();
@@ -455,6 +455,9 @@ public class World1Template extends GridPane {
      * Avslutar spelrundan och kör metoden gameOver i mainProgram.
      */
     private void gameOver(String cause) {
+        if(null == cause || MainProgram.wrongCauseInput(cause)) {
+            throw new IllegalArgumentException("Invalid input: Cause");
+        }
         AudioPlayer.playGameOverSound();
         AudioPlayer.stopTimeLeftSound();
         AudioPlayer.stopMusic();
@@ -478,7 +481,7 @@ public class World1Template extends GridPane {
      * @throws InterruptedException
      */
     private void enteredGoal() throws FileNotFoundException, InterruptedException {
-        if (map.isGameStarted() && map.allCollectiblesObtained()) {
+        if (map.isGameStarted() && map.allCollectiblesObtained() && !timeIsNullOrOver()) {
             AudioPlayer.stopTimeLeftSound();
             AudioPlayer.playGoalSound();
             time.setGameOver(true);
@@ -547,7 +550,7 @@ public class World1Template extends GridPane {
     private void enteredBreakableWall(MouseEvent e) {
         Label label = (Label) e.getSource();
         ImageView pathView = new ImageView(path);
-        if (map.isGameStarted()) {
+        if (map.isGameStarted() && !timeIsNullOrOver()) {
             if (map.isPickAxeInInventory()) {
                 label.setGraphic(pathView);
                 map.setPickAxeInInventory(false);
@@ -559,5 +562,9 @@ public class World1Template extends GridPane {
                 enteredWall(e);
             }
         }
+    }
+
+    private boolean timeIsNullOrOver() {
+        return null == time || time.isGameOver();
     }
 }
