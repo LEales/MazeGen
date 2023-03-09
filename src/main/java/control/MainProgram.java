@@ -695,10 +695,6 @@ public class MainProgram extends Application {
         mainWindow.setScene(scene);
     }
 
-    public void changeToSandBoxNewLoad() {
-        Scene scene = new Scene(new SandboxLoadNew(), WIDTH, HEIGHT);
-        mainWindow.setScene(scene);
-    }
 
     /**
      * Sets the taskbar icon
