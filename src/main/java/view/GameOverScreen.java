@@ -18,7 +18,9 @@ public class GameOverScreen extends Pane {
      * Konstruktor som tar emot mainProgram
      * Kör sedan metoder för bild och animation
      */
-    public GameOverScreen(Player player) {
+    public GameOverScreen(Player player, String cause) {
+        setWidth(MainProgram.WIDTH);
+        setHeight(MainProgram.HEIGHT);
         setOnMouseClicked(e -> {
             MainProgram mp = MainProgram.getMainProgram();
             if (mp.isQualified(player)) {
@@ -27,15 +29,25 @@ public class GameOverScreen extends Pane {
                 mp.showHighScoreList();
             }
         });
-        gameOverAnimation();
+        gameOverAnimation(cause);
+    }
+
+    public GameOverScreen(String cause) {
+        setOnMouseClicked(e -> {
+            MainProgram mp = MainProgram.getMainProgram();
+            mp.changeToMenu();
+        });
+        gameOverAnimation(cause);
     }
 
     /**
      * Animation för gameOver-bilden
      */
-    private boolean gameOverAnimation() {
+    private boolean gameOverAnimation(String cause) {
         try {
-            ImageView introView = new ImageView(new Image("file:files/texts/Gameover.png", 600, 600, false, false));
+            ImageView introView = new ImageView(new Image("file:files/texts/gameover" + cause + ".png", 600, 100, false, false));
+            introView.setX(-3);
+            introView.setY(250);
             introView.setStyle("fx-background-color: transparent;");
             FadeTransition ft = new FadeTransition(Duration.millis(4000.0), introView);
             getChildren().add(introView);

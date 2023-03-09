@@ -328,7 +328,7 @@ public class World1Template extends GridPane {
     }
 
     private void collectibleObtained(MouseEvent e) {
-        if (map.isGameStarted()) {
+        if (map.isGameStarted() && !time.isGameOver()) {
             AudioPlayer.playCollectibleSound();
             Label label = (Label) e.getSource();
             label.setVisible(false);
@@ -365,7 +365,7 @@ public class World1Template extends GridPane {
 
     private void heartCrystalObtained(MouseEvent e) {
         Label label = (Label) e.getSource();
-        if (map.isGameStarted()) {
+        if (map.isGameStarted() && !time.isGameOver()) {
             AudioPlayer.playHeartSound();
             label.setVisible(false);
             map.heartCrystalCollected();
@@ -398,7 +398,7 @@ public class World1Template extends GridPane {
      * @param e MouseEvent
      */
     private void pickAxeObtained(MouseEvent e) {
-        if (map.isGameStarted() && !map.isPickAxeInInventory()) {
+        if (map.isGameStarted() && !map.isPickAxeInInventory() && !time.isGameOver()) {
             AudioPlayer.playPickAxeSound();
             Label label = (Label) e.getSource();
             label.setVisible(false);
@@ -415,15 +415,17 @@ public class World1Template extends GridPane {
      * @param e Används för att hitta rätt label.
      */
     private void enteredWall(MouseEvent e) {
-        Label label = (Label) e.getSource();
-        createFadeTransition(label, 0.3, 10.0, 0.6).play();
-        if (map.isGameStarted()) {
-            if (map.heartCrystalLost()) {
-                gameOver();
+        if (!time.isGameOver()) {
+            Label label = (Label) e.getSource();
+            createFadeTransition(label, 0.3, 10.0, 0.6).play();
+            if (map.isGameStarted()) {
+                if (map.heartCrystalLost()) {
+                    gameOver("died");
+                }
+                rightPanel.changeHeartCounter(map.getHeartCrystals());
+                AudioPlayer.playDeathSound();
+                map.setGameStarted(false);
             }
-            rightPanel.changeHeartCounter(map.getHeartCrystals());
-            AudioPlayer.playDeathSound();
-            map.setGameStarted(false);
         }
     }
 
@@ -435,13 +437,13 @@ public class World1Template extends GridPane {
      * @param e
      */
     void enteredGhost(MouseEvent e) {
-        if (map.isGameStarted()) {
+        if (map.isGameStarted() && !time.isGameOver()) {
             ImageView view = (ImageView) e.getSource();
             createFadeTransition(view, 0.2, 10, 0.6).play();
             AudioPlayer.playMobSound();
             AudioPlayer.playDeathSound();
             if (map.heartCrystalLost()) {
-                gameOver();
+                gameOver("died");
             }
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             map.setGameStarted(false);
@@ -452,13 +454,13 @@ public class World1Template extends GridPane {
     /**
      * Avslutar spelrundan och kör metoden gameOver i mainProgram.
      */
-    private void gameOver() {
+    private void gameOver(String cause) {
         AudioPlayer.playGameOverSound();
         AudioPlayer.stopTimeLeftSound();
         AudioPlayer.stopMusic();
-        mainProgram.gameOver();
-        time.setGameOver(true);
-        time = null;
+        mainProgram.gameOver(cause);
+        this.time.setGameOver(true);
+        this.time = null;
         rightPanel.removePickaxe();
     }
 

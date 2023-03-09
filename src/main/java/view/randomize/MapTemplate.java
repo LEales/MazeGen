@@ -237,7 +237,7 @@ public class MapTemplate extends GridPane {
     }
 
     private void collectibleEntered(MouseEvent e) {
-        if (mazeGenerator.getMap().isGameStarted()) {
+        if (mazeGenerator.getMap().isGameStarted() && !time.isGameOver()) {
             AudioPlayer.playCollectibleSound();
             Label label = (Label) e.getSource();
             label.setVisible(false);
@@ -251,28 +251,30 @@ public class MapTemplate extends GridPane {
      * @param e Används för att hitta rätt label.
      */
     public void enteredWall(MouseEvent e) {
-        Label label = (Label) e.getSource();
-        FadeTransition fade = new FadeTransition();
-        fade.setNode(label);
-        fade.setDuration(Duration.seconds(0.3));
-        fade.setFromValue(10);
-        fade.setToValue(0.6);
-        fade.play();
+        if (!time.isGameOver()) {
+            Label label = (Label) e.getSource();
+            FadeTransition fade = new FadeTransition();
+            fade.setNode(label);
+            fade.setDuration(Duration.seconds(0.3));
+            fade.setFromValue(10);
+            fade.setToValue(0.6);
+            fade.play();
 
-        if (mazeGenerator.getMap().isGameStarted()) {
-            AudioPlayer.playDeathSound();
-            mazeGenerator.getMap().setGameStarted(false);
-            if (mazeGenerator.getMap().heartCrystalLost()) {
-                gameOver();
+            if (mazeGenerator.getMap().isGameStarted()) {
+                AudioPlayer.playDeathSound();
+                mazeGenerator.getMap().setGameStarted(false);
+                if (mazeGenerator.getMap().heartCrystalLost()) {
+                    gameOver("died");
+                }
+                rightPanel.changeHeartCounter(mazeGenerator.getMap().getHeartCrystals());
             }
-            rightPanel.changeHeartCounter(mazeGenerator.getMap().getHeartCrystals());
         }
     }
-    private void gameOver() {
+    private void gameOver(String cause) {
         AudioPlayer.playGameOverSound();
         AudioPlayer.stopMusic();
         AudioPlayer.stopTimeLeftSound();
-        MainProgram.getMainProgram().gameOverRandomize();
+        MainProgram.getMainProgram().gameOverRandomize(cause);
         time.setGameOver(true);
         time = null;
     }
