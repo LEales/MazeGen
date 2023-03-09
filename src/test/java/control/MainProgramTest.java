@@ -3,9 +3,11 @@ package control;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import model.enums.World;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,19 +16,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class MainProgramTest {
-
     @BeforeAll
     static void initJFXRuntime() {
         new Thread(() -> Application.launch(MainProgram.class)).start();
-    }
-
-    @Test
-    void startMainProgram() {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        MainProgram mp = MainProgram.getMainProgram();
+    }
+    @Test
+    public void testPlayRandomizeMusic() {
+        AudioPlayer audioPlayer = new AudioPlayer();
+        File testSongFile = new File("files/music/forest.mp3");
+        File result = audioPlayer.playLevelMusic(World.FOREST);
+        assertEquals(testSongFile, result);
     }
 }
