@@ -60,9 +60,6 @@ public class TutorialScreen extends Pane {
             case "NOW GO ON FINISH THE MAZE..." -> "OR WHATEVER...";
             default -> null;
         };
-
-
-
     }
 
     private String nextMessageSecond(String message) {
@@ -90,7 +87,6 @@ public class TutorialScreen extends Pane {
 
     private void onMouseClickFirst(String message) {
         String next = nextMessageFirst(message);
-
         if (null == next) {
             FadeTransition ft = removeTutorial();
             ft.play();
@@ -117,7 +113,6 @@ public class TutorialScreen extends Pane {
             }
         }
         showMessage(next);
-
         setOnMouseClicked(e -> onMouseClickFirst(next));
     }
 
@@ -166,7 +161,6 @@ public class TutorialScreen extends Pane {
     }
 
     public void setupFirstScene() {
-
         String first = "HAHAHAHA WELCOME TO MY WORLD...";
         FadeTransition ft = addTutorial();
         ft.play();
@@ -176,10 +170,7 @@ public class TutorialScreen extends Pane {
             messageLabel.toFront();
             addMoreTextArrow();
             setOnMouseClicked(ex -> onMouseClickFirst(first));
-
         });
-
-
     }
 
     public void setupSecondScene() {
@@ -208,22 +199,23 @@ public class TutorialScreen extends Pane {
         });
     }
 
-    private void createSkipLabel() {
-        skipLabel = new Label("Press space to skip");
-        skipLabel.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 10));
-        skipLabel.setStyle("-fx-text-fill: white;");
-        skipLabel.setLayoutX(490.0);
-        skipLabel.setLayoutY(380.0);
-        skipLabel.setWrapText(true);
-        skipLabel.setMaxSize(80, 80);
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), skipLabel);
+    private Image createSkipLabel() {
+        Image image = new Image("file:files/skip_tutorial.png");
+        ImageView imageView = new ImageView(image);
+        imageView.setStyle("-fx-background-color: transparent;");
+        imageView.setLayoutX(457.0);
+        imageView.setLayoutY(380.0);
+        imageView.setFitHeight(80);
+        imageView.setFitWidth(130);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), imageView);
         translateTransition.setFromY(0);
         translateTransition.setToY(-30);
         translateTransition.setCycleCount(TranslateTransition.INDEFINITE);
         translateTransition.setAutoReverse(true);
         translateTransition.setInterpolator(Interpolator.EASE_BOTH);
         translateTransition.play();
-        getChildren().add(skipLabel);
+        getChildren().add(imageView);
+        return image;
     }
 
     private void showMessage(String message) {
@@ -243,6 +235,7 @@ public class TutorialScreen extends Pane {
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
         getChildren().removeAll(messageLabel, skipLabel,moreTextArrow);
+        getChildren().removeAll();
         setOnMouseClicked(null);
         return ft;
     }
