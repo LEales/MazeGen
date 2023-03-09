@@ -40,8 +40,8 @@ class GameOverScreenTest {
             GameOverScreen gameOverScreen = new GameOverScreen(null);
             ImageView imageView = (ImageView) gameOverScreen.getChildren().get(0);
             fail("no nullpointer check");
-        }catch (NullPointerException e){
-            assertEquals("Cause is not defined",e.getMessage());
+        }catch (IllegalArgumentException e){
+            assertEquals("Invalid input: Cause",e.getMessage());
         }
     }
     @Test
@@ -51,7 +51,7 @@ class GameOverScreenTest {
             ImageView imageView = (ImageView) gameOverScreen.getChildren().get(0);
             fail("Not a valid cause");
         }catch (IllegalArgumentException e){
-            assertEquals("Not a cause",e.getMessage());
+            assertEquals("Invalid input: Cause",e.getMessage());
         }
     }
 
