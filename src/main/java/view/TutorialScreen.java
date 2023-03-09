@@ -17,11 +17,14 @@ public class TutorialScreen extends Pane {
     private Label messageLabel;
     private Label skipLabel;
     private ImageView arrow;
+    private ImageView moreTextArrow;
     private AnimationTimer animationTimer;
+    private Timeline moreTextTimer;
     private ImageView introView;
 
     public TutorialScreen() {
         arrow = new ImageView(new Image("file:files/arrow.png", 80, 80, false, false));
+        moreTextArrow = new ImageView(new Image("file:files/tutarrow.png", 80, 80, false, false));
         messageLabel = new Label();
         introView = new ImageView(new Image("file:files/sven.png", 500, 500, false, false));
         introView.setStyle("fx-background-color: transparent;");
@@ -57,6 +60,9 @@ public class TutorialScreen extends Pane {
             case "NOW GO ON FINISH THE MAZE..." -> "OR WHATEVER...";
             default -> null;
         };
+
+
+
     }
 
     private String nextMessageSecond(String message) {
@@ -84,6 +90,7 @@ public class TutorialScreen extends Pane {
 
     private void onMouseClickFirst(String message) {
         String next = nextMessageFirst(message);
+
         if (null == next) {
             FadeTransition ft = removeTutorial();
             ft.play();
@@ -110,6 +117,7 @@ public class TutorialScreen extends Pane {
             }
         }
         showMessage(next);
+
         setOnMouseClicked(e -> onMouseClickFirst(next));
     }
 
@@ -158,6 +166,7 @@ public class TutorialScreen extends Pane {
     }
 
     public void setupFirstScene() {
+
         String first = "HAHAHAHA WELCOME TO MY WORLD...";
         FadeTransition ft = addTutorial();
         ft.play();
@@ -165,8 +174,12 @@ public class TutorialScreen extends Pane {
             createSkipLabel();
             showMessage(first);
             messageLabel.toFront();
+            addMoreTextArrow();
             setOnMouseClicked(ex -> onMouseClickFirst(first));
+
         });
+
+
     }
 
     public void setupSecondScene() {
@@ -176,6 +189,7 @@ public class TutorialScreen extends Pane {
         ft.setOnFinished(e -> {
             createSkipLabel();
             showMessage(first);
+            addMoreTextArrow();
             messageLabel.toFront();
             setOnMouseClicked(ex -> onMouseClickSecond(first));
         });
@@ -188,6 +202,7 @@ public class TutorialScreen extends Pane {
         ft.setOnFinished(e -> {
             createSkipLabel();
             showMessage(first);
+            addMoreTextArrow();
             messageLabel.toFront();
             setOnMouseClicked(ex -> onMouseClickThird(first));
         });
@@ -227,7 +242,7 @@ public class TutorialScreen extends Pane {
         FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
-        getChildren().removeAll(messageLabel, skipLabel);
+        getChildren().removeAll(messageLabel, skipLabel,moreTextArrow);
         setOnMouseClicked(null);
         return ft;
     }
@@ -260,4 +275,20 @@ public class TutorialScreen extends Pane {
         };
         animationTimer.start();
     }
+
+    public void addMoreTextArrow() {
+        getChildren().add(moreTextArrow);
+        moreTextArrow.toFront();
+        moreTextArrow.setX(arrow.getTranslateX() + 280);
+        moreTextArrow.setY(arrow.getTranslateY() + 190);
+
+        Timeline moreTextTimer = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(moreTextArrow.visibleProperty(), true)),
+                new KeyFrame(Duration.seconds(0.5), new KeyValue(moreTextArrow.visibleProperty(), false)),
+                new KeyFrame(Duration.seconds(1.0), new KeyValue(moreTextArrow.visibleProperty(), true))
+        );
+        moreTextTimer.setCycleCount(Timeline.INDEFINITE);
+        moreTextTimer.play();
+    }
+
 }
