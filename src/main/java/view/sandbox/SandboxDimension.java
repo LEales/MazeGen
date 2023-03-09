@@ -63,7 +63,7 @@ public class SandboxDimension extends Pane {
         Label aReturn = createLabel(320, 450, "Return");
         aReturn.setOnMouseClicked(e ->{
             AudioPlayer.playButtonSound();
-            mainProgram.changeToMenu();
+            mainProgram.changeToSandBoxNewLoad();
         });
         return aReturn;
     }
