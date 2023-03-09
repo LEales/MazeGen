@@ -102,7 +102,7 @@ public class VictoryScreen extends Pane {
     }
 
     private void createCharAnimation(Label label) {
-        if( 2 == backSpaceCheck) {
+        if( !thirdProperty.get().equals("_")) {
             return;
         }
         if(currCharLabel != null) {
