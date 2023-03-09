@@ -5,6 +5,7 @@ import control.MainProgram;
 import control.time.TimeThread;
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
@@ -28,9 +29,8 @@ public class SandboxTemplate extends GridPane {
     private final CreatedMap map;
     private final MainProgram mainProgram;
     private final int squareSize;
-
+    private boolean ladderClicked = false;
     private TimeThread time;
-
     private final RightPanel rightPanel;
     private Image wall, path, border, goal, diamond, start, pickAxeImage,heart,breakableWall;
 
@@ -295,6 +295,7 @@ public class SandboxTemplate extends GridPane {
         borderView.setFitWidth(squareSize);
         label.setGraphic(borderView);
         label.setOnMouseClicked(e -> startLevel());
+        label.setId("start");
         return label;
     }
 
@@ -412,6 +413,9 @@ public class SandboxTemplate extends GridPane {
             if (map.heartCrystalLost()) {
                 gameOver();
             }
+            else{
+                startLadderAnimation(map.getWorld());
+            }
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             AudioPlayer.playDeathSound();
             map.setGameStarted(false);
@@ -433,6 +437,9 @@ public class SandboxTemplate extends GridPane {
             AudioPlayer.playDeathSound();
             if (map.heartCrystalLost()) {
                 gameOver();
+            }
+            else{
+                startLadderAnimation(map.getWorld());
             }
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             map.setGameStarted(false);
@@ -532,6 +539,63 @@ public class SandboxTemplate extends GridPane {
                 enteredWall(e);
             }
         }
+    }
+    public void startLadderAnimation(World world) {
+        ladderClicked = false;
+        Thread imageThread = new Thread(() -> {
+            Label yellowLadder = getYellowStart(world);
+            Label normal = (Label) lookup("#start");
+            int row = getRowIndex(normal);
+            int column = getColumnIndex(normal);
+
+            normal.setOnMouseClicked(e -> stopLadderAnimation());
+            yellowLadder.setOnMouseClicked(e -> {
+                stopLadderAnimation();
+
+            });
+
+            while (!ladderClicked) {
+                Platform.runLater(() -> {
+                    getChildren().remove(normal);
+                    add(yellowLadder, column, row);
+                });
+                sleepFor(1000);
+                Platform.runLater(() -> {
+                    getChildren().remove(yellowLadder);
+                    add(normal, column, row);
+                });
+                sleepFor(1000);
+                if (ladderClicked) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
+        imageThread.start();
+    }
+
+    private void sleepFor(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+
+    public Label getYellowStart(World world) {
+        start = new Image("file:files/" + world + "/brightLadder.png", squareSize, squareSize, false, false);
+        Label label = new Label();
+        ImageView borderView = new ImageView(start);
+        borderView.setFitHeight(squareSize);
+        borderView.setFitWidth(squareSize);
+        label.setGraphic(borderView);
+        return label;
+    }
+
+
+    public void stopLadderAnimation() {
+        ladderClicked = true;
+        startLevel();
     }
 }
 

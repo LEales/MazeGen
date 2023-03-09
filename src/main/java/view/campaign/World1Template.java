@@ -1,23 +1,24 @@
 package view.campaign;
 
+import control.AudioPlayer;
 import control.MainProgram;
+import control.time.TimeThread;
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
+import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import model.enums.GameMode;
-import model.maps.Maps;
 import model.enums.World;
-import control.time.TimeThread;
-import control.AudioPlayer;
+import model.maps.Maps;
 import view.menu.RightPanel;
 
 import java.io.FileNotFoundException;
@@ -31,12 +32,21 @@ import java.io.FileNotFoundException;
 public class World1Template extends GridPane {
 
 
+
     private final MainProgram mainProgram;
     private final Maps map;
-    private Image wall, path, border, goal, diamond, start, heart, breakableWall, pickAxeImage;
-    final int squareSize;
     private final RightPanel rightPanel;
+    private Image wall, path, border, goal, diamond, start, heart, breakableWall, pickAxeImage;
     private TimeThread time;
+    private boolean ladderClicked;
+    private int ladderRow;
+    private int ladderColumn;
+    final int squareSize;
+    private int column;
+    private int row;
+    private Thread imageThread;
+    private Label brightLadder;
+    private Label normaLadder;
 
     /**
      * Instansierar objekten.
@@ -278,6 +288,7 @@ public class World1Template extends GridPane {
      */
     private Label getGoal() {
         Label label = new Label();
+        label.setId("goal");
         ImageView borderView = new ImageView(goal);
         borderView.setFitHeight(squareSize);
         borderView.setFitWidth(squareSize);
@@ -303,7 +314,7 @@ public class World1Template extends GridPane {
         borderView.setFitHeight(squareSize);
         borderView.setFitWidth(squareSize);
         label.setGraphic(borderView);
-        label.setOnMouseClicked(e -> startLevel());
+        label.setId("start");
         return label;
     }
 
@@ -421,9 +432,14 @@ public class World1Template extends GridPane {
             if (map.heartCrystalLost()) {
                 gameOver();
             }
+            else{
+                setLadderstatus(false);
+                startLadderAnimation(map.getWorld());
+            }
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             AudioPlayer.playDeathSound();
             map.setGameStarted(false);
+
         }
     }
 
@@ -443,9 +459,14 @@ public class World1Template extends GridPane {
             if (map.heartCrystalLost()) {
                 gameOver();
             }
+            else{
+                setLadderstatus(false);
+                startLadderAnimation(map.getWorld());
+            }
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             map.setGameStarted(false);
             createFadeTransition(view, 1.5, 0.6, 10).play();
+
         }
     }
 
@@ -558,4 +579,93 @@ public class World1Template extends GridPane {
             }
         }
     }
+
+    public boolean hasLadderInitialized(World world){
+        Label normal = (Label) lookup("#start");
+        if (normal != null && normal.hasProperties()) {
+            return true;
+        }
+        return false;
+    }
+
+    public void startLadderAnimation(World world) {
+        if(hasLadderInitialized(world)){
+            imageThread = new Thread(() -> {
+                brightLadder = getBrightStart(world);
+                normaLadder = (Label) lookup("#start");
+                row = getRowIndex(normaLadder);
+                column = getColumnIndex(normaLadder);
+                while (!getLadderstatus()) {
+                    Platform.runLater(() -> {
+                        if (!getChildren().contains(brightLadder)) {
+                            getChildren().remove(normaLadder);
+                            add(brightLadder, column, row);
+                            brightLadder.toBack();
+                            brightLadder.setOnMouseClicked(e -> {
+                                setLadderstatus(true);
+                                stopLadderAnimation(world);
+                                getChildren().remove(brightLadder);
+                                add(normaLadder, column, row);
+                                normaLadder.toBack();
+                            });
+                        } else if (!getChildren().contains(normaLadder)) {
+                            getChildren().remove(brightLadder);
+                            add(normaLadder, column, row);
+                            normaLadder.toBack();
+                            normaLadder.setOnMouseClicked(e -> {
+                                setLadderstatus(true);
+                                stopLadderAnimation(world);
+                            });
+                        }
+
+                    });
+                    sleepFor(1000);
+                }
+            });
+            imageThread.start();
+        };
+
+
+    }
+
+    private void sleepFor(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+
+    public Label getBrightStart(World world) {
+        start = new Image("file:files/" + world + "/brightLadder.png", squareSize, squareSize, false, false);
+        Label label = new Label();
+        label.setId("#brightStart");
+        ImageView borderView = new ImageView(start);
+        borderView.setFitHeight(squareSize);
+        borderView.setFitWidth(squareSize);
+        label.setGraphic(borderView);
+        return label;
+    }
+
+
+    public void stopLadderAnimation(World world) {
+        setLadderstatus(true);
+        imageThread.stop();
+        startLevel();
+    }
+    public boolean getLadderstatus(){
+        return ladderClicked;
+    }
+
+    public void setLadderstatus(boolean ladderstatus){
+        this.ladderClicked = ladderstatus;
+    }
+
+    public Maps getMap(){
+        return map;
+    }
+
+
 }
+

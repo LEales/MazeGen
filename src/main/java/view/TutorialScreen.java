@@ -21,6 +21,7 @@ public class TutorialScreen extends Pane {
     private AnimationTimer animationTimer;
     private Timeline moreTextTimer;
     private ImageView introView;
+    private boolean isRunning = true;
 
     public TutorialScreen() {
         arrow = new ImageView(new Image("file:files/arrow.png", 80, 80, false, false));
@@ -217,6 +218,7 @@ public class TutorialScreen extends Pane {
         imageView.setLayoutY(380.0);
         imageView.setFitHeight(80);
         imageView.setFitWidth(130);
+        imageView.setId("#skipLabel");
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), imageView);
         translateTransition.setFromY(0);
         translateTransition.setToY(-30);
@@ -247,6 +249,7 @@ public class TutorialScreen extends Pane {
         getChildren().removeAll(messageLabel, skipLabel,moreTextArrow);
         getChildren().removeAll();
         setOnMouseClicked(null);
+        isRunning = false;
         return ft;
     }
 
@@ -294,4 +297,8 @@ public class TutorialScreen extends Pane {
         moreTextTimer.play();
     }
 
+
+    public boolean getIsRunning(){
+        return isRunning;
+    }
 }
