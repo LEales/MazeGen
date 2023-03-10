@@ -3,10 +3,16 @@ package view.sandbox;
 import control.MainProgram;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import model.enums.Sprite;
 import model.enums.World;
 import model.maps.CreatedMap;
 import org.junit.jupiter.api.BeforeAll;
@@ -194,5 +200,39 @@ class SandboxScreenTest {
         MainProgram mainProgram = MainProgram.getMainProgram();
         Optional<Boolean> result = Optional.of(mainProgram.checkMap("fest"));
         assertTrue(result.get());
+    }
+
+    @Test
+    public void testFillWithWalls() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        SandboxScreen sandboxScreen = new SandboxScreen(20);
+        GridPane gridPane = new GridPane();
+
+        Method fillWithWalls = SandboxScreen.class.getDeclaredMethod("fillWithWalls");
+        fillWithWalls.setAccessible(true);
+
+        Label label = new Label();
+        ImageView imageView = new ImageView();
+        imageView.setImage(new Image("file:files/emptySprite.png"));
+        label.setGraphic(imageView);
+        gridPane.add(label, 0, 0);
+
+        Button fillWallsButton = new Button("FILL WALLS");
+        fillWallsButton.setOnAction(event -> {
+            try {
+                fillWithWalls.invoke(sandboxScreen);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        });
+
+        fillWallsButton.fire();
+
+        Node node = gridPane.getChildren().get(0);
+        Label label2 = (Label) node;
+        ImageView imageView2 = (ImageView) label2.getGraphic();
+        assertNotNull(imageView2);
+        assertEquals("file:files/forest/wall.png", imageView2.getImage().getUrl());
     }
 }
