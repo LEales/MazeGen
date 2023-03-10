@@ -788,6 +788,10 @@ public class MainProgram extends Application {
     }
 
     public static boolean wrongCauseInput(String cause) {
-        return !cause.equals("died") || !cause.equals("time");
+        if(cause.equals("died") || cause.equals("time")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
