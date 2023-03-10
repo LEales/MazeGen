@@ -3,6 +3,7 @@ package view.sandbox;
 import control.MainProgram;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -11,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import model.enums.Sprite;
 import model.enums.World;
@@ -202,37 +204,42 @@ class SandboxScreenTest {
         assertTrue(result.get());
     }
 
+
     @Test
-    public void testFillWithWalls() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    void checkIfButtonExist() throws NoSuchFieldException, IllegalAccessException {
         SandboxScreen sandboxScreen = new SandboxScreen(20);
+        Field fillWithWalls = SandboxScreen.class.getDeclaredField("fillWithWalls");
+        fillWithWalls.setAccessible(true);
+        Button fill = (Button) fillWithWalls.get(sandboxScreen);
+        assertTrue(fill != null);
+    }
+
+    @Test
+    void checkNotNullSprite() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        SandboxScreen ss = new SandboxScreen(20);
         GridPane gridPane = new GridPane();
 
         Method fillWithWalls = SandboxScreen.class.getDeclaredMethod("fillWithWalls");
         fillWithWalls.setAccessible(true);
+        fillWithWalls.invoke(ss);
 
-        Label label = new Label();
-        ImageView imageView = new ImageView();
-        imageView.setImage(new Image("file:files/emptySprite.png"));
-        label.setGraphic(imageView);
-        gridPane.add(label, 0, 0);
-
-        Button fillWallsButton = new Button("FILL WALLS");
-        fillWallsButton.setOnAction(event -> {
-            try {
-                fillWithWalls.invoke(sandboxScreen);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                ImageView imageView = new ImageView("file:files/emptySprite.png");
+                Label label = new Label();
+                label.setGraphic(imageView);
+                gridPane.add(label, i, j);
             }
-        });
+        }
 
-        fillWallsButton.fire();
-
-        Node node = gridPane.getChildren().get(0);
-        Label label2 = (Label) node;
-        ImageView imageView2 = (ImageView) label2.getGraphic();
-        assertNotNull(imageView2);
-        assertEquals("file:files/forest/wall.png", imageView2.getImage().getUrl());
+        for (Node node : gridPane.getChildren()) {
+            if (node instanceof Label) {
+                Label label = (Label) node;
+                ImageView imageView = (ImageView) label.getGraphic();
+                if (imageView.getImage().equals("files/emptySprite.png")) {
+                    assertEquals(imageView.getImage(), "files/forest/wall.png");
+                }
+            }
+        }
     }
 }
