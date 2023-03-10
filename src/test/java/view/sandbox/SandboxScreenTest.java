@@ -48,14 +48,13 @@ class SandboxScreenTest {
         SandboxScreen sandboxScreen = null;
         try{
             sandboxScreen = new SandboxScreen(-1);
+            Field privateField = SandboxScreen.class.getDeclaredField("path");
+            privateField.setAccessible(true);
+            Label label = (Label) privateField.get(sandboxScreen);
+            fail("Invalid dimension");
         }catch (IllegalArgumentException e){
-            assertEquals("Not a valid dimension", e.getMessage());
+            assertEquals("Invalid dimension", e.getMessage());
         }
-
-        Field privateField = SandboxScreen.class.getDeclaredField("path");
-        privateField.setAccessible(true);
-        Label label = (Label) privateField.get(sandboxScreen);
-        fail("not a valid dimention");
     }
     @Test
     void RightMenuWallLabel() throws NoSuchFieldException, IllegalAccessException{
@@ -70,13 +69,13 @@ class SandboxScreenTest {
         SandboxScreen sandboxScreen = null;
         try{
             sandboxScreen = new SandboxScreen(-1);
+            Field privateField = SandboxScreen.class.getDeclaredField("wall");
+            privateField.setAccessible(true);
+            Label label = (Label) privateField.get(sandboxScreen);
+            fail("Invalid dimension");
         }catch (IllegalArgumentException e){
-            assertEquals("Not a valid dimension", e.getMessage());
+            assertEquals("Invalid dimension", e.getMessage());
         }
-        Field privateField = SandboxScreen.class.getDeclaredField("wall");
-        privateField.setAccessible(true);
-        Label label = (Label) privateField.get(sandboxScreen);
-        fail("not a valid dimention");
     }
     @Test
     void RightMenuHeartLabel() throws NoSuchFieldException, IllegalAccessException {
@@ -91,13 +90,14 @@ class SandboxScreenTest {
         SandboxScreen sandboxScreen = null;
         try{
             sandboxScreen = new SandboxScreen(-1);
+            Field privateField = SandboxScreen.class.getDeclaredField("breakableWall");
+            privateField.setAccessible(true);
+            Label label = (Label) privateField.get(sandboxScreen);
+            fail("not a valid dimention");
         }catch (IllegalArgumentException e){
-            assertEquals("Not a valid dimension", e.getMessage());
+            assertEquals("Invalid dimension", e.getMessage());
         }
-        Field privateField = SandboxScreen.class.getDeclaredField("heart");
-        privateField.setAccessible(true);
-        Label label = (Label) privateField.get(sandboxScreen);
-        fail("not a valid dimention");
+
     }
 
     @Test
@@ -113,13 +113,14 @@ class SandboxScreenTest {
         SandboxScreen sandboxScreen = null;
         try{
             sandboxScreen = new SandboxScreen(-1);
+            Field privateField = SandboxScreen.class.getDeclaredField("breakableWall");
+            privateField.setAccessible(true);
+            Label label = (Label) privateField.get(sandboxScreen);
+            fail("not a valid dimention");
         }catch (IllegalArgumentException e){
-            assertEquals("Not a valid dimension", e.getMessage());
+            assertEquals("Invalid dimension", e.getMessage());
         }
-        Field privateField = SandboxScreen.class.getDeclaredField("breakableWall");
-        privateField.setAccessible(true);
-        Label label = (Label) privateField.get(sandboxScreen);
-        fail("not a valid dimention");
+
     }
     @Test
     void RightMenuAxeLabel() throws NoSuchFieldException, IllegalAccessException{
@@ -134,13 +135,13 @@ class SandboxScreenTest {
         SandboxScreen sandboxScreen = null;
         try{
             sandboxScreen = new SandboxScreen(-1);
+            Field privateField = SandboxScreen.class.getDeclaredField("axe");
+            privateField.setAccessible(true);
+            Label label = (Label) privateField.get(sandboxScreen);
+            fail("Invalid dimension");
         }catch (IllegalArgumentException e){
-            assertEquals("Not a valid dimension", e.getMessage());
+            assertEquals("Invalid dimension", e.getMessage());
         }
-        Field privateField = SandboxScreen.class.getDeclaredField("axe");
-        privateField.setAccessible(true);
-        Label label = (Label) privateField.get(sandboxScreen);
-        fail("not a valid dimention");
     }
 
     @Test
@@ -156,13 +157,13 @@ class SandboxScreenTest {
         SandboxScreen sandboxScreen = null;
         try{
             sandboxScreen = new SandboxScreen(-1);
+            Field privateField = SandboxScreen.class.getDeclaredField("collectible");
+            privateField.setAccessible(true);
+            Label label = (Label) privateField.get(sandboxScreen);
+            fail("Invalid dimension");
         }catch (IllegalArgumentException e){
-            assertEquals("Not a valid dimension", e.getMessage());
+            assertEquals("Invalid dimension", e.getMessage());
         }
-        Field privateField = SandboxScreen.class.getDeclaredField("collectible");
-        privateField.setAccessible(true);
-        Label label = (Label) privateField.get(sandboxScreen);
-        fail("not a valid dimention");
     }
     @Test
     void RightMenuDeleteLabel() throws NoSuchFieldException, IllegalAccessException{
@@ -177,13 +178,14 @@ class SandboxScreenTest {
         SandboxScreen sandboxScreen = null;
         try{
             sandboxScreen = new SandboxScreen(-1);
+            Field privateField = SandboxScreen.class.getDeclaredField("delete");
+            privateField.setAccessible(true);
+            Label label = (Label) privateField.get(sandboxScreen);
+            fail("Invalid dimension");
         }catch (IllegalArgumentException e){
-            assertEquals("Not a valid dimension", e.getMessage());
+            assertEquals("Invalid dimension", e.getMessage());
         }
-        Field privateField = SandboxScreen.class.getDeclaredField("delete");
-        privateField.setAccessible(true);
-        Label label = (Label) privateField.get(sandboxScreen);
-        fail("not a valid dimention");
+
     }
 
     @Test
