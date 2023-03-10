@@ -213,13 +213,14 @@ public class MainProgram extends Application {
      */
     public void changeToCampaign() throws FileNotFoundException {
         lvlCleared = 0;
-        worldTemplate = new World1Template(new World1Maps(3, 25, 1, World.FOREST), rightPanel);
+        worldTemplate = new World1Template(new World1Maps(3, 25, 5, World.FOREST), rightPanel);
         rightPanel.changeLevelCounter("11");
         mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
         campaignScene.setOnKeyPressed(e -> keyPressed(e));
         tutorialScreen = new TutorialScreen();
         tutorialScreen.setupFirstScene();
+
         mainPaneCampaign.getChildren().add(tutorialScreen);
         startTotalTime();
     }
@@ -227,12 +228,15 @@ public class MainProgram extends Application {
     private void keyPressed(KeyEvent e) {
         if (null != e) {
             if (KeyCode.SPACE == e.getCode() && tutorialScreen !=null && !(tutorialScreen.isDisable())) {
-
                 removeTutorialScreen();
                 if (rightPanel.getFirstLevel()) {
                     playWorldIntroAnimation(World.FOREST);
                 }
-                worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
+                else {
+                    worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
+                }
+
+
 
             }
         }
@@ -348,6 +352,7 @@ public class MainProgram extends Application {
 
     public void nextWorld2Level(int level, int heartCrystals) throws FileNotFoundException, InterruptedException {
         rightPanel.removePickaxe();
+
         switch (level) {
             case 1 -> {
                 lvlCleared = 15;
@@ -379,8 +384,9 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
+
         worldTemplate = new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel);
+        worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
         mainPaneCampaign.setCenter(worldTemplate);
         if (5 == level) {
             tutorialScreen = new TutorialScreen();
@@ -476,8 +482,9 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate.startLadderAnimation(World.CLOUD);
+
         worldTemplate = new World4Template(new World4Maps(heartCrystals, 55, level + 1, World.CLOUD), rightPanel);
+        worldTemplate.startLadderAnimation(World.CLOUD);
         mainPaneCampaign.setCenter(worldTemplate);
     }
 
@@ -522,8 +529,9 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate.startLadderAnimation(World.DESERT);
+
         worldTemplate = new World5Template(new World5Maps(heartCrystals, 65, level + 1, World.DESERT), rightPanel);
+        worldTemplate.startLadderAnimation(World.DESERT);
         mainPaneCampaign.setCenter(worldTemplate);
     }
 
@@ -574,8 +582,8 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate.startLadderAnimation(World.SPACE);
         worldTemplate = new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel);
+        worldTemplate.startLadderAnimation(World.SPACE);
         mainPaneCampaign.setCenter(worldTemplate);
     }
 
