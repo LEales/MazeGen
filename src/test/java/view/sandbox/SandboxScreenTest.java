@@ -3,9 +3,12 @@ package view.sandbox;
 import control.MainProgram;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import model.enums.World;
 import model.maps.CreatedMap;
@@ -232,5 +235,43 @@ class SandboxScreenTest {
         MainProgram mainProgram = MainProgram.getMainProgram();
         Optional<Boolean> result = Optional.of(mainProgram.checkMap("fest"));
         assertTrue(result.get());
+    }
+
+    @Test
+    void checkIfButtonExist() throws NoSuchFieldException, IllegalAccessException {
+        SandboxScreen sandboxScreen = new SandboxScreen(20);
+        Field fillWithWalls = SandboxScreen.class.getDeclaredField("fillWithWalls");
+        fillWithWalls.setAccessible(true);
+        Button fill = (Button) fillWithWalls.get(sandboxScreen);
+        assertTrue(fill != null);
+    }
+
+    @Test
+    void checkNotNullSprite() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        SandboxScreen ss = new SandboxScreen(20);
+        GridPane gridPane = new GridPane();
+
+        Method fillWithWalls = SandboxScreen.class.getDeclaredMethod("fillWithWalls");
+        fillWithWalls.setAccessible(true);
+        fillWithWalls.invoke(ss);
+
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                ImageView imageView = new ImageView("file:files/emptySprite.png");
+                Label label = new Label();
+                label.setGraphic(imageView);
+                gridPane.add(label, i, j);
+            }
+        }
+
+        for (Node node : gridPane.getChildren()) {
+            if (node instanceof Label) {
+                Label label = (Label) node;
+                ImageView imageView = (ImageView) label.getGraphic();
+                if (imageView.getImage().equals("files/emptySprite.png")) {
+                    assertEquals(imageView.getImage(), "files/forest/wall.png");
+                }
+            }
+        }
     }
 }
