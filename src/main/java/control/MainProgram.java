@@ -295,7 +295,7 @@ public class MainProgram extends Application {
     public void lostLife(LifeLostCause cause, int heartCrystals) {
         playerHurt = true;
 
-        showLostLifeText(cause);
+        showLostLifeText(cause, heartCrystals);
         lostHeartAnimation(heartCrystals);
     }
 
@@ -303,7 +303,7 @@ public class MainProgram extends Application {
      * Skapar en transition för att visa texten för hur spelaren dog.
      * @param cause anledningen till kollision
      */
-    private void showLostLifeText(LifeLostCause cause) {
+    private void showLostLifeText(LifeLostCause cause, int heartCrystals) {
         playerHurt = true;
 
         lostLifeView = new ImageView(new Image("file:files/lostLifeCause/" + cause + ".png", 600, 600, false, false));
@@ -315,6 +315,14 @@ public class MainProgram extends Application {
         FadeTransition lostLifeTransition = new FadeTransition(Duration.millis(700), lostLifeView);
         lostLifeTransition.setFromValue(0.0);
         lostLifeTransition.setToValue(1.0);
+        if (--heartCrystals == 0) {
+            lostLifeTransition.setOnFinished(e -> {;
+                FadeTransition fadeOutTransition = new FadeTransition(Duration.millis(400), lostLifeView);
+                fadeOutTransition.setFromValue(1.0);
+                fadeOutTransition.setToValue(0.0);
+                fadeOutTransition.play();
+            });
+        }
 
         mainPaneCampaign.getChildren().add(lostLifeView);
         lostLifeTransition.play();
