@@ -796,7 +796,7 @@ public class MainProgram extends Application {
     }
 
     public void playWorldIntroAnimation(World world) {
-        if (null != world) {
+        if (null != world && !mainPaneCampaign.getChildren().contains(introAnimation)) {
             introAnimation = new WorldIntroAnimation(world);
             mainPaneCampaign.getChildren().add(introAnimation);
             introAnimation.setDisable(true);
