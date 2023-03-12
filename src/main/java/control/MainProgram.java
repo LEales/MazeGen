@@ -945,6 +945,8 @@ public class MainProgram extends Application {
     }
 
     public void startLadderAnimation() {
-        worldTemplate.startLadderAnimation();
+        if (null != worldTemplate) {
+            worldTemplate.startLadderAnimation();
+        }
     }
 }

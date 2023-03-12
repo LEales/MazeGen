@@ -590,24 +590,26 @@ public class World1Template extends GridPane {
     }
 
     public void startLadderAnimation() {
-        timer = new AnimationTimer() {
-            private long lastUpdate;
-            private boolean isLabelVisible;
+        if (timer == null) {
+            timer = new AnimationTimer() {
+                private long lastUpdate;
+                private boolean isLabelVisible;
 
-            @Override
-            public void handle(long now) {
-                if (now - lastUpdate >= 500_000_000) {
-                    isLabelVisible = !isLabelVisible;
-                    if (isLabelVisible) {
-                        startLabel.setGraphic(new ImageView(new Image("file:files/" + map.getWorld() + "/brightLadder.png", squareSize, squareSize, false, false)));
-                    } else {
-                        startLabel.setGraphic(new ImageView(new Image("file:files/" + map.getWorld() + "/start.png", squareSize, squareSize, false, false)));
+                @Override
+                public void handle(long now) {
+                    if (now - lastUpdate >= 500_000_000) {
+                        isLabelVisible = !isLabelVisible;
+                        if (isLabelVisible) {
+                            startLabel.setGraphic(new ImageView(new Image("file:files/" + map.getWorld() + "/brightLadder.png", squareSize, squareSize, false, false)));
+                        } else {
+                            startLabel.setGraphic(new ImageView(new Image("file:files/" + map.getWorld() + "/start.png", squareSize, squareSize, false, false)));
+                        }
+                        lastUpdate = now;
                     }
-                    lastUpdate = now;
                 }
-            }
-        };
-        timer.start();
+            };
+            timer.start();
+        }
     }
 
     public void stopLadderAnimation() {
