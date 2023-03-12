@@ -3,6 +3,7 @@ package view.sandbox;
 import control.AudioPlayer;
 import control.MainProgram;
 import control.time.TimeThread;
+import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
 import javafx.application.Platform;
@@ -29,11 +30,14 @@ public class SandboxTemplate extends GridPane {
     private final CreatedMap map;
     private final MainProgram mainProgram;
     private final int squareSize;
-    private boolean ladderClicked = false;
     private TimeThread time;
 
     private final RightPanel rightPanel;
     private Image wall, path, border, goal, diamond, start, pickAxeImage,heart,breakableWall;
+
+    private AnimationTimer timer;
+
+    private Label startLabel;
 
     /**
      * Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
@@ -297,6 +301,7 @@ public class SandboxTemplate extends GridPane {
         label.setGraphic(borderView);
         label.setOnMouseClicked(e -> startLevel());
         label.setId("start");
+        startLabel = label;
         return label;
     }
 
@@ -500,8 +505,8 @@ public class SandboxTemplate extends GridPane {
         if (!map.isGameStarted()) {
             AudioPlayer.playStartSound();
         }
-        mainProgram.removeTutorialScreen();
         map.setGameStarted(true);
+        stopLadderAnimation();
     }
 
     /**
@@ -550,61 +555,31 @@ public class SandboxTemplate extends GridPane {
         return null == time || time.isGameOver();
     }
     public void startLadderAnimation(World world) {
-        ladderClicked = false;
-        Thread imageThread = new Thread(() -> {
-            Label yellowLadder = getYellowStart(world);
-            Label normal = (Label) lookup("#start");
-            int row = getRowIndex(normal);
-            int column = getColumnIndex(normal);
-
-            normal.setOnMouseClicked(e -> stopLadderAnimation());
-            yellowLadder.setOnMouseClicked(e -> {
-                stopLadderAnimation();
-
-            });
-
-            while (!ladderClicked) {
-                Platform.runLater(() -> {
-                    getChildren().remove(normal);
-                    add(yellowLadder, column, row);
-                });
-                sleepFor(1000);
-                Platform.runLater(() -> {
-                    getChildren().remove(yellowLadder);
-                    add(normal, column, row);
-                });
-                sleepFor(1000);
-                if (ladderClicked) {
-                    Thread.currentThread().interrupt();
+        timer = new AnimationTimer() {
+            private long lastUpdate;
+            private boolean isLabelVisible;
+            @Override
+            public void handle(long now) {
+                if (now - lastUpdate >= 500_000_000) {
+                    System.out.println("Blinking");
+                    isLabelVisible = !isLabelVisible;
+                    if (isLabelVisible) {
+                        startLabel.setGraphic(new ImageView(new Image("file:files/" + map.getWorld() + "/brightLadder.png", squareSize, squareSize, false, false)));
+                    } else {
+                        startLabel.setGraphic(new ImageView(new Image("file:files/" + map.getWorld() + "/start.png", squareSize, squareSize, false, false)));
+                    }
+                    lastUpdate = now;
                 }
             }
-        });
-        imageThread.start();
+        };
+        timer.start();
     }
-
-    private void sleepFor(long milliseconds) {
-        try {
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
-
-
-    public Label getYellowStart(World world) {
-        start = new Image("file:files/" + world + "/brightLadder.png", squareSize, squareSize, false, false);
-        Label label = new Label();
-        ImageView borderView = new ImageView(start);
-        borderView.setFitHeight(squareSize);
-        borderView.setFitWidth(squareSize);
-        label.setGraphic(borderView);
-        return label;
-    }
-
-
     public void stopLadderAnimation() {
-        ladderClicked = true;
-        startLevel();
+        if (timer != null) {
+            timer.stop();
+            startLabel.setGraphic(new ImageView(new Image("file:files/" + map.getWorld() + "/start.png", squareSize, squareSize, false, false)));
+            timer = null;
+        }
     }
 }
 

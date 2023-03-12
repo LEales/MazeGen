@@ -67,6 +67,8 @@ public class MainProgram extends Application {
 
     private TutorialScreen tutorialScreen;
 
+    private GameOverScreen gameOverScreen;
+
     private ArrayList<CreatedMap> createdMaps;
 
 
@@ -179,6 +181,9 @@ public class MainProgram extends Application {
      * Byter scen till huvudmenyn.
      */
     public void changeToMenu() {
+        if (worldTemplate != null) {
+            worldTemplate.stopLadderAnimation();
+        }
         removeTutorialScreen();
         mainWindow.setScene(menuScene);
         sandboxScene = null;
@@ -230,13 +235,11 @@ public class MainProgram extends Application {
 
     private void keyPressed(KeyEvent e) {
         if (null != e) {
-            if (KeyCode.SPACE == e.getCode() && tutorialScreen !=null && !(tutorialScreen.isDisable())) {
+            if (KeyCode.SPACE == e.getCode() && tutorialScreen != null && !(tutorialScreen.isDisable())) {
                 removeTutorialScreen();
                 if (rightPanel.getFirstLevel()) {
                     playWorldIntroAnimation(World.FOREST);
-                }
-                else {
-                    worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
+                    startLadderAnimation();
                 }
             }
         }
@@ -261,36 +264,38 @@ public class MainProgram extends Application {
     /**
      * Vid gameOver körs denna metod.
      * Kör en enkel animation med texten "Game Over".
+     *
      * @param cause anledningen till död
      */
     public void gameOver(String cause) {
-        if(null == cause || wrongCauseInput(cause)) {
+        if (null == cause || wrongCauseInput(cause)) {
             throw new IllegalArgumentException("Invalid input: Cause");
         }
         victoryScreen.setTime(totTime.setGameOver(true));
         Player player = new Player("___", totTime.setGameOver(true), lvlCleared);
-        GameOverScreen gameOverScreen = new GameOverScreen(player, cause);
+        gameOverScreen = new GameOverScreen(player, cause);
         mainPaneCampaign.getChildren().add(gameOverScreen);
     }
 
     public void gameOverRandomize(String cause) {
-        if(null == cause || wrongCauseInput(cause)) {
+        if (null == cause || wrongCauseInput(cause)) {
             throw new IllegalArgumentException("Invalid input: Cause");
         }
-        GameOverScreen gameOverScreen = new GameOverScreen(cause);
+        gameOverScreen = new GameOverScreen(cause, "Random");
         mainPaneRandomMaze.getChildren().add(gameOverScreen);
     }
 
     public void gameOverSandbox(String cause) {
-        if(null == cause || wrongCauseInput(cause)) {
+        if (null == cause || wrongCauseInput(cause)) {
             throw new IllegalArgumentException("Invalid input: Cause");
         }
-        GameOverScreen gameOverScreen = new GameOverScreen(cause);
+        gameOverScreen = new GameOverScreen(cause, "Sandbox");
         mainPaneSandbox.getChildren().add(gameOverScreen);
     }
 
     /**
      * Tar in vad som spelaren träffades av samt antalet heartcrystals innan kollision
+     *
      * @param cause the cause of hurt
      */
     public void lostLife(LifeLostCause cause, int heartCrystals) {
@@ -302,6 +307,7 @@ public class MainProgram extends Application {
 
     /**
      * Skapar en transition för att visa texten för hur spelaren dog.
+     *
      * @param cause anledningen till kollision
      */
     private void showLostLifeText(LifeLostCause cause, int heartCrystals) {
@@ -317,7 +323,8 @@ public class MainProgram extends Application {
         lostLifeTransition.setFromValue(0.0);
         lostLifeTransition.setToValue(1.0);
         if (--heartCrystals == 0) {
-            lostLifeTransition.setOnFinished(e -> {;
+            lostLifeTransition.setOnFinished(e -> {
+                ;
                 FadeTransition fadeOutTransition = new FadeTransition(Duration.millis(400), lostLifeView);
                 fadeOutTransition.setFromValue(1.0);
                 fadeOutTransition.setToValue(0.0);
@@ -332,6 +339,7 @@ public class MainProgram extends Application {
     /**
      * Skapar en animation genom TimeLine som visar antal hjärtan innan kollision och sedan antal
      * efter kollision
+     *
      * @param heartCrystals antal heartcrystals innan kollision
      */
     private void lostHeartAnimation(int heartCrystals) {
@@ -341,8 +349,8 @@ public class MainProgram extends Application {
         heartView.setStyle("fx-background-color: transparent;");
         heartView.setFitWidth(150);
         heartView.setFitHeight(50);
-        heartView.setLayoutX((mainPaneCampaign.getWidth() / 2) - (heartView.getFitWidth() + heartView.getFitWidth()/6));
-        heartView.setLayoutY((mainPaneCampaign.getHeight() / 2)  + (heartView.getFitHeight()/2));
+        heartView.setLayoutX((mainPaneCampaign.getWidth() / 2) - (heartView.getFitWidth() + heartView.getFitWidth() / 6));
+        heartView.setLayoutY((mainPaneCampaign.getHeight() / 2) + (heartView.getFitHeight() / 2));
 
         KeyFrame keyFrame1On = new KeyFrame(Duration.seconds(0.5), new KeyValue(heartView.imageProperty(), image1, Interpolator.EASE_OUT));
         KeyFrame keyFrame2On = new KeyFrame(Duration.seconds(1.0), new KeyValue(heartView.imageProperty(), image2, Interpolator.EASE_OUT));
@@ -361,12 +369,11 @@ public class MainProgram extends Application {
      * tar bort texten för hur man skadades (kallas på när spelaren klickar på startstegen igen)
      */
     public void removeLostLifeText() {
-        if(lostLifeView != null || heartView != null) {
+        if (lostLifeView != null || heartView != null) {
             mainPaneCampaign.getChildren().remove(lostLifeView);
             mainPaneCampaign.getChildren().remove(heartView);
             playerHurt = false;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Invalid view");
         }
     }
@@ -414,7 +421,7 @@ public class MainProgram extends Application {
         }
         worldTemplate = new World1Template(new World1Maps(heartCrystals, 25, level + 1, World.FOREST), rightPanel, LifeLostCause.FORESTWALL);
         mainPaneCampaign.setCenter(worldTemplate);
-        worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
+        worldTemplate.startLadderAnimation();
         if (4 == level) {
             tutorialScreen = new TutorialScreen();
             tutorialScreen.setupSecondScene();
@@ -437,7 +444,6 @@ public class MainProgram extends Application {
             case 1 -> {
                 lvlCleared = 15;
                 rightPanel.changeLevelCounter("21");
-                playWorldIntroAnimation(World.UNDERGROUND);
                 AudioPlayer.playWorldIntroSound();
                 AudioPlayer.stopMusic();
                 AudioPlayer.playLevelMusic(World.UNDERGROUND);
@@ -465,13 +471,15 @@ public class MainProgram extends Application {
             }
         }
         worldTemplate = new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel, LifeLostCause.UNDERGROUNDWALL);
-        worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
         mainPaneCampaign.setCenter(worldTemplate);
         if (5 == level) {
             tutorialScreen = new TutorialScreen();
             tutorialScreen.setupThirdScene();
             mainPaneCampaign.getChildren().add(tutorialScreen);
+        } else if (1 == level) {
+            playWorldIntroAnimation(World.UNDERGROUND);
         }
+        worldTemplate.startLadderAnimation();
     }
 
     /**
@@ -488,7 +496,6 @@ public class MainProgram extends Application {
             case 1 -> {
                 lvlCleared = 25;
                 rightPanel.changeLevelCounter("31");
-                playWorldIntroAnimation(World.LAVA);
                 AudioPlayer.playWorldIntroSound();
                 AudioPlayer.stopMusic();
                 AudioPlayer.playLevelMusic(World.LAVA);
@@ -516,8 +523,11 @@ public class MainProgram extends Application {
             }
         }
         worldTemplate = new World3Template(new World3Maps(heartCrystals, 45, level + 1, World.LAVA), rightPanel, LifeLostCause.LAVAWALL);
-        worldTemplate.startLadderAnimation((World.LAVA));
+        worldTemplate.startLadderAnimation();
         mainPaneCampaign.setCenter(worldTemplate);
+        if (1 == level) {
+            playWorldIntroAnimation(World.LAVA);
+        }
     }
 
     /**
@@ -534,7 +544,6 @@ public class MainProgram extends Application {
             case 1 -> {
                 lvlCleared = 35;
                 rightPanel.changeLevelCounter("41");
-                playWorldIntroAnimation(World.CLOUD);
                 AudioPlayer.playWorldIntroSound();
                 AudioPlayer.stopMusic();
                 AudioPlayer.playLevelMusic(World.CLOUD);
@@ -562,8 +571,11 @@ public class MainProgram extends Application {
             }
         }
         worldTemplate = new World4Template(new World4Maps(heartCrystals, 55, level + 1, World.CLOUD), rightPanel, LifeLostCause.CLOUDWALL);
-        worldTemplate.startLadderAnimation(World.CLOUD);
+        worldTemplate.startLadderAnimation();
         mainPaneCampaign.setCenter(worldTemplate);
+        if (1 == level) {
+            playWorldIntroAnimation(World.CLOUD);
+        }
     }
 
     /**
@@ -580,7 +592,6 @@ public class MainProgram extends Application {
             case 1 -> {
                 lvlCleared = 45;
                 rightPanel.changeLevelCounter("51");
-                playWorldIntroAnimation(World.DESERT);
                 AudioPlayer.playWorldIntroSound();
                 AudioPlayer.stopMusic();
                 AudioPlayer.playLevelMusic(World.DESERT);
@@ -608,8 +619,11 @@ public class MainProgram extends Application {
             }
         }
         worldTemplate = new World5Template(new World5Maps(heartCrystals, 65, level + 1, World.DESERT), rightPanel, LifeLostCause.DESERTWALL);
-        worldTemplate.startLadderAnimation(World.DESERT);
+        worldTemplate.startLadderAnimation();
         mainPaneCampaign.setCenter(worldTemplate);
+        if (1 == level) {
+            playWorldIntroAnimation(World.DESERT);
+        }
     }
 
     /**
@@ -626,7 +640,6 @@ public class MainProgram extends Application {
             case 1 -> {
                 lvlCleared = 55;
                 rightPanel.changeLevelCounter("61");
-                playWorldIntroAnimation(World.SPACE);
                 AudioPlayer.playWorldIntroSound();
                 AudioPlayer.stopMusic();
                 AudioPlayer.playLevelMusic(World.SPACE);
@@ -634,22 +647,18 @@ public class MainProgram extends Application {
             case 2 -> {
                 lvlCleared = 61;
                 rightPanel.changeLevelCounter("62");
-                worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
             }
             case 3 -> {
                 lvlCleared = 62;
                 rightPanel.changeLevelCounter("63");
-                worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
             }
             case 4 -> {
                 lvlCleared = 63;
                 rightPanel.changeLevelCounter("64");
-                worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
             }
             case 5 -> {
                 lvlCleared = 64;
                 rightPanel.changeLevelCounter("65");
-                worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
             }
             case 6 -> {
                 lvlCleared = 65;
@@ -660,8 +669,11 @@ public class MainProgram extends Application {
             }
         }
         worldTemplate = new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel, LifeLostCause.SPACEWALL);
-        worldTemplate.startLadderAnimation(World.SPACE);
+        worldTemplate.startLadderAnimation();
         mainPaneCampaign.setCenter(worldTemplate);
+        if (1 == level) {
+            playWorldIntroAnimation(World.SPACE);
+        }
     }
 
     public void stopTime() {
@@ -782,7 +794,6 @@ public class MainProgram extends Application {
             introAnimation = new WorldIntroAnimation(world);
             mainPaneCampaign.getChildren().add(introAnimation);
             introAnimation.setDisable(true);
-            worldTemplate.startLadderAnimation(world);
         }
     }
 
@@ -906,10 +917,28 @@ public class MainProgram extends Application {
     }
 
     public static boolean wrongCauseInput(String cause) {
-        if(cause.equals("died") || cause.equals("time")) {
+        if (cause.equals("died") || cause.equals("time")) {
             return false;
         } else {
             return true;
         }
+    }
+
+    public void removeGameOver(String mode) {
+        if (mode.equals("Campaign")) {
+            mainPaneCampaign.getChildren().remove(gameOverScreen);
+        } else if (mode.equals("Sandbox")) {
+            mainPaneSandbox.getChildren().remove(gameOverScreen);
+        } else if (mode.equals("Random")) {
+            mainPaneRandomMaze.getChildren().remove(gameOverScreen);
+        }
+    }
+
+    public void removeWorldIntro() {
+        mainPaneCampaign.getChildren().remove(introAnimation);
+    }
+
+    public void startLadderAnimation() {
+        worldTemplate.startLadderAnimation();
     }
 }

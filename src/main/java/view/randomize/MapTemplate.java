@@ -296,6 +296,7 @@ public class MapTemplate extends GridPane {
         if (mazeGenerator.getMap().isGameStarted() && mazeGenerator.getMap().allCollectiblesObtained() && !timeIsNullOrOver()) {
             AudioPlayer.playGoalSound();
             AudioPlayer.stopTimeLeftSound();
+            AudioPlayer.stopMusic();
             stopTime();
             mazeGenerator.generateNextMaze();
         }
