@@ -435,253 +435,254 @@ public class World1Template extends GridPane {
         if (!timeIsNullOrOver()) {
             Label label = (Label) e.getSource();
             createFadeTransition(label, 0.3, 10.0, 0.6).play();
-            if (map.isGameStarted()) {mainProgram.lostLife(worldCause, map.getHeartCrystals());
+            if (map.isGameStarted()) {
+                mainProgram.lostLife(worldCause, map.getHeartCrystals());
                 if (map.heartCrystalLost()) {
                     gameOver("died");
+                } else {
+                    setLadderstatus(false);
+                    startLadderAnimation(map.getWorld());
                 }
-                else{
-                setLadderstatus(false);
-                startLadderAnimation(map.getWorld());
+                rightPanel.changeHeartCounter(map.getHeartCrystals());
+                AudioPlayer.playDeathSound();
+                map.setGameStarted(false);
             }
-            rightPanel.changeHeartCounter(map.getHeartCrystals());
-            AudioPlayer.playDeathSound();
-            map.setGameStarted(false);
         }
     }
 
-    /**
-     * Om en spelare vidrör ett spöke med muspekaren körs denna metod.
-     * Om spelrundan är aktiverad förlorar spelaren ett liv.
-     * Om spelaren endast har ett återstående liv kvar vid kollisionen körs metoden gameOver.
-     *
-     * @param e
-     */
-    void enteredGhost(MouseEvent e) {
-        if (map.isGameStarted() && !timeIsNullOrOver()) {
-            ImageView view = (ImageView) e.getSource();
-            createFadeTransition(view, 0.2, 10, 0.6).play();
-            AudioPlayer.playMobSound();
-            AudioPlayer.playDeathSound();
-            mainProgram.lostLife(LifeLostCause.GHOST, map.getHeartCrystals());
-            if (map.heartCrystalLost()) {
-                gameOver("died");
+        /**
+         * Om en spelare vidrör ett spöke med muspekaren körs denna metod.
+         * Om spelrundan är aktiverad förlorar spelaren ett liv.
+         * Om spelaren endast har ett återstående liv kvar vid kollisionen körs metoden gameOver.
+         *
+         * @param e
+         */
+        void enteredGhost (MouseEvent e){
+            if (map.isGameStarted() && !timeIsNullOrOver()) {
+                ImageView view = (ImageView) e.getSource();
+                createFadeTransition(view, 0.2, 10, 0.6).play();
+                AudioPlayer.playMobSound();
+                AudioPlayer.playDeathSound();
+                mainProgram.lostLife(LifeLostCause.GHOST, map.getHeartCrystals());
+                if (map.heartCrystalLost()) {
+                    gameOver("died");
+                } else {
+                    setLadderstatus(false);
+                    startLadderAnimation(map.getWorld());
+                }
+                rightPanel.changeHeartCounter(map.getHeartCrystals());
+                map.setGameStarted(false);
+                createFadeTransition(view, 1.5, 0.6, 10).play();
             }
-            else{
-                setLadderstatus(false);
-                startLadderAnimation(map.getWorld());
+        }
+
+        /**
+         * Avslutar spelrundan och kör metoden gameOver i mainProgram.
+         */
+        private void gameOver (String cause){
+            if (null == cause || MainProgram.wrongCauseInput(cause)) {
+                throw new IllegalArgumentException("Invalid input: Cause");
             }
-            rightPanel.changeHeartCounter(map.getHeartCrystals());
-            map.setGameStarted(false);
-            createFadeTransition(view, 1.5, 0.6, 10).play();
-        }
-    }
-
-    /**
-     * Avslutar spelrundan och kör metoden gameOver i mainProgram.
-     */
-    private void gameOver(String cause) {
-        if(null == cause || MainProgram.wrongCauseInput(cause)) {
-            throw new IllegalArgumentException("Invalid input: Cause");
-        }
-        AudioPlayer.playGameOverSound();
-        AudioPlayer.stopTimeLeftSound();
-        AudioPlayer.stopMusic();
-        mainProgram.gameOver(cause);
-        this.time.setGameOver(true);
-        this.time = null;
-        rightPanel.removePickaxe();
-    }
-
-    public void stopTime() {
-        if (time != null) {
-            time.setGameOver(true);
-            time = null;
-        }
-    }
-
-    /**
-     * Om spelrundan är aktiverad och spelaren har plockat upp alla collectibles startas nästa nivå.
-     *
-     * @throws FileNotFoundException
-     * @throws InterruptedException
-     */
-    private void enteredGoal() throws FileNotFoundException, InterruptedException {
-        if (map.isGameStarted() && map.allCollectiblesObtained() && !timeIsNullOrOver()) {
+            AudioPlayer.playGameOverSound();
             AudioPlayer.stopTimeLeftSound();
-            AudioPlayer.playGoalSound();
-            time.setGameOver(true);
-            time = null;
-            nextLevel();
+            AudioPlayer.stopMusic();
+            mainProgram.gameOver(cause);
+            this.time.setGameOver(true);
+            this.time = null;
+            rightPanel.removePickaxe();
         }
-    }
 
-    /**
-     * Baserad på den aktuella världen väljer programmmet vilken nivå som ska spelas.
-     *
-     * @throws FileNotFoundException
-     * @throws InterruptedException
-     */
-    private void nextLevel() throws FileNotFoundException, InterruptedException {
-        switch (map.getWorld()) {
-            case FOREST -> mainProgram.nextWorld1Level(map.getNextLevel(), map.getHeartCrystals());
-            case UNDERGROUND -> mainProgram.nextWorld2Level(map.getNextLevel(), map.getHeartCrystals());
-            case LAVA -> mainProgram.nextWorld3Level(map.getNextLevel(), map.getHeartCrystals());
-            case CLOUD -> mainProgram.nextWorld4Level(map.getNextLevel(), map.getHeartCrystals());
-            case DESERT -> mainProgram.nextWorld5Level(map.getNextLevel(), map.getHeartCrystals());
-            case SPACE -> mainProgram.nextWorld6Level(map.getNextLevel(), map.getHeartCrystals());
-        }
-    }
-
-    /**
-     * Startar spelrundan och timern.
-     */
-    private void startLevel() {
-        if (!map.isTimeStarted()) {
-            map.setTimeStarted(true);
-            time.start();
-        }
-        if (!map.isGameStarted()) {
-            AudioPlayer.playStartSound();
-        }
-        if(mainProgram.isPlayerHurt()) {
-            mainProgram.removeLostLifeText();
-        }
-        mainProgram.removeTutorialScreen();
-        map.setGameStarted(true);
-    }
-
-    /**
-     * När muspekaren lämnar en label slutar den att highlightas.
-     *
-     * @param e Används för att hitta rätt label.
-     */
-    private void exitedLabel(MouseEvent e) {
-        Label label = (Label) e.getSource();
-        createFadeTransition(label, 0.3, 0.6, 10).play();
-    }
-
-    private FadeTransition createFadeTransition(Node node, double duration, double from, double to) {
-        FadeTransition fade = new FadeTransition();
-        fade.setNode(node);
-        fade.setDuration(Duration.seconds(duration));
-        fade.setFromValue(from);
-        fade.setToValue(to);
-        return fade;
-    }
-
-    /**
-     * Om spelrundan är startad och spelaren har plockat upp en yxa går det att förstöra väggen.
-     * Om spelrundan är startad och spelaren inte plockat upp en yxa förlorar hen ett liv vid kollision med väggen.
-     *
-     * @param e Används för att hitta rätt label.
-     */
-    private void enteredBreakableWall(MouseEvent e) {
-        Label label = (Label) e.getSource();
-        ImageView pathView = new ImageView(path);
-        if (map.isGameStarted() && !timeIsNullOrOver()) {
-            if (map.isPickAxeInInventory()) {
-                label.setGraphic(pathView);
-                map.setPickAxeInInventory(false);
-                rightPanel.removePickaxe();
-                label.setOnMouseEntered(null);
-                label.setOnMouseExited(null);
-                AudioPlayer.playBreakableWallSound();
-            } else {
-                enteredWall(e);
+        public void stopTime () {
+            if (time != null) {
+                time.setGameOver(true);
+                time = null;
             }
         }
-    }
 
-    private boolean timeIsNullOrOver() {
-        return null == time || time.isGameOver();
-    }
-
-    public boolean hasLadderInitialized(World world){
-        Label normal = (Label) lookup("#start");
-        if (normal != null && normal.hasProperties()) {
-            return true;
+        /**
+         * Om spelrundan är aktiverad och spelaren har plockat upp alla collectibles startas nästa nivå.
+         *
+         * @throws FileNotFoundException
+         * @throws InterruptedException
+         */
+        private void enteredGoal () throws FileNotFoundException, InterruptedException {
+            if (map.isGameStarted() && map.allCollectiblesObtained() && !timeIsNullOrOver()) {
+                AudioPlayer.stopTimeLeftSound();
+                AudioPlayer.playGoalSound();
+                time.setGameOver(true);
+                time = null;
+                nextLevel();
+            }
         }
-        return false;
-    }
 
-    public void startLadderAnimation(World world) {
-        if(hasLadderInitialized(world)){
-            imageThread = new Thread(() -> {
-                brightLadder = getBrightStart(world);
-                normaLadder = (Label) lookup("#start");
-                row = getRowIndex(normaLadder);
-                column = getColumnIndex(normaLadder);
-                while (!getLadderstatus()) {
-                    Platform.runLater(() -> {
-                        if (!getChildren().contains(brightLadder)) {
-                            getChildren().remove(normaLadder);
-                            add(brightLadder, column, row);
-                            brightLadder.toBack();
-                            brightLadder.setOnMouseClicked(e -> {
-                                setLadderstatus(true);
-                                stopLadderAnimation(world);
+        /**
+         * Baserad på den aktuella världen väljer programmmet vilken nivå som ska spelas.
+         *
+         * @throws FileNotFoundException
+         * @throws InterruptedException
+         */
+        private void nextLevel () throws FileNotFoundException, InterruptedException {
+            switch (map.getWorld()) {
+                case FOREST -> mainProgram.nextWorld1Level(map.getNextLevel(), map.getHeartCrystals());
+                case UNDERGROUND -> mainProgram.nextWorld2Level(map.getNextLevel(), map.getHeartCrystals());
+                case LAVA -> mainProgram.nextWorld3Level(map.getNextLevel(), map.getHeartCrystals());
+                case CLOUD -> mainProgram.nextWorld4Level(map.getNextLevel(), map.getHeartCrystals());
+                case DESERT -> mainProgram.nextWorld5Level(map.getNextLevel(), map.getHeartCrystals());
+                case SPACE -> mainProgram.nextWorld6Level(map.getNextLevel(), map.getHeartCrystals());
+            }
+        }
+
+        /**
+         * Startar spelrundan och timern.
+         */
+        private void startLevel () {
+            if (!map.isTimeStarted()) {
+                map.setTimeStarted(true);
+                time.start();
+            }
+            if (!map.isGameStarted()) {
+                AudioPlayer.playStartSound();
+            }
+            if (mainProgram.isPlayerHurt()) {
+                mainProgram.removeLostLifeText();
+            }
+            mainProgram.removeTutorialScreen();
+            map.setGameStarted(true);
+        }
+
+        /**
+         * När muspekaren lämnar en label slutar den att highlightas.
+         *
+         * @param e Används för att hitta rätt label.
+         */
+        private void exitedLabel (MouseEvent e){
+            Label label = (Label) e.getSource();
+            createFadeTransition(label, 0.3, 0.6, 10).play();
+        }
+
+        private FadeTransition createFadeTransition (Node node,double duration, double from, double to){
+            FadeTransition fade = new FadeTransition();
+            fade.setNode(node);
+            fade.setDuration(Duration.seconds(duration));
+            fade.setFromValue(from);
+            fade.setToValue(to);
+            return fade;
+        }
+
+        /**
+         * Om spelrundan är startad och spelaren har plockat upp en yxa går det att förstöra väggen.
+         * Om spelrundan är startad och spelaren inte plockat upp en yxa förlorar hen ett liv vid kollision med väggen.
+         *
+         * @param e Används för att hitta rätt label.
+         */
+        private void enteredBreakableWall (MouseEvent e){
+            Label label = (Label) e.getSource();
+            ImageView pathView = new ImageView(path);
+            if (map.isGameStarted() && !timeIsNullOrOver()) {
+                if (map.isPickAxeInInventory()) {
+                    label.setGraphic(pathView);
+                    map.setPickAxeInInventory(false);
+                    rightPanel.removePickaxe();
+                    label.setOnMouseEntered(null);
+                    label.setOnMouseExited(null);
+                    AudioPlayer.playBreakableWallSound();
+                } else {
+                    enteredWall(e);
+                }
+            }
+        }
+
+        private boolean timeIsNullOrOver () {
+            return null == time || time.isGameOver();
+        }
+
+        public boolean hasLadderInitialized (World world){
+            Label normal = (Label) lookup("#start");
+            if (normal != null && normal.hasProperties()) {
+                return true;
+            }
+            return false;
+        }
+
+        public void startLadderAnimation (World world){
+            if (hasLadderInitialized(world)) {
+                imageThread = new Thread(() -> {
+                    brightLadder = getBrightStart(world);
+                    normaLadder = (Label) lookup("#start");
+                    row = getRowIndex(normaLadder);
+                    column = getColumnIndex(normaLadder);
+                    while (!getLadderstatus()) {
+                        Platform.runLater(() -> {
+                            if (!getChildren().contains(brightLadder)) {
+                                getChildren().remove(normaLadder);
+                                add(brightLadder, column, row);
+                                brightLadder.toBack();
+                                brightLadder.setOnMouseClicked(e -> {
+                                    setLadderstatus(true);
+                                    stopLadderAnimation(world);
+                                    getChildren().remove(brightLadder);
+                                    add(normaLadder, column, row);
+                                    normaLadder.toBack();
+                                });
+                            } else if (!getChildren().contains(normaLadder)) {
                                 getChildren().remove(brightLadder);
                                 add(normaLadder, column, row);
                                 normaLadder.toBack();
-                            });
-                        } else if (!getChildren().contains(normaLadder)) {
-                            getChildren().remove(brightLadder);
-                            add(normaLadder, column, row);
-                            normaLadder.toBack();
-                            normaLadder.setOnMouseClicked(e -> {
-                                setLadderstatus(true);
-                                stopLadderAnimation(world);
-                            });
-                        }
+                                normaLadder.setOnMouseClicked(e -> {
+                                    setLadderstatus(true);
+                                    stopLadderAnimation(world);
+                                });
+                            }
 
-                    });
-                    sleepFor(1000);
-                }
-            });
-            imageThread.start();
-        };
+                        });
+                        sleepFor(1000);
+                    }
+                });
+                imageThread.start();
+            }
+            ;
 
 
-    }
-
-    private void sleepFor(long milliseconds) {
-        try {
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
         }
+
+        private void sleepFor ( long milliseconds){
+            try {
+                Thread.sleep(milliseconds);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+
+        public Label getBrightStart (World world){
+            start = new Image("file:files/" + world + "/brightLadder.png", squareSize, squareSize, false, false);
+            Label label = new Label();
+            label.setId("#brightStart");
+            ImageView borderView = new ImageView(start);
+            borderView.setFitHeight(squareSize);
+            borderView.setFitWidth(squareSize);
+            label.setGraphic(borderView);
+            return label;
+        }
+
+
+        public void stopLadderAnimation (World world){
+            setLadderstatus(true);
+            imageThread.stop();
+            startLevel();
+        }
+        public boolean getLadderstatus () {
+            return ladderClicked;
+        }
+
+        public void setLadderstatus ( boolean ladderstatus){
+            this.ladderClicked = ladderstatus;
+        }
+
+        public Maps getMap () {
+            return map;
+        }
+
+
     }
-
-
-    public Label getBrightStart(World world) {
-        start = new Image("file:files/" + world + "/brightLadder.png", squareSize, squareSize, false, false);
-        Label label = new Label();
-        label.setId("#brightStart");
-        ImageView borderView = new ImageView(start);
-        borderView.setFitHeight(squareSize);
-        borderView.setFitWidth(squareSize);
-        label.setGraphic(borderView);
-        return label;
-    }
-
-
-    public void stopLadderAnimation(World world) {
-        setLadderstatus(true);
-        imageThread.stop();
-        startLevel();
-    }
-    public boolean getLadderstatus(){
-        return ladderClicked;
-    }
-
-    public void setLadderstatus(boolean ladderstatus){
-        this.ladderClicked = ladderstatus;
-    }
-
-    public Maps getMap(){
-        return map;
-    }
-
-
-}
 
