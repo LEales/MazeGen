@@ -11,21 +11,22 @@ public class CreatedMap implements Serializable {
     private final World world;
     private final int seconds;
     private Sprite[][] map;
-    public int dimension;
 
+    public int dimension;
     private final String name;
 
     private int collectibles, collectiblesObtained, heartCrystals;
     private boolean pickAxeInInventory, gameStarted, timeStarted;
     public static final long serialVersionUID = 329832084320L;
+
     public CreatedMap(int heartCrystals, int seconds, int dimension, String name, World world) {
-        if(0 > heartCrystals) {
+        if (0 > heartCrystals) {
             throw new IllegalArgumentException("Invalid input: Negative amount of heartcrystals");
         }
-        if(0 > seconds) {
+        if (0 > seconds) {
             throw new IllegalArgumentException("Invalid input: Negative amout of seconds");
         }
-        if( 0 > dimension) {
+        if (0 > dimension) {
             throw new IllegalArgumentException("Invalid input: Negative dimension");
         }
         this.heartCrystals = heartCrystals;
@@ -35,8 +36,9 @@ public class CreatedMap implements Serializable {
         this.world = world;
         map = new Sprite[dimension][dimension];
     }
+
     public CreatedMap() {
-        this(3,45,10,"DEFAULT",World.FOREST);
+        this(3, 45, 10, "DEFAULT", World.FOREST);
     }
 
     public String getName() {

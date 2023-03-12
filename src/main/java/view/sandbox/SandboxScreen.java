@@ -51,7 +51,7 @@ public class SandboxScreen extends BorderPane {
     private Button fillWithWalls;
 
     public SandboxScreen(int dimension) {
-        if(5 > dimension) {
+        if (5 > dimension) {
             throw new IllegalArgumentException("Invalid dimension");
         }
         this.squareSizeMenu = 60;
@@ -108,7 +108,6 @@ public class SandboxScreen extends BorderPane {
         breakableWall.setId("breakableWall");
         axe.setId("axe");
         collectible.setId("collectible");
-
 
 
         ImageView pathImageView = new ImageView(pathImageMenu);
@@ -237,7 +236,7 @@ public class SandboxScreen extends BorderPane {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to return to the menu? All unsaved changes will be lost.", ButtonType.YES, ButtonType.NO);
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES) {
-                    mainProgram.changeToSandBoxDimension();
+                    mainProgram.changeToSandBoxLoader();
                 }
             });
         });
@@ -247,7 +246,7 @@ public class SandboxScreen extends BorderPane {
         fillWithWalls.setTranslateY(80);
         fillWithWalls.setFont(Font.loadFont("file:files/fonts/PressStart2P.ttf", 18));
         fillWithWalls.setOnMouseClicked(e -> {
-            fillWithWalls();
+                    fillWithWalls();
                 }
         );
 
@@ -290,9 +289,9 @@ public class SandboxScreen extends BorderPane {
                 label.setGraphic(new ImageView(collectibleImage));
             } else if (compareImages(image, tempAxe)) {
                 label.setGraphic(new ImageView(axeImage));
-            } else if(compareImages(image, tempHeart)) {
+            } else if (compareImages(image, tempHeart)) {
                 label.setGraphic(new ImageView(heartImage));
-            }else if (compareImages(image, startImage)) {
+            } else if (compareImages(image, startImage)) {
                 startImage = new Image("file:files/" + newValue.toString().toLowerCase() + "/start.png", squareSizeMap, squareSizeMap, false, false);
                 label.setGraphic(new ImageView(startImage));
             } else if (compareImages(image, goalImage)) {
@@ -334,7 +333,7 @@ public class SandboxScreen extends BorderPane {
 
     //laddar in en karta från en CreatedMap
     public void loadMap(CreatedMap map) {
-        if(null == map || null == map.getMap()) {
+        if (null == map || null == map.getMap()) {
             throw new IllegalArgumentException("Invalid map");
         }
         world = map.getWorld();
@@ -469,7 +468,6 @@ public class SandboxScreen extends BorderPane {
             });
 
 
-
             label.setOnDragDropped(e -> {
                 Dragboard db = e.getDragboard();
                 if (db.hasImage() && db.hasString()) {
@@ -491,7 +489,8 @@ public class SandboxScreen extends BorderPane {
                 }
             });
 
-            label.setOnDragOver(e -> {;
+            label.setOnDragOver(e -> {
+                ;
                 if (e.getGestureSource() != label && e.getDragboard().hasImage() && e.getDragboard().hasString()) {
                     String image = ((ImageView) label.getGraphic()).getImage().getUrl();
                     if (image == null) {
@@ -515,8 +514,7 @@ public class SandboxScreen extends BorderPane {
                 System.out.println("Label ID: " + label.getId());
                 if (label.getGraphic() != null) {
                     System.out.println("Image: " + ((ImageView) label.getGraphic()).getImage().getUrl());
-                }
-                else {
+                } else {
 
                 }
             }
@@ -539,8 +537,6 @@ public class SandboxScreen extends BorderPane {
             }
         }
     }
-
-
 
 
     private boolean isNumeric(String sourceId) {

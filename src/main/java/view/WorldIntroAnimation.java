@@ -1,6 +1,7 @@
 package view;
 
 
+import control.MainProgram;
 import javafx.animation.FadeTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -50,6 +51,7 @@ public class WorldIntroAnimation extends Pane {
         if (image.isSmooth()) return false;
         if (image.isPreserveRatio()) return false;
         try {
+            System.out.println("introAnimation");
             ImageView introView = new ImageView(image);
             introView.setStyle("fx-background-color: transparent;");
             FadeTransition ft = new FadeTransition(Duration.millis(4000), introView);
@@ -57,6 +59,7 @@ public class WorldIntroAnimation extends Pane {
             ft.setFromValue(1);
             ft.setToValue(0);
             ft.play();
+            ft.setOnFinished(e -> MainProgram.getMainProgram().removeWorldIntro());
         } catch (Exception e) {
             return false;
         }

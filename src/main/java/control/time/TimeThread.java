@@ -15,7 +15,6 @@ public class TimeThread extends Thread {
     private Time time;
     private RightPanel panel;
     private boolean gameOver;
-
     private final GameMode gameMode;
 
     /**

@@ -62,6 +62,7 @@ public class ChooseDimension extends Pane {
         });
         return eighteen;
     }
+
     private Label getPain() {
         Label pain = createLabel(335, 350, "Pain");
         pain.setOnMouseClicked(e -> {
@@ -70,9 +71,10 @@ public class ChooseDimension extends Pane {
         });
         return pain;
     }
+
     private Label getReturn() {
         Label aReturn = createLabel(320, 450, "Return");
-        aReturn.setOnMouseClicked(e ->{
+        aReturn.setOnMouseClicked(e -> {
             AudioPlayer.playButtonSound();
             mainProgram.changeToMenu();
         });

@@ -15,14 +15,10 @@ import model.enums.World;
 public class TutorialScreen extends Pane {
 
     private Label messageLabel;
-    private Label skipLabel;
     private ImageView arrow;
     private ImageView moreTextArrow;
     private AnimationTimer animationTimer;
-    private Timeline moreTextTimer;
     private ImageView introView;
-    private boolean isRunning = true;
-    private int counter =0;
 
     public TutorialScreen() {
         arrow = new ImageView(new Image("file:files/arrow.png", 80, 80, false, false));
@@ -90,17 +86,17 @@ public class TutorialScreen extends Pane {
 
     private void onMouseClickFirst(String message) {
         String next = nextMessageFirst(message);
-        if ("last" == next) {
+        if ("last".equals(next)) {
             FadeTransition ft = removeTutorial();
             ft.play();
             ft.setOnFinished(e -> {
-                System.out.println(next);
                 getChildren().removeAll(arrow, introView);
-                if (counter==0) {
-                    MainProgram.getMainProgram().playWorldIntroAnimation(World.FOREST);
-                    counter++;
-                }
+                MainProgram mp = MainProgram.getMainProgram();
+                mp.playWorldIntroAnimation(World.FOREST);
+                mp.startLadderAnimation();
+                mp.removeTutorialScreen();
             });
+            getParent().setOnMouseClicked(null);
             return;
         }
         switch (next) {
@@ -120,7 +116,7 @@ public class TutorialScreen extends Pane {
             }
         }
         showMessage(next);
-        if (getParent() != null){
+        if (getParent() != null) {
             getParent().setOnMouseClicked(e -> onMouseClickFirst(next));
         }
     }
@@ -136,6 +132,7 @@ public class TutorialScreen extends Pane {
                 getChildren().remove(introView);
                 this.toBack();
             });
+            getParent().setOnMouseClicked(null);
             return;
         }
         switch (next) {
@@ -165,6 +162,7 @@ public class TutorialScreen extends Pane {
                 getChildren().remove(introView);
                 this.toBack();
             });
+            getParent().setOnMouseClicked(null);
             return;
         }
         showMessage(next);
@@ -203,8 +201,8 @@ public class TutorialScreen extends Pane {
             showMessage(first);
             addMoreTextArrow();
             messageLabel.toFront();
-            if (getParent() != null){
-                getParent().setOnMouseClicked(ex -> onMouseClickThird(first));
+            if (getParent() != null) {
+                getParent().setOnMouseClicked(ex -> onMouseClickSecond(first));
             }
         });
 
@@ -220,7 +218,7 @@ public class TutorialScreen extends Pane {
             showMessage(first);
             addMoreTextArrow();
             messageLabel.toFront();
-            if (getParent() != null){
+            if (getParent() != null) {
                 getParent().setOnMouseClicked(ex -> onMouseClickThird(first));
             }
         });
@@ -262,10 +260,9 @@ public class TutorialScreen extends Pane {
         FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
-        getChildren().removeAll(messageLabel, skipLabel,moreTextArrow);
-        getChildren().removeAll();
+        getChildren().removeAll(messageLabel, moreTextArrow, lookup("#skipLabel"));
+        //getChildren().removeAll();
         setOnMouseClicked(null);
-        isRunning = false;
         return ft;
     }
 
@@ -311,10 +308,5 @@ public class TutorialScreen extends Pane {
         );
         moreTextTimer.setCycleCount(Timeline.INDEFINITE);
         moreTextTimer.play();
-    }
-
-
-    public boolean getIsRunning(){
-        return isRunning;
     }
 }

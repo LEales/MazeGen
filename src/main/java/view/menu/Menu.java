@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import model.enums.World;
 import control.AudioPlayer;
+
 import java.io.FileNotFoundException;
 
 /**
@@ -173,6 +174,7 @@ public class Menu extends Pane {
         return highscoreView;
          */
     }
+
     private Label getSandBoxView() {
         Label sandboxLabel = createLabel("Sandbox", 320.0, 400.0);
         sandboxLabel.setOnMouseClicked(e -> {

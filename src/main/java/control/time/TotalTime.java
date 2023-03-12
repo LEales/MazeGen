@@ -7,7 +7,6 @@ import model.Time;
  * Tråd som räknar den totala tiden det tog att spela
  */
 public class TotalTime extends Thread {
-
     private boolean gameOver;
     private Time time = new Time();
 

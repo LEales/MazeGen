@@ -16,7 +16,7 @@ public class Player implements Serializable, Comparable<Player> {
 
 
     public Player(String player, Time time, int lvl) {
-        if(lvl < 0) {
+        if (lvl < 0) {
             throw new IllegalArgumentException("Invalid level input");
         }
         playerCheck(player);
