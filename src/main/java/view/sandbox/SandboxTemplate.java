@@ -489,6 +489,7 @@ public class SandboxTemplate extends GridPane {
             time.setGameOver(true);
             time = null;
             mainProgram.changeToMenu();
+            rightPanel.removePickaxe();
         }
     }
 

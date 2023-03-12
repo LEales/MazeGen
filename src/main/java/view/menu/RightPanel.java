@@ -188,6 +188,7 @@ public class RightPanel extends GridPane {
      */
     private void mainMenuClicked() {
         mainProgram.changeToMenu();
+        removePickaxe();
         mainProgram.stopTime();
         AudioPlayer.playButtonSound();
         AudioPlayer.stopTimeLeftSound();
