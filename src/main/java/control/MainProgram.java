@@ -238,9 +238,6 @@ public class MainProgram extends Application {
                 else {
                     worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
                 }
-
-
-
             }
         }
     }
@@ -786,7 +783,6 @@ public class MainProgram extends Application {
             mainPaneCampaign.getChildren().add(introAnimation);
             introAnimation.setDisable(true);
             worldTemplate.startLadderAnimation(world);
-
         }
     }
 

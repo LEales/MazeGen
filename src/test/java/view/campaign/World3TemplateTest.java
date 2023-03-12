@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import model.enums.GameMode;
+import model.enums.LifeLostCause;
 import model.enums.World;
 import model.maps.World3Maps;
 import org.junit.jupiter.api.BeforeAll;
@@ -40,7 +41,7 @@ public class World3TemplateTest {
     void init() {
         w3m = new World3Maps(3, 25, 2, World.LAVA);
         try {
-            w3 = new World3Template(w3m, new RightPanel(GameMode.CAMPAIGN));
+            w3 = new World3Template(w3m, new RightPanel(GameMode.CAMPAIGN), LifeLostCause.LAVAWALL);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -22,6 +22,7 @@ public class TutorialScreen extends Pane {
     private Timeline moreTextTimer;
     private ImageView introView;
     private boolean isRunning = true;
+    private int counter =0;
 
     public TutorialScreen() {
         arrow = new ImageView(new Image("file:files/arrow.png", 80, 80, false, false));
@@ -59,6 +60,7 @@ public class TutorialScreen extends Pane {
             case "IF YOU HIT A WALL YOU WILL DIE... OR LOSE A LIFE..." -> "AND PRESS THE START LADDER AGAIN...";
             case "AND PRESS THE START LADDER AGAIN..." -> "NOW GO ON FINISH THE MAZE...";
             case "NOW GO ON FINISH THE MAZE..." -> "OR WHATEVER...";
+            case "OR WHATEVER..." -> "last";
             default -> null;
         };
     }
@@ -88,12 +90,16 @@ public class TutorialScreen extends Pane {
 
     private void onMouseClickFirst(String message) {
         String next = nextMessageFirst(message);
-        if (null == next) {
+        if ("last" == next) {
             FadeTransition ft = removeTutorial();
             ft.play();
             ft.setOnFinished(e -> {
+                System.out.println(next);
                 getChildren().removeAll(arrow, introView);
-                MainProgram.getMainProgram().playWorldIntroAnimation(World.FOREST);
+                if (counter==0) {
+                    MainProgram.getMainProgram().playWorldIntroAnimation(World.FOREST);
+                    counter++;
+                }
             });
             return;
         }
@@ -197,8 +203,9 @@ public class TutorialScreen extends Pane {
             showMessage(first);
             addMoreTextArrow();
             messageLabel.toFront();
-            getParent().setOnMouseClicked(ex -> onMouseClickSecond(first));
-
+            if (getParent() != null){
+                getParent().setOnMouseClicked(ex -> onMouseClickThird(first));
+            }
         });
 
 

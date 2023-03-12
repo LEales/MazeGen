@@ -1,18 +1,7 @@
 package view;
 
-import control.MainProgram;
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import model.Player;
-import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -20,15 +9,7 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.concurrent.CountDownLatch;
 
-import static java.util.Locale.lookup;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -37,11 +18,6 @@ public class VictoryScreenTest {
     private AnimationTimer timer;
     private Label label;
     private Label currCharLabel;
-
-    @BeforeClass
-    public static void setUpClass() {
-        new JFXPanel();
-    }
 
     @Test
     public void testCreateCharAnimation() throws NoSuchMethodException, NoSuchFieldException, InvocationTargetException, IllegalAccessException {
