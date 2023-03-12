@@ -218,7 +218,7 @@ public class MainProgram extends Application {
     }
 
     public void playRandomizeMusic(World world) {
-        AudioPlayer.playLevelMusic(world);
+        AudioPlayer.playRandomizeMusic(world);
     }
 
     /**
@@ -948,5 +948,9 @@ public class MainProgram extends Application {
         if (null != worldTemplate) {
             worldTemplate.startLadderAnimation();
         }
+    }
+
+    public boolean getRandomizeMusicOn() {
+        return rightPnlRndm.getMusicOn();
     }
 }

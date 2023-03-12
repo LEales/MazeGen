@@ -104,6 +104,20 @@ public class AudioPlayer {
         return currentSong;
     }
 
+    public static File playRandomizeMusic(World songToPlay) {
+        if (null == songToPlay) return null;
+        MainProgram mainProgram = MainProgram.getMainProgram();
+        currentSong = new File("files/music/" + songToPlay + ".mp3");
+        currentMedia = new Media(currentSong.toURI().toString());
+        currentSongPlayer = new MediaPlayer(currentMedia);
+        currentSongPlayer.setOnEndOfMedia(() -> currentSongPlayer.seek(Duration.ZERO));
+        currentSongPlayer.play();
+        if (!mainProgram.getRandomizeMusicOn()) {
+            currentSongPlayer.setMute(true);
+        }
+        return currentSong;
+    }
+
     /**
      * Spelar ett ljud när spelaren plockar upp en collectible.
      */
