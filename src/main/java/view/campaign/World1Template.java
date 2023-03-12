@@ -588,7 +588,6 @@ public class World1Template extends GridPane {
     private boolean timeIsNullOrOver() {
         return null == time || time.isGameOver();
     }
-}
 
     public boolean hasLadderInitialized(World world){
         Label normal = (Label) lookup("#start");
