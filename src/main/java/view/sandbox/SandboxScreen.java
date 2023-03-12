@@ -237,7 +237,7 @@ public class SandboxScreen extends BorderPane {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to return to the menu? All unsaved changes will be lost.", ButtonType.YES, ButtonType.NO);
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES) {
-                    mainProgram.changeToSandBoxDimension();
+                    mainProgram.changeToSandBoxLoader();
                 }
             });
         });

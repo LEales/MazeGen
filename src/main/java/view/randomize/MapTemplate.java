@@ -4,6 +4,7 @@ package view.randomize;
 import control.MazeGenerator;
 import control.MainProgram;
 import control.time.TimeThread;
+import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
@@ -36,6 +37,8 @@ public class MapTemplate extends GridPane {
 
     private final RightPanel rightPanel;
     private Image wall, path, border, goal, diamond, start;
+    private AnimationTimer timer;
+    private Label startLabel;
 
     /**
      * Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
@@ -217,6 +220,8 @@ public class MapTemplate extends GridPane {
         borderView.setFitWidth(squareSize);
         label.setGraphic(borderView);
         label.setOnMouseClicked(e -> startLevel());
+        startLabel = label;
+        startLadderAnimation();
         return label;
     }
 
@@ -263,19 +268,22 @@ public class MapTemplate extends GridPane {
             fade.setFromValue(10);
             fade.setToValue(0.6);
             fade.play();
-
             if (mazeGenerator.getMap().isGameStarted()) {
                 AudioPlayer.playDeathSound();
                 mazeGenerator.getMap().setGameStarted(false);
                 if (mazeGenerator.getMap().heartCrystalLost()) {
                     gameOver("died");
+                } else {
+                    startLadderAnimation();
                 }
                 rightPanel.changeHeartCounter(mazeGenerator.getMap().getHeartCrystals());
+
             }
         }
     }
+
     private void gameOver(String cause) {
-        if(null == cause || MainProgram.wrongCauseInput(cause)) {
+        if (null == cause || MainProgram.wrongCauseInput(cause)) {
             throw new IllegalArgumentException("Invalid input: Cause");
         }
         AudioPlayer.playGameOverSound();
@@ -314,6 +322,7 @@ public class MapTemplate extends GridPane {
         if (!map.isGameStarted()) {
             AudioPlayer.playStartSound();
         }
+        stopLadderAnimation();
         map.setGameStarted(true);
     }
 
@@ -341,5 +350,35 @@ public class MapTemplate extends GridPane {
 
     private boolean timeIsNullOrOver() {
         return null == time || time.isGameOver();
+    }
+
+    public void startLadderAnimation() {
+        timer = new AnimationTimer() {
+            private long lastUpdate;
+            private boolean isLabelVisible;
+
+            @Override
+            public void handle(long now) {
+                if (now - lastUpdate >= 500_000_000) {
+                    System.out.println("Blinking");
+                    isLabelVisible = !isLabelVisible;
+                    if (isLabelVisible) {
+                        startLabel.setGraphic(new ImageView(new Image("file:files/" + mazeGenerator.getMap().getWorld() + "/brightLadder.png", squareSize, squareSize, false, false)));
+                    } else {
+                        startLabel.setGraphic(new ImageView(new Image("file:files/" + mazeGenerator.getMap().getWorld() + "/start.png", squareSize, squareSize, false, false)));
+                    }
+                    lastUpdate = now;
+                }
+            }
+        };
+        timer.start();
+    }
+
+    public void stopLadderAnimation() {
+        if (timer != null) {
+            timer.stop();
+            startLabel.setGraphic(new ImageView(new Image("file:files/" + mazeGenerator.getMap().getWorld() + "/start.png", squareSize, squareSize, false, false)));
+            timer = null;
+        }
     }
 }

@@ -184,6 +184,12 @@ public class MainProgram extends Application {
         if (worldTemplate != null) {
             worldTemplate.stopLadderAnimation();
         }
+        if (sandboxTemplate != null) {
+            sandboxTemplate.stopLadderAnimation();
+        }
+        if (mapTemplate != null) {
+            mapTemplate.stopLadderAnimation();
+        }
         removeTutorialScreen();
         mainWindow.setScene(menuScene);
         sandboxScene = null;
@@ -884,7 +890,7 @@ public class MainProgram extends Application {
         sandboxTemplate = new SandboxTemplate(clone, rightPanelSandbox);
         mainPaneSandbox.setCenter(sandboxTemplate);
         mainWindow.setScene(sandboxPlayScene);
-        sandboxTemplate.startLadderAnimation(clone.getWorld());
+        sandboxTemplate.startLadderAnimation();
     }
 
     //Metod som gör en kopia av ett objekt så att orginalet inte förändras. No pass by value in java :(

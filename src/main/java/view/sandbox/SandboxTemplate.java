@@ -33,7 +33,7 @@ public class SandboxTemplate extends GridPane {
     private TimeThread time;
 
     private final RightPanel rightPanel;
-    private Image wall, path, border, goal, diamond, start, pickAxeImage,heart,breakableWall;
+    private Image wall, path, border, goal, diamond, start, pickAxeImage, heart, breakableWall;
 
     private AnimationTimer timer;
 
@@ -419,13 +419,13 @@ public class SandboxTemplate extends GridPane {
             if (map.isGameStarted()) {
                 if (map.heartCrystalLost()) {
                     gameOver("died");
+                } else {
+                    startLadderAnimation();
                 }
-                else{
-                startLadderAnimation(map.getWorld());
+                rightPanel.changeHeartCounter(map.getHeartCrystals());
+                AudioPlayer.playDeathSound();
+                map.setGameStarted(false);
             }
-            rightPanel.changeHeartCounter(map.getHeartCrystals());
-            AudioPlayer.playDeathSound();
-            map.setGameStarted(false);}
         }
     }
 
@@ -444,9 +444,8 @@ public class SandboxTemplate extends GridPane {
             AudioPlayer.playDeathSound();
             if (map.heartCrystalLost()) {
                 gameOver("died");
-            }
-            else{
-                startLadderAnimation(map.getWorld());
+            } else {
+                startLadderAnimation();
             }
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             map.setGameStarted(false);
@@ -458,7 +457,7 @@ public class SandboxTemplate extends GridPane {
      * Avslutar spelrundan och kör metoden gameOver i mainProgram.
      */
     private void gameOver(String cause) {
-        if(null == cause || MainProgram.wrongCauseInput(cause)) {
+        if (null == cause || MainProgram.wrongCauseInput(cause)) {
             throw new IllegalArgumentException("Invalid input: Cause");
         }
         AudioPlayer.playGameOverSound();
@@ -554,10 +553,12 @@ public class SandboxTemplate extends GridPane {
     private boolean timeIsNullOrOver() {
         return null == time || time.isGameOver();
     }
-    public void startLadderAnimation(World world) {
+
+    public void startLadderAnimation() {
         timer = new AnimationTimer() {
             private long lastUpdate;
             private boolean isLabelVisible;
+
             @Override
             public void handle(long now) {
                 if (now - lastUpdate >= 500_000_000) {
@@ -574,6 +575,7 @@ public class SandboxTemplate extends GridPane {
         };
         timer.start();
     }
+
     public void stopLadderAnimation() {
         if (timer != null) {
             timer.stop();
