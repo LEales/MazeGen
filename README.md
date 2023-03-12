@@ -11,5 +11,7 @@ Apache Maven 3.8.6 or higher
 1. Clone or download this repository.
 2. Open the project using an IDEA of your choice.
 3. Compile the project.
-4. Run Mainstarter.java from src/main/java.
+4. Run MainStarter.java from src/main/java.
+
+
 Enjoy!
