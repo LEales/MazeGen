@@ -199,11 +199,12 @@ public class RightPanel extends GridPane {
      * Pausar musik & visar Game Over texten
      */
     public void gameIsOver(GameMode gameMode) {
+        String cause = "time";
         Platform.runLater(() -> {
             switch (gameMode) {
-                case CAMPAIGN -> mainProgram.gameOver();
-                case RANDOMIZE -> mainProgram.gameOverRandomize();
-                case CUSTOM -> mainProgram.gameOverSandbox();
+                case CAMPAIGN -> mainProgram.gameOver(cause);
+                case RANDOMIZE -> mainProgram.gameOverRandomize(cause);
+                case CUSTOM -> mainProgram.gameOverSandbox(cause);
             }
             AudioPlayer.playGameOverSound();
             AudioPlayer.stopMusic();

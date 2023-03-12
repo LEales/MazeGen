@@ -241,7 +241,7 @@ public class MapTemplate extends GridPane {
     }
 
     private void collectibleEntered(MouseEvent e) {
-        if (mazeGenerator.getMap().isGameStarted()) {
+        if (mazeGenerator.getMap().isGameStarted() && !timeIsNullOrOver()) {
             AudioPlayer.playCollectibleSound();
             Label label = (Label) e.getSource();
             label.setVisible(false);
@@ -255,28 +255,33 @@ public class MapTemplate extends GridPane {
      * @param e Används för att hitta rätt label.
      */
     public void enteredWall(MouseEvent e) {
-        Label label = (Label) e.getSource();
-        FadeTransition fade = new FadeTransition();
-        fade.setNode(label);
-        fade.setDuration(Duration.seconds(0.3));
-        fade.setFromValue(10);
-        fade.setToValue(0.6);
-        fade.play();
+        if (!timeIsNullOrOver()) {
+            Label label = (Label) e.getSource();
+            FadeTransition fade = new FadeTransition();
+            fade.setNode(label);
+            fade.setDuration(Duration.seconds(0.3));
+            fade.setFromValue(10);
+            fade.setToValue(0.6);
+            fade.play();
 
-        if (mazeGenerator.getMap().isGameStarted()) {
-            AudioPlayer.playDeathSound();
-            mazeGenerator.getMap().setGameStarted(false);
-            if (mazeGenerator.getMap().heartCrystalLost()) {
-                gameOver();
+            if (mazeGenerator.getMap().isGameStarted()) {
+                AudioPlayer.playDeathSound();
+                mazeGenerator.getMap().setGameStarted(false);
+                if (mazeGenerator.getMap().heartCrystalLost()) {
+                    gameOver("died");
+                }
+                rightPanel.changeHeartCounter(mazeGenerator.getMap().getHeartCrystals());
             }
-            rightPanel.changeHeartCounter(mazeGenerator.getMap().getHeartCrystals());
         }
     }
-    private void gameOver() {
+    private void gameOver(String cause) {
+        if(null == cause || MainProgram.wrongCauseInput(cause)) {
+            throw new IllegalArgumentException("Invalid input: Cause");
+        }
         AudioPlayer.playGameOverSound();
         AudioPlayer.stopMusic();
         AudioPlayer.stopTimeLeftSound();
-        MainProgram.getMainProgram().gameOverRandomize();
+        MainProgram.getMainProgram().gameOverRandomize(cause);
         time.setGameOver(true);
         time = null;
     }
@@ -288,7 +293,7 @@ public class MapTemplate extends GridPane {
      * @throws InterruptedException
      */
     private void enteredGoal() throws FileNotFoundException, InterruptedException {
-        if (mazeGenerator.getMap().isGameStarted() && mazeGenerator.getMap().allCollectiblesObtained()) {
+        if (mazeGenerator.getMap().isGameStarted() && mazeGenerator.getMap().allCollectiblesObtained() && !timeIsNullOrOver()) {
             AudioPlayer.playGoalSound();
             AudioPlayer.stopTimeLeftSound();
             stopTime();
@@ -331,5 +336,9 @@ public class MapTemplate extends GridPane {
             time.setGameOver(true);
             time = null;
         }
+    }
+
+    private boolean timeIsNullOrOver() {
+        return null == time || time.isGameOver();
     }
 }

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import javafx.util.Duration;
 import model.enums.GameMode;
+import model.enums.Sprite;
 import model.maps.*;
 
 import model.Player;
@@ -257,41 +258,32 @@ public class MainProgram extends Application {
     /**
      * Vid gameOver körs denna metod.
      * Kör en enkel animation med texten "Game Over".
+     * @param cause anledningen till död
      */
-    public void gameOver() {
+    public void gameOver(String cause) {
+        if(null == cause || wrongCauseInput(cause)) {
+            throw new IllegalArgumentException("Invalid input: Cause");
+        }
         victoryScreen.setTime(totTime.setGameOver(true));
         Player player = new Player("___", totTime.setGameOver(true), lvlCleared);
-        GameOverScreen gameOverScreen = new GameOverScreen(player);
+        GameOverScreen gameOverScreen = new GameOverScreen(player, cause);
         mainPaneCampaign.getChildren().add(gameOverScreen);
     }
 
-    public void gameOverRandomize() {
-        ImageView introView = new ImageView(new Image("file:files/texts/Gameover.png", 600, 600, false, false));
-        introView.setStyle("fx-background-color: transparent;");
-        FadeTransition ft = new FadeTransition(Duration.millis(4000.0), introView);
-        mainPaneRandomMaze.getChildren().add(introView);
-        ft.setFromValue(0.0);
-        ft.setToValue(1.0);
-        ft.play();
-        mainPaneRandomMaze.setOnMouseClicked(e -> {
-            AudioPlayer.stopMusic();
-            changeToMenu();
-            mainPaneRandomMaze.setOnMouseClicked(null);
-        });
+    public void gameOverRandomize(String cause) {
+        if(null == cause || wrongCauseInput(cause)) {
+            throw new IllegalArgumentException("Invalid input: Cause");
+        }
+        GameOverScreen gameOverScreen = new GameOverScreen(cause);
+        mainPaneRandomMaze.getChildren().add(gameOverScreen);
     }
 
-    public void gameOverSandbox() {
-        ImageView introView = new ImageView(new Image("file:files/texts/Gameover.png", 600, 600, false, false));
-        introView.setStyle("fx-background-color: transparent;");
-        FadeTransition ft = new FadeTransition(Duration.millis(4000.0), introView);
-        mainPaneSandbox.getChildren().add(introView);
-        ft.setFromValue(0.0);
-        ft.setToValue(1.0);
-        ft.play();
-        mainPaneSandbox.setOnMouseClicked(e -> {
-            changeToMenu();
-            mainPaneSandbox.setOnMouseClicked(null);
-        });
+    public void gameOverSandbox(String cause) {
+        if(null == cause || wrongCauseInput(cause)) {
+            throw new IllegalArgumentException("Invalid input: Cause");
+        }
+        GameOverScreen gameOverScreen = new GameOverScreen(cause);
+        mainPaneSandbox.getChildren().add(gameOverScreen);
     }
 
     /**
@@ -819,5 +811,13 @@ public class MainProgram extends Application {
     public void changeToSandBoxLoader() {
         sandboxLoader = new Scene(new SandboxLoader(createdMaps), WIDTH, HEIGHT);
         mainWindow.setScene(sandboxLoader);
+    }
+
+    public static boolean wrongCauseInput(String cause) {
+        if(cause.equals("died") || cause.equals("time")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

@@ -13,10 +13,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import model.enums.GameMode;
+import model.maps.Maps;
 import model.enums.World;
 import model.maps.Maps;
 import view.menu.RightPanel;
@@ -30,7 +32,6 @@ import java.io.FileNotFoundException;
  */
 
 public class World1Template extends GridPane {
-
 
 
     private final MainProgram mainProgram;
@@ -315,6 +316,7 @@ public class World1Template extends GridPane {
         borderView.setFitWidth(squareSize);
         label.setGraphic(borderView);
         label.setId("start");
+        label.setOnMouseClicked(e -> startLevel());
         return label;
     }
 
@@ -339,7 +341,7 @@ public class World1Template extends GridPane {
     }
 
     private void collectibleObtained(MouseEvent e) {
-        if (map.isGameStarted()) {
+        if (map.isGameStarted() && !timeIsNullOrOver()) {
             AudioPlayer.playCollectibleSound();
             Label label = (Label) e.getSource();
             label.setVisible(false);
@@ -376,7 +378,7 @@ public class World1Template extends GridPane {
 
     private void heartCrystalObtained(MouseEvent e) {
         Label label = (Label) e.getSource();
-        if (map.isGameStarted()) {
+        if (map.isGameStarted() && !timeIsNullOrOver()) {
             AudioPlayer.playHeartSound();
             label.setVisible(false);
             map.heartCrystalCollected();
@@ -409,7 +411,7 @@ public class World1Template extends GridPane {
      * @param e MouseEvent
      */
     private void pickAxeObtained(MouseEvent e) {
-        if (map.isGameStarted() && !map.isPickAxeInInventory()) {
+        if (map.isGameStarted() && !map.isPickAxeInInventory() && !timeIsNullOrOver()) {
             AudioPlayer.playPickAxeSound();
             Label label = (Label) e.getSource();
             label.setVisible(false);
@@ -426,20 +428,21 @@ public class World1Template extends GridPane {
      * @param e Används för att hitta rätt label.
      */
     private void enteredWall(MouseEvent e) {
-        Label label = (Label) e.getSource();
-        createFadeTransition(label, 0.3, 10.0, 0.6).play();
-        if (map.isGameStarted()) {
-            if (map.heartCrystalLost()) {
-                gameOver();
-            }
-            else{
+        if (!timeIsNullOrOver()) {
+            Label label = (Label) e.getSource();
+            createFadeTransition(label, 0.3, 10.0, 0.6).play();
+            if (map.isGameStarted()) {
+                if (map.heartCrystalLost()) {
+                    gameOver("died");
+                }
+                else{
                 setLadderstatus(false);
                 startLadderAnimation(map.getWorld());
             }
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             AudioPlayer.playDeathSound();
             map.setGameStarted(false);
-
+}
         }
     }
 
@@ -451,13 +454,13 @@ public class World1Template extends GridPane {
      * @param e
      */
     void enteredGhost(MouseEvent e) {
-        if (map.isGameStarted()) {
+        if (map.isGameStarted() && !timeIsNullOrOver()) {
             ImageView view = (ImageView) e.getSource();
             createFadeTransition(view, 0.2, 10, 0.6).play();
             AudioPlayer.playMobSound();
             AudioPlayer.playDeathSound();
             if (map.heartCrystalLost()) {
-                gameOver();
+                gameOver("died");
             }
             else{
                 setLadderstatus(false);
@@ -466,20 +469,22 @@ public class World1Template extends GridPane {
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             map.setGameStarted(false);
             createFadeTransition(view, 1.5, 0.6, 10).play();
-
         }
     }
 
     /**
      * Avslutar spelrundan och kör metoden gameOver i mainProgram.
      */
-    private void gameOver() {
+    private void gameOver(String cause) {
+        if(null == cause || MainProgram.wrongCauseInput(cause)) {
+            throw new IllegalArgumentException("Invalid input: Cause");
+        }
         AudioPlayer.playGameOverSound();
         AudioPlayer.stopTimeLeftSound();
         AudioPlayer.stopMusic();
-        mainProgram.gameOver();
-        time.setGameOver(true);
-        time = null;
+        mainProgram.gameOver(cause);
+        this.time.setGameOver(true);
+        this.time = null;
         rightPanel.removePickaxe();
     }
 
@@ -497,7 +502,7 @@ public class World1Template extends GridPane {
      * @throws InterruptedException
      */
     private void enteredGoal() throws FileNotFoundException, InterruptedException {
-        if (map.isGameStarted() && map.allCollectiblesObtained()) {
+        if (map.isGameStarted() && map.allCollectiblesObtained() && !timeIsNullOrOver()) {
             AudioPlayer.stopTimeLeftSound();
             AudioPlayer.playGoalSound();
             time.setGameOver(true);
@@ -566,7 +571,7 @@ public class World1Template extends GridPane {
     private void enteredBreakableWall(MouseEvent e) {
         Label label = (Label) e.getSource();
         ImageView pathView = new ImageView(path);
-        if (map.isGameStarted()) {
+        if (map.isGameStarted() && !timeIsNullOrOver()) {
             if (map.isPickAxeInInventory()) {
                 label.setGraphic(pathView);
                 map.setPickAxeInInventory(false);
@@ -579,6 +584,11 @@ public class World1Template extends GridPane {
             }
         }
     }
+
+    private boolean timeIsNullOrOver() {
+        return null == time || time.isGameOver();
+    }
+}
 
     public boolean hasLadderInitialized(World world){
         Label normal = (Label) lookup("#start");
