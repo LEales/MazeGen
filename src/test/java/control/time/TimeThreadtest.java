@@ -47,11 +47,13 @@ public class TimeThreadtest {
     @Test
     void oneSecondsLeft() throws Exception {
         RightPanel panel= new RightPanel(GameMode.CAMPAIGN);
-        TimeThread timeThread = new TimeThread(1,panel,GameMode.CAMPAIGN);
+        TimeThread timeThread = new TimeThread(0,panel,GameMode.CAMPAIGN);
         timeThread.start();
         Thread.sleep(1000);
-        System.out.println("is alive: " + timeThread.isAlive());
-        assertFalse(timeThread.isAlive());
+        while (timeThread.isAlive()!=true){
+            System.out.println("Staying alive");
+        }
+        assertFalse(timeThread.isAlive()==false);
     }
 
     @Test

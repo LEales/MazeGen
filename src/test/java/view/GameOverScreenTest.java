@@ -2,15 +2,11 @@ package view;
 
 import control.MainProgram;
 import javafx.application.Application;
-import javafx.scene.image.ImageView;
+import model.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import view.sandbox.SandboxDimension;
-import view.sandbox.SandboxScreen;
 
-import javax.naming.directory.InvalidAttributeValueException;
-import javax.naming.directory.InvalidAttributesException;
-import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,39 +17,16 @@ class GameOverScreenTest {
     static void initJFXRuntime() {
         new Thread(() -> Application.launch(MainProgram.class)).start();
     }
-
     @Test
-    void gameOverAnimationHeart(){
-        GameOverScreen gameOverScreen = new GameOverScreen("died");
-        ImageView imageView = (ImageView) gameOverScreen.getChildren().get(0);
-        assertEquals("file:files/texts/gameoverdied.png",imageView.getImage().getUrl());
-    }
-    @Test
-    void gameOverAnimationTime() {
-        GameOverScreen gameOverScreen = new GameOverScreen("time");
-        ImageView imageView = (ImageView) gameOverScreen.getChildren().get(0);
-        assertEquals("file:files/texts/gameovertime.png",imageView.getImage().getUrl());
-    }
-    @Test
-    void gameOverAnimationNull() {
+    void gameOverAnimation() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         try {
-            GameOverScreen gameOverScreen = new GameOverScreen(null);
-            ImageView imageView = (ImageView) gameOverScreen.getChildren().get(0);
-            fail("no nullpointer check");
-        }catch (IllegalArgumentException e){
-            assertEquals("Invalid input: Cause",e.getMessage());
+            Thread.sleep(2000);
+        } catch (InterruptedException ignored) {
         }
+        Player player = new Player("SVE", 1, 1);
+        GameOverScreen gms = new GameOverScreen(player);
+        Method gameOver = GameOverScreen.class.getDeclaredMethod("gameOverAnimation");
+        gameOver.setAccessible(true);
+        assertTrue((Boolean) gameOver.invoke(gms));
     }
-    @Test
-    void gameOverAnimationWrongCause() {
-        try {
-            GameOverScreen gameOverScreen = new GameOverScreen("TJENIXEN");
-            ImageView imageView = (ImageView) gameOverScreen.getChildren().get(0);
-            fail("Not a valid cause");
-        }catch (IllegalArgumentException e){
-            assertEquals("Invalid input: Cause",e.getMessage());
-        }
-    }
-
-
 }
