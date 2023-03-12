@@ -51,7 +51,6 @@ public class WorldIntroAnimation extends Pane {
         if (image.isSmooth()) return false;
         if (image.isPreserveRatio()) return false;
         try {
-            System.out.println("introAnimation");
             ImageView introView = new ImageView(image);
             introView.setStyle("fx-background-color: transparent;");
             FadeTransition ft = new FadeTransition(Duration.millis(4000), introView);
