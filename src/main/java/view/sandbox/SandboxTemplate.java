@@ -563,7 +563,6 @@ public class SandboxTemplate extends GridPane {
             @Override
             public void handle(long now) {
                 if (now - lastUpdate >= 500_000_000) {
-                    System.out.println("Blinking");
                     isLabelVisible = !isLabelVisible;
                     if (isLabelVisible) {
                         startLabel.setGraphic(new ImageView(new Image("file:files/" + map.getWorld() + "/brightLadder.png", squareSize, squareSize, false, false)));
