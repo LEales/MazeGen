@@ -1,11 +1,8 @@
 package view.campaign;
 
-import control.AudioPlayer;
 import control.MainProgram;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polyline;
 import model.enums.LifeLostCause;
 import model.maps.Maps;

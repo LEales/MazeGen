@@ -27,7 +27,7 @@ public class RightPanel extends GridPane {
     private final ImageView currentLevelView, currentHeartView, pickaxeView, soundView, musicView, emptyView;
     private final Label levelLabel, heartLabel, pickaxeLabel, soundLabel, musicLabel, timerLabel;
     private boolean soundOn, musicOn;
-   // private Timeline timeline;
+    // private Timeline timeline;
 
 
     /**

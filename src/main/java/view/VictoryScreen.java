@@ -102,16 +102,17 @@ public class VictoryScreen extends Pane {
     }
 
     private void createCharAnimation(Label label) {
-        if( !thirdProperty.get().equals("_")) {
+        if (!thirdProperty.get().equals("_")) {
             return;
         }
-        if(currCharLabel != null) {
+        if (currCharLabel != null) {
             currCharLabel.setVisible(true);
         }
         currCharLabel = label;
         timer = new AnimationTimer() {
             private long lastUpdate;
             private boolean isLabelVisible;
+
             @Override
             public void handle(long now) {
                 // Only update the visibility of the label once every 500 million nanoseconds (0.5 seconds)

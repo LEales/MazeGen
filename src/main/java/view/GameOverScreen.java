@@ -21,10 +21,10 @@ public class GameOverScreen extends Pane {
      * Kör sedan metoder för bild och animation
      */
     public GameOverScreen(Player player, String cause) {
-        if(null == cause || MainProgram.wrongCauseInput(cause)) {
+        if (null == cause || MainProgram.wrongCauseInput(cause)) {
             throw new IllegalArgumentException("Invalid input: Cause");
         }
-        if(null == player) {
+        if (null == player) {
             throw new IllegalArgumentException("Invalid input: Player");
         }
         setWidth(MainProgram.WIDTH);
@@ -44,7 +44,7 @@ public class GameOverScreen extends Pane {
     }
 
     public GameOverScreen(String cause, String remove) {
-        if(null == cause || MainProgram.wrongCauseInput(cause)) {
+        if (null == cause || MainProgram.wrongCauseInput(cause)) {
             throw new IllegalArgumentException("Invalid input: Cause");
         }
         setOnMouseClicked(e -> {
@@ -60,7 +60,7 @@ public class GameOverScreen extends Pane {
      * Animation för gameOver-bilden
      */
     private boolean gameOverAnimation(String cause) {
-        if(null == cause || MainProgram.wrongCauseInput(cause)) {
+        if (null == cause || MainProgram.wrongCauseInput(cause)) {
             throw new IllegalArgumentException("Invalid input: Cause");
         }
         try {

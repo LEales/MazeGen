@@ -116,7 +116,7 @@ public class TutorialScreen extends Pane {
             }
         }
         showMessage(next);
-        if (getParent() != null){
+        if (getParent() != null) {
             getParent().setOnMouseClicked(e -> onMouseClickFirst(next));
         }
     }
@@ -201,7 +201,7 @@ public class TutorialScreen extends Pane {
             showMessage(first);
             addMoreTextArrow();
             messageLabel.toFront();
-            if (getParent() != null){
+            if (getParent() != null) {
                 getParent().setOnMouseClicked(ex -> onMouseClickSecond(first));
             }
         });
@@ -218,7 +218,7 @@ public class TutorialScreen extends Pane {
             showMessage(first);
             addMoreTextArrow();
             messageLabel.toFront();
-            if (getParent() != null){
+            if (getParent() != null) {
                 getParent().setOnMouseClicked(ex -> onMouseClickThird(first));
             }
         });
@@ -260,7 +260,7 @@ public class TutorialScreen extends Pane {
         FadeTransition ft = new FadeTransition(Duration.millis(3000.0), introView);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
-        getChildren().removeAll(messageLabel,moreTextArrow, lookup("#skipLabel"));
+        getChildren().removeAll(messageLabel, moreTextArrow, lookup("#skipLabel"));
         //getChildren().removeAll();
         setOnMouseClicked(null);
         return ft;

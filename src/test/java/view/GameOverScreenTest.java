@@ -24,7 +24,7 @@ class GameOverScreenTest {
         } catch (InterruptedException ignored) {
         }
         Player player = new Player("SVE", 1, 1);
-        GameOverScreen gms = new GameOverScreen(player.getPlayer());
+        GameOverScreen gms = new GameOverScreen(player.getPlayer(), "Campaign");
         Method gameOver = GameOverScreen.class.getDeclaredMethod("gameOverAnimation");
         gameOver.setAccessible(true);
         assertTrue((Boolean) gameOver.invoke(gms));

@@ -28,6 +28,7 @@ public class SandboxDimension extends Pane {
                 BackgroundSize.DEFAULT);
         setBackground(new Background(menuBackground));
     }
+
     private ImageView getDimensionView() {
         Image chooseDimension = new Image("file:files/texts/ChooseDimension.png", 800, 600, false, false);
         ImageView dimensionView = new ImageView(chooseDimension);
@@ -61,7 +62,7 @@ public class SandboxDimension extends Pane {
 
     private Label getReturn() {
         Label aReturn = createLabel(320, 450, "Return");
-        aReturn.setOnMouseClicked(e ->{
+        aReturn.setOnMouseClicked(e -> {
             AudioPlayer.playButtonSound();
             mainProgram.changeToSandBoxLoader();
         });

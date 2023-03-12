@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class SandboxLoader extends Pane {
     private final ScrollPane scrollPane;
     private final VBox content;
-    
+
     private final MainProgram mainProgram;
 
     public SandboxLoader() {
@@ -55,7 +55,7 @@ public class SandboxLoader extends Pane {
         getChildren().add(createNm);
         createNm.setOnMouseEntered(e -> createNm.setTextFill(Color.ORANGERED));
         createNm.setOnMouseExited(e -> createNm.setTextFill(Color.web("#0000D6")));
-        createNm.setOnMouseClicked(e ->{
+        createNm.setOnMouseClicked(e -> {
             AudioPlayer.playButtonSound();
             mainProgram.changeToSandBoxDimension();
         });
@@ -69,19 +69,20 @@ public class SandboxLoader extends Pane {
         getChildren().add(back);
         back.setOnMouseEntered(e -> back.setTextFill(Color.ORANGERED));
         back.setOnMouseExited(e -> back.setTextFill(Color.web("#0000D6")));
-        back.setOnMouseClicked(e ->{
+        back.setOnMouseClicked(e -> {
             AudioPlayer.playButtonSound();
             mainProgram.changeToMenu();
 
         });
     }
+
     public SandboxLoader(ArrayList<CreatedMap> maps) {
         this();
         for (CreatedMap map : maps) {
             content.getChildren().add(addMap(map));
         }
 
-       // scrollPane.lookup(".viewport").setStyle("-fx-background-color: transparent;");
+        // scrollPane.lookup(".viewport").setStyle("-fx-background-color: transparent;");
     }
 
     private void setBackground() {
@@ -90,6 +91,7 @@ public class SandboxLoader extends Pane {
                 BackgroundSize.DEFAULT);
         setBackground(new Background(menuBackground));
     }
+
     //lägger till funktioner för sparade kartor i en vbox.
     private VBox addMap(CreatedMap map) {
         CreatedMap finalMap = map;

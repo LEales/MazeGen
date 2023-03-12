@@ -3,11 +3,9 @@ package view.campaign;
 import control.AudioPlayer;
 import control.MainProgram;
 import control.time.TimeThread;
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
@@ -15,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
@@ -23,7 +20,6 @@ import model.enums.GameMode;
 import model.enums.LifeLostCause;
 import model.maps.Maps;
 import model.enums.World;
-import model.maps.Maps;
 import view.menu.RightPanel;
 
 import java.io.FileNotFoundException;
@@ -594,9 +590,10 @@ public class World1Template extends GridPane {
     }
 
     public void startLadderAnimation() {
-         timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             private long lastUpdate;
             private boolean isLabelVisible;
+
             @Override
             public void handle(long now) {
                 if (now - lastUpdate >= 500_000_000) {
