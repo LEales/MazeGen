@@ -231,12 +231,15 @@ public class MainProgram extends Application {
     private void keyPressed(KeyEvent e) {
         if (null != e) {
             if (KeyCode.SPACE == e.getCode() && tutorialScreen !=null && !(tutorialScreen.isDisable())) {
-
                 removeTutorialScreen();
                 if (rightPanel.getFirstLevel()) {
                     playWorldIntroAnimation(World.FOREST);
                 }
-                worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
+                else {
+                    worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
+                }
+
+
 
             }
         }

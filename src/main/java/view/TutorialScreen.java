@@ -126,7 +126,10 @@ public class TutorialScreen extends Pane {
             FadeTransition ft = removeTutorial();
             ft.play();
             getChildren().remove(arrow);
-            ft.setOnFinished(e -> getChildren().remove(introView));
+            ft.setOnFinished(e -> {
+                getChildren().remove(introView);
+                this.toBack();
+            });
             return;
         }
         switch (next) {
@@ -152,7 +155,10 @@ public class TutorialScreen extends Pane {
         if (null == next) {
             FadeTransition ft = removeTutorial();
             ft.play();
-            ft.setOnFinished(e -> getChildren().remove(introView));
+            ft.setOnFinished(e -> {
+                getChildren().remove(introView);
+                this.toBack();
+            });
             return;
         }
         showMessage(next);
@@ -192,7 +198,10 @@ public class TutorialScreen extends Pane {
             addMoreTextArrow();
             messageLabel.toFront();
             getParent().setOnMouseClicked(ex -> onMouseClickSecond(first));
+
         });
+
+
     }
 
     public void setupThirdScene() {
