@@ -1,6 +1,6 @@
 package control;
 
-import javafx.animation.FadeTransition;
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 
 import javafx.util.Duration;
 import model.enums.GameMode;
-import model.enums.Sprite;
+import model.enums.LifeLostCause;
 import model.maps.*;
 
 import model.Player;
@@ -49,6 +49,7 @@ public class MainProgram extends Application {
     private Stage mainWindow;
     private BorderPane mainPaneRandomMaze, mainPaneCampaign, mainPaneSandbox;
     private Scene menuScene, helpScene, chooseDimensionScene, highscoreScene, victoryScene, randomScene, campaignScene, sandboxLoader, sandboxScene, sandboxPlayScene;
+    private ImageView lostLifeView, heartView;
     private HighscoreList highscoreList;
     private VictoryScreen victoryScreen;
     private RightPanel rightPanel, rightPnlRndm, rightPanelSandbox;
@@ -56,6 +57,8 @@ public class MainProgram extends Application {
 
     private WorldIntroAnimation introAnimation;
     private int lvlCleared;
+
+    private boolean playerHurt = false;
     private TotalTime totTime;
 
     private MapTemplate mapTemplate;
@@ -214,7 +217,7 @@ public class MainProgram extends Application {
      */
     public void changeToCampaign() throws FileNotFoundException {
         lvlCleared = 0;
-        worldTemplate = new World1Template(new World1Maps(3, 25, 1, World.FOREST), rightPanel);
+        worldTemplate = new World1Template(new World1Maps(3, 25, 1, World.FOREST), rightPanel, LifeLostCause.FORESTWALL);
         rightPanel.changeLevelCounter("11");
         mainPaneCampaign.setCenter(worldTemplate);
         mainWindow.setScene(campaignScene);
@@ -287,6 +290,96 @@ public class MainProgram extends Application {
     }
 
     /**
+     * Tar in vad som spelaren träffades av samt antalet heartcrystals innan kollision
+     * @param cause the cause of hurt
+     */
+    public void lostLife(LifeLostCause cause, int heartCrystals) {
+        playerHurt = true;
+
+        showLostLifeText(cause, heartCrystals);
+        lostHeartAnimation(heartCrystals);
+    }
+
+    /**
+     * Skapar en transition för att visa texten för hur spelaren dog.
+     * @param cause anledningen till kollision
+     */
+    private void showLostLifeText(LifeLostCause cause, int heartCrystals) {
+        playerHurt = true;
+
+        lostLifeView = new ImageView(new Image("file:files/lostLifeCause/" + cause + ".png", 600, 600, false, false));
+        lostLifeView.setStyle("fx-background-color: transparent;");
+        lostLifeView.setFitWidth(600);
+        lostLifeView.setFitHeight(100);
+        lostLifeView.setLayoutX((mainPaneCampaign.getWidth() / 2) - 400);
+        lostLifeView.setLayoutY((mainPaneCampaign.getHeight() - lostLifeView.getFitHeight()) / 2);
+        FadeTransition lostLifeTransition = new FadeTransition(Duration.millis(700), lostLifeView);
+        lostLifeTransition.setFromValue(0.0);
+        lostLifeTransition.setToValue(1.0);
+        if (--heartCrystals == 0) {
+            lostLifeTransition.setOnFinished(e -> {;
+                FadeTransition fadeOutTransition = new FadeTransition(Duration.millis(400), lostLifeView);
+                fadeOutTransition.setFromValue(1.0);
+                fadeOutTransition.setToValue(0.0);
+                fadeOutTransition.play();
+            });
+        }
+
+        mainPaneCampaign.getChildren().add(lostLifeView);
+        lostLifeTransition.play();
+    }
+
+    /**
+     * Skapar en animation genom TimeLine som visar antal hjärtan innan kollision och sedan antal
+     * efter kollision
+     * @param heartCrystals antal heartcrystals innan kollision
+     */
+    private void lostHeartAnimation(int heartCrystals) {
+        Image image1 = new Image("file:files/hearts/" + heartCrystals + "heart.png");
+        Image image2 = new Image("file:files/hearts/" + --heartCrystals + "heart.png");
+        heartView = new ImageView(image1);
+        heartView.setStyle("fx-background-color: transparent;");
+        heartView.setFitWidth(150);
+        heartView.setFitHeight(50);
+        heartView.setLayoutX((mainPaneCampaign.getWidth() / 2) - (heartView.getFitWidth() + heartView.getFitWidth()/6));
+        heartView.setLayoutY((mainPaneCampaign.getHeight() / 2)  + (heartView.getFitHeight()/2));
+
+        KeyFrame keyFrame1On = new KeyFrame(Duration.seconds(0.5), new KeyValue(heartView.imageProperty(), image1, Interpolator.EASE_OUT));
+        KeyFrame keyFrame2On = new KeyFrame(Duration.seconds(1.0), new KeyValue(heartView.imageProperty(), image2, Interpolator.EASE_OUT));
+        Timeline timelineOn = new Timeline(keyFrame1On, keyFrame2On);
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
+
+        mainPaneCampaign.getChildren().add(heartView);
+        timelineOn.play();
+        delay.play();
+
+
+    }
+
+    /**
+     * tar bort texten för hur man skadades (kallas på när spelaren klickar på startstegen igen)
+     */
+    public void removeLostLifeText() {
+        if(lostLifeView != null || heartView != null) {
+            mainPaneCampaign.getChildren().remove(lostLifeView);
+            mainPaneCampaign.getChildren().remove(heartView);
+            playerHurt = false;
+        }
+        else {
+            throw new IllegalArgumentException("Invalid view");
+        }
+    }
+
+    /**
+     * @return används i World1Template.startLevel() för att kunna ta bort texten om
+     * spelaren precis kolliderat
+     */
+    public boolean isPlayerHurt() {
+        return this.playerHurt;
+    }
+
+    /**
      * Byter scen till en ny nivå i kampanjläget baserad på givna parametrar.
      *
      * @param level         Den aktuella nivån.
@@ -319,7 +412,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate = new World1Template(new World1Maps(heartCrystals, 25, level + 1, World.FOREST), rightPanel);
+        worldTemplate = new World1Template(new World1Maps(heartCrystals, 25, level + 1, World.FOREST), rightPanel, LifeLostCause.FORESTWALL);
         mainPaneCampaign.setCenter(worldTemplate);
         worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
         if (4 == level) {
@@ -371,8 +464,8 @@ public class MainProgram extends Application {
                 return;
             }
         }
+        worldTemplate = new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel, LifeLostCause.UNDERGROUNDWALL);
         worldTemplate.startLadderAnimation(worldTemplate.getMap().getWorld());
-        worldTemplate = new World2Template(new World2Maps(heartCrystals, 35, level + 1, World.UNDERGROUND), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
         if (5 == level) {
             tutorialScreen = new TutorialScreen();
@@ -422,7 +515,7 @@ public class MainProgram extends Application {
                 return;
             }
         }
-        worldTemplate = new World3Template(new World3Maps(heartCrystals, 45, level + 1, World.LAVA), rightPanel);
+        worldTemplate = new World3Template(new World3Maps(heartCrystals, 45, level + 1, World.LAVA), rightPanel, LifeLostCause.LAVAWALL);
         worldTemplate.startLadderAnimation((World.LAVA));
         mainPaneCampaign.setCenter(worldTemplate);
     }
@@ -468,8 +561,8 @@ public class MainProgram extends Application {
                 return;
             }
         }
+        worldTemplate = new World4Template(new World4Maps(heartCrystals, 55, level + 1, World.CLOUD), rightPanel, LifeLostCause.CLOUDWALL);
         worldTemplate.startLadderAnimation(World.CLOUD);
-        worldTemplate = new World4Template(new World4Maps(heartCrystals, 55, level + 1, World.CLOUD), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
     }
 
@@ -514,8 +607,8 @@ public class MainProgram extends Application {
                 return;
             }
         }
+        worldTemplate = new World5Template(new World5Maps(heartCrystals, 65, level + 1, World.DESERT), rightPanel, LifeLostCause.DESERTWALL);
         worldTemplate.startLadderAnimation(World.DESERT);
-        worldTemplate = new World5Template(new World5Maps(heartCrystals, 65, level + 1, World.DESERT), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
     }
 
@@ -566,8 +659,8 @@ public class MainProgram extends Application {
                 return;
             }
         }
+        worldTemplate = new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel, LifeLostCause.SPACEWALL);
         worldTemplate.startLadderAnimation(World.SPACE);
-        worldTemplate = new World6Template(new World6Maps(heartCrystals, 99, level + 1, World.SPACE), rightPanel);
         mainPaneCampaign.setCenter(worldTemplate);
     }
 

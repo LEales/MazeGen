@@ -18,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import model.enums.GameMode;
+import model.enums.LifeLostCause;
 import model.maps.Maps;
 import model.enums.World;
 import model.maps.Maps;
@@ -36,18 +37,20 @@ public class World1Template extends GridPane {
 
     private final MainProgram mainProgram;
     private final Maps map;
-    private final RightPanel rightPanel;
     private Image wall, path, border, goal, diamond, start, heart, breakableWall, pickAxeImage;
+    final int squareSize;
+    private final RightPanel rightPanel;
     private TimeThread time;
     private boolean ladderClicked;
     private int ladderRow;
     private int ladderColumn;
-    final int squareSize;
     private int column;
     private int row;
     private Thread imageThread;
     private Label brightLadder;
     private Label normaLadder;
+
+    private LifeLostCause worldCause;
 
     /**
      * Instansierar objekten.
@@ -57,12 +60,13 @@ public class World1Template extends GridPane {
      */
 
     //Konstruktorn ska kunna ta emot int-arrayer och representera dem i GUIt
-    public World1Template(Maps map, RightPanel rightPanel) throws FileNotFoundException {
+    public World1Template(Maps map, RightPanel rightPanel, LifeLostCause worldCause) throws FileNotFoundException {
         this.mainProgram = MainProgram.getMainProgram();
         this.map = map;
         rightPanel.changeHeartCounter(map.getHeartCrystals());
         time = new TimeThread(map.getSeconds(), rightPanel, GameMode.CAMPAIGN);
         this.rightPanel = rightPanel;
+        this.worldCause = worldCause;
         squareSize = (int) MainProgram.HEIGHT / (map.getMap().length + 2);
         setBackground();
         setupImages(map.getWorld());
@@ -431,7 +435,7 @@ public class World1Template extends GridPane {
         if (!timeIsNullOrOver()) {
             Label label = (Label) e.getSource();
             createFadeTransition(label, 0.3, 10.0, 0.6).play();
-            if (map.isGameStarted()) {
+            if (map.isGameStarted()) {mainProgram.lostLife(worldCause, map.getHeartCrystals());
                 if (map.heartCrystalLost()) {
                     gameOver("died");
                 }
@@ -442,7 +446,6 @@ public class World1Template extends GridPane {
             rightPanel.changeHeartCounter(map.getHeartCrystals());
             AudioPlayer.playDeathSound();
             map.setGameStarted(false);
-}
         }
     }
 
@@ -459,6 +462,7 @@ public class World1Template extends GridPane {
             createFadeTransition(view, 0.2, 10, 0.6).play();
             AudioPlayer.playMobSound();
             AudioPlayer.playDeathSound();
+            mainProgram.lostLife(LifeLostCause.GHOST, map.getHeartCrystals());
             if (map.heartCrystalLost()) {
                 gameOver("died");
             }
@@ -538,6 +542,9 @@ public class World1Template extends GridPane {
         }
         if (!map.isGameStarted()) {
             AudioPlayer.playStartSound();
+        }
+        if(mainProgram.isPlayerHurt()) {
+            mainProgram.removeLostLifeText();
         }
         mainProgram.removeTutorialScreen();
         map.setGameStarted(true);
